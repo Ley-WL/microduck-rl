@@ -7389,3 +7389,177 @@ def roulade_lateral_velocity_penalty(
     """Body-frame lateral (y) linear velocity² — keeps the roll straight."""
     asset: Entity = env.scene[asset_cfg.name]
     return torch.nan_to_num(asset.data.root_link_lin_vel_b[:, 1].pow(2), nan=0.0)
+
+
+def hd1910_leg_pose_error(env):
+    """Normalized HOME error on servo legs; head joints remain independent."""
+    robot = env.scene["robot"]
+    ids = _servo_joint_ids(env, robot)
+    names = [robot.joint_names[i] for i in ids]
+    leg = [i for i, name in enumerate(names) if name.startswith(("left_", "right_"))]
+    scales = [0.10 if "yaw" in names[i] else 0.08 if "roll" in names[i] else 0.18 for i in leg]
+    delta = (_servo_joint_pos(env, robot) - robot.data.default_joint_pos[:, ids])[:, leg]
+    return delta / delta.new_tensor(scales)
+
+
+def hd1910_leg_pose_cost(env):
+    """Positive dense cost, preserving a gradient outside the pose Gaussian."""
+    return hd1910_leg_pose_error(env).abs().mean(dim=-1)
+
+
+def hd1910_standing_composite(env, nominal_height: float, height_std: float = 0.018):
+    """Balance AND leg alignment: a twisted stable stance cannot earn full reward."""
+    robot = env.scene["robot"]
+    height = robot.data.root_link_pos_w[:, 2] - env.scene.env_origins[:, 2]
+    upright = (-robot.data.projected_gravity_b[:, 2]).clamp(0.0, 1.0)
+    speed = robot.data.root_link_lin_vel_w[:, :2].square().sum(dim=-1)
+    alignment = torch.exp(-hd1910_leg_pose_error(env).square().mean(dim=-1))
+    return upright.square() * torch.exp(-((height - nominal_height) / height_std).square()) * torch.exp(-speed / 0.04) * alignment
+
+
+def _hd1910_push_state(env):
+    if not hasattr(env, "_hd1910_last_push"):
+        env._hd1910_last_push = torch.full((env.num_envs,), -10000, device=env.device, dtype=torch.long)
+        env._hd1910_next_push = torch.zeros(env.num_envs,device=env.device,dtype=torch.long)
+        env._hd1910_burst_left = torch.zeros(env.num_envs,device=env.device,dtype=torch.long)
+        env._hd1910_burst_direction = torch.zeros((env.num_envs,2),device=env.device)
+
+
+def hd1910_reset_push_schedule(env, env_ids):
+    _hd1910_push_state(env)
+    if env_ids is None:
+        env_ids = torch.arange(env.num_envs,device=env.device)
+    env._hd1910_last_push[env_ids] = -10000
+    env._hd1910_burst_left[env_ids] = 0
+    delay = torch.rand(len(env_ids),device=env.device)*2.5+2.5
+    env._hd1910_next_push[env_ids] = env.common_step_counter + (delay / env.step_dt).long()
+
+
+def hd1910_burst_push(env, env_ids, stages, calm_interval=(2.5,5.)):
+    """Add velocity increments, prioritizing forward/backward, with short bursts."""
+    _hd1910_push_state(env)
+    ids=env_ids[env._hd1910_next_push[env_ids] <= env.common_step_counter]
+    if ids.numel()==0:
+        return
+    maximum=stages[0][1]
+    for step,value in stages:
+        if env.common_step_counter >= step:
+            maximum=value
+    robot=env.scene["robot"]
+    new=env._hd1910_burst_left[ids]==0
+    new_ids=ids[new]
+    n=len(new_ids)
+    if n:
+        # 60% sagittal, 30% lateral, 10% arbitrary horizontal heading.
+        bucket=torch.rand(n,device=env.device)
+        sign=torch.where(torch.rand(n,device=env.device)<.5,-1.,1.)
+        angle=torch.rand(n,device=env.device)*2*math.pi
+        direction=torch.stack((torch.cos(angle),torch.sin(angle)),dim=-1)
+        direction[bucket<.6,0]=sign[bucket<.6];direction[bucket<.6,1]=0
+        side=(bucket>=.6)&(bucket<.9)
+        direction[side,0]=0;direction[side,1]=sign[side]
+        env._hd1910_burst_direction[new_ids]=direction
+        env._hd1910_burst_left[new_ids]=torch.where(torch.rand(n,device=env.device)<.6,
+            torch.randint(2,5,(n,),device=env.device),torch.ones(n,device=env.device,dtype=torch.long))
+    strength=.08+torch.rand(len(ids),device=env.device)*(maximum-.08)
+    direction=env._hd1910_burst_direction[ids]
+    # Heading only, matching the local viewer. Quaternions are wxyz.
+    q=robot.data.root_link_quat_w[ids]
+    yaw=torch.atan2(2*(q[:,0]*q[:,3]+q[:,1]*q[:,2]),1-2*(q[:,2].square()+q[:,3].square()))
+    c,s=torch.cos(yaw),torch.sin(yaw)
+    delta=torch.stack((c*direction[:,0]-s*direction[:,1],s*direction[:,0]+c*direction[:,1]),dim=-1)*strength[:,None]
+    velocity=robot.data.root_link_vel_w[ids].clone()
+    velocity[:,:2]+=delta
+    robot.write_root_link_velocity_to_sim(velocity,env_ids=ids)
+    env._hd1910_last_push[ids]=env.common_step_counter
+    env._hd1910_burst_left[ids]-=1
+    in_burst=env._hd1910_burst_left[ids]>0
+    spacing=torch.where(in_burst,torch.rand(len(ids),device=env.device)*.5+.3,
+                        torch.rand(len(ids),device=env.device)*(calm_interval[1]-calm_interval[0])+calm_interval[0])
+    env._hd1910_next_push[ids]=env.common_step_counter+(spacing/env.step_dt).long()
+
+
+def hd1910_recovery_pose_factor(env):
+    """External-push grace, not a reward loophole the policy can self-trigger."""
+    _hd1910_push_state(env)
+    recent=(env.common_step_counter-env._hd1910_last_push)*env.step_dt<2.
+    return torch.where(recent,.1,1.)
+
+
+def hd1910_recovery_pose_cost(env):
+    return hd1910_leg_pose_cost(env)*hd1910_recovery_pose_factor(env)
+
+
+def hd1910_quiet_pose(env):
+    robot=env.scene["robot"]
+    upright=(-robot.data.projected_gravity_b[:,2]).clamp(0.,1.)
+    return torch.exp(-hd1910_leg_pose_error(env).square().mean(-1))*hd1910_recovery_pose_factor(env)*upright.square()
+
+
+def hd1910_recovery_balance(env, nominal_height):
+    robot=env.scene["robot"]
+    height=robot.data.root_link_pos_w[:,2]-env.scene.env_origins[:,2]
+    upright=(-robot.data.projected_gravity_b[:,2]).clamp(0.,1.)
+    speed=robot.data.root_link_lin_vel_w[:,:2].square().sum(-1)
+    return upright.square()*torch.exp(-((height-nominal_height)/.035).square())*torch.exp(-speed/.25)
+
+
+def hd1910_reset_settle_schedule(env, env_ids):
+    hd1910_reset_push_schedule(env,env_ids)
+    if env_ids is None:
+        env_ids=torch.arange(env.num_envs,device=env.device)
+    idle=torch.rand(len(env_ids),device=env.device)<.3
+    # 30% whole episodes are undisturbed, not just brief gaps between pushes.
+    env._hd1910_next_push[env_ids[idle]]=env.common_step_counter+1000000000
+
+
+def hd1910_head_home_error(env):
+    robot=env.scene["robot"]
+    ids=_servo_joint_ids(env,robot)
+    head=[i for i,j in enumerate(ids) if robot.joint_names[j].startswith(("neck_","head_"))]
+    delta=(_servo_joint_pos(env,robot)-robot.data.default_joint_pos[:,ids])[:,head]
+    return delta-env.command_manager.get_command("head_pose")
+
+
+def hd1910_settle_head_cost(env):
+    # Head may counterbalance during recovery, but must return afterwards.
+    factor=hd1910_recovery_pose_factor(env)
+    return hd1910_head_home_error(env).abs().mean(-1)/.2*(.2+.8*factor)
+
+
+def hd1910_settle_head_target_cost(env):
+    # Actual joint error saturates at mechanical stops. Score raw targets too
+    # so the policy cannot hide a huge head command behind a small joint range.
+    robot=env.scene["robot"]
+    ids=_servo_joint_ids(env,robot)
+    head=[i for i,j in enumerate(ids) if robot.joint_names[j].startswith(("neck_","head_"))]
+    error=env.action_manager.action[:,head]-env.command_manager.get_command("head_pose")
+    factor=hd1910_recovery_pose_factor(env)
+    return error.square().mean(-1)/(.2**2)*(.2+.8*factor)
+
+
+def hd1910_walk_idle_home(env, nominal_height):
+    idle=env.command_manager.get_command('twist').norm(dim=-1)<.01
+    return idle*hd1910_standing_composite(env,nominal_height,height_std=.025)
+
+
+def hd1910_settle_motion_cost(env):
+    robot=env.scene["robot"]
+    quiet=(hd1910_recovery_pose_factor(env)-.1)/.9
+    angular=robot.data.root_link_ang_vel_b.square().sum(-1)
+    joints=_servo_joint_vel(env,robot).square().mean(-1)
+    linear=robot.data.root_link_lin_vel_w.square().sum(-1)
+    target_change=(env.action_manager.action-env.action_manager.prev_action).abs().mean(-1)
+    return quiet*(angular+.25*joints+2*linear+2*target_change)
+
+
+def hd1910_settle_balance(env, nominal_height):
+    robot=env.scene["robot"]
+    quiet=(hd1910_recovery_pose_factor(env)-.1)/.9
+    head=torch.exp(-(hd1910_head_home_error(env)/.15).square().mean(-1))
+    legs=torch.exp(-hd1910_leg_pose_error(env).square().mean(-1))
+    still=torch.exp(-robot.data.root_link_ang_vel_b.square().sum(-1)/.16
+                    -_servo_joint_vel(env,robot).square().mean(-1)/.09)
+    # Strong task reward requires both posture and settling in calm periods.
+    # During the external push window the original balance objective remains.
+    return hd1910_recovery_balance(env,nominal_height)*((1-quiet)+quiet*head*legs*still)
