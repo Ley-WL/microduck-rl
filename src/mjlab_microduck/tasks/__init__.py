@@ -419,3 +419,6 @@ for _name,_penalty in [('Control',False),('Repair',True)]:
 from .microduck_hd1910_sit_pitch_env_cfg import SitPitchFixedRlCfg
 for _name,_penalty in [('Control',False),('Repair',True)]:
     register_mjlab_task(task_id='Mjlab-SitPitchFixed'+_name+'-Flat-MicroDuck-HD1910',env_cfg=make_sit_pitch_env_cfg(penalty=_penalty),play_env_cfg=make_sit_pitch_env_cfg(play=True,penalty=_penalty),rl_cfg=SitPitchFixedRlCfg,runner_cls=MicroduckOnPolicyRunner)
+from .microduck_roulade_mechanical_env_cfg import make_roll_transfer_cfg,RollTransferRlCfg
+for _name,_repair in [('Control',False),('Repair',True)]:
+    register_mjlab_task(task_id='Mjlab-RouladeTransfer'+_name+'-Flat-MicroDuck',env_cfg=make_roll_transfer_cfg(repair=_repair),play_env_cfg=make_roll_transfer_cfg(play=True,repair=_repair),rl_cfg=RollTransferRlCfg,runner_cls=MicroduckOnPolicyRunner)
