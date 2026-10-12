@@ -287,6 +287,15 @@ def evaluate(args):
     options.intra_op_num_threads = options.inter_op_num_threads = 1
     session = ort.InferenceSession(str(args.onnx), sess_options=options, providers=['CPUExecutionProvider'])
     assert session.get_inputs()[0].shape == [1, 61] and session.get_outputs()[0].shape == [1, 14]
+    walk_session=None
+    if getattr(args,'walk_onnx',None):
+        if kind!='sitstand':raise ValueError('Walk handoff requires sitstand')
+        walk_meta=json.loads(args.walk_onnx.with_suffix('.metadata.json').read_text())
+        assert hashlib.sha256(args.walk_onnx.read_bytes()).hexdigest()==walk_meta['policySha256']
+        assert walk_meta['jointOrder']==names
+        np.testing.assert_allclose(walk_meta['homeRadians'],home,atol=1e-6,rtol=0)
+        walk_profile=walk_meta['walkExecution']
+        walk_session=ort.InferenceSession(str(args.walk_onnx),sess_options=options,providers=['CPUExecutionProvider'])
     args.output.mkdir(parents=True, exist_ok=True)
     groups = []
     for seed in args.seeds:
@@ -325,6 +334,8 @@ def evaluate(args):
                 initial_qpos=data.qpos.copy()
                 previous = filtered = np.zeros(14)
                 previous_sit = None
+                standing_begin=0
+                walk_active=False
                 transition_begin = None
                 stress_impulses = []
                 next_impulse_tick = None
@@ -348,11 +359,13 @@ def evaluate(args):
                         if previous_sit is not None and sit != previous_sit:
                             transition_begin = tick
                             next_impulse_tick = tick
+                            standing_begin=tick if not sit else None
                             if history_mode == 'reset':
                                 previous, filtered = np.zeros(14), np.zeros(14)
                             elif history_mode == 'pose':
                                 previous, filtered = np.zeros(14), data.qpos[qadr].copy()-home
                         previous_sit = sit
+                        walk_active=bool(walk_session and not sit and (tick-standing_begin)*.02>=args.stand_handoff_seconds-1e-8)
                         if kind=='getup' and tick==50:
                             # An independent recovery stress window, 1.0-1.8s;
                             # all baseline initial states and random draws match.
@@ -365,7 +378,7 @@ def evaluate(args):
                             stress_impulses.append({'time':time,'pitchVelocityImpulseRadS':impulse})
                             next_impulse_tick=tick+int(stress_rng.integers(6,11))
                         body_gyro, gravity = root_body_imu_observation(model, data, trunk)
-                        if args.profile == 'runtime':
+                        if args.profile == 'runtime' and not getattr(args,'native_sensors',False):
                             velocity = observation_filter(velocity, data.qvel[vadr], args.joint_velocity_old_weight)
                             gyro = observation_filter(gyro, body_gyro, args.gyro_old_weight)
                         else:
@@ -374,15 +387,23 @@ def evaluate(args):
                         if kind == 'sitstand':
                             commands[0] = float(sit)
                         observed_velocity = velocity_delay.update(velocity)
+                        if getattr(args,'native_sensors',False):
+                            observed_velocity=velocity.copy() if tick==0 else native_previous_velocity.copy()
+                            native_previous_velocity=velocity.copy()
+                        if walk_active:commands[:]=0.
                         observation = np.concatenate([gyro, gravity, data.qpos[qadr]-home, observed_velocity, previous, commands]).astype(np.float32)
                         if not np.isfinite(observation).all():
                             finite = False
                             break
-                        action = session.run(None, {session.get_inputs()[0].name: observation[None]})[0][0]
+                        active_session=walk_session if walk_active else session
+                        action = active_session.run(None, {active_session.get_inputs()[0].name: observation[None]})[0][0]
                         if not np.isfinite(action).all():
                             finite = False
                             break
-                        filtered = action_ema*filtered+(1-action_ema)*action
+                        if walk_active:
+                            weights=np.full(14,float(walk_profile['legsNewWeight']));weights[5:9]=float(walk_profile['headNewWeight'])
+                            filtered=(1-weights)*filtered+weights*float(walk_profile['actionScale'])*action
+                        else:filtered = action_ema*filtered+(1-action_ema)*action
                         previous = action.copy()
                         target = home+filtered
                         target = _contract.encode_target(target)
@@ -391,6 +412,7 @@ def evaluate(args):
                             target = np.clip(target, hard[:, 0], hard[:, 1])
                         if getattr(args, 'capture_policy_frames', False) or kind in ('sitstand','getup'):
                             policy_frames.append({'time':time, 'sit':bool(sit), 'observation':observation.tolist(),
+                                                  'activeActor':'walk' if walk_active else 'sitstand',
                                                   'rawAction':action.tolist(), 'filteredAction':filtered.tolist(),
                                                   'target':target.tolist(), 'position':data.qpos[qadr].tolist()})
                         head_contact_peak=0.
@@ -409,7 +431,7 @@ def evaluate(args):
                         xy_speed, angular_speed = float(np.linalg.norm(data.qvel[:2])), float(np.linalg.norm(data.qvel[3:6]))
                         leg_error = float(np.mean(np.abs(data.qpos[qadr][legs]-(seated if sit else home)[legs])))
                         stable = tilt < 20. and abs(height-heights[int(sit)]) < .012 and xy_speed < .2 and angular_speed < 2. and leg_error < .25
-                        trace.append({'time': time, 'sit': sit, 'tiltDeg': tilt, 'heightM': height, 'xySpeed': xy_speed, 'angularSpeed': angular_speed, 'legError': leg_error, 'stable': stable, 'contacts': int(data.ncon),'headGroundForcePeakN':head_contact_peak})
+                        trace.append({'time': time, 'sit': sit, 'activeActor':'walk' if walk_active else 'sitstand', 'tiltDeg': tilt, 'heightM': height, 'xySpeed': xy_speed, 'angularSpeed': angular_speed, 'legError': leg_error, 'stable': stable, 'contacts': int(data.ncon),'headGroundForcePeakN':head_contact_peak})
                         qpositions.append(data.qpos.copy())
                         if writer and tick % 2 == 0:
                             camera.lookat[:] = data.xpos[trunk]
@@ -422,6 +444,7 @@ def evaluate(args):
                 success, fractions = trial_success(trace, segments, kind, finite)
                 result = {'scenario': scenario, 'seed': seed, 'trial': trial, 'success': success, 'finite': finite, 'stableFractions': fractions, 'resetCount': 0}
                 result['initialQpos']=initial_qpos.tolist()
+                result['handoffDiagnostic']={'walkPolicySha256':walk_meta['policySha256'] if walk_session else None,'standingSecondsBeforeWalk':getattr(args,'stand_handoff_seconds',None),'nativeSensors':getattr(args,'native_sensors',False),'hardwareGainParity':False}
                 if kind == 'sitstand':
                     result['transitionSmoothness'] = transition_smoothness(policy_frames, names)
                     result['transitionStressImpulses'] = stress_impulses
@@ -450,8 +473,10 @@ def evaluate(args):
                            'independentTrialFrictionReset':True,
                            'frictionConstraintRevision':_controller_module.FRICTION_CONSTRAINT_REVISION,
                            'initialSettleSeconds': args.settle_seconds,
-                           'jointVelocityFilterOldWeight': args.joint_velocity_old_weight if args.profile == 'runtime' else 0.,
-                           'gyroFilterOldWeight': args.gyro_old_weight if args.profile == 'runtime' else 0.,
+                           'jointVelocityFilterOldWeight': args.joint_velocity_old_weight if args.profile == 'runtime' and not getattr(args,'native_sensors',False) else 0.,
+                           'gyroFilterOldWeight': args.gyro_old_weight if args.profile == 'runtime' and not getattr(args,'native_sensors',False) else 0.,
+                           'nativeSensorReplay':getattr(args,'native_sensors',False),
+                           'walkHandoffDiagnostic':bool(walk_session),
                            'imuAngularFrame': 'root-body-frame-freejoint-qvel',
                            'diagnosticContactRepair': args.contact_repair,
                            'contactSelectionRevision': 'v2-assembled-with-two-unnamed-leg-meshes',
@@ -460,6 +485,7 @@ def evaluate(args):
                        'groups': groups, 'scopeComplete': len(groups) == len(scenarios)*len(args.seeds),
                        'accepted': len(groups) == len(scenarios)*len(args.seeds) and args.trials >= 200 and len(set(args.seeds)) >= 2
                                    and not args.contact_repair
+                                   and not walk_session and not getattr(args,'native_sensors',False)
                                    and metadata.get('skillPhysicsRevision') in ('body-ground-collision-selection-v2','sit-self-contact-bounded-target-v3')
                                    and metadata.get('assembledBodyGroundContactMeshes') == 68
                                    and args.profile == 'runtime' and args.joint_velocity_lag_steps == 0
@@ -500,6 +526,9 @@ if __name__ == '__main__':
     p.add_argument('--gyro-old-weight', type=float, default=.25,
                    help='Diagnostic gyro filter; altered weights cannot count as runtime acceptance')
     p.add_argument('--video', action='store_true')
+    p.add_argument('--walk-onnx',type=Path,help='Diagnostic standing-to-walk handoff; never a hardware command')
+    p.add_argument('--stand-handoff-seconds',type=float,default=1.)
+    p.add_argument('--native-sensors',action='store_true',help='Raw gyro and previous measured joint velocity, first sample current')
     p.add_argument('--contact-repair', action='store_true',
                    help='Diagnostic candidate self contact + XML target clamp; cannot count as old-model acceptance')
     evaluate(p.parse_args())
