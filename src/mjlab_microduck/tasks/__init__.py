@@ -410,3 +410,6 @@ register_mjlab_task(
     rl_cfg=HD1910SettleRlCfg,
     runner_cls=MicroduckOnPolicyRunner,
 )
+from .microduck_hd1910_sit_head_env_cfg import make_sit_head_env_cfg,SitHeadRlCfg
+for _name,_penalty in [('Control',False),('Repair',True)]:
+    register_mjlab_task(task_id='Mjlab-SitHead'+_name+'-Flat-MicroDuck-HD1910',env_cfg=make_sit_head_env_cfg(penalty=_penalty),play_env_cfg=make_sit_head_env_cfg(play=True,penalty=_penalty),rl_cfg=SitHeadRlCfg,runner_cls=MicroduckOnPolicyRunner)
