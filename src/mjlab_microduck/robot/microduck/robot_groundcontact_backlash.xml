@@ -122,7 +122,7 @@
       <!-- Link yaw2roll -->
       <body name="yaw2roll" pos="0.006 0.0175 -0.005" quat="0 -0.707107 -0.707107 -0">
         <!-- Joint from trunk_base to yaw2roll -->
-        <joint axis="0 0 1" name="left_hip_yaw" type="hinge" range="-0.4363323129985824 0.5235987755982988" class="chosen_actuator"/>
+        <joint axis="0 0 1" name="left_hip_yaw" type="hinge" range="-0.22 0.45" class="chosen_actuator"/>
         <joint axis="0 0 1" name="passive_left_hip_yaw_backlash" type="hinge" class="backlash"/>
         <inertial pos="-8.8e-11 0.00099414 0.0168917" mass="0.0230406" fullinertia="4.1964e-06 3.41752e-06 2.3265e-06 -0 -0 -5.0881e-08"/>
         <!-- Part yaw2roll -->
@@ -136,7 +136,7 @@
         <!-- Link hip_l -->
         <body name="hip_l" pos="0 0.0165 0.0125" quat="0.707107 -0.707107 0 -0">
           <!-- Joint from yaw2roll to hip_l -->
-          <joint axis="0 0 1" name="left_hip_roll" type="hinge" range="-0.3839724354386992 0.38397243543880577" class="chosen_actuator"/>
+          <joint axis="0 0 1" name="left_hip_roll" type="hinge" range="-0.3839724354387525 0.3839724354387525" class="chosen_actuator"/>
           <joint axis="0 0 1" name="passive_left_hip_roll_backlash" type="hinge" class="backlash"/>
           <inertial pos="0.014815 1.6179e-08 -0.00829992" mass="0.00618934" fullinertia="8.60626e-07 1.15753e-06 6.51588e-07 1e-12 3.89882e-07 -1e-12"/>
           <!-- Part seeed_bearing__configuration__22x16x4_4 -->
@@ -147,7 +147,7 @@
           <!-- Link upper_leg_left -->
           <body name="upper_leg_left" pos="0.025 0 -0.0185" quat="0.5 -0.5 0.5 -0.5">
             <!-- Joint from hip_l to upper_leg_left -->
-            <joint axis="0 0 1" name="left_hip_pitch" type="hinge" range="-1.570796326794949 1.5707963267948442" class="chosen_actuator"/>
+            <joint axis="0 0 1" name="left_hip_pitch" type="hinge" range="-1.570796326795005 1.5707963267947882" class="chosen_actuator"/>
             <joint axis="0 0 1" name="passive_left_hip_pitch_backlash" type="hinge" class="backlash"/>
             <inertial pos="0.006766 0.0228838 0.0134531" mass="0.0482067" fullinertia="1.68753e-05 1.03691e-05 1.98269e-05 -4.41852e-06 2.27982e-07 3.89298e-07"/>
             <!-- Part upper_leg_left -->
@@ -163,7 +163,7 @@
             <!-- Link leg -->
             <body name="leg" pos="0.022 0.0357771 -0.004" quat="0 0.707107 0.707107 0">
               <!-- Joint from upper_leg_left to leg -->
-              <joint axis="0 0 1" name="left_knee" type="hinge" range="-1.5707963267948983 1.5707963267948948" class="chosen_actuator"/>
+              <joint axis="0 0 1" name="left_knee" type="hinge" range="-1.570796326795012 1.570796326794781" class="chosen_actuator"/>
               <joint axis="0 0 1" name="passive_left_knee_backlash" type="hinge" class="backlash"/>
               <inertial pos="-1.52e-10 0.0318937 -0.00953505" mass="0.0215844" fullinertia="5.25056e-06 2.15507e-06 4.33925e-06 -1e-12 0 7.65005e-07"/>
               <!-- Part leg -->
@@ -174,7 +174,7 @@
               <!-- Link ankle_left -->
               <body name="ankle_left" pos="-0 0.042 -0.026" quat="0 -1 -0 0">
                 <!-- Joint from leg to ankle_left -->
-                <joint axis="0 0 1" name="left_ankle" type="hinge" range="-1.5707963267949063 1.5707963267948868" class="chosen_actuator"/>
+                <joint axis="0 0 1" name="left_ankle" type="hinge" range="-1.5707963267949019 1.5707963267948912" class="chosen_actuator"/>
                 <joint axis="0 0 1" name="passive_left_ankle_backlash" type="hinge" class="backlash"/>
                 <inertial pos="-0.00615742 -0.0137483 -0.0156585" mass="0.0300246" fullinertia="5.91525e-06 1.11534e-05 7.74016e-06 -2.05354e-07 8.218e-08 5.6722e-08"/>
                 <!-- Part sole_left -->
@@ -196,7 +196,7 @@
       <!-- Link neck -->
       <body name="neck" pos="0.026 0.0145 0.0324215" quat="0 0 0.707107 -0.707107">
         <!-- Joint from trunk_base to neck -->
-        <joint axis="0 0 1" name="neck_pitch" type="hinge" range="-1.5707963267948974 1.0471975511965967" class="chosen_actuator"/>
+        <joint axis="0 0 1" name="neck_pitch" type="hinge" range="-2.356194490192345 1.0471975511965976" class="chosen_actuator"/>
         <joint axis="0 0 1" name="passive_neck_pitch_backlash" type="hinge" class="backlash"/>
         <inertial pos="-0 -0.025 0.0141665" mass="0.0368414" fullinertia="1.72925e-05 3.12694e-06 1.63707e-05 -0 0 -0"/>
         <!-- Part neck -->
@@ -210,7 +210,7 @@
         <!-- Link neck_pitch -->
         <body name="neck_pitch" pos="-0 -0.05 0" quat="0 1 -0 -0">
           <!-- Joint from neck to neck_pitch -->
-          <joint axis="0 0 1" name="head_pitch" type="hinge" range="-1.5707963267948966 1.5707963267948966" class="chosen_actuator"/>
+          <joint axis="0 0 1" name="head_pitch" type="hinge" range="-1.8325957145940461 1.8325957145940461" class="chosen_actuator"/>
           <joint axis="0 0 1" name="passive_head_pitch_backlash" type="hinge" class="backlash"/>
           <inertial pos="-6.533e-09 0.0116641 -0.0145" mass="0.00572" fullinertia="1.09186e-06 9.66855e-07 5.12111e-07 0 0 0"/>
           <!-- Part neck_pitch -->
@@ -220,7 +220,7 @@
           <!-- Link yaw_roll_motion -->
           <body name="yaw_roll_motion" pos="-0 0.0186931 -0.0145" quat="0 -0 -0.707107 -0.707107">
             <!-- Joint from neck_pitch to yaw_roll_motion -->
-            <joint axis="0 0 1" name="head_yaw" type="hinge" range="-2.9670597283903613 2.9670597283903595" class="chosen_actuator"/>
+            <joint axis="0 0 1" name="head_yaw" type="hinge" range="-2.967059728390373 2.967059728390348" class="chosen_actuator"/>
             <joint axis="0 0 1" name="passive_head_yaw_backlash" type="hinge" class="backlash"/>
             <inertial pos="-0.000166657 -0.00500964 0.0178065" mass="0.0486" fullinertia="6.97903e-06 8.10293e-06 9.57884e-06 3.21657e-07 -3.4797e-08 3.4295e-07"/>
             <!-- Part yaw_roll_motion -->
@@ -234,7 +234,7 @@
             <!-- Link jaw_soft -->
             <body name="jaw_soft" pos="-0.0179 0 0.0145" quat="0.707107 0 -0.707107 -0">
               <!-- Joint from yaw_roll_motion to jaw_soft -->
-              <joint axis="0 0 1" name="head_roll" type="hinge" range="-0.43633231299858327 0.4363323129985815" class="chosen_actuator"/>
+              <joint axis="0 0 1" name="head_roll" type="hinge" range="-0.43633231299859127 0.4363323129985735" class="chosen_actuator"/>
               <joint axis="0 0 1" name="passive_head_roll_backlash" type="hinge" class="backlash"/>
               <inertial pos="0.00460523 0.00120047 -0.0324761" mass="0.188766" fullinertia="0.000320811 0.0002541 0.000149882 -6.32293e-07 6.57153e-06 4.18477e-06"/>
               <!-- Part lens -->
@@ -288,7 +288,7 @@
       <!-- Link bearing_roll -->
       <body name="bearing_roll" pos="0.006 -0.0175 -0.005" quat="0 -0.707107 -0.707107 0">
         <!-- Joint from trunk_base to bearing_roll -->
-        <joint axis="0 0 1" name="right_hip_yaw" type="hinge" range="-0.523598775598297 0.43633231299858416" class="chosen_actuator"/>
+        <joint axis="0 0 1" name="right_hip_yaw" type="hinge" range="-0.45 0.22" class="chosen_actuator"/>
         <joint axis="0 0 1" name="passive_right_hip_yaw_backlash" type="hinge" class="backlash"/>
         <inertial pos="-8.8e-11 0.00099414 0.0168917" mass="0.0230406" fullinertia="4.1964e-06 3.41752e-06 2.3265e-06 -0 -0 -5.0881e-08"/>
         <!-- Part yaw2roll_2 -->
@@ -302,7 +302,7 @@
         <!-- Link hip_l_2 -->
         <body name="hip_l_2" pos="-0 0.0165 0.0125" quat="0 0 0.707107 0.707107">
           <!-- Joint from bearing_roll to hip_l_2 -->
-          <joint axis="0 0 1" name="right_hip_roll" type="hinge" range="-0.3839724354387507 0.38397243543875426" class="chosen_actuator"/>
+          <joint axis="0 0 1" name="right_hip_roll" type="hinge" range="-0.3839724354387525 0.3839724354387525" class="chosen_actuator"/>
           <joint axis="0 0 1" name="passive_right_hip_roll_backlash" type="hinge" class="backlash"/>
           <inertial pos="0.014815 1.6212e-08 -0.00829992" mass="0.00618934" fullinertia="8.60626e-07 1.15753e-06 6.51588e-07 1e-12 3.89882e-07 -1e-12"/>
           <!-- Part hip_l_2 -->
@@ -313,7 +313,7 @@
           <!-- Link upper_leg_right -->
           <body name="upper_leg_right" pos="0.025 0 -0.0185" quat="0.5 -0.5 0.5 -0.5">
             <!-- Joint from hip_l_2 to upper_leg_right -->
-            <joint axis="0 0 1" name="right_hip_pitch" type="hinge" range="-1.57079632679494 1.570796326794853" class="chosen_actuator"/>
+            <joint axis="0 0 1" name="right_hip_pitch" type="hinge" range="-1.5707963267949268 1.5707963267948664" class="chosen_actuator"/>
             <joint axis="0 0 1" name="passive_right_hip_pitch_backlash" type="hinge" class="backlash"/>
             <inertial pos="-0.006766 0.0228838 0.0134531" mass="0.0482067" fullinertia="1.68753e-05 1.03691e-05 1.98269e-05 4.41852e-06 -2.27982e-07 3.89298e-07"/>
             <!-- Part xl330_13 -->
@@ -329,7 +329,7 @@
             <!-- Link leg_2 -->
             <body name="leg_2" pos="-0.022 0.0357771 -0.004" quat="0 1 -0 -0">
               <!-- Joint from upper_leg_right to leg_2 -->
-              <joint axis="0 0 1" name="right_knee" type="hinge" range="-1.5707963267949339 1.5707963267948593" class="chosen_actuator"/>
+              <joint axis="0 0 1" name="right_knee" type="hinge" range="-1.570796326794932 1.570796326794861" class="chosen_actuator"/>
               <joint axis="0 0 1" name="passive_right_knee_backlash" type="hinge" class="backlash"/>
               <inertial pos="-0.0318937 -1.52e-10 -0.00953505" mass="0.0215844" fullinertia="2.15507e-06 5.25056e-06 4.33925e-06 1e-12 -7.65005e-07 0"/>
               <!-- Part xl330_15 -->
@@ -340,7 +340,7 @@
               <!-- Link ankle_right -->
               <body name="ankle_right" pos="-0.042 0 -0.026" quat="0 -0.707107 -0.707107 0">
                 <!-- Joint from leg_2 to ankle_right -->
-                <joint axis="0 0 1" name="right_ankle" type="hinge" range="-1.5707963267949028 1.5707963267948903" class="chosen_actuator"/>
+                <joint axis="0 0 1" name="right_ankle" type="hinge" range="-1.5707963267949054 1.5707963267948877" class="chosen_actuator"/>
                 <joint axis="0 0 1" name="passive_right_ankle_backlash" type="hinge" class="backlash"/>
                 <inertial pos="0.00615539 -0.0137482 -0.0156566" mass="0.0300251" fullinertia="5.91534e-06 1.11534e-05 7.74015e-06 2.04877e-07 -8.2467e-08 5.7017e-08"/>
                 <!-- Part ankle_right -->

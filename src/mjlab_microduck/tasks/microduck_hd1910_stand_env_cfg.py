@@ -11,6 +11,7 @@ from mjlab_microduck.actuator.feetech_bam import FeetechBamActuatorCfg
 from mjlab_microduck.robot.microduck_constants import HOME_FRAME
 from .microduck_velocity_env_cfg import make_microduck_velocity_env_cfg, MicroduckRlCfg
 from . import mdp
+from .xgoduck_runtime_actions import XgoDuckPositionActionCfg
 
 ROBOT_DIR = Path(__file__).resolve().parents[1] / "robot" / "replica"
 PARAMS = ROBOT_DIR.parent / "hd1910" / "1910_m6.json"
@@ -47,11 +48,12 @@ STAND_HEIGHT = nominal_stand_height()
 
 def make_hd1910_stand_env_cfg(play=False):
     cfg = deepcopy(make_microduck_velocity_env_cfg(play=play))
+    cfg.actions["joint_pos"] = XgoDuckPositionActionCfg(**vars(cfg.actions["joint_pos"]), alpha=0.45)
     robot = cfg.scene.entities["robot"]
     robot.spec_fn = get_replica_spec
     robot.articulation.actuators = (FeetechBamActuatorCfg(
         json_path=str(PARAMS), target_names_expr=(r"^(?!passive_).*",),
-        kp_fw=5.0, vin_range=(6.5, 8.4), vin_drop_gain_range=(0.0, 0.2),
+        kp_fw=5.0, vin_range=(7.4, 8.0), vin_drop_gain_range=(0.0, 0.2),
         vin_min=4.0, delay_min_lag=3, delay_max_lag=6,
     ),)
     # Keep all 61 observation slots; tiny nonzero samples keep command weights alive.
@@ -64,6 +66,11 @@ def make_hd1910_stand_env_cfg(play=False):
     for command in ("head_pose", "body_pose"):
         c = cfg.commands[command]
         c.ranges = tuple((-0.005, 0.005) for _ in c.ranges)
+    # XgoDuck-matched observation uncertainty; keep this robot's geometry/HOME.
+    cfg.events["foot_friction"].params["ranges"] = (0.4, 1.5)
+    for name, magnitude in (("base_ang_vel", .06), ("projected_gravity", .03), ("joint_pos", .01)):
+        noise = cfg.observations["actor"].terms[name].noise
+        noise.n_min, noise.n_max = -magnitude, magnitude
     # Stand-hold starts upright, with small deviations; no lying-down recovery.
     cfg.events["reset_base"].params = {
         "pose_range": {"x": (-0.03, 0.03), "y": (-0.03, 0.03),

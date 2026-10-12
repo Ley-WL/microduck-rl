@@ -12,6 +12,7 @@
         "allcollisions_contacts.xml"
     ],
     "post_import_commands": [
+        "python3 ../apply_xgoduck_limits.py robot_allcollisions.xml",
         "sed -i 's/body name=\"trunk_base\" pos=\"[^\"]*\"/body name=\"trunk_base\" pos=\"0 0 0.12\"/' robot_allcollisions.xml",
         "sed -i '/<!-- Part sole_left -->/{n; n; s/class=\"collision\"/name=\"left_foot_collision\" class=\"collision\"/}' robot_allcollisions.xml",
         "sed -i '/<!-- Part sole_right -->/{n; n; s/class=\"collision\"/name=\"right_foot_collision\" class=\"collision\"/}' robot_allcollisions.xml",

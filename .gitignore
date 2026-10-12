@@ -40,3 +40,4 @@ logdir/
 logdir/.claude/worktrees/
 
 .venv-preview/
+.local/

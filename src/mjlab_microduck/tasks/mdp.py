@@ -123,6 +123,13 @@ print("[mdp] Patch 4 active: ONNX export filters passive_* joints")
 # normalizers and optimizer are kept). Forwarded into HF Jobs by hf_jobs.py.
 WARM_START_ENV = "MICRODUCK_WARM_START"
 
+def _restore_fixed_warm_start_lr(algorithm):
+    # Adam's checkpoint contains the old param-group LR. Preserve its moments,
+    # but a new fixed schedule must actually use the requested learning rate.
+    if getattr(algorithm,'schedule',None)=='fixed':
+        for group in algorithm.optimizer.param_groups:
+            group['lr']=algorithm.learning_rate
+
 try:
     from mjlab.rl.runner import MjlabOnPolicyRunner as _MjlabRunner  # noqa: E402
 
@@ -131,6 +138,7 @@ try:
     def _load_with_warm_start(self, path, *args, **kwargs):
         infos = _orig_runner_load(self, path, *args, **kwargs)
         if os.environ.get(WARM_START_ENV, "") not in ("", "0"):
+            _restore_fixed_warm_start_lr(self.alg)
             restored = self.env.unwrapped.common_step_counter
             self.env.unwrapped.common_step_counter = 0
             self.current_learning_iteration = 0
@@ -150,6 +158,55 @@ if TYPE_CHECKING:
 
 
 _DEFAULT_ASSET_CFG = SceneEntityCfg("robot")
+
+
+def hd1910_transition_pitch_kick(env, env_ids, magnitude=(.7,1.6), probability=.25, window_s=.8):
+    """Physical transition disturbances; hypotheses, not identified servo gains.
+
+    Change world angular velocity along local pitch. Gravity/positions evolve
+    through physics and actor noise/delay remain in their normal pipeline.
+    """
+    if env_ids is None:
+        env_ids=torch.arange(env.num_envs,device=env.device)
+    if not hasattr(env,'_sit_transfer_command'):
+        env._sit_transfer_command=env.command_manager.get_command('twist')[:,0].clone()
+        env._sit_transfer_edge_tick=env.episode_length_buf.clone()-100000
+        env._sit_transfer_kick_count=torch.zeros(env.num_envs,device=env.device,dtype=torch.long)
+    flags=env.command_manager.get_command('twist')[:,0]
+    fresh=env.episode_length_buf[env_ids]<=1
+    changed=flags[env_ids]!=env._sit_transfer_command[env_ids]
+    # Startup is not a command transition. Reset bookkeeping independently.
+    env._sit_transfer_edge_tick[env_ids[fresh]]=env.episode_length_buf[env_ids[fresh]]-100000
+    edges=env_ids[changed & ~fresh]
+    env._sit_transfer_edge_tick[edges]=env.episode_length_buf[edges]
+    env._sit_transfer_command[env_ids]=flags[env_ids]
+    elapsed=(env.episode_length_buf[env_ids]-env._sit_transfer_edge_tick[env_ids])*env.step_dt
+    selected=env_ids[(elapsed>=0)&(elapsed<window_s)&(torch.rand(len(env_ids),device=env.device)<probability)]
+    if not len(selected):return
+    env._sit_transfer_kick_count[selected]+=1
+    robot=env.scene['robot']
+    delta=torch.zeros((len(selected),3),device=env.device)
+    amplitude=torch.rand(len(selected),device=env.device)*(magnitude[1]-magnitude[0])+magnitude[0]
+    sign=torch.where(torch.rand(len(selected),device=env.device)<.5,-1.,1.)
+    delta[:,1]=amplitude*sign
+    world_delta=quat_apply(robot.data.root_link_quat_w[selected],delta)
+    velocity=torch.cat([robot.data.root_link_lin_vel_w[selected],robot.data.root_link_ang_vel_w[selected]+world_delta],dim=-1)
+    robot.write_root_link_velocity_to_sim(velocity,env_ids=selected)
+
+
+def hd1910_target_acceleration_cost(env):
+    """Nonnegative EMA-target acceleration cost; reset cannot pay stale history."""
+    target=env.action_manager.get_term('joint_pos').position_target
+    if not hasattr(env,'_sit_target_last'):
+        env._sit_target_last=target.detach().clone()
+        env._sit_target_delta=torch.zeros_like(target)
+    delta=target-env._sit_target_last
+    acceleration=delta-env._sit_target_delta
+    cost=acceleration.square().sum(dim=1)
+    cost=torch.where(env.episode_length_buf<=1,torch.zeros_like(cost),cost)
+    env._sit_target_last=target.detach().clone()
+    env._sit_target_delta=torch.where((env.episode_length_buf<=1)[:,None],torch.zeros_like(delta),delta).detach().clone()
+    return cost
 
 # Name patterns matching the 4 neck/head actuated joints. Used by head_pose
 # tracking reward and by UniformPoseCommand asset hookups.
@@ -4310,6 +4367,61 @@ def set_random_prone_orientation(
     env.sim.data.qvel[env_ids, :6] = 0.0
 
 
+def hd1910_reset_skill_pose(
+    env: ManagerBasedRlEnv,
+    env_ids: torch.Tensor,
+    pose_probabilities: tuple,
+    pose_angles: tuple,
+    spawn_heights: tuple,
+    sit_overrides: dict,
+    joint_noise: float = .08,
+    tilt_noise_deg: float = 12.,
+    clearance: float = .015,
+    asset_cfg: SceneEntityCfg = _DEFAULT_ASSET_CFG,
+):
+    """Replica-specific upright/seated and six fallen-pose reset cohorts.
+
+    Spawn heights come from the actual mesh support height for each pose.
+    Store the sampled cohort for diagnostics; never count a reset as recovery.
+    """
+    if env_ids is None or len(env_ids) == 0:
+        return
+    ids = env_ids.to(device=env.device, dtype=torch.long)
+    probabilities = torch.tensor(pose_probabilities, device=env.device)
+    if len(pose_angles) != len(spawn_heights) or probabilities.numel() != len(pose_angles):
+        raise ValueError("Pose angles/heights/probabilities must have matching lengths")
+    if bool((probabilities < 0).any()) or float(probabilities.sum()) <= 0:
+        raise ValueError("Invalid pose probabilities")
+    cohort = torch.multinomial(probabilities, len(ids), replacement=True)
+    if not hasattr(env, "_hd1910_spawn_cohort"):
+        env._hd1910_spawn_cohort = torch.zeros(env.num_envs, device=env.device, dtype=torch.long)
+    env._hd1910_spawn_cohort[ids] = cohort
+    angles = torch.tensor(pose_angles, device=env.device)[cohort] * (math.pi / 180.)
+    angles += (torch.rand_like(angles) * 2 - 1) * math.radians(tilt_noise_deg)
+    roll, pitch = angles[:, 0] / 2, angles[:, 1] / 2
+    yaw = (torch.rand(len(ids), device=env.device) * 2 - 1) * math.pi / 2
+    cr, sr, cp, sp, cy, sy = torch.cos(roll), torch.sin(roll), torch.cos(pitch), torch.sin(pitch), torch.cos(yaw), torch.sin(yaw)
+    quat = torch.stack((cr*cp*cy+sr*sp*sy, sr*cp*cy-cr*sp*sy,
+                        cr*sp*cy+sr*cp*sy, cr*cp*sy-sr*sp*cy), dim=-1)
+    asset = env.scene[asset_cfg.name]
+    servo_ids = _servo_joint_ids(env, asset)
+    joints = asset.data.default_joint_pos[ids].clone()
+    seated = cohort == 1
+    for joint, angle in sit_overrides.items():
+        joints[seated, servo_ids[joint]] = angle
+    joints += (torch.rand_like(joints) * 2 - 1) * joint_noise
+    limits = asset.data.joint_pos_limits[ids]
+    joints = torch.maximum(torch.minimum(joints, limits[..., 1]), limits[..., 0])
+    # This task has the canonical free-base + 14 scalar hinges; passive
+    # variants are intentionally not registered for these two skill tasks.
+    if len(servo_ids) != 14 or joints.shape[1] != 14:
+        raise ValueError("HD1910 skills require the canonical 14-joint replica")
+    env.sim.data.qpos[ids, 2] = torch.tensor(spawn_heights, device=env.device)[cohort] + clearance + _env_origin_z(env, ids)
+    env.sim.data.qpos[ids, 3:7] = quat
+    env.sim.data.qpos[ids, 7:] = joints
+    env.sim.data.qvel[ids, :] = 0.
+
+
 def set_random_ground_state(
     env: ManagerBasedRlEnv,
     env_ids: torch.Tensor,
@@ -6464,6 +6576,7 @@ class SitStandCommand(UniformVelocityCommand):
     def __init__(self, cfg, env: ManagerBasedRlEnv):
         super().__init__(cfg, env)
         self._sit_prob = float(getattr(cfg, "sit_prob", 0.5))
+        self._alternate = bool(getattr(cfg, "alternate", False))
         self._ramp_s = float(getattr(cfg, "ramp_s", 2.0))
         self._sit_z = float(getattr(cfg, "sit_z", 0.060))
         self._stand_z = float(getattr(cfg, "stand_z", 0.115))
@@ -6484,6 +6597,11 @@ class SitStandCommand(UniformVelocityCommand):
         if n == 0:
             return
         sit = (torch.rand(n, device=self.device) < self._sit_prob).float()
+        if self._alternate:
+            # command_counter is zero for episode reset; manager increments it
+            # AFTER _resample_command. Start randomly, then always change state.
+            sit = torch.where(self.command_counter[env_ids] > 0,
+                1. - self.vel_command_b[env_ids, 0], sit)
         self.vel_command_b[env_ids] = 0.0
         self.vel_command_b[env_ids, 0] = sit
 
@@ -6524,6 +6642,7 @@ class SitStandCommandCfg(UniformVelocityCommandCfg):
     class_type: type = SitStandCommand
     # Probability that a resample commands SIT (vs STAND).
     sit_prob: float = 0.5
+    alternate: bool = False
     # Seconds for the internal target blend to traverse STAND↔SIT in full.
     ramp_s: float = 2.0
     # Rest heights, used to initialise the blend from the spawn state.
@@ -6600,6 +6719,21 @@ def posture_pose_match(
     return torch.exp(-((joint_pos - target) / std) ** 2).mean(dim=-1)
 
 
+def posture_pose_group_match(
+    env: ManagerBasedRlEnv,
+    command_name: str,
+    sit_overrides: dict,
+    joint_indices: list,
+    std: float = 0.5,
+    asset_cfg: SceneEntityCfg = _DEFAULT_ASSET_CFG,
+) -> torch.Tensor:
+    """Score the whole leg pose; correct inactive joints cannot mask bent knees."""
+    asset = env.scene[asset_cfg.name]
+    _, target = _posture_targets(env, asset, command_name, sit_overrides)
+    error = (_servo_joint_pos(env, asset)[:, joint_indices] - target[:, joint_indices]) / std
+    return torch.exp(-error.square().mean(dim=-1))
+
+
 def posture_pose_l1(
     env: ManagerBasedRlEnv,
     command_name: str,
@@ -6634,17 +6768,18 @@ def posture_height_l1(
     command_name: str,
     sit_z: float,
     stand_z: float,
+    error_scale: float = 1.0,
     asset_cfg: SceneEntityCfg = _DEFAULT_ASSET_CFG,
 ) -> torch.Tensor:
     """L1 companion to ``posture_height_gaussian`` — the transition driver.
 
-    While the robot rests in the *wrong* posture this charges a constant
-    per-step cost (~|Δz| = 55 mm), which is what makes "ignore the command"
-    a net-negative strategy in both directions.
+    Returns negative height error divided by error_scale (metres). Default 1
+    preserves old tasks. A weight alone does not guarantee wrong-pose total
+    reward is negative; audit against the other terms and motion costs.
     """
     del asset_cfg
     target_z, z = _posture_height(env, command_name, sit_z, stand_z)
-    return -torch.abs(z - target_z)
+    return -torch.abs(z - target_z) / error_scale
 
 
 def posture_composite(
@@ -7543,6 +7678,294 @@ def hd1910_walk_idle_home(env, nominal_height):
     return idle*hd1910_standing_composite(env,nominal_height,height_std=.025)
 
 
+def hd1910_walk_posture_factor(gravity_b, height, nominal_height):
+    """Broad gait posture gate; collapsed/low states earn no positive reward."""
+    upright=(-gravity_b[:,2]).clamp(-1.,1.)
+    viable=(upright>=math.cos(math.radians(45))) & (height>=.65*nominal_height)
+    return viable*torch.exp(-2*(1-upright)/.18-((height-nominal_height)/.04).square())
+
+
+def hd1910_walk_low_trunk(env, nominal_height):
+    robot=env.scene['robot']
+    height=robot.data.root_link_pos_w[:,2]-env.scene.terrain.env_origins[:,2]
+    return height<.65*nominal_height
+
+
+def hd1910_walk_failure_cost(env):
+    """An actual failed episode must be worse than avoiding its future costs."""
+    return env.termination_manager.terminated.float()/env.step_dt
+
+
+def hd1910_walk_official_target_cost(env):
+    """Discourage raw targets outside the same official ranges sent on hardware."""
+    robot=env.scene['robot']
+    ids=_servo_joint_ids(env,robot)
+    target=robot.data.default_joint_pos[:,ids]+env.action_manager.action
+    limits=robot.data.joint_pos_limits[:,ids]
+    excess=(limits[:,:,0]-target).clamp(min=0)+(target-limits[:,:,1]).clamp(min=0)
+    return (excess/.25).square().mean(-1)
+
+
+class hd1910_walk_supported_reward:
+    """Preserve the wrapped term's setup/reset lifecycle and entity selectors."""
+    def __init__(self,cfg,env):
+        import inspect
+        from mjlab.managers import RewardTermCfg
+        self.params=cfg.params['base_params']
+        for value in self.params.values():
+            if isinstance(value,SceneEntityCfg):
+                value.resolve(env.scene)
+        base=cfg.params['base_func']
+        self.base=(base(RewardTermCfg(func=base,weight=1.,params=self.params),env)
+                   if inspect.isclass(base) else base)
+        self.head_bias=torch.zeros((env.num_envs,4),device=env.device)
+
+    def reset(self,env_ids):
+        self.head_bias[env_ids]=0.
+        if hasattr(self.base,'reset'):
+            self.base.reset(env_ids)
+
+    def __call__(self,env,base_func,base_params,nominal_height,head_quality=False,
+                 head_std=.4,head_floor=.4,motion_quality=False,straight_quality=False):
+        robot=env.scene['robot']
+        height=robot.data.root_link_pos_w[:,2]-env.scene.terrain.env_origins[:,2]
+        factor=hd1910_walk_posture_factor(robot.data.projected_gravity_b,height,nominal_height)
+        if motion_quality:
+            factor=factor*hd1910_walk_motion_quality(
+                env.command_manager.get_command('twist'),
+                robot.data.root_link_lin_vel_b[:,:2],robot.data.root_link_ang_vel_b[:,2])
+        if straight_quality:
+            command=env.command_manager.get_command('twist')
+            straight=(command[:,0]>.03)&(command[:,1].abs()<.01)&(command[:,2].abs()<.01)
+            quality=torch.exp(-(robot.data.root_link_ang_vel_b[:,2]/.25).square()
+                -(robot.data.root_link_lin_vel_b[:,1]/.04).square())
+            factor=factor*torch.where(straight,quality,torch.ones_like(quality))
+        if head_quality:
+            alpha=env.step_dt/(.5+env.step_dt)
+            self.head_bias.mul_(1-alpha).add_(hd1910_head_home_error(env),alpha=alpha)
+            factor=factor*hd1910_walk_head_quality(self.head_bias,std=head_std,floor=head_floor)
+        return self.base(env,**self.params)*factor
+
+
+def hd1910_walk_head_quality(error,std=.4,floor=.4):
+    """Couple gait success to a natural mean head pose, without a negative jackpot."""
+    return floor+(1-floor)*torch.exp(-error.square().mean(-1)/(std**2))
+
+
+def hd1910_walk_motion_quality(command,velocity,yaw_rate):
+    """Zero positive moving payout at rest; cap progress at requested speed."""
+    speed=command[:,:2].norm(dim=-1)
+    progress=(velocity*command[:,:2]).sum(-1)/speed.square().clamp(min=.03**2)
+    turn=yaw_rate*command[:,2]/command[:,2].square().clamp(min=.1**2)
+    return torch.where(speed>.03,progress.clamp(0.,1.),
+        torch.where(command[:,2].abs()>.1,turn.clamp(0.,1.),torch.ones_like(speed)))
+
+
+def hd1910_walk_command_progress(env):
+    robot=env.scene['robot']
+    command=env.command_manager.get_command('twist')
+    moving=(command[:,:2].norm(dim=-1)>.03)|(command[:,2].abs()>.1)
+    return moving*hd1910_walk_motion_quality(command,
+        robot.data.root_link_lin_vel_b[:,:2],robot.data.root_link_ang_vel_b[:,2])
+
+
+def hd1910_stride_quality(progress,side,peak,air_time,speed,cycle_time=.4,target_air=.16,target_height=.018):
+    """A complete swing earns more than a low, short, frequent shuffle."""
+    target=(speed*cycle_time).clamp(max=.16)
+    error=((progress-target)/(.025+.2*target)).square()
+    error+=((peak-target_height)/.014).square()+((air_time-target_air)/.09).square()
+    error+=(side/.03).square()
+    return (speed>.03)*torch.exp(-.5*error)
+
+
+def hd1910_stride_component_quality(progress,side,peak,air_time,speed,
+                                    cycle_time=.4,target_air=.12,target_height=.012):
+    """Each improving swing component gives a signal without a triple product."""
+    distance=(progress/(speed*cycle_time).clamp(min=.02)).clamp(0.,1.)
+    clearance=(peak/target_height).clamp(0.,1.)
+    duration=(air_time/target_air).clamp(0.,1.)
+    return (speed>.03)*(progress>0)*(distance+clearance+duration)/3.*torch.exp(-(side/.04).square())
+
+
+def hd1910_continuous_swing_quality(height,air_time,contact,target_height=.01,target_air=.1):
+    """Dense swing feedback with one grounded foot and a bounded support phase."""
+    single=contact.sum(-1)==1
+    airborne=~contact
+    clearance=(height/target_height).clamp(0.,1.)
+    duration=(air_time/target_air).clamp(0.,1.)
+    quality=(clearance+duration+2*torch.minimum(clearance,duration))/4.
+    # Holding one foot indefinitely or hopping on both feet cannot farm it.
+    window=(air_time>0)&(air_time<.24)&airborne
+    return (quality*window).sum(-1)*single
+
+
+def hd1910_walk_swing_progress(env,target_height=.01,target_air=.1):
+    command=env.command_manager.get_command('twist')
+    sensor=env.scene['feet_ground_contact'].data
+    return (command[:,:2].norm(dim=-1)>.03)*hd1910_continuous_swing_quality(
+        env.scene['foot_height_scan'].data.heights,sensor.current_air_time,
+        sensor.found>0,target_height,target_air)
+
+
+class hd1910_walk_stride_reward:
+    """Measure lift-to-land travel in the commanded direction, at touchdown only."""
+    def __init__(self,cfg,env):
+        self.feet,_=env.scene['robot'].find_sites(['left_foot','right_foot'])
+        self.lift_xy=torch.zeros((env.num_envs,2,2),device=env.device)
+        self.direction=torch.zeros_like(self.lift_xy)
+        self.speed=torch.zeros((env.num_envs,2),device=env.device)
+        self.peak=torch.zeros_like(self.speed)
+        self.valid=torch.zeros_like(self.speed,dtype=torch.bool)
+        self.last_foot=torch.full((env.num_envs,),-1,device=env.device,dtype=torch.long)
+
+    def reset(self,env_ids):
+        self.valid[env_ids]=False
+        self.peak[env_ids]=0.
+        self.last_foot[env_ids]=-1
+
+    def __call__(self,env,cycle_time=.4,target_air=.16,target_height=.018,require_alternation=False,
+                 complete_swing=False,component_shaping=False):
+        robot=env.scene['robot'];sensor=env.scene['feet_ground_contact']
+        command=env.command_manager.get_command('twist')
+        velocity=torch.cat((command[:,:2],torch.zeros_like(command[:,:1])),dim=-1)
+        world_velocity=quat_apply(robot.data.root_link_quat_w,velocity)[:,:2]
+        norm=world_velocity.norm(dim=-1)
+        direction=world_velocity/norm.clamp(min=1e-6)[:,None]
+        xy=robot.data.site_pos_w[:,self.feet,:2]
+        lift=sensor.compute_first_air(dt=env.step_dt)
+        self.lift_xy=torch.where(lift[:,:,None],xy,self.lift_xy)
+        self.direction=torch.where(lift[:,:,None],direction[:,None,:],self.direction)
+        self.speed=torch.where(lift,norm[:,None],self.speed)
+        self.valid|=lift
+        self.peak=torch.where(lift,torch.zeros_like(self.peak),self.peak)
+        in_air=sensor.data.found==0
+        self.peak=torch.where(in_air,torch.maximum(self.peak,env.scene['foot_height_scan'].data.heights),self.peak)
+        landing=sensor.compute_first_contact(dt=env.step_dt)&self.valid
+        delta=xy-self.lift_xy
+        progress=(delta*self.direction).sum(-1)
+        side=delta[:,:,0]*self.direction[:,:,1]-delta[:,:,1]*self.direction[:,:,0]
+        air=sensor.data.last_air_time
+        quality=hd1910_stride_quality(progress,side,self.peak,air,self.speed,cycle_time,target_air,target_height)
+        if component_shaping:
+            quality=hd1910_stride_component_quality(progress,side,self.peak,air,self.speed,
+                                                    cycle_time,target_air,target_height)
+        if complete_swing:
+            # Incomplete fast swings cannot substitute for complete steps.
+            quality=quality*(air/target_air).clamp(0.,1.).square()
+            quality=quality*(self.peak/target_height).clamp(0.,1.).square()
+            quality=quality*(progress/(self.speed*cycle_time).clamp(min=.02)).clamp(0.,1.).square()
+        # Weight by the completed air time, so doubling landing frequency does
+        # not double payout. Brief contact chatter and idle steps earn nothing.
+        active=(command[:,:2].norm(dim=-1)>.03)[:,None]
+        completed=landing & (air>=.04) & active
+        if require_alternation:
+            # Simultaneous touchdowns are hops, and repeated same-foot swings
+            # must not farm the normal walking bonus.
+            one=completed.sum(-1)==1
+            foot=completed.long().argmax(-1)
+            alternating=one & ((self.last_foot<0)|(foot!=self.last_foot))
+            self.last_foot=torch.where(one,foot,self.last_foot)
+            self.last_foot=torch.where(~active[:,0],-1,self.last_foot)
+            completed=completed & alternating[:,None]
+        reward=(quality*air.clamp(max=.3)*completed).sum(-1)/env.step_dt
+        self.valid&=~landing
+        env.extras['log']['Metrics/stride_quality']=((quality*completed).sum()/completed.sum().clamp(min=1))
+        return reward
+
+
+class HD1910WalkVelocityCommand(VelocityCommandCommandOnly):
+    """Teach exact straight commands at walking speeds, not only >=0.3m/s."""
+    def _resample_command(self,env_ids):
+        super()._resample_command(env_ids)
+        moving=env_ids[~self.is_standing_env[env_ids]]
+        selected=moving[torch.rand(len(moving),device=self.device)<self.cfg.rel_straight_envs]
+        if len(selected)==0:
+            return
+        forward=torch.rand(len(selected),device=self.device)<self.cfg.straight_forward_prob
+        positive=torch.empty(len(selected),device=self.device).uniform_(*self.cfg.straight_speed_range)
+        exact=torch.rand(len(selected),device=self.device)<self.cfg.exact_speed_prob
+        positive=torch.where(exact,self.cfg.exact_speed,positive)
+        negative=torch.empty(len(selected),device=self.device).uniform_(-.2,-.1)
+        self.vel_command_b[selected,0]=torch.where(forward,positive,negative)
+        self.vel_command_b[selected,1:]=0.
+        self.vel_command_w[selected]=self.vel_command_b[selected]
+        self.is_world_env[selected]=False
+        self.is_heading_env[selected]=False
+
+
+@_dataclass(kw_only=True)
+class HD1910WalkVelocityCommandCfg(VelocityCommandCommandOnlyCfg):
+    rel_straight_envs: float=.7
+    straight_forward_prob: float=.8
+    straight_speed_range: tuple[float,float]=(.12,.3)
+    exact_speed_prob: float=0.
+    exact_speed: float=.1
+
+    def build(self,env):
+        return HD1910WalkVelocityCommand(self,env)
+
+
+class hd1910_walk_straight_path_cost:
+    """Anchor each straight command segment to its initial world heading/path."""
+    def __init__(self,cfg,env):
+        self.active=torch.zeros(env.num_envs,device=env.device,dtype=torch.bool)
+        self.origin=torch.zeros((env.num_envs,2),device=env.device)
+        self.heading=torch.zeros(env.num_envs,device=env.device)
+
+    def reset(self,env_ids):
+        self.active[env_ids]=False
+
+    def __call__(self,env):
+        robot=env.scene['robot'];command=env.command_manager.get_command('twist')
+        active=(command[:,0]>.03)&(command[:,1].abs()<.01)&(command[:,2].abs()<.01)
+        start=active&~self.active
+        self.origin[start]=robot.data.root_link_pos_w[start,:2]
+        self.heading[start]=robot.data.heading_w[start]
+        self.active.copy_(active)
+        angle=robot.data.heading_w-self.heading
+        angle=torch.atan2(torch.sin(angle),torch.cos(angle))
+        delta=robot.data.root_link_pos_w[:,:2]-self.origin
+        cross=-torch.sin(self.heading)*delta[:,0]+torch.cos(self.heading)*delta[:,1]
+        return active*((angle/.2).square().clamp(max=9)+(cross/.05).square().clamp(max=9))
+
+
+def hd1910_walk_yaw_error_cost(env):
+    error=env.scene['robot'].data.root_link_ang_vel_b[:,2]-env.command_manager.get_command('twist')[:,2]
+    # A Gaussian has almost no gradient far from its target. This cost keeps
+    # charging persistent drift, and still respects explicitly requested turns.
+    return error.abs()+.25*error.square()
+
+
+class hd1910_walk_yaw_bias_cost:
+    """Charge sustained yaw error while letting alternating gait yaw cancel."""
+    def __init__(self,cfg,env):
+        self.bias=torch.zeros(env.num_envs,device=env.device)
+        self.command=torch.zeros((env.num_envs,3),device=env.device)
+
+    def reset(self,env_ids):
+        self.bias[env_ids]=0.
+        self.command[env_ids]=0.
+
+    def __call__(self,env,tau=.5,std=.2):
+        command=env.command_manager.get_command('twist')
+        changed=(command-self.command).abs().amax(dim=-1)>.03
+        self.bias[changed]=0.
+        self.command.copy_(command)
+        error=env.scene['robot'].data.root_link_ang_vel_b[:,2]-command[:,2]
+        alpha=env.step_dt/(tau+env.step_dt)
+        self.bias.mul_(1-alpha).add_(error,alpha=alpha)
+        env.extras['log']['Metrics/yaw_bias_abs']=self.bias.abs().mean()
+        return (self.bias/std).square()
+
+
+def hd1910_walk_idle_stop_cost(env):
+    robot=env.scene['robot']
+    idle=env.command_manager.get_command('twist').norm(dim=-1)<.01
+    linear=robot.data.root_link_lin_vel_w[:,:2].square().sum(-1)/(.05**2)
+    head=hd1910_head_home_error(env).square().mean(-1)/(.25**2)
+    return idle*(linear+head)
+
+
 def hd1910_settle_motion_cost(env):
     robot=env.scene["robot"]
     quiet=(hd1910_recovery_pose_factor(env)-.1)/.9
@@ -7563,3 +7986,14 @@ def hd1910_settle_balance(env, nominal_height):
     # Strong task reward requires both posture and settling in calm periods.
     # During the external push window the original balance objective remains.
     return hd1910_recovery_balance(env,nominal_height)*((1-quiet)+quiet*head*legs*still)
+
+
+def hd1910_sit_target_error_cost(env):
+    """Positive cost for sustained position demand after real/sim target bounds.
+
+    Charges pressure demand even at a legal angle; a zero joint velocity alone
+    cannot distinguish seated rest from a servo pushing into a blocked part.
+    """
+    term = env.action_manager.get_term('joint_pos')
+    actual = env.scene['robot'].data.joint_pos[:, term.target_ids]
+    return ((term.position_target - actual) / .25).square().mean(-1)
