@@ -5,7 +5,7 @@ build-backend = "uv_build"
 [project]
 name = "mjlab-microduck"
 version = "0.1.0"
-description = "RL training environments for the Microduck robot, built on mjlab"
+description = "Local MicroDuck HD1910 training with the current replica STL/MJCF, built on mjlab"
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
@@ -51,8 +51,7 @@ mjlab_microduck = "mjlab_microduck.tasks"
 # --hf-jobs is intercepted from the `mjlab.tasks` entry point above
 # (train_hook.py), not here. Locked by tests/test_hf_jobs_flag.py.
 train = "mjlab_microduck.train_cli:main"
-# Serve a simulated body to the real `robotd` — see sim/body_server.py.
-duck-body = "mjlab_microduck.sim.body_server:main"
+# The upstream XML-PD body server is reference-only; it is not an HD1910 simulator.
 publish = "mjlab_microduck.publish.cli:main"
 [tool.ruff]
 src = ["src"]  # Helpful for recognizing first-party imports.

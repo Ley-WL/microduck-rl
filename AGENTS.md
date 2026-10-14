@@ -1,3 +1,5 @@
+> **2026-10-14 用户要求统一训练硬件（本地整理）：** 所有新训练仅使用 `robot/replica` 当前 STL/MJCF 与 `robot/hd1910/1910_m6.json`。`hardware_profile.py` 为参数入口，禁止恢复 XL330/P200/6V 下限、官方教师默认下载、供体质量/惯量/装配覆盖。旧任务名称现在也走 HD1910，历史证据和权重不改写。`hardware-inputs.json` 记录当前输入 SHA；变更几何须显式审计更新。当前模型内 `xl330.stl` 是几何名称，不等于执行器型号；质量/惯量未重新辨识。训练/预览/导出须保持同一硬件来源与各技能动作合同。仅整理与软件验证，不自动训练、访问主板、部署或推上游。详见 `docs/hardware-profile.md`；本条覆盖下文旧官方默认配置说明。
+
 > **2026-10-12 翻滚20轮微调已结束、未提速不部署（最新覆盖）：** case roulade-mechanical-transfer-20261012，无活跃训练/候选；GPU0/1容量保护、实际训练GPU1，不动他人。修接触匹配容量64→256后4测试、64×40目标1.191e-7rad/raw历史0、两分支64×5smoke及1024×20/同seed62173，Adam100/400、4正规导出finite/normalizer、231源hash保持，无有效阶段overflow。原actor8fdaf12c恢复，critic新随机/count合成1000000明确是迁移假设，非完整原checkpoint resume。仅未完成翻滚时间代价0→−.5，现限位/无EMA/编码/Feetech BAM/具名惯量及冲击平滑约束保持。首接触overflow控制权重废弃，全部失败源/日志保留；末wrapper重复trainingSeed导致job.exit1发生在训练/筛选/源核验之后，独立final-audit确认全部完成，不重训。
 > 3秒稳定退出支持角门原207/256→Repair208/256，逐例丢42；但查看配对画面并几何交叉核对发现很多只是接触加权角328°没过330°而实际完整旋转364°、头顶latch且直立，不将门槛丢例全说成摔倒。独立几何交叉核对原255/256、Control250/256、Repair254/256，Repair丢原2例；均无1秒完成，平均1.307→1.327秒、共同成功配对慢1.60%，相对control仅快.39%，无有效提速。该交叉诊断未改变原验收门、不是正式或实机验收；候选拒绝，不扩轮/换板。当前板1秒交回walk与模拟约1.3秒完成有提前交接风险，但实机带载掉压/跟随也未完全辨识，不只延时便宣称已修好。完整147MB训练源码/所有checkpoint/轨迹/失败源/日志SHA006f2a9a…下载核验解压，几何/判据补充分别SHA84d3f52c/4c99603e单独核验，明确不属原归档成员；RL artifacts/roulade-transfer-20261012/{diagnostics,complete/final-audit,orientation-cross-check}.json。主板/其它模型/配置/App不改，无代发动作。
 
@@ -130,7 +132,7 @@
 microduck 与 replica 的全部 14 舵机关节物理范围以 `src/mjlab_microduck/robot/xgoduck_joint_limits.json` 为准（2026-10-09 XgoDuck robot_walk.xml 快照）。颈俯仰 −135～60°、头俯仰 ±105°、左髋偏航 −0.22～0.45rad、右髋偏航 −0.45～0.22rad；其余同快照。行走/全碰撞/地面接触/滚轮/回差变体均对齐，CAD 导出须运行 `robot/apply_xgoduck_limits.py`，不改被动关节范围。此要求覆盖旧 MicroDuck/replica 的 −90° 颈限位及旧髋范围，不改变 STL、BAM、HOME、观测或动作合同。observer 软件范围已同值；本次本地改动无实机/EEPROM操作。历史评估对应当时模型哈希，不随新限位改写为已通过。
 
 RL training environments for Microduck — a ~800 g, ~25 cm tall bipedal
-robot with 14 Dynamixel XL330 servos — built on [mjlab](https://github.com/mujocolab/mjlab)
+local replica with 14 HD1910 policy-controlled joints — built on [mjlab](https://github.com/mujocolab/mjlab)
 (MuJoCo Warp) with PPO (rsl_rl). Policies are trained here at 50 Hz, exported to
 ONNX, and deployed by the runtime in the `pollen-robotics/microduck` repo on
 the real robot. Sim2real transfer
@@ -195,7 +197,7 @@ Never launch a long run without one.
   Every actuator/obs/reward selector uses `^(?!passive_).*` — keep the prefix
   convention when adding joints, and new `passive_` regexes must not
   accidentally match backlash joints (`^passive_.*wheel`, not `^passive_.*`).
-- **Actuators are BAM** (voltage-controlled XL330 model, friction computed by
+- **Actuators are BAM** (the supplied HD1910 M6 JSON, friction computed by
   the actuator). Two consequences: any STANDALONE env cfg must register the
   `expand_bam_friction_fields` startup event, and joint-friction DR must scale
   the actuator's `friction_scale` — `dof_frictionloss` is zeroed under BAM, so

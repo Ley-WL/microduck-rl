@@ -25,7 +25,7 @@ SCHEMA_VERSION = 2
 MODEL_API = 1
 OBS_LEN = 61
 ACTION_LEN = 14
-ROBOT: dict[str, Any] = {"model": "microduck", "hw_rev": 1, "servos": "xl330", "control_hz": 50}
+ROBOT: dict[str, Any] = {"model": "microduck", "hw_rev": 1, "servos": "hd1910", "control_hz": 50}
 
 # The one `.onnx` a repo carries. The daemon takes the sole `.onnx` in a repo and refuses several.
 POLICY_FILE = "policy.onnx"

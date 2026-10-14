@@ -1,0 +1,224 @@
+"""Frozen walking diagnostic with current Rust arithmetic; never accesses hardware.
+
+Replica contact geometry and donor named inertias are simulation assumptions.
+BAM kp is a diagnostic parameter, not an identified firmware P conversion.
+"""
+import argparse
+from collections import deque
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import numpy as np
+import mujoco
+import onnxruntime as ort
+from bam.model import load_model
+
+ROOT = Path(__file__).resolve().parents[1]
+
+def module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    result = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(result)
+    return result
+
+mechanical = module('walk_mechanical', ROOT/'src/mjlab_microduck/tasks/getup_mechanical_contract.py')
+bam_cpu = module('walk_bam', ROOT/'scripts/bam_cpu_controller.py')
+imu = module('walk_imu', ROOT/'scripts/evaluate_getup_mechanical_cpu.py')
+
+def command_step(previous, target):
+    return (previous + np.float32(.2)*(target-previous)).astype(np.float32)
+
+def action_step(previous, raw, initialized):
+    target = np.float32(.9)*raw
+    alpha = np.full(14, .7, dtype=np.float32); alpha[5:9] = .5
+    return ((1-alpha)*previous+alpha*target if initialized else target).astype(np.float32)
+
+def observed_angles(qpos):
+    # Encoder feedback is rounded, but never clipped to software target limits.
+    refs=np.asarray(mechanical.REFERENCES);directions=np.asarray(mechanical.DIRECTIONS)
+    steps=np.floor(refs+qpos/mechanical.ENCODER_STEP*directions+.5)
+    return (steps-refs)*mechanical.ENCODER_STEP*directions
+
+class BacklashController(bam_cpu.MujocoController):
+    """Position loop reads output angle; motor velocity drives back-EMF/friction."""
+    def update(self):
+        data=self.mujoco_data;ids=self.dof_indexes
+        q=data.qpos[self.qpos_indexes]+data.qpos[self.passive_qadr]
+        dq=data.qvel[ids];act=self.model.actuator
+        dt=data.time-self.last_ts;self.last_ts=data.time
+        control=act.compute_control(self.q_target,q,dq,dt)
+        torque=act.compute_torque(control,True,q,dq)
+        data.ctrl[self.act_indexes]=torque
+        external=-data.qfrc_bias[ids]+data.qfrc_constraint[ids]-bam_cpu.dof_friction_force(data,ids)
+        friction,damping=self.model.compute_frictions(data.qfrc_actuator[ids],external,dq)
+        self.mujoco_model.dof_frictionloss[ids]=friction
+        self.mujoco_model.dof_damping[ids]=damping
+
+def run(args):
+    args.output.mkdir(parents=True, exist_ok=False)
+    meta=json.loads(args.onnx.with_suffix('.metadata.json').read_text())
+    assert hashlib.sha256(args.onnx.read_bytes()).hexdigest()==meta['policySha256']
+    assert tuple(meta['jointOrder'])==mechanical.NAMES
+    assert meta['walkExecution']['actionScale']==.9
+    assert meta['walkExecution']['headNewWeight']==.5 and meta['walkExecution']['legsNewWeight']==.7
+    home=np.asarray(meta['homeRadians'],dtype=np.float32)
+    robot=ROOT/'src/mjlab_microduck/robot'
+    ground=module('walk_ground',robot/'ground_contact.py')
+    spec=mujoco.MjSpec.from_file(str(robot/'replica'/('scene_walk_backlash.xml' if args.backlash else 'scene_walk.xml')))
+    contacts=ground.add_body_ground_contacts(spec)
+    # Local MJCF is authoritative; historical donor overrides were retired.
+    mechanical.edit_mechanical_spec(spec)
+    params=robot/'hd1910/1910_m6.json';bam=load_model(str(params))
+    assert hashlib.sha256(params.read_bytes()).hexdigest()==meta['actuatorParamsSha256']
+    bam.actuator.kp=args.bam_kp;bam.actuator.vin=args.voltage;bam.actuator.max_current=None
+    maximum=args.voltage*bam.kt.value/bam.R.value
+    for j in spec.joints:
+        if j.name in mechanical.NAMES:
+            j.armature=float(bam.actuator.get_extra_inertia());j.damping=np.zeros((3,1));j.frictionloss=0
+            j.solref_friction=(-5e4,-2e2);j.solimp_friction=(.99,.9999,.001,.5,2)
+    for a in spec.actuators:
+        a.set_to_motor();a.forcelimited=True;a.forcerange=(-maximum,maximum);a.gear=[1.,0,0,0,0,0]
+    for g in spec.geoms:
+        if g.name in ('left_foot_collision','right_foot_collision') or g.name.startswith('body_ground_'):
+            g.contype=1;g.conaffinity=0;g.condim=3;g.friction=[args.friction,.005,.0001]
+            if args.contact_timeconst is not None:g.solref=[args.contact_timeconst,1.]
+            if g.name.endswith('foot_collision'):g.priority=1
+        elif g.type!=mujoco.mjtGeom.mjGEOM_PLANE and g.meshname!='leg':g.contype=0;g.conaffinity=0
+    terrain_hash=None
+    if args.terrain_height_mm:
+        amplitude=args.terrain_height_mm/1000
+        y,x=np.meshgrid(np.linspace(-1,1,257),np.linspace(-3,3,769),indexing='ij')
+        height=np.sin(2*np.pi*x/.071)*np.cos(2*np.pi*y/.093)+.4*np.sin(2*np.pi*(x+y)/.037)
+        height=(height-height.min())/(height.max()-height.min())
+        terrain_hash=hashlib.sha256(height.astype(np.float64).tobytes()).hexdigest()
+        spec.add_hfield(name='diagnostic_pile',nrow=257,ncol=769,size=[3,1,amplitude,.02],userdata=height.ravel().tolist())
+        for g in spec.geoms:
+            if g.type==mujoco.mjtGeom.mjGEOM_PLANE:g.pos[2]=-.03
+        spec.worldbody.add_geom(name='diagnostic_pile_ground',type=mujoco.mjtGeom.mjGEOM_HFIELD,hfieldname='diagnostic_pile',
+            pos=[0,0,-amplitude/2],contype=1,conaffinity=1,condim=3,friction=[args.friction,.005,.0001])
+    model=spec.compile();model.opt.timestep=.002;model.opt.iterations=10;model.opt.ls_iterations=20
+    model.opt.integrator=mujoco.mjtIntegrator.mjINT_IMPLICITFAST
+    model.opt.disableflags|=int(mujoco.mjtDisableBit.mjDSBL_EULERDAMP)
+    data=mujoco.MjData(model)
+    controller=bam_cpu.MujocoController(bam,list(mechanical.NAMES),model,data,vin_drop_gain=0.,vin_min=4.)
+    qadr=controller.qpos_indexes;vadr=controller.dof_indexes;trunk=model.body('trunk_base').id
+    passive_qadr=np.asarray([model.jnt_qposadr[model.joint('passive_'+name+'_backlash').id] for name in mechanical.NAMES]) if args.backlash else None
+    passive_vadr=np.asarray([model.jnt_dofadr[model.joint('passive_'+name+'_backlash').id] for name in mechanical.NAMES]) if args.backlash else None
+    if args.backlash:
+        controller.__class__=BacklashController;controller.passive_qadr=passive_qadr
+        for name,bounds in donor['gear_backlash']['ranges_rad'].items():
+            np.testing.assert_allclose(model.jnt_range[model.joint(name).id],bounds,atol=1e-12,rtol=0)
+    opts=ort.SessionOptions();opts.intra_op_num_threads=1;opts.inter_op_num_threads=1
+    session=ort.InferenceSession(str(args.onnx),sess_options=opts,providers=['CPUExecutionProvider'])
+    assert session.get_inputs()[0].shape==[1,61] and session.get_outputs()[0].shape==[1,14]
+    manifest=dict(simulationOnly=True,hardwareAccess=False,training=False,policySha256=meta['policySha256'],
+        hardwareProfile="microduck-replica-hd1910-v1",bodyContractApplied=False,bodyGroundMeshes=contacts,
+        massKg=float(model.body_mass.sum()),bamKp=args.bam_kp,voltage=args.voltage,friction=args.friction,
+        contactTimeconst=args.contact_timeconst,compliantContactIsNotMeasuredCarpet=True,
+        terrainHeightMm=args.terrain_height_mm,terrainHash=terrain_hash,terrainBoundary='synthetic smooth heightfield, no measured pile geometry or deformable shear',
+        frictionConstraintRevision=bam_cpu.FRICTION_CONSTRAINT_REVISION,
+        commandAlpha=.2,actionScale=.9,headNewWeight=.5,legsNewWeight=.7,
+        jointVelocityObservation='previous native50Hz feedback sample',gyroFilter=False,backlash=args.backlash,
+        encoderThroughBacklash=args.backlash,motorVelocityForFriction=True,
+        physicsDt=.002,policyDt=.02,extraTransportDelayMs=args.transport_ms,
+        limitations=['BAM kp not identified from firmware P5/D0','donor inertia with replica contacts, not measured hardware dynamics',
+            'ideal IMU, quantized encoder position, unquantized simulated velocity','fixed transport delay, no UART faults',
+            'initial standing state is synthetic, not the actual getup handoff'])
+    (args.output/'manifest.json').write_text(json.dumps(manifest,indent=2))
+    reports=[]
+    real_start=json.loads(args.start_observation.read_text()) if args.start_observation else None
+    cadence=json.loads(args.timing_recording.read_text()) if args.timing_recording else None
+    if cadence:
+        manifest['cadenceRecordingSha256']=hashlib.sha256(args.timing_recording.read_bytes()).hexdigest()
+        manifest['cadenceBoundary']='repeat earlier600 observed inference intervals; rounded to2ms; not missing failure-tail timing'
+    manifest['voltageCompensation']=args.voltage_compensation
+    manifest['realStartBoundary']='joint angles, gravity, gyro and observed joint speed; root linear velocity and passive gear state unknown' if real_start else None
+    if real_start:manifest['startObservationSha256']=hashlib.sha256(args.start_observation.read_bytes()).hexdigest()
+    (args.output/'manifest.json').write_text(json.dumps(manifest,indent=2))
+    delay=int(np.ceil((float(json.loads(params.read_text())['command_delay'])+args.transport_ms/1000)/.002))
+    if args.command_delay_steps is not None:
+        assert 0<=args.command_delay_steps<=20
+        delay=args.command_delay_steps
+    manifest['effectiveCommandDelaySteps']=delay
+    manifest['effectiveCommandDelayMs']=delay*2
+    manifest['commandDelayOverride']=args.command_delay_steps is not None
+    (args.output/'manifest.json').write_text(json.dumps(manifest,indent=2))
+    for seed in args.seeds:
+        for trial in range(args.trials):
+            rng=np.random.default_rng(seed+trial)
+            perturb=rng.uniform(-.015,.015,14)
+            for speed in args.speeds:
+                mujoco.mj_resetData(model,data);model.dof_damping[vadr]=0;model.dof_frictionloss[vadr]=0
+                data.qpos[:7]=[0,0,.12,1,0,0,0];data.qpos[qadr]=home+perturb;mujoco.mj_forward(model,data)
+                data.qpos[2]+=.002-ground.lowest_mesh_z(model,data);mujoco.mj_forward(model,data)
+                controller.reset(data.qpos);controller.last_ts=data.time;bam.actuator.q_target_smooth=data.qpos[qadr].copy()
+                initial=data.qpos[qadr].copy()
+                for _ in range(200):controller.q_target[:]=initial;controller.update();mujoco.mj_step(model,data)
+                if real_start:
+                    state=np.asarray(real_start['observation']);gravity=state[3:6]
+                    roll=np.arctan2(-gravity[1],-gravity[2]);pitch=np.arcsin(np.clip(gravity[0],-1,1))
+                    data.qpos[:7]=[0,0,.12,*imu.quaternion(roll,pitch,0)]
+                    data.qpos[qadr]=home+state[6:20]
+                    if args.backlash:data.qpos[passive_qadr]=0
+                    data.qvel[:]=0;data.qvel[3:6]=state[:3];data.qvel[vadr]=state[20:34]
+                    mujoco.mj_forward(model,data);data.qpos[2]+=.002-ground.lowest_mesh_z(model,data);mujoco.mj_forward(model,data)
+                    controller.reset(data.qpos);controller.last_ts=data.time;bam.actuator.q_target_smooth=data.qpos[qadr].copy()
+                    initial=mechanical.encode_target(np.asarray(real_start['homeRadians'])+np.asarray(real_start['filteredActionRadians']))
+                start=data.time;start_qpos=data.qpos.copy();previous=np.zeros(14,dtype=np.float32)
+                filtered=previous.copy();command=np.zeros(3,dtype=np.float32)
+                history=deque([initial.copy() for _ in range(delay+1)],maxlen=delay+1)
+                velocity_previous=data.qvel[vadr].copy()+(data.qvel[passive_vadr] if args.backlash else 0);rows=[];fallen=None
+                if real_start:
+                    previous=np.asarray(real_start['observation'][34:48],dtype=np.float32)
+                    filtered=np.asarray(real_start['emaPreviousRadians'],dtype=np.float32)
+                    command=np.asarray(real_start['commandTwist'],dtype=np.float32)
+                for tick in range(round(args.seconds/.02)):
+                    t=float(data.time-start)
+                    if t>=args.seconds:break
+                    target_command=np.asarray([speed if 2<=t<args.seconds-3 else 0.,0,0],dtype=np.float32)
+                    command=command_step(command,target_command)
+                    gyro,gravity=imu.root_body_imu_observation(model,data,trunk)
+                    encoder_q=data.qpos[qadr]+(data.qpos[passive_qadr] if args.backlash else 0)
+                    obs=np.concatenate([gyro,gravity,observed_angles(encoder_q)-home,velocity_previous,previous,command,np.zeros(10)]).astype(np.float32)
+                    raw=session.run(None,{session.get_inputs()[0].name:obs[None]})[0][0]
+                    if not np.isfinite(raw).all():raise ValueError('Non-finite frozen policy output')
+                    voltage_scale=np.float32(7.4/np.clip(args.voltage,6.,9.5)) if args.voltage_compensation else np.float32(1.)
+                    filtered=action_step(filtered,raw*voltage_scale,tick>0);desired=home.astype(np.float64)+filtered
+                    target=mechanical.encode_target(desired);previous=raw.copy()
+                    tilt=float(np.degrees(np.arccos(np.clip(-gravity[2],-1,1))))
+                    contact_pairs=[[model.geom(c.geom1).name,model.geom(c.geom2).name] for c in data.contact]
+                    rows.append(dict(time=t,tilt=tilt,command=command.tolist(),raw=raw.tolist(),target=target.tolist(),contacts=contact_pairs,
+                        qpos=data.qpos.tolist(),velocity=data.qvel.tolist(),obs=obs.tolist(),clipped=(np.abs(desired-np.clip(desired,np.asarray(list(mechanical.LIMITS.values()))[:,0],np.asarray(list(mechanical.LIMITS.values()))[:,1]))>1e-7).tolist()))
+                    if tilt>=60:fallen=t;break
+                    velocity_previous=data.qvel[vadr].copy()+(data.qvel[passive_vadr] if args.backlash else 0)
+                    steps=max(1,round(cadence[tick%len(cadence)]/.002)) if cadence else 10
+                    for physics_tick in range(steps):
+                        history.append(target.copy());controller.q_target[:]=history[0]
+                        controller.update();mujoco.mj_step(model,data)
+                key=f'seed{seed}-trial{trial}-speed{speed:g}'
+                (args.output/(key+'.json')).write_text(json.dumps(dict(initialQpos=start_qpos.tolist(),frames=rows)))
+                end=np.asarray(rows[-1]['qpos'])
+                moving=[r for r in rows if 4<=r['time']<args.seconds-3]
+                row=dict(seed=seed,trial=trial,speed=speed,fallSeconds=fallen,completed=fallen is None,
+                    maxTiltDeg=max(r['tilt'] for r in rows),distanceM=float(end[0]-start_qpos[0]),
+                    movingMeanVx=float(np.mean([r['velocity'][0] for r in moving])) if moving else None,
+                    clippedFrames=sum(any(r['clipped']) for r in rows))
+                reports.append(row);print(json.dumps(row),flush=True)
+                (args.output/'summary.json').write_text(json.dumps(dict(manifest=manifest,results=reports),indent=2))
+
+if __name__=='__main__':
+    p=argparse.ArgumentParser();p.add_argument('--onnx',type=Path,required=True)
+    p.add_argument('--body-contract',type=Path,help='Deprecated compatibility argument; never applied to local geometry');p.add_argument('--output',type=Path,required=True)
+    p.add_argument('--speeds',type=float,nargs='+',default=[.1,.15,.2,.25]);p.add_argument('--seeds',type=int,nargs='+',default=[130031,240017])
+    p.add_argument('--trials',type=int,default=2);p.add_argument('--seconds',type=float,default=20.)
+    p.add_argument('--voltage',type=float,default=7.4);p.add_argument('--friction',type=float,default=1.)
+    p.add_argument('--bam-kp',type=float,default=5.);p.add_argument('--transport-ms',type=float,default=8.)
+    p.add_argument('--backlash',action='store_true')
+    p.add_argument('--start-observation',type=Path)
+    p.add_argument('--voltage-compensation',action='store_true')
+    p.add_argument('--timing-recording',type=Path)
+    p.add_argument('--contact-timeconst',type=float,help='Diagnostic normal-contact compliance, not an identified carpet model')
+    p.add_argument('--terrain-height-mm',type=float,default=0.)
+    p.add_argument('--command-delay-steps',type=int,help='Frozen diagnostic override in2ms ticks; not measured hardware latency')
+    run(p.parse_args())

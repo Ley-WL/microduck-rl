@@ -224,6 +224,7 @@ def test_warm_start_patch_resets_counters(monkeypatch):
     class _Runner:
         env = _Env()
         current_learning_iteration = 3750
+        alg = object()  # Real runners own an algorithm; this stub has no fixed LR.
 
     monkeypatch.setattr(microduck_mdp, "_orig_runner_load", lambda self, path, *a, **k: {"env_state": {"common_step_counter": 90024}})
     monkeypatch.setenv(microduck_mdp.WARM_START_ENV, "1")

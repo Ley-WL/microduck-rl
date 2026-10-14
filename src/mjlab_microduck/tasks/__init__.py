@@ -6,13 +6,42 @@ from mjlab_microduck.train_hook import maybe_submit_to_hf_jobs
 # train_hook.py). A no-op without the flag.
 maybe_submit_to_hf_jobs()
 
-from mjlab.tasks.registry import register_mjlab_task
+from mjlab.tasks.registry import register_mjlab_task as _register_mjlab_task
 from mjlab.tasks.velocity.rl import VelocityOnPolicyRunner
+from mjlab_microduck.robot.hardware_profile import HD1910_PARAMS, HARDWARE_PROFILE
+from mjlab_microduck.actuator.feetech_bam import FeetechBamActuatorCfg
+from pathlib import Path
+from copy import deepcopy
+import json
+
+
+def register_mjlab_task(*, task_id, env_cfg, play_env_cfg, rl_cfg, runner_cls=None):
+    """Old task IDs remain usable, but may never select the old hardware."""
+    for cfg in (env_cfg, play_env_cfg):
+        for actuator in cfg.scene.entities["robot"].articulation.actuators:
+            if (not isinstance(actuator, FeetechBamActuatorCfg)
+                    or actuator.motor_name is not None
+                    or not actuator.json_path
+                    or Path(actuator.json_path).resolve() != HD1910_PARAMS.resolve()
+                    or actuator.kp_fw != 5.0 or actuator.vin_min != 4.0):
+                raise ValueError(f"{task_id}: expected {HARDWARE_PROFILE}, got {actuator}")
+    # New experiments cannot overwrite/log under upstream experiment names.
+    rl_cfg = deepcopy(rl_cfg)
+    if "hd1910" not in rl_cfg.experiment_name.lower():
+        rl_cfg.experiment_name = "hd1910_" + rl_cfg.experiment_name
+    rl_cfg.logger = "tensorboard"
+    _register_mjlab_task(task_id, env_cfg, play_env_cfg, rl_cfg, runner_cls)
 
 
 class MicroduckOnPolicyRunner(VelocityOnPolicyRunner):
     def __init__(self, env, train_cfg: dict, log_dir=None, device="cpu", **kwargs):
+        from mjlab_microduck.robot.hardware_profile import provenance
+        source = provenance()
         super().__init__(env, train_cfg, log_dir, device, **kwargs)
+        if log_dir:
+            destination = Path(log_dir) / "hardware-profile.json"
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(json.dumps(source, indent=2) + "\n", encoding="utf-8")
         # resolve_symmetry_config injects _env into train_cfg["algorithm"]["symmetry_cfg"]
         # in-place, sharing the same dict object with self.alg.symmetry.  Replace the
         # train_cfg reference with a copy that omits _env so dump_yaml can serialize the

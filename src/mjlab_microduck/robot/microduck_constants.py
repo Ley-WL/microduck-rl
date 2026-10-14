@@ -1,38 +1,31 @@
-import os
 from pathlib import Path
 
 import mujoco
-from mjlab.actuator import XmlActuatorCfg
-from mjlab_microduck.actuator import (
-    BacklashEncoderBamActuatorCfg,
-    FrictionDRBamActuatorCfg,
+from mjlab_microduck.actuator.feetech_bam import (
+    FeetechBamActuatorCfg, FeetechBacklashActuatorCfg,
 )
+from .hardware_profile import ROBOT_DIR, actuator_kwargs
 from mjlab.entity import EntityArticulationInfoCfg, EntityCfg
 from mjlab.utils.spec_config import CollisionCfg
 
 
-_ROBOT_DIR: Path = Path(os.path.dirname(__file__)) / "microduck"
+_ROBOT_DIR: Path = ROBOT_DIR
 
 MICRODUCK_WALK_XML: Path = _ROBOT_DIR / "robot_walk.xml"
-# Ground-contact model (formerly "allcollisions"): curated collision set for
-# the parts that touch the floor in body-on-ground tasks (soles, legs, trunk
-# shells, head shells, jaw, battery, hips) — NOT every geom. Shared by
-# standup / ground-pick / sitstand / roulade / walk-rollers tasks.
-MICRODUCK_GROUNDCONTACT_XML: Path = _ROBOT_DIR / "robot_groundcontact.xml"
-# TRUE all-collisions model: every part carries a collision geom (70 geoms,
-# 37 meshes; power_support demoted to self_collision_only like every variant).
-# No task uses it yet — exported 2026-09 for future envs needing full contact.
+# Local body-contact variant; collision selection belongs to each task.
+MICRODUCK_GROUNDCONTACT_XML: Path = _ROBOT_DIR / "robot_allcollisions.xml"
+# Full local collision model; shares the current replica assembly.
 MICRODUCK_ALLCOLLISIONS_XML: Path = _ROBOT_DIR / "robot_allcollisions.xml"
 # 70mm / 15g ball prop for the BallKick task.
 MICRODUCK_BALL_XML: Path = _ROBOT_DIR / "ball.xml"
 # Roller-skate model: 14 actuated joints + passive wheel hinges (passive_*wheel).
-MICRODUCK_GROUNDCONTACT_ROLLERS_XML: Path = _ROBOT_DIR / "robot_groundcontact_rollers.xml"
+MICRODUCK_GROUNDCONTACT_ROLLERS_XML: Path = _ROBOT_DIR / "robot_allcollisions_rollers.xml"
 # Backlash models: every servo joint gets an unactuated passive_<joint>_backlash
 # hinge in series (±1° play, 2° total). Exported via
 # config_mjcf_{groundcontact,walk}_backlash.json (add_backlash.py post-processor).
-MICRODUCK_GROUNDCONTACT_BACKLASH_XML: Path = _ROBOT_DIR / "robot_groundcontact_backlash.xml"
+MICRODUCK_GROUNDCONTACT_BACKLASH_XML: Path = _ROBOT_DIR / "robot_allcollisions_backlash.xml"
 MICRODUCK_WALK_BACKLASH_XML: Path = _ROBOT_DIR / "robot_walk_backlash.xml"
-MICRODUCK_GROUNDCONTACT_ROLLERS_BACKLASH_XML: Path = _ROBOT_DIR / "robot_groundcontact_rollers_backlash.xml"
+MICRODUCK_GROUNDCONTACT_ROLLERS_BACKLASH_XML: Path = _ROBOT_DIR / "robot_allcollisions_rollers_backlash.xml"
 MICRODUCK_ALLCOLLISIONS_BACKLASH_XML: Path = _ROBOT_DIR / "robot_allcollisions_backlash.xml"
 
 assert MICRODUCK_WALK_XML.exists(), f"XML not found: {MICRODUCK_WALK_XML}"
@@ -69,7 +62,7 @@ SERVO_GEOM_SUFFIX = "_servo_collision"
 
 
 def name_servo_collision_geoms(spec: mujoco.MjSpec) -> mujoco.MjSpec:
-    """Name every collision geom that is an XL330 housing mesh.
+    """Name housing collision geoms from the current CAD identifiers.
 
     The onshape-to-robot export leaves collision geoms unnamed (only the two
     foot soles are named by the export config). The protective-fall tasks need a
@@ -79,13 +72,24 @@ def name_servo_collision_geoms(spec: mujoco.MjSpec) -> mujoco.MjSpec:
     FULL_COLLISION (condim 1) like the other named collision geoms.
     """
     counts: dict[str, int] = {}
-    for geom in spec.geoms:
-        if geom.meshname != SERVO_MESH_NAME or (geom.contype == 0 and geom.conaffinity == 0):
+    for geom in list(spec.geoms):
+        if geom.meshname != SERVO_MESH_NAME:
             continue
         body = geom.parent.name
         k = counts.get(body, 0)
         counts[body] = k + 1
-        geom.name = f"{body}_{k}{SERVO_GEOM_SUFFIX}"
+        name = f"{body}_{k}{SERVO_GEOM_SUFFIX}"
+        if geom.contype == 0 and geom.conaffinity == 0:
+            # The local export has visual housings only. Add a floor-contact
+            # copy for the protective-fall sensor, without altering the mesh,
+            # explicit body inertia or enabling overlapping self contacts.
+            geom.parent.add_geom(
+                name=name, type=mujoco.mjtGeom.mjGEOM_MESH,
+                meshname=geom.meshname, pos=geom.pos, quat=geom.quat,
+                contype=1, conaffinity=0, group=3, mass=0.,
+            )
+        else:
+            geom.name = name
     return spec
 
 
@@ -146,47 +150,11 @@ FULL_COLLISION = CollisionCfg(
     friction={r"^(left|right)_foot_collision$": (1.0,)},
 )
 
-# -- Old actuator (XML position, MuJoCo built-in PD + friction) --
-# actuators = DelayedActuatorCfg(
-    # delay_min_lag=0,
-    # delay_max_lag=3,
-    # base_cfg=XmlPositionActuatorCfg(joint_names_expr=(r".*",)),
-# )
-
-# -- BAM M6 actuator (full voltage control + load-dependent friction) --
-# Exclude passive_* joints (jaw linkage in the new model has no XML actuator).
-# Voltage domain randomization (mirrors mjlab_microban):
-#   - vin_range: per-env battery voltage sampled at startup (replaces fixed vin)
-#   - vin_drop_gain_range: load-dependent voltage sag V_drop = gain * sum(|tau|)
-#   - vin_min: hard floor on the effective voltage after sag
-# kp_fw kept at 200 (microduck's preserved firmware stiffness; microban uses 125).
-_BAM_ACTUATOR_KWARGS = dict(
-    motor_name="xl330",
-    model="m6",
-    target_names_expr=(r"^(?!passive_).*",),
-    kp_fw=200.0,  # microduck's preserved firmware stiffness (microban uses 125)
-    # vin_range=(6.9, 7.9),
-    vin_range=(6.5, 8.2),
-    vin_drop_gain_range=(0.0, 0.2),
-    vin_min=6.0,
-    # max_current=1.75,
-    delay_min_lag=3,
-    delay_max_lag=6,
-)
-actuators = FrictionDRBamActuatorCfg(**_BAM_ACTUATOR_KWARGS)
-
-# Same BAM actuator, but the firmware position loop reads the encoder THROUGH
-# the passive_<joint>_backlash hinges (the real encoder is on the output side
-# of the gear play). Only for the backlash model; the target regex already
-# excludes the passive_* backlash joints from actuation.
-backlash_actuators = BacklashEncoderBamActuatorCfg(**_BAM_ACTUATOR_KWARGS)
-
-# -- BAM M4 actuator
-# actuators = DelayedActuatorCfg(
-    # delay_min_lag=0,
-    # delay_max_lag=3,
-    # base_cfg=make_bam_m4_actuator_cfg(),
-# )
+# All task factories use HD1910, including legacy task IDs.
+# "xl330" remains a CAD mesh identifier, never an actuator selection.
+_BAM_ACTUATOR_KWARGS = actuator_kwargs()
+actuators = FeetechBamActuatorCfg(**_BAM_ACTUATOR_KWARGS)
+backlash_actuators = FeetechBacklashActuatorCfg(**_BAM_ACTUATOR_KWARGS)
 
 # HOME frame for the backlash model. HOME_FRAME's unanchored patterns
 # (e.g. r".*left_hip_roll.*") would also match passive_left_hip_roll_backlash

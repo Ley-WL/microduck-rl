@@ -12,6 +12,7 @@ convert by hand.
 import os
 import re
 import sys
+import hashlib
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Literal
@@ -70,6 +71,8 @@ def _iteration_of(checkpoint_path: Path | None) -> int | None:
 
 
 def run_export(task_id: str, cfg: ExportConfig) -> ExportResult:
+    from mjlab_microduck.robot.hardware_profile import verify_inputs
+    verify_inputs()
     configure_torch_backends()
 
     device = cfg.device or ("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -264,6 +267,13 @@ def run_export(task_id: str, cfg: ExportConfig) -> ExportResult:
     runner.export_policy_to_onnx(path, filename)
 
     metadata = get_base_metadata(runner.env.unwrapped, run_path=cfg.checkpoint_file)
+    from mjlab_microduck.robot.hardware_profile import HARDWARE_PROFILE, HD1910_PARAMS, ROBOT_ROOT
+    metadata.update(
+        export_hardware_profile=HARDWARE_PROFILE,
+        export_actuator_params_sha256=hashlib.sha256(HD1910_PARAMS.read_bytes()).hexdigest(),
+        export_geometry_manifest_sha256=hashlib.sha256((ROBOT_ROOT / "hardware-inputs.json").read_bytes()).hexdigest(),
+        hardware_provenance_scope="export configuration; checkpoint training provenance must be verified separately",
+    )
     attach_metadata_to_onnx(onnx_path, metadata)
 
     print(f"Written {onnx_path}")

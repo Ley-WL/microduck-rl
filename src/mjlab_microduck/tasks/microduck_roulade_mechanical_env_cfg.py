@@ -23,20 +23,7 @@ INPUTS = Path(os.environ.get('MICRODUCK_ROULADE_INPUTS', CASE / 'artifacts/roula
 
 def get_roll_spec():
     spec = edit_mechanical_spec(get_skills_spec())
-    contract = json.loads((INPUTS / 'contract.json').read_text())
-    bodies = {b.name: b for b in spec.bodies}
-    for row in contract['model']['bodies']:
-        if row['name'] == 'world':
-            continue
-        body = bodies[row['name']]
-        body.mass = row['mass_kg']
-        body.fullinertia = np.asarray([np.nan, 0., 0., 0., 0., 0.])
-        body.inertia = np.asarray(row['inertia'])
-        body.ipos = np.asarray(row['ipos'])
-        body.iquat = np.asarray(row['iquat'])
-        body.pos = np.asarray(row['pos'])
-        body.quat = np.asarray(row['quat'])
-        body.explicitinertial = True
+    # Keep the current local model; no donor mass/inertia/transform overrides.
     return spec
 
 def completion_time_cost(accum, head_latch, gravity_z, height):
@@ -93,7 +80,7 @@ def make_roll_transfer_cfg(play=False, repair=True):
     actuator = cfg.scene.entities['robot'].articulation.actuators[0]
     actuator.vin_range = (6.8, 8.) if not play else (7.4, 7.4)
     actuator.vin_drop_gain_range = (0., .4) if not play else (0., 0.)
-    actuator.vin_min = 5.7
+    actuator.vin_min = 4.0
     # This is a scalar supply approximation, not a fitted battery circuit.
     for term in ('base_ang_vel', 'projected_gravity'):
         cfg.observations['actor'].terms[term].delay_min_lag = 0

@@ -19,7 +19,7 @@ from mjlab_microduck.actuator.feetech_bam import FeetechBamActuatorCfg
 from mjlab_microduck.robot.microduck_constants import HOME_FRAME
 from mjlab_microduck.robot.ground_contact import lowest_mesh_z
 from . import mdp
-from .microduck_hd1910_stand_env_cfg import ROBOT_DIR, PARAMS
+from mjlab_microduck.robot.hardware_profile import ROBOT_DIR, HD1910_PARAMS as PARAMS, actuator_kwargs
 from .microduck_standup_env_cfg import make_microduck_standup_env_cfg, MicroduckStandUpRlCfg
 from .microduck_sitstand_env_cfg import make_microduck_sitstand_env_cfg, MicroduckSitStandRlCfg, SITTING_TARGET_OVERRIDES
 from .xgoduck_runtime_actions import XgoDuckPositionActionCfg
@@ -85,12 +85,10 @@ def _adapt(cfg, play):
         friction=(1., .005, .0001),
         solref={r'^body_ground_\d+$': (.004, 1.)},
     ),)
-    robot.articulation.actuators = (FeetechBamActuatorCfg(
-        json_path=str(PARAMS), target_names_expr=(r"^(?!passive_).*",),
-        kp_fw=5., vin_range=(7.4, 8.) if not play else (7.4, 7.4),
-        vin_drop_gain_range=(0., .2) if not play else (0., 0.),
-        vin_min=4., delay_min_lag=3, delay_max_lag=6,
-    ),)
+    actuator = actuator_kwargs()
+    if play:
+        actuator.update(vin_range=(7.4, 7.4), vin_drop_gain_range=(0., 0.))
+    robot.articulation.actuators = (FeetechBamActuatorCfg(**actuator),)
     cfg.actions["joint_pos"] = XgoDuckPositionActionCfg(**vars(cfg.actions["joint_pos"]), alpha=.45)
     # Do not add XML target clipping: same model-output treatment as XgoDuck.
     cfg.actions["joint_pos"].clip = None

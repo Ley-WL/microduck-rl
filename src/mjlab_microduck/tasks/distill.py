@@ -61,7 +61,7 @@ EXPERT_CACHE_DIR = Path("logs/rsl_rl/expert_cache")
 def default_bc_cfg() -> dict:
     return {
         # Expert checkpoint: either a local ``checkpoint_path`` or a wandb run.
-        "wandb_run_path": "pollen-robotics/mjlab_microduck/69u48n8l",
+        "wandb_run_path": None,
         "checkpoint_name": "model_9750.pt",
         "checkpoint_path": None,
         "coef": 1.0,               # MSE weight (actions in rad)
@@ -74,7 +74,7 @@ def default_bc_cfg() -> dict:
         "gravity_slice": (3, 6),   # projected gravity in the actor obs
         "twist_slice": (48, 51),   # twist command slot → zeroed for the stand expert
         # Walk anchor (run-3 lesson): the warm-start walk teaches frames with tilt < anchor_tilt_deg.
-        "anchor_wandb_run_path": "pollen-robotics/mjlab_microduck/441tzs6d",
+        "anchor_wandb_run_path": None,
         "anchor_checkpoint_name": "model_3750.pt",
         "anchor_checkpoint_path": None,
         "anchor_coef": 1.0,
@@ -86,7 +86,7 @@ def default_bc_cfg() -> dict:
 class PpoWithExpertBcCfg(PpoWithSymmetryCfg):
     """PpoWithSymmetryCfg + fallen-gated expert behavior cloning."""
 
-    bc_cfg: dict | None = field(default_factory=default_bc_cfg)
+    bc_cfg: dict | None = None
     class_name: str = "mjlab_microduck.tasks.distill.PpoWithExpertBc"
 
 

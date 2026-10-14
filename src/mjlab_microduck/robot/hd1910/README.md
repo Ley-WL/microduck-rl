@@ -21,8 +21,8 @@
 ## 当前应用
 
 `Mjlab-Velocity-{Flat,Rough}-MicroDuck-HD1910` 使用这份参数，沿用上游训练设置：
-`kp_fw=5`、`vin_range=(7.4, 8.0)`、`vin_min=7.0`、负载压降增益 `(0.0, 0.2)`、
-命令延迟 `3–6` 个仿真步。保留本地 Microduck 几何与关节约定。
+`kp_fw=5`、`vin_range=(7.4, 8.0)`、`vin_min=4.0`、负载压降增益 `(0.0, 0.2)`、
+命令延迟 `3–6` 个仿真步。所有已注册任务（包含旧名称）均使用本地 `robot/replica` STL/MJCF 与关节约定；不再提供 XL330 参数回退。统一配置见 `robot/hardware_profile.py`。
 
 `max_velocity=100` 是上游用于近似取消目标位置斜率限速的设置，不是宣称
 舵机空载转速为 100 rad/s；模型仍通过供电和反电动势限制速度。

@@ -13,8 +13,7 @@ from .microduck_velocity_env_cfg import make_microduck_velocity_env_cfg, Microdu
 from . import mdp
 from .xgoduck_runtime_actions import XgoDuckPositionActionCfg
 
-ROBOT_DIR = Path(__file__).resolve().parents[1] / "robot" / "replica"
-PARAMS = ROBOT_DIR.parent / "hd1910" / "1910_m6.json"
+from mjlab_microduck.robot.hardware_profile import ROBOT_DIR, HD1910_PARAMS as PARAMS, actuator_kwargs
 
 def get_replica_spec():
     return mujoco.MjSpec.from_file(str(ROBOT_DIR / "robot_walk.xml"))
@@ -51,11 +50,7 @@ def make_hd1910_stand_env_cfg(play=False):
     cfg.actions["joint_pos"] = XgoDuckPositionActionCfg(**vars(cfg.actions["joint_pos"]), alpha=0.45)
     robot = cfg.scene.entities["robot"]
     robot.spec_fn = get_replica_spec
-    robot.articulation.actuators = (FeetechBamActuatorCfg(
-        json_path=str(PARAMS), target_names_expr=(r"^(?!passive_).*",),
-        kp_fw=5.0, vin_range=(7.4, 8.0), vin_drop_gain_range=(0.0, 0.2),
-        vin_min=4.0, delay_min_lag=3, delay_max_lag=6,
-    ),)
+    robot.articulation.actuators = (FeetechBamActuatorCfg(**actuator_kwargs()),)
     # Keep all 61 observation slots; tiny nonzero samples keep command weights alive.
     twist = cfg.commands["twist"]
     twist.rel_standing_envs = 0.9 if not play else 1.0

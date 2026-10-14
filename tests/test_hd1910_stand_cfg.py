@@ -21,7 +21,7 @@ def test_stand_task_preserves_command_slots_and_zero_idle():
     assert c.rewards["action_rate_l2"].weight < 0
     assert c.rewards["leg_alignment_cost"].weight < 0
 
-def test_supplied_model_and_no_mutation_of_xl330_task():
+def test_supplied_model_and_legacy_task_uses_hd1910():
     p = json.loads(PARAMS.read_text())
     assert p["actuator"] == "sts3215" and p["model"] == "m6"
     c = make_hd1910_stand_env_cfg()
@@ -29,7 +29,8 @@ def test_supplied_model_and_no_mutation_of_xl330_task():
     assert a.json_path == str(PARAMS) and a.motor_name is None and a.vin_min == 4.0
     c.commands["head_pose"].ranges = ()
     assert len(make_hd1910_stand_env_cfg().commands["head_pose"].ranges) == 4
-    assert load_env_cfg("Mjlab-Velocity-Flat-MicroDuck").scene.entities["robot"].articulation.actuators[0].motor_name == "xl330"
+    legacy = load_env_cfg("Mjlab-Velocity-Flat-MicroDuck").scene.entities["robot"].articulation.actuators[0]
+    assert legacy.motor_name is None and legacy.json_path == str(PARAMS)
 
 
 def test_stand_reward_rejects_twisted_legs_but_not_head_motion():

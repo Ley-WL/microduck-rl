@@ -10,34 +10,31 @@ import pickle
 import queue
 import select
 import sys
-import termios
+try:
+    import termios
+    import tty
+except ImportError:  # CPU model utilities also run in Windows verification.
+    termios = tty = None
 import threading
 import time
-import tty
 import numpy as np
 import mujoco
 import mujoco.viewer
 import onnxruntime as ort
 
-MICRODUCK_XML = "src/mjlab_microduck/robot/microduck/scene.xml"
-# MICRODUCK_XML = "src/mjlab_microduck/robot/microduck/scene_ramps.xml"
-# MICRODUCK_XML = "src/mjlab_microduck/robot/microduck/scene_floor_objects.xml"
-# MICRODUCK_XML = "src/mjlab_microduck/robot/microduck/scene_robot_walk.xml"
-MICRODUCK_ROLLERS_XML = "src/mjlab_microduck/robot/microduck/scene_rollers.xml"
-MICRODUCK_BALL_XML = "src/mjlab_microduck/robot/microduck/scene_ball.xml"
-
-# BAM M6 defaults — MUST mirror `_BAM_ACTUATOR_KWARGS` in
-# src/mjlab_microduck/robot/microduck_constants.py (the actuator every policy is
-# trained against in warp). Not imported from there: that module drags in
-# mjlab/torch/warp (~16 s import) for a CPU rehearsal script. Locked by
-# tests/test_infer_policy_bam.py.
-BAM_MOTOR_NAME = "xl330"
+from mjlab_microduck.robot.hardware_profile import (
+    ROBOT_DIR, HD1910_PARAMS, KP_FW, VIN_RANGE, VIN_DROP_GAIN_RANGE, VIN_MIN,
+)
+MICRODUCK_XML = str(ROBOT_DIR / "scene.xml")
+MICRODUCK_ROLLERS_XML = str(ROBOT_DIR / "scene_rollers.xml")
+MICRODUCK_BALL_XML = str(ROBOT_DIR / "scene_ball.xml")
+BAM_MOTOR_NAME = None
 BAM_MODEL = "m6"
-BAM_KP_FW = 200.0                 # microduck's preserved firmware stiffness
-BAM_VIN_RANGE = (6.5, 8.2)        # per-env battery voltage DR in training
-BAM_VIN_DROP_GAIN_RANGE = (0.0, 0.2)  # load-dependent sag V_drop = gain * sum|tau|
-BAM_VIN_MIN = 6.0                 # floor on effective voltage after sag
-BAM_MAX_CURRENT = None            # training runs WITHOUT the firmware current limiter
+BAM_KP_FW = KP_FW
+BAM_VIN_RANGE = VIN_RANGE
+BAM_VIN_DROP_GAIN_RANGE = VIN_DROP_GAIN_RANGE
+BAM_VIN_MIN = VIN_MIN
+BAM_MAX_CURRENT = None
 # Stiff joint-friction constraint, copied from bam.mjlab.BamActuator
 # (stiff_frictionloss=True in training): warp has no noslip solver, so BAM
 # stiffens frictionloss so a statically-held joint does not creep. Mirrored
@@ -47,9 +44,9 @@ BAM_STIFF_SOLIMP_FRICTION = (0.99, 0.9999, 0.001, 0.5, 2.0)
 
 
 def load_bam_model(kp_fw: float, vin: float, max_current):
-    """Build the BAM M6 model + XL330 voltage-controlled actuator."""
+    """Build the local HD1910 BAM model."""
     from bam.model import load_model
-    bam_model = load_model(motor_name=BAM_MOTOR_NAME, model=BAM_MODEL)
+    bam_model = load_model(str(HD1910_PARAMS))
     bam_model.actuator.kp = kp_fw
     bam_model.actuator.vin = vin
     bam_model.actuator.max_current = max_current if (max_current and max_current > 0) else None
@@ -95,8 +92,14 @@ def load_mujoco_with_bam(xml_path: str, bam_model, timestep: float, vin_drop_gai
     model = spec.compile()
     model.opt.timestep = timestep
     data = mujoco.MjData(model)
-    bam_ctrl = MujocoController(bam_model, names, model, data,
+    class Hd1910Controller(MujocoController):
+        def reset(self, qpos):
+            super().reset(qpos)
+            self.model.actuator.q_target_smooth = qpos[self.qpos_indexes].copy()
+
+    bam_ctrl = Hd1910Controller(bam_model, names, model, data,
                                 vin_drop_gain=vin_drop_gain, vin_min=vin_min)
+    bam_ctrl.reset(data.qpos)
     print(f"BAM {BAM_MODEL} actuators on {len(names)} joints: kt={kt:.4f} R={R:.4f} "
           f"vin={bam_model.actuator.vin:.2f}V kp_fw={bam_model.actuator.kp:.0f} "
           f"vin_drop_gain={vin_drop_gain} vin_min={vin_min} "
@@ -156,7 +159,7 @@ class TerminalInput:
 
     def __init__(self):
         self._queue = queue.Queue()
-        self.enabled = sys.stdin.isatty()
+        self.enabled = termios is not None and sys.stdin.isatty()
         self._fd = sys.stdin.fileno() if self.enabled else -1
         self._old_attrs = None
         self._stop = threading.Event()
@@ -1198,8 +1201,7 @@ def main():
                              "Required for policies trained with the new pose-command-tracking setup. "
                              "Old policies (51D obs, head_offset added to ctrl) need this flag OFF.")
     parser.add_argument("--no-bam", action="store_true",
-                        help="Use the XML MuJoCo position actuators instead of the BAM M6 "
-                             "voltage/friction model the policies are trained against.")
+                        help="Removed: rejected to prevent an old XML-PD fallback.")
     parser.add_argument("--vin", type=float, default=7.4,
                         help="BAM battery voltage [V]. Training samples per-env in "
                              f"{BAM_VIN_RANGE}; 7.4 = nominal 2S LiPo.")
@@ -1209,9 +1211,7 @@ def main():
     parser.add_argument("--kp-fw", type=float, default=BAM_KP_FW,
                         help="BAM firmware P-gain (training uses %(default)s).")
     parser.add_argument("--current-limit", type=float, default=0.0,
-                        help="XL330 firmware current limit [A]. With BAM this is the duty-cycle "
-                             "limiter of the voltage model (as bam models it); with --no-bam the "
-                             "actuator force is clipped to +/- current_limit * kt. Training runs "
+                        help="Optional BAM current-limit diagnostic [A], not a hardware register value. Training runs "
                              "WITHOUT a current limit, so the default is off (<=0).")
     parser.add_argument("--foot-friction", type=float, default=None,
                         help="Override the foot sliding friction (mu) to emulate the real grippy "
@@ -1270,35 +1270,12 @@ def main():
     else:
         xml_path = MICRODUCK_XML
     print(f"Loading MuJoCo model from: {xml_path}")
-    bam_ctrl = None
-    if not args.no_bam:
-        # Same actuator the policies are trained against in warp (BAM M6 XL330,
-        # voltage control + load-dependent friction budget), driven on CPU by
-        # bam.mujoco.MujocoController. Voltage DR collapses to fixed --vin /
-        # --vin-drop-gain (training samples them per env).
-        bam_model = load_bam_model(args.kp_fw, args.vin, args.current_limit)
-        vin_drop_gain = args.vin_drop_gain if args.vin_drop_gain > 0 else None
-        model, data, bam_ctrl, _bam_names = load_mujoco_with_bam(
-            xml_path, bam_model, 0.005, vin_drop_gain, BAM_VIN_MIN)
-    else:
-        model = mujoco.MjModel.from_xml_path(xml_path)
-        model.opt.timestep = 0.005
-        data = mujoco.MjData(model)
-        print("Legacy MuJoCo position actuators (--no-bam): NOT the actuator the policy was trained with")
-
-    # (--no-bam only) XL330 firmware current limit. The motors saturate current
-    # at ~1.75 A; since torque = kt * current, this caps the actuator force at
-    # +/- kt * I_max. With BAM the limiter is modelled inside the voltage
-    # controller instead (see load_bam_model). kt comes from the bam package.
-    if args.no_bam and args.current_limit and args.current_limit > 0:
-        from bam.model import load_model
-        kt = load_model(motor_name="xl330", model="m6").kt.value
-        torque_limit = kt * args.current_limit
-        model.actuator_forcerange[:, 0] = -torque_limit
-        model.actuator_forcerange[:, 1] = torque_limit
-        model.actuator_forcelimited[:] = 1
-        print(f"Current limit: {args.current_limit:.2f} A -> torque limit "
-              f"+/-{torque_limit:.4f} Nm (kt={kt:.4f})")
+    if args.no_bam:
+        parser.error("--no-bam was removed: use the HD1910 BAM hardware profile")
+    bam_model = load_bam_model(args.kp_fw, args.vin, args.current_limit)
+    vin_drop_gain = args.vin_drop_gain if args.vin_drop_gain > 0 else None
+    model, data, bam_ctrl, _bam_names = load_mujoco_with_bam(
+        xml_path, bam_model, 0.005, vin_drop_gain, BAM_VIN_MIN)
 
     # Foot contact override — emulate the real grippy + soft PU sole to check
     # whether it reproduces the on-robot forward-fall-at-speed. Training used
@@ -1382,7 +1359,8 @@ def main():
     for i, qpos_idx in enumerate(policy.joint_qpos_indices):
         data.qpos[qpos_idx] = policy.default_pose[i]
     if bam_ctrl is not None:
-        bam_ctrl.reset(data.qpos)   # clears voltage-drop state, q_target = current qpos
+        bam_ctrl.reset(data.qpos)
+        bam_ctrl.model.actuator.q_target_smooth = data.qpos[bam_ctrl.qpos_indexes].copy()
     policy.set_position_targets(policy.default_pose)
     mujoco.mj_forward(model, data)
 
@@ -1447,19 +1425,14 @@ def main():
     if args.record:
         original_kp = model.actuator_gainprm[:, 0].copy()
 
-    # Standby (--record) gains: the legacy path sets the position-actuator kp
-    # to 2.0 (XML kp 0.55 ~ kp_fw 200). Under BAM apply the same ratio to the
-    # firmware gain so both paths hold with the same relative stiffness.
-    _XML_KP_NOMINAL = 0.55
-    _STANDBY_KP = 2.0
-
+    # Recording uses the same HD1910 firmware gain as policy execution.
     def set_standby_gains(on: bool):
         if bam_ctrl is not None:
-            bam_ctrl.model.actuator.kp = args.kp_fw * (_STANDBY_KP / _XML_KP_NOMINAL if on else 1.0)
+            bam_ctrl.model.actuator.kp = args.kp_fw
             print(f"  BAM kp_fw set to {bam_ctrl.model.actuator.kp:.0f}")
             return
         for i in range(model.nu):
-            kp = _STANDBY_KP if on else original_kp[i]
+            kp = original_kp[i]
             model.actuator_gainprm[i, 0] = kp
             model.actuator_biasprm[i, 1] = -kp
 

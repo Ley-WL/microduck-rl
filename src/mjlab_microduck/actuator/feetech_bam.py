@@ -10,7 +10,10 @@ from dataclasses import dataclass
 import torch
 from mjlab.actuator.actuator import ActuatorCmd
 
-from .friction_dr_bam import FrictionDRBamActuator, FrictionDRBamActuatorCfg
+from .friction_dr_bam import (
+    FrictionDRBamActuator, FrictionDRBamActuatorCfg,
+    BacklashEncoderBamActuator,
+)
 
 
 class FeetechBamActuator(FrictionDRBamActuator):
@@ -43,3 +46,13 @@ class FeetechBamActuator(FrictionDRBamActuator):
 class FeetechBamActuatorCfg(FrictionDRBamActuatorCfg):
     def build(self, entity, target_ids, target_names) -> FeetechBamActuator:
         return FeetechBamActuator(self, entity, target_ids, target_names)
+
+
+class FeetechBacklashActuator(FeetechBamActuator, BacklashEncoderBamActuator):
+    """Feetech reset lifecycle plus output-side backlash encoder feedback."""
+
+
+@dataclass(kw_only=True)
+class FeetechBacklashActuatorCfg(FeetechBamActuatorCfg):
+    def build(self, entity, target_ids, target_names) -> FeetechBacklashActuator:
+        return FeetechBacklashActuator(self, entity, target_ids, target_names)

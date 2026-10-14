@@ -240,7 +240,7 @@ NUM_STEPS_PER_ENV = 24
 # under the conditions it was trained under. Set False to train from scratch
 # with the original from-scratch schedule (phase constants below scale up).
 WARM_START = True
-WARM_START_RUN = "pollen-robotics/mjlab_microduck/441tzs6d"   # alpha_walking.onnx
+WARM_START_RUN = None  # Supply a compatible local HD1910 checkpoint explicitly.
 WARM_START_CHECKPOINT = "model_3750.pt"
 
 # Phase boundaries (PPO iterations; env step counter scales by num_steps_per_env=24).
@@ -289,7 +289,7 @@ RECOVERY_ECON_KICKIN_ITER = 600 if WARM_START else 1200
 # Run-2 fix (1bqctpkq, 0 recoveries @1085 even with the attempt tax relieved):
 # distill the deployed stand expert into the fallen frames (see distill.py).
 # The expert recovers 100% face-down/up and 95% side on this model in ~1 s.
-ENABLE_EXPERT_BC = True
+ENABLE_EXPERT_BC = False
 EXPERT_BC_COEF = 1.0
 EXPERT_BC_GATE_TILT_DEG = 35.0
 
