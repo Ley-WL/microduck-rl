@@ -36,3 +36,38 @@ class FeedbackTeacher:
         result[[0,2]]=np.clip(desired+self.correction,[-.3,-1.2],[.3,1.2])
         self.previous[:]=desired
         return result
+
+
+class TensorFeedbackTeacher:
+    """Batched equivalent for GPU demonstration generation; no runtime use."""
+    def __init__(self):
+        self.filtered=None
+
+    def query(self, command, actual, dt=.02, enabled=None):
+        import torch
+        desired=command[:,[0,2]]
+        if self.filtered is None:
+            self.filtered=torch.zeros_like(desired)
+            self.integral=torch.zeros_like(desired)
+            self.correction=torch.zeros_like(desired)
+            self.previous=torch.zeros_like(desired)
+        if not 0 < dt <= .1:raise ValueError('Invalid feedback period')
+        active=desired.norm(dim=-1)>=.001
+        if enabled is not None:active=active & enabled
+        reversal=(desired*self.previous<0)&(desired.abs()>.02)
+        self.integral=torch.where(reversal,0.,self.integral)
+        self.correction=torch.where(reversal,0.,self.correction)
+        self.filtered=self.filtered+dt/(.35+dt)*(actual-self.filtered)
+        error=desired-self.filtered
+        bounds=desired.new_tensor([.12,.6])
+        self.integral=(self.integral+dt*.8*error).clamp(-bounds,bounds)
+        target=(desired.new_tensor([.3,.2])*error+self.integral).clamp(-bounds,bounds)
+        slew=dt*desired.new_tensor([.3,1.2])
+        self.correction=self.correction+(target-self.correction).clamp(-slew,slew)
+        result=command.clone()
+        corrected=(desired+self.correction).clamp(desired.new_tensor([-.3,-1.2]),desired.new_tensor([.3,1.2]))
+        result[:,[0,2]]=torch.where(active[:,None],corrected,desired)
+        for name in ('filtered','integral','correction'):
+            setattr(self,name,torch.where(active[:,None],getattr(self,name),0.))
+        self.previous=desired.clone()
+        return result

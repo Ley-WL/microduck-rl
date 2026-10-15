@@ -19,7 +19,9 @@ p.add_argument('--teacher-map', type=Path, help='Offline diagnostic teacher quer
 p.add_argument('--long-hold', action='store_true', help='30s: move1-11, stop11-16, reverse16-26, stop26-30')
 p.add_argument('--fixed-actuator', action='store_true', help='7.4V/no droop/4 physics ticks; other DR retained')
 p.add_argument('--nominal-dr', action='store_true', help='Disable listed parameter/sensor DR; reset distribution remains')
+p.add_argument('--feedback-teacher', action='store_true', help='Privileged simulation reference, never a deployed policy')
 a = p.parse_args()
+assert not (a.feedback_teacher and a.teacher_map), 'Select one simulation teacher'
 assert not a.nominal_dr or a.fixed_actuator, 'Nominal DR requires fixed actuator'
 assert not ((a.long_hold or a.fixed_actuator or a.nominal_dr) and a.baseline_cache), 'Diagnostic profiles cannot reuse legacy baseline cache'
 ROOT = Path(__file__).resolve().parents[2]
@@ -57,6 +59,10 @@ for seed in a.seeds:
         cfg.observations['actor'].enable_corruption = False
         env = ManagerBasedRlEnv(cfg, device='cuda:0')
         try:
+            feedback=None
+            if a.feedback_teacher and label=='candidate':
+                from walk_feedback_teacher import TensorFeedbackTeacher
+                feedback=TensorFeedbackTeacher()
             agent = asdict(rl_cfg()); agent['upload_model'] = False
             runner = MjlabOnPolicyRunner(RslRlVecEnvWrapper(env), agent, log_dir=None, device=env.device)
             runner.load(str(ROOT / checkpoint), load_cfg={'actor': True}, map_location=env.device)
@@ -99,6 +105,12 @@ for seed in a.seeds:
                     query=obs
                     if a.teacher_map and label=='candidate':
                         query=guidance.query(obs)
+                    if feedback is not None:
+                        view=obs['actor'].clone()
+                        actual_feedback=torch.stack((robot.data.root_link_lin_vel_b[:,0],robot.data.root_link_ang_vel_b[:,2]),-1)
+                        active=env.command_manager.get_command('twist').norm(dim=-1)>.001
+                        view[:,48:51]=feedback.query(view[:,48:51],actual_feedback,enabled=active)
+                        query={**obs,'actor':view}
                     action = actor(query)
                 obs, _, done, timeout, _ = env.step(action)
                 tilt = torch.rad2deg(torch.acos((-robot.data.projected_gravity_b[:, 2]).clamp(-1, 1)))
@@ -185,7 +197,7 @@ for seed in a.seeds:
     comparisons.append(dict(seed=seed, lost=lost, paired=int(keep.sum()), perCase=per_case,
         aggregate=aggregate, directionRegressionPassed=bool(directional), passed=bool(passed)))
 result = dict(cases=cases, results=rows, comparisons=comparisons, accepted=all(r['passed'] for r in comparisons),
-    longHold=a.long_hold, fixedActuator=a.fixed_actuator, nominalDr=a.nominal_dr,
+    longHold=a.long_hold, fixedActuator=a.fixed_actuator, nominalDr=a.nominal_dr, privilegedFeedbackTeacher=a.feedback_teacher,
     candidateCheckpoint=a.candidate, baselineCache=str(a.baseline_cache) if a.baseline_cache else None,
     teacherMap=str(a.teacher_map) if a.teacher_map else None,
     teacherMapSha256=hashlib.sha256(a.teacher_map.read_bytes()).hexdigest() if a.teacher_map else None,

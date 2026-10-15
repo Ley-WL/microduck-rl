@@ -1,0 +1,47 @@
+{
+  "simulationOnly": true,
+  "teacherOnly": true,
+  "originalGateAccepted": false,
+  "results": {
+    "baseline": {
+      "survived": 120,
+      "vxBias": 0.013430433097873144,
+      "yawBias": 0.0765142931405478,
+      "stop": [
+        0.006807211539732331,
+        0.033345172707534704
+      ]
+    },
+    "candidate": {
+      "survived": 120,
+      "vxBias": 0.0010684414768585763,
+      "yawBias": 0.006711768904960991,
+      "stop": [
+        0.006494900005297192,
+        0.03306676744153568
+      ]
+    }
+  },
+  "stopRegressions": [
+    {
+      "seed": 210151,
+      "command": [
+        0.0,
+        0.6
+      ],
+      "baseline": [
+        0.006331743206828833,
+        0.03092748997732997
+      ],
+      "teacher": [
+        0.00812090770341456,
+        0.03300852607935667
+      ]
+    }
+  ],
+  "archive": {
+    "sha256": "a097db46a530b15c4bbeb2e86e0a870cc86709d2c8776ea74211ef4afcdc0005",
+    "verified": true,
+    "bytes": 66764
+  }
+}

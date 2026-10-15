@@ -1,0 +1,45 @@
+[
+  {
+    "steps": 500,
+    "initialValidationRms": 0.013152082450687885,
+    "validationRms": 0.005705834366381168,
+    "policySha256": "5a5181b864db5cff2dbda5dd7556319be37d67d2fd633fcd9cce0db685bca695",
+    "onnxMaxError": 7.152557373046875e-07,
+    "normalizerUnchanged": true,
+    "feedbackUsedAtRuntime": false,
+    "hardwareAccess": false,
+    "lost": 0,
+    "bias": {
+      "baseline": [
+        0.012597635979792207,
+        0.06879266844713736
+      ],
+      "candidate": [
+        0.0120466327318771,
+        0.0876700140961475
+      ]
+    },
+    "stopPassed": false,
+    "strideRetained": true,
+    "cpuBaseline": {
+      "error": [
+        0.014549597088893987,
+        0.21649659836112553
+      ],
+      "stop": 0.003857409707602792,
+      "stride": 0.1051730880831374
+    },
+    "cpuCandidate": {
+      "error": [
+        0.004346626862393461,
+        0.05641424426021225
+      ],
+      "stop": 0.004144597239970203,
+      "stride": 0.1043818601675095
+    },
+    "cpuPassed": true,
+    "cpuDirectionsPassed": true,
+    "continueTraining": false,
+    "originalScreenAccepted": false
+  }
+]

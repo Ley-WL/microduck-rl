@@ -1,0 +1,234 @@
+{
+  "simulationOnly": true,
+  "seeds": [
+    209101,
+    209107
+  ],
+  "window": [
+    7,
+    17
+  ],
+  "results": [
+    {
+      "policy": "v6",
+      "commandVx": -0.4,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        -0.3288788539251193,
+        0.08861416509392543
+      ],
+      "meanFootTravel": 0.15268423180330248
+    },
+    {
+      "policy": "v6",
+      "commandVx": -0.3,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        -0.26948537579063714,
+        -0.08187538939691322
+      ],
+      "meanFootTravel": 0.13153090175937668
+    },
+    {
+      "policy": "v6",
+      "commandVx": -0.15,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        -0.15394734422445014,
+        -0.18924169597393414
+      ],
+      "meanFootTravel": 0.07710163079970438
+    },
+    {
+      "policy": "v6",
+      "commandVx": -0.05,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        -6.40415415579807e-05,
+        0.00025482826002565907
+      ],
+      "meanFootTravel": null
+    },
+    {
+      "policy": "v6",
+      "commandVx": 0.05,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        -0.0002106965546240968,
+        -0.001223678779012128
+      ],
+      "meanFootTravel": null
+    },
+    {
+      "policy": "v6",
+      "commandVx": 0.15,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        0.1608087250681418,
+        -0.016789320995983424
+      ],
+      "meanFootTravel": 0.08774943758485726
+    },
+    {
+      "policy": "v6",
+      "commandVx": 0.3,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        0.3305203682412164,
+        0.08438476975381523
+      ],
+      "meanFootTravel": 0.16126435128267746
+    },
+    {
+      "policy": "v6",
+      "commandVx": 0.4,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        0.38096877951869046,
+        0.23517477621993096
+      ],
+      "meanFootTravel": 0.1833221613528362
+    },
+    {
+      "policy": "v11",
+      "commandVx": -0.4,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        -0.32686391036061446,
+        0.276767778957048
+      ],
+      "meanFootTravel": 0.15219114669623515
+    },
+    {
+      "policy": "v11",
+      "commandVx": -0.3,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        -0.2811798802821894,
+        0.06188619166552042
+      ],
+      "meanFootTravel": 0.1357878816126989
+    },
+    {
+      "policy": "v11",
+      "commandVx": -0.15,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        -0.16215774901517505,
+        -0.06362009183605383
+      ],
+      "meanFootTravel": 0.08170356789841304
+    },
+    {
+      "policy": "v11",
+      "commandVx": -0.05,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        -0.00011859056455161969,
+        0.0021592919234575225
+      ],
+      "meanFootTravel": null
+    },
+    {
+      "policy": "v11",
+      "commandVx": 0.05,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        -0.00014985710287799403,
+        -0.0009036064392573271
+      ],
+      "meanFootTravel": null
+    },
+    {
+      "policy": "v11",
+      "commandVx": 0.15,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        0.15878586798163194,
+        0.017460815977962316
+      ],
+      "meanFootTravel": 0.08657308269882319
+    },
+    {
+      "policy": "v11",
+      "commandVx": 0.3,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        0.31069431243307716,
+        0.1167673432631491
+      ],
+      "meanFootTravel": 0.15330537196322896
+    },
+    {
+      "policy": "v11",
+      "commandVx": 0.4,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        0.3729755332537137,
+        0.22803283248875852
+      ],
+      "meanFootTravel": 0.17838005184909314
+    },
+    {
+      "policy": "teacher",
+      "commandVx": -0.15,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        -0.15013629002997542,
+        -0.0017219497606959016
+      ],
+      "meanFootTravel": 0.07631834143629065
+    },
+    {
+      "policy": "teacher",
+      "commandVx": -0.05,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        -0.025091796316546993,
+        0.0012379409613347463
+      ],
+      "meanFootTravel": 0.025708609471156673
+    },
+    {
+      "policy": "teacher",
+      "commandVx": 0.05,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        0.050961208013800136,
+        -0.003668179140067511
+      ],
+      "meanFootTravel": 0.03075412892709688
+    },
+    {
+      "policy": "teacher",
+      "commandVx": 0.15,
+      "cases": 2,
+      "completed": 2,
+      "meanActual": [
+        0.14974608621105123,
+        -0.005562449588057633
+      ],
+      "meanFootTravel": 0.08226801579252684
+    }
+  ],
+  "limitations": "2 initial states; teacher privileged; \u00b1.3/.4 outside demonstrated training targets; neither standing still nor surviving proves tracking"
+}

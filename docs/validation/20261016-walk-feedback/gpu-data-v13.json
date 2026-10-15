@@ -1,0 +1,13 @@
+{
+  "worlds": 100,
+  "survived": 100,
+  "maxTiltDeg": 12.531816482543945,
+  "seed": 211131,
+  "steps": 1500,
+  "trainingWorlds": 75,
+  "validationWorlds": 25,
+  "privilegedTeacherOnly": true,
+  "dataSha256": "02303bb93adc2db3e11b2e48806202b33c51ee70a95ab29968b792fad919696d",
+  "downloadHashVerified": true,
+  "hardwareAccess": false
+}
