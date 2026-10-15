@@ -14,7 +14,7 @@ from walk_transfer_task import make_cfg,rl_cfg,TASK
 p=argparse.ArgumentParser();p.add_argument('--surface',action='store_true')
 p.add_argument('--envs',type=int,required=True);p.add_argument('--iterations',type=int,required=True)
 p.add_argument('--output',type=Path,required=True);a=p.parse_args()
-assert (a.envs,a.iterations) in ([(64,5),(1024,50)] if TASK=='walk_tracking_transfer' else [(64,5),(1024,100)])
+assert (a.envs,a.iterations) in ([(64,5),(1024,50)] if TASK!='walk_stop_transfer' else [(64,5),(1024,100)])
 ROOT=Path(__file__).resolve().parents[2];a.output.mkdir(parents=True,exist_ok=False)
 torch.manual_seed(68131);cfg=make_cfg(a.surface);cfg.scene.num_envs=a.envs
 env=ManagerBasedRlEnv(cfg,device='cuda:0')
@@ -28,7 +28,7 @@ try:
     # Retain the baked deployment distribution; only critic normalization learns.
     actor.update_normalization=lambda *args,**kwargs:None
     anchor_stats=[]
-    if TASK=='walk_tracking_transfer':
+    if TASK!='walk_stop_transfer':
         anchor=copy.deepcopy(actor).eval()
         for parameter in anchor.parameters():parameter.requires_grad_(False)
         def retain(optimizer,args,kwargs):
@@ -43,7 +43,7 @@ try:
         hook=runner.alg.optimizer.register_step_pre_hook(retain)
     assert not runner.alg.optimizer.state
     runner.learn(num_learning_iterations=a.iterations,init_at_random_ep_len=False)
-    if TASK=='walk_tracking_transfer':
+    if TASK!='walk_stop_transfer':
         hook.remove()
         assert len(anchor_stats)==a.iterations*8
         (a.output/'retention.json').write_text(json.dumps(dict(coefficient=10.,

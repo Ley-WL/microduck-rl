@@ -1,0 +1,97 @@
+{
+  "arms": {
+    "duration": [
+      {
+        "improvement": [
+          0.023196748948354183,
+          0.019193860731310356,
+          0.011580354614659241
+        ],
+        "score": 0.01799032143144126,
+        "lost": 1,
+        "screenAccepted": false,
+        "continueTraining": true,
+        "task": "walk_tracking_transfer",
+        "iterations": 150,
+        "adamSteps": 1200,
+        "policySha256": "862978185a390027b3ae4d0dfdcf1213018f2f161c35152cbfa15bc7d7e2b909",
+        "onnxTorchMaxError": 5.7220458984375e-06,
+        "normalizerUnchanged": true,
+        "finite": true,
+        "retentionMean": 1.2740066333141916e-05,
+        "hardwareAccess": false
+      },
+      {
+        "improvement": [
+          0.031353739986149744,
+          0.03032168684619634,
+          0.04254177734287337
+        ],
+        "score": 0.034739068058406486,
+        "lost": 1,
+        "screenAccepted": false,
+        "continueTraining": true,
+        "task": "walk_tracking_transfer",
+        "iterations": 300,
+        "adamSteps": 2400,
+        "policySha256": "d78ad76842c866fe94830a03cca1a4a521ac3084c2000fefeba34821da27b77a",
+        "onnxTorchMaxError": 3.337860107421875e-06,
+        "normalizerUnchanged": true,
+        "finite": true,
+        "retentionMean": 4.272436841624483e-05,
+        "hardwareAccess": false
+      },
+      {
+        "improvement": [
+          0.04166300746961234,
+          0.028698435326839696,
+          0.04980529427563764
+        ],
+        "score": 0.04005557902402989,
+        "lost": 1,
+        "screenAccepted": false,
+        "continueTraining": false,
+        "task": "walk_tracking_transfer",
+        "iterations": 450,
+        "adamSteps": 3600,
+        "policySha256": "0b5be3bdfcbd2eaa238cd3d201fa247ae11996187ec6ab953d66ad2c8546828b",
+        "onnxTorchMaxError": 2.384185791015625e-06,
+        "normalizerUnchanged": true,
+        "finite": true,
+        "retentionMean": 8.679265628095499e-05,
+        "hardwareAccess": false
+      }
+    ],
+    "stride": [
+      {
+        "improvement": [
+          0.007283315681995872,
+          0.00794092366641244,
+          0.0018443829875675417
+        ],
+        "score": 0.0056895407786586175,
+        "lost": 1,
+        "screenAccepted": false,
+        "continueTraining": false,
+        "task": "walk_stride_transfer",
+        "iterations": 150,
+        "adamSteps": 1200,
+        "policySha256": "2800020a95cb62a8233b049911e6f1d73b87f4118c2f3e1137a44e19ab76d760",
+        "onnxTorchMaxError": 2.6226043701171875e-06,
+        "normalizerUnchanged": true,
+        "finite": true,
+        "retentionMean": 1.1868549236903429e-05,
+        "hardwareAccess": false
+      }
+    ]
+  },
+  "sourceCheck": {
+    "passed": true
+  },
+  "archive": {
+    "sha256": "2e7aa39fae7b0e91d8b8a4e0b716a134d2fc385ca67f3c517ab4f182cf53facc",
+    "verified": true,
+    "bytes": 336026815
+  },
+  "deploymentAccepted": false
+}
