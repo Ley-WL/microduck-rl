@@ -11,7 +11,7 @@ from tensordict import TensorDict
 from mjlab.envs import ManagerBasedRlEnv
 from mjlab.rl import MjlabOnPolicyRunner,RslRlVecEnvWrapper
 import mjlab_microduck.tasks
-from mjlab_microduck.tasks.walk_stop_transfer import make_cfg,rl_cfg
+from walk_transfer_task import make_cfg,rl_cfg
 from mjlab_microduck.tasks.getup_mechanical_contract import encode_target
 
 ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'evidence'
