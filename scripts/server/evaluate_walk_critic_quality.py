@@ -14,13 +14,14 @@ ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'evidence'
 p=argparse.ArgumentParser()
 p.add_argument('--checkpoint',type=Path,default=Path('inputs/candidate.pt'))
+p.add_argument('--collect-training',action='store_true',help='Separate seeds and whole-world critic dataset; never reuse calibration seeds for fitting')
 p.add_argument('--task',choices=['walk_low_speed_mean_tracking','walk_mean_motion_tracking','walk_motion_critic_context'],default='walk_low_speed_mean_tracking')
 a=p.parse_args()
 module=importlib.import_module('mjlab_microduck.tasks.'+a.task)
 make_cfg,rl_cfg=module.make_cfg,module.rl_cfg
 checkpoint=ROOT/a.checkpoint
 reports=[]
-for seed in (235151,235157):
+for seed in ((239101,239107) if a.collect_training else (235151,235157)):
     torch.manual_seed(seed)
     cfg=make_cfg()
     cases=[(v,yaw) for v in (-.2,-.05,.05,.2) for yaw in (-.6,0.,.6)]
@@ -43,8 +44,11 @@ for seed in (235151,235157):
         command.stop_speed[:]=grid[:,0];command.stop_yaw[:]=grid[:,1]
         alive=torch.ones(env.num_envs,dtype=torch.bool,device=env.device)
         reward_rows=[];value_rows=[];done_rows=[];live_rows=[];commands=[]
+        observation_rows=[]
         with torch.inference_mode():
             for tick in range(3000):
+                if a.collect_training and tick<1500:
+                    observation_rows.append(obs['critic'].detach().cpu().clone())
                 value_rows.append(critic(obs).squeeze(-1).clone())
                 live_rows.append(alive.clone())
                 commands.append(env.command_manager.get_command('twist').clone())
@@ -78,6 +82,12 @@ for seed in (235151,235157):
         np.savez_compressed(OUT/f'critic-{seed}.npz',rewards=rewards.cpu().numpy(),
             values=values.cpu().numpy(),returns=returns.cpu().numpy(),dones=dones.cpu().numpy(),
             live=live.cpu().numpy(),commands=torch.stack(commands).cpu().numpy(),dt=.02,gamma=gamma)
+        if a.collect_training:
+            torch.save(dict(observations=torch.stack(observation_rows),
+                returns=returns[:1500].cpu(),live=live[:1500].cpu(),
+                validationWorlds=torch.arange(env.num_envs)%4==3,seed=seed,
+                checkpointSha256=hashlib.sha256(checkpoint.read_bytes()).hexdigest()),
+                OUT/f'critic-data-{seed}.pt')
         reports.append(dict(seed=seed,worlds=env.num_envs,survivedFirst30=int(live[1499].sum()),
             survived60=int(alive.sum()),gamma=gamma,unobservedTailDiscount=gamma**1500,phases=result))
         (OUT/'critic-quality.json').write_text(json.dumps(dict(results=reports,

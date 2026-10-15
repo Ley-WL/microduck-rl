@@ -385,3 +385,7 @@ v42完成，actor仍精确v28；两个seed各48/48，实际回报21.377/21.244�
 检查发现奖励EMA与30s命令计划有内部历史，原critic没有直接获得。新walk_motion_critic_context只给训练critic添加10维真实manager状态（linear3/angular3误差、phase sin/cos、stop_speed/stop_yaw），未改actor输入、奖励、动作、命令规则、物理或PD。环境先构建ObservationManager后RewardManager，因此初建回退零误差；正常观测位于reward和command compute之后，读取实际历史，不做重复EMA更新。配置、actor保持、只读与reset测试通过；不是已证明唯一原因。
 
 独立walk-context-critic-v43-20261016 launcher3537596/worker3548034已确认活跃。原v28actor冻结/fresh86维critic/LR3e-4，64×5/40Adam/finite/normalizer/61→14导出通过，actorSHA仍b0809f25896126e15fd7c29f9daf34f889dbebf21456347a1f6976ecf7965587。1024×200在途，结束仍原价值校验门，不自动actor更新/部署。准备但未启动的mean_motion动作launcher已撤除；不是遗留运行作业。目标未完成。
+
+
+> **2026-10-16 v43未通过，v44完整回报critic拟合已启动：** v43 job0/source-check通过，完整归档00d2c3f6859ae6a2388f1feb8a170db9bdbf7a16d71e3e3910e7ba8bf65ffcb6（80254051字节）已下载；两seed完整循环EV -1.886/-1.906，原门未过，float64实际回报重算误差<4.17e-5，actor仍v28。不恢复动作训练。独立walk-mc-critic-v44-20261016 launcher3632318：新239101/239107采集冻结v28 actor的60s轨迹，前30s raw critic观测对应完整折扣回报；每case第4条完整world留出，actor/normalizer冻结，仅critic监督Adam LR1e-4，5步冒烟→100→最多500步，100步无改善则停，之后原235151/235157独立价值门。初始阶段context-test已确认，尚未完成数据/拟合，不称步态改善。PD/实机/部署不动，目标未完成，勿重复启动。
+
