@@ -13,8 +13,13 @@ from walk_transfer_task import make_cfg,rl_cfg,TASK
 
 p=argparse.ArgumentParser();p.add_argument('--surface',action='store_true')
 p.add_argument('--envs',type=int,required=True);p.add_argument('--iterations',type=int,required=True)
-p.add_argument('--output',type=Path,required=True);a=p.parse_args()
-assert (a.envs,a.iterations) in ([(64,5),(1024,50)] if TASK!='walk_stop_transfer' else [(64,5),(1024,100)])
+p.add_argument('--output',type=Path,required=True)
+p.add_argument('--noise-schedule',choices=['fixed','anneal']);a=p.parse_args()
+if a.noise_schedule:
+    assert TASK=='walk_low_speed_mean_tracking'
+    assert (a.envs,a.iterations) in [(64,5),(1024,200)]
+else:
+    assert (a.envs,a.iterations) in ([(64,5),(1024,50)] if TASK!='walk_stop_transfer' else [(64,5),(1024,100)])
 actor_only=TASK in ('walk_sustained_transfer','walk_low_speed_stride','walk_low_speed_control','walk_low_speed_focused','walk_low_speed_focused_control','walk_low_speed_air_window','walk_low_speed_mean_tracking')
 ROOT=Path(__file__).resolve().parents[2];a.output.mkdir(parents=True,exist_ok=False)
 torch.manual_seed(68131);cfg=make_cfg(a.surface);cfg.scene.num_envs=a.envs
@@ -46,7 +51,16 @@ try:
             anchor_stats.append(float(loss.detach()))
         hook=runner.alg.optimizer.register_step_pre_hook(retain)
     assert not runner.alg.optimizer.state
+    noise=None
+    if a.noise_schedule:
+        from walk_noise_schedule import RolloutNoise
+        assert rl['num_steps_per_env']==24 and abs(env.step_dt-.02)<1e-9
+        noise=RolloutNoise(runner.alg,a.noise_schedule)
     runner.learn(num_learning_iterations=a.iterations,init_at_random_ep_len=False)
+    if noise:
+        assert len(noise.audit)==a.iterations and noise.calls==0
+        (a.output/'noise-audit.json').write_text(json.dumps(dict(mode=a.noise_schedule,
+            distributionFrozen=True,deterministicExport=True,iterations=noise.audit),indent=2))
     if TASK!='walk_stop_transfer':
         hook.remove()
         assert len(anchor_stats)==a.iterations*8
