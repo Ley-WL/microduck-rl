@@ -15,14 +15,15 @@ p=argparse.ArgumentParser();p.add_argument('--surface',action='store_true')
 p.add_argument('--envs',type=int,required=True);p.add_argument('--iterations',type=int,required=True)
 p.add_argument('--output',type=Path,required=True);a=p.parse_args()
 assert (a.envs,a.iterations) in ([(64,5),(1024,50)] if TASK!='walk_stop_transfer' else [(64,5),(1024,100)])
+actor_only=TASK in ('walk_sustained_transfer','walk_low_speed_stride','walk_low_speed_control')
 ROOT=Path(__file__).resolve().parents[2];a.output.mkdir(parents=True,exist_ok=False)
 torch.manual_seed(68131);cfg=make_cfg(a.surface);cfg.scene.num_envs=a.envs
 env=ManagerBasedRlEnv(cfg,device='cuda:0')
 try:
     rl=asdict(rl_cfg());rl.update(upload_model=False,logger='tensorboard')
     runner=MjlabOnPolicyRunner(RslRlVecEnvWrapper(env),rl,log_dir=str(a.output/'logs'),device='cuda:0')
-    runner.load(str(ROOT/'inputs/seed.pt'),load_cfg={'actor':True} if TASK=='walk_sustained_transfer' else None,map_location='cuda:0')
-    if TASK=='walk_sustained_transfer':
+    runner.load(str(ROOT/'inputs/seed.pt'),load_cfg={'actor':True} if actor_only else None,map_location='cuda:0')
+    if actor_only:
         assert not runner.alg.optimizer.state
         assert all(group['lr']==1e-5 for group in runner.alg.optimizer.param_groups)
     env.common_step_counter=0;runner.current_learning_iteration=0
@@ -40,7 +41,7 @@ try:
             td=TensorDict({'actor':sample},batch_size=[len(sample)])
             with torch.no_grad():target=anchor(td)
             loss=(actor(td)-target).square().mean()
-            ((5. if TASK=='walk_sustained_transfer' else 10.)*loss).backward()
+            ((5. if actor_only else 10.)*loss).backward()
             torch.nn.utils.clip_grad_norm_(actor.parameters(),runner.alg.max_grad_norm)
             anchor_stats.append(float(loss.detach()))
         hook=runner.alg.optimizer.register_step_pre_hook(retain)
@@ -49,7 +50,7 @@ try:
     if TASK!='walk_stop_transfer':
         hook.remove()
         assert len(anchor_stats)==a.iterations*8
-        (a.output/'retention.json').write_text(json.dumps(dict(coefficient=5. if TASK=='walk_sustained_transfer' else 10.,
+        (a.output/'retention.json').write_text(json.dumps(dict(coefficient=5. if actor_only else 10.,
             loss=anchor_stats,source='input seed actor; on-policy samples',
             notHistoricalCheckpointResume=True)))
     assert all(torch.equal(actor.state_dict()[k],v) for k,v in normalizer.items()),'Actor normalizer drift'

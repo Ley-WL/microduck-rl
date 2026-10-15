@@ -7853,9 +7853,9 @@ def hd1910_walk_command_progress(env):
         robot.data.root_link_lin_vel_b[:,:2],robot.data.root_link_ang_vel_b[:,2])
 
 
-def hd1910_stride_quality(progress,side,peak,air_time,speed,cycle_time=.4,target_air=.16,target_height=.018):
+def hd1910_stride_quality(progress,side,peak,air_time,speed,cycle_time=.4,target_air=.16,target_height=.018,min_stride=0.):
     """A complete swing earns more than a low, short, frequent shuffle."""
-    target=(speed*cycle_time).clamp(max=.16)
+    target=(speed*cycle_time).clamp(min=min_stride,max=.16)
     error=((progress-target)/(.025+.2*target)).square()
     error+=((peak-target_height)/.014).square()+((air_time-target_air)/.09).square()
     error+=(side/.03).square()
@@ -7863,9 +7863,9 @@ def hd1910_stride_quality(progress,side,peak,air_time,speed,cycle_time=.4,target
 
 
 def hd1910_stride_component_quality(progress,side,peak,air_time,speed,
-                                    cycle_time=.4,target_air=.12,target_height=.012):
+                                    cycle_time=.4,target_air=.12,target_height=.012,min_stride=0.):
     """Each improving swing component gives a signal without a triple product."""
-    distance=(progress/(speed*cycle_time).clamp(min=.02)).clamp(0.,1.)
+    distance=(progress/(speed*cycle_time).clamp(min=max(.02,min_stride))).clamp(0.,1.)
     clearance=(peak/target_height).clamp(0.,1.)
     duration=(air_time/target_air).clamp(0.,1.)
     return (speed>.03)*(progress>0)*(distance+clearance+duration)/3.*torch.exp(-(side/.04).square())
@@ -7908,7 +7908,9 @@ class hd1910_walk_stride_reward:
         self.last_foot[env_ids]=-1
 
     def __call__(self,env,cycle_time=.4,target_air=.16,target_height=.018,require_alternation=False,
-                 complete_swing=False,component_shaping=False):
+                 complete_swing=False,component_shaping=False,min_stride=0.,max_air_credit=.3):
+        if not 0 <= min_stride <= .16 or not .04 <= max_air_credit <= 1.:
+            raise ValueError('Invalid stride distance or air-time credit bound')
         robot=env.scene['robot'];sensor=env.scene['feet_ground_contact']
         command=env.command_manager.get_command('twist')
         velocity=torch.cat((command[:,:2],torch.zeros_like(command[:,:1])),dim=-1)
@@ -7929,15 +7931,15 @@ class hd1910_walk_stride_reward:
         progress=(delta*self.direction).sum(-1)
         side=delta[:,:,0]*self.direction[:,:,1]-delta[:,:,1]*self.direction[:,:,0]
         air=sensor.data.last_air_time
-        quality=hd1910_stride_quality(progress,side,self.peak,air,self.speed,cycle_time,target_air,target_height)
+        quality=hd1910_stride_quality(progress,side,self.peak,air,self.speed,cycle_time,target_air,target_height,min_stride)
         if component_shaping:
             quality=hd1910_stride_component_quality(progress,side,self.peak,air,self.speed,
-                                                    cycle_time,target_air,target_height)
+                                                    cycle_time,target_air,target_height,min_stride)
         if complete_swing:
             # Incomplete fast swings cannot substitute for complete steps.
             quality=quality*(air/target_air).clamp(0.,1.).square()
             quality=quality*(self.peak/target_height).clamp(0.,1.).square()
-            quality=quality*(progress/(self.speed*cycle_time).clamp(min=.02)).clamp(0.,1.).square()
+            quality=quality*(progress/(self.speed*cycle_time).clamp(min=max(.02,min_stride))).clamp(0.,1.).square()
         # Weight by the completed air time, so doubling landing frequency does
         # not double payout. Brief contact chatter and idle steps earn nothing.
         active=(command[:,:2].norm(dim=-1)>.03)[:,None]
@@ -7951,7 +7953,7 @@ class hd1910_walk_stride_reward:
             self.last_foot=torch.where(one,foot,self.last_foot)
             self.last_foot=torch.where(~active[:,0],-1,self.last_foot)
             completed=completed & alternating[:,None]
-        reward=(quality*air.clamp(max=.3)*completed).sum(-1)/env.step_dt
+        reward=(quality*air.clamp(max=max_air_credit)*completed).sum(-1)/env.step_dt
         self.valid&=~landing
         env.extras['log']['Metrics/stride_quality']=((quality*completed).sum()/completed.sum().clamp(min=1))
         return reward

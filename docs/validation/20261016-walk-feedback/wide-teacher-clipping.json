@@ -1,0 +1,28 @@
+{
+  "-0.4": {
+    "clippedJointFraction": {
+      "left_hip_yaw": 0.13872255489021956,
+      "right_hip_yaw": 0.05289421157684631,
+      "right_hip_pitch": 0.07884231536926148
+    },
+    "queryVxMean": -0.5,
+    "queryVxAtBoundFraction": 1.0
+  },
+  "-0.3": {
+    "clippedJointFraction": {
+      "left_hip_yaw": 0.10978043912175649
+    },
+    "queryVxMean": -0.3393258566330531,
+    "queryVxAtBoundFraction": 0.0
+  },
+  "0.3": {
+    "clippedJointFraction": {},
+    "queryVxMean": 0.2683737320814304,
+    "queryVxAtBoundFraction": 0.0
+  },
+  "0.4": {
+    "clippedJointFraction": {},
+    "queryVxMean": 0.4523541660246973,
+    "queryVxAtBoundFraction": 0.0
+  }
+}

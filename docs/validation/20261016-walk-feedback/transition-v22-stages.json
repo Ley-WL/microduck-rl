@@ -1,0 +1,50 @@
+[
+  {
+    "transitionWeight": 4.0,
+    "stopWeight": 8.0,
+    "steps": 500,
+    "initialValidationRms": 0.005941842682659626,
+    "validationRms": 0.005953636020421982,
+    "initialGpuValidationRms": 0.01203636173158884,
+    "gpuValidationRms": 0.009204614907503128,
+    "policySha256": "c915f76573eb22d9d69a22da10b872df5e204d57eb5ba4e23d2dfc4ccb6836ae",
+    "onnxMaxError": 7.003545761108398e-07,
+    "normalizerUnchanged": true,
+    "feedbackUsedAtRuntime": false,
+    "hardwareAccess": false,
+    "lost": 0,
+    "bias": {
+      "baseline": [
+        0.01388941713943505,
+        0.08418174789827239
+      ],
+      "candidate": [
+        0.013204960470958819,
+        0.06312900779372134
+      ]
+    },
+    "stopPassed": false,
+    "strideRetained": true,
+    "cpuBaseline": {
+      "error": [
+        0.004628459850921897,
+        0.05889828037307898
+      ],
+      "stop": 0.004006283817741796,
+      "stride": 0.10443426249666803
+    },
+    "cpuCandidate": {
+      "error": [
+        0.005137028647142919,
+        0.061759378123223796
+      ],
+      "stop": 0.003208916277306724,
+      "stride": 0.1044198160801423
+    },
+    "cpuPassed": true,
+    "cpuDirectionsPassed": true,
+    "gpuTrackingImproved": true,
+    "continueTraining": false,
+    "originalScreenAccepted": false
+  }
+]

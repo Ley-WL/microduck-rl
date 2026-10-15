@@ -11,6 +11,7 @@ from mjlab_microduck.tasks.mdp import quat_apply
 from mjlab_microduck.tasks.walk_tracking_transfer import make_cfg, rl_cfg
 
 p = argparse.ArgumentParser()
+p.add_argument('--speed-grid',type=float,nargs='+',default=[-.2,-.1,0.,.1,.2])
 p.add_argument('--seeds', type=int, nargs='+', default=[191051, 191057])
 p.add_argument('--output', default='tracking-screen.json')
 p.add_argument('--candidate', default='evidence/main/final.pt')
@@ -24,12 +25,15 @@ p.add_argument('--trace-motion',action='store_true',help='Save body velocity and
 p.add_argument('--stop-teacher-checkpoint',type=Path,help='Simulation-only stop controller diagnostic; not deployment')
 p.add_argument('--feedback-teacher', action='store_true', help='Privileged simulation reference, never a deployed policy')
 a = p.parse_args()
+assert not a.baseline_cache or a.speed_grid==[-.2,-.1,0.,.1,.2], 'Changed speed grid cannot reuse legacy cache'
 assert not a.baseline_cache or a.baseline_checkpoint==Path('inputs/seed.pt'), 'Explicit baseline cannot reuse legacy cache'
 assert sum(bool(x) for x in (a.feedback_teacher,a.teacher_map,a.stop_teacher_checkpoint))<=1, 'Select one simulation teacher'
 assert not a.nominal_dr or a.fixed_actuator, 'Nominal DR requires fixed actuator'
 assert not ((a.long_hold or a.fixed_actuator or a.nominal_dr) and a.baseline_cache), 'Diagnostic profiles cannot reuse legacy baseline cache'
 ROOT = Path(__file__).resolve().parents[2]
-cases = [(v, yaw) for v in (-.2, -.1, 0., .1, .2) for yaw in (-.6, 0., .6)]
+assert len(a.speed_grid)==len(set(a.speed_grid)) and all(np.isfinite(a.speed_grid))
+cases = [(v, yaw) for v in a.speed_grid for yaw in (-.6, 0., .6)]
+worlds=len(cases)*4
 rows = []
 cached = json.loads(a.baseline_cache.read_text())['results'] if a.baseline_cache else []
 if a.teacher_map:
@@ -45,7 +49,7 @@ for seed in a.seeds:
             rows.append(baseline_rows[0]);expected_start=baseline_rows[0]['initialStateSha256']
             continue
         torch.manual_seed(seed)
-        cfg = make_cfg(); cfg.scene.num_envs = 60; cfg.episode_length_s = 26.
+        cfg = make_cfg(); cfg.scene.num_envs = worlds; cfg.episode_length_s = 26.
         if a.long_hold: cfg.episode_length_s = 32.
         if a.fixed_actuator:
             actuator = cfg.scene.entities['robot'].articulation.actuators[0]
@@ -100,15 +104,15 @@ for seed in a.seeds:
                     self.is_heading_env[:] = False
                     self.is_world_env[:] = False
                 term.compute = MethodType(long_compute, term)
-            failed = torch.zeros(60, device=env.device, dtype=torch.bool)
+            failed = torch.zeros(worlds, device=env.device, dtype=torch.bool)
             has_moved=torch.zeros_like(failed)
-            peak = torch.zeros(60, device=env.device)
-            sums = torch.zeros((60, 2, 8), device=env.device)
-            counts = torch.zeros((60, 2), device=env.device)
-            stop = torch.zeros((60, 2), device=env.device); stopcount = torch.zeros(60, device=env.device)
-            lift_xy = torch.zeros((60, 2, 2), device=env.device)
-            lift_dir = torch.zeros_like(lift_xy); valid = torch.zeros((60, 2), device=env.device, dtype=torch.bool)
-            steps = torch.zeros((60, 2), device=env.device); distance = torch.zeros_like(steps)
+            peak = torch.zeros(worlds, device=env.device)
+            sums = torch.zeros((worlds, 2, 8), device=env.device)
+            counts = torch.zeros((worlds, 2), device=env.device)
+            stop = torch.zeros((worlds, 2), device=env.device); stopcount = torch.zeros(worlds, device=env.device)
+            lift_xy = torch.zeros((worlds, 2, 2), device=env.device)
+            lift_dir = torch.zeros_like(lift_xy); valid = torch.zeros((worlds, 2), device=env.device, dtype=torch.bool)
+            steps = torch.zeros((worlds, 2), device=env.device); distance = torch.zeros_like(steps)
             airsum = torch.zeros_like(steps)
             motion_trace=[]
             command_hash = hashlib.sha256()
@@ -190,7 +194,7 @@ comparisons = []
 for seed in a.seeds:
     b, c = [r for r in rows if r['seed'] == seed]
     keep = np.array(b['survival']) & np.array(c['survival'])
-    lost = [i for i in range(60) if b['survival'][i] and not c['survival'][i]]
+    lost = [i for i in range(worlds) if b['survival'][i] and not c['survival'][i]]
     per_case = []
     for index, case in enumerate(cases):
         ids = np.arange(index * 4, index * 4 + 4); ids = ids[keep[ids]]

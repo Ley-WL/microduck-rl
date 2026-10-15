@@ -1,0 +1,16 @@
+{
+  "seed": 68131,
+  "surface": false,
+  "worlds": 64,
+  "iterations": 5,
+  "rolloutSteps": 7680,
+  "adamSteps": [
+    40
+  ],
+  "actorNormalizerUnchanged": true,
+  "finite": true,
+  "onnxTorchMaxError": 8.106231689453125e-06,
+  "policySha256": "961f8ba5c6b5d984a11196c75ec2bb1adeacec88931a282df1752987b5f4f31a",
+  "hardwareAccess": false,
+  "accepted": false
+}

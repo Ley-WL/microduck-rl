@@ -1,3 +1,5 @@
+> **2026-10-16 v22失败/v24通过/v25覆盖与步幅对照运行：** v22 step500仍GPU停止失败，归档07d14eaf通过，不加轮。发现原奖励在.05m/s的2.75cm已饱和；新可选min_stride.06/max_air_credit1，默认数值2048组严格保持。两组共同宽速度±.05至±.4，只有步幅奖励不同；v24各64×5/Adam40/finite/导出/硬件合同测试通过，归档4df7bc10核验。v25从v16step500 actor各1024×50；control训练导出已完成，原launcher2359860资源门失败exit1，未重训。当前resume2378535/评估2378603活跃，先control-screen再stride train/screen，33命令×4×2新seed222151/222157。完成看resume.exit/source-check，勿因旧job.exit1重启。详见docs/walk-guided-training.md。无部署/实机，目标未完成。
+
 > **2026-10-16 v21完成/v22过渡微调活跃：** 完整曲线每seed112事件原/候选均停稳；v16均停稳比v6慢.03–.04s，一秒后均速约.001m/s，原均值门仍失败。静止示范误差降低但GPU过渡误差未降，故独立walk-stop-transition-v22-20261016新增停止衰减首50帧损失×4，stopWeight8/同v11起点/其它门保持。launcher2266575/worker2266925活跃、624源hash核验；5更新导出冒烟通过，已到500筛选，勿重复启动。v21归档787dc04e下载核验，详见docs/walk-guided-training.md。低速大步/宽速度/连续切换/抗扰仍待完成，无实机部署，目标未完成。
 
 > **2026-10-16 v19/v20完成，v21停止曲线诊断中：** v19独立回归无丢例，但v16 step500相对v6四项/相对v11两项停止退化，未验收。v20仅运动后的停止切v6，GPU均残速改善4%且无相对v16退化，但对v6两个[-.1,0]仍失败；CPU4组停止前轨迹逐帧一致、换停止策略未改善。两轮exit0/source-check/归档下载通过，不采组合示范或盲加轮。v21冻结v6/v16完整motion trace，launcher2227901/worker2227909活跃、625源hash核验，不重启；分析首秒行程/连续停稳时间/一秒后残速，原门保持。详见docs/walk-guided-training.md，无实机/部署/PD修改，目标未完成。
