@@ -7,7 +7,7 @@ if '--worker' not in sys.argv:
     proof=json.loads((ROOT/'inputs/reward-proof.json').read_text())
     assert proof['passed'] and proof['optimizationSteps']==0
     seed=json.loads((ROOT/'inputs/prepare-audit.json').read_text())
-    assert seed['actorSource'] in ('mc-v45','pulse-v49-step100')
+    assert seed['actorSource'] in ('mc-v45','pulse-v49-step100','pulse-v51-step100')
     assert hashlib.sha256((ROOT/'inputs/seed.pt').read_bytes()).hexdigest()==seed['seedSha256']
     (OUT/'launch.json').write_text(json.dumps(dict(hardwareAccess=False,autoDeployment=False,
         feedbackUsedAtRuntime=False,sourceHashes={p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest()

@@ -1,0 +1,365 @@
+{
+  "results": [
+    {
+      "source": "cpu-straight\\seed245171-trial0-speed0.035.json",
+      "completed": true,
+      "maxTiltDeg": 5.220766111463735,
+      "meanCommand": [
+        0.034999992698431015,
+        0.0
+      ],
+      "meanActual": [
+        0.030523099769048923,
+        -0.03586438987875281
+      ],
+      "rolling1sMAE": [
+        0.0379223653012164,
+        0.07130664313531936
+      ],
+      "rolling1sP95": [
+        0.0641090204444623,
+        0.22809357576149536
+      ],
+      "stopMeanHorizontalSpeed": 0.0004761229959072039,
+      "stepDistance": 0.06509879009875859,
+      "stepCount": 9,
+      "speed": 0.035,
+      "cycleWindow": [
+        7.714285714285714,
+        24.857142857142858
+      ],
+      "cycleMeanVx": 0.0360905449803001
+    },
+    {
+      "source": "cpu-straight\\seed245177-trial0-speed0.035.json",
+      "completed": true,
+      "maxTiltDeg": 5.305836794089018,
+      "meanCommand": [
+        0.034999992698431015,
+        0.0
+      ],
+      "meanActual": [
+        0.030740696734219513,
+        -0.03282288665783247
+      ],
+      "rolling1sMAE": [
+        0.03824094162987541,
+        0.0664258962199377
+      ],
+      "rolling1sP95": [
+        0.06488427438355718,
+        0.2200960663295375
+      ],
+      "stopMeanHorizontalSpeed": 0.0005134223003285018,
+      "stepDistance": 0.06608819932981255,
+      "stepCount": 9,
+      "speed": 0.035,
+      "cycleWindow": [
+        7.714285714285714,
+        24.857142857142858
+      ],
+      "cycleMeanVx": 0.035798805778567686
+    },
+    {
+      "source": "cpu-straight\\seed245171-trial0-speed0.04.json",
+      "completed": true,
+      "maxTiltDeg": 5.220766111463735,
+      "meanCommand": [
+        0.03999999165534973,
+        0.0
+      ],
+      "meanActual": [
+        0.04094169067736978,
+        -0.026994880340265634
+      ],
+      "rolling1sMAE": [
+        0.03965955744713045,
+        0.07629015960982258
+      ],
+      "rolling1sP95": [
+        0.06166686802713553,
+        0.22502194166262196
+      ],
+      "stopMeanHorizontalSpeed": 0.00034911129234564177,
+      "stepDistance": 0.06650542516033207,
+      "stepCount": 12,
+      "speed": 0.04,
+      "cycleWindow": [
+        7.0,
+        27.0
+      ],
+      "cycleMeanVx": 0.04104877333686758
+    },
+    {
+      "source": "cpu-straight\\seed245177-trial0-speed0.04.json",
+      "completed": true,
+      "maxTiltDeg": 5.305836794089018,
+      "meanCommand": [
+        0.03999999165534973,
+        0.0
+      ],
+      "meanActual": [
+        0.04088312662403532,
+        -0.028581627834078683
+      ],
+      "rolling1sMAE": [
+        0.0396277143593545,
+        0.07714553577282318
+      ],
+      "rolling1sP95": [
+        0.06142277391974167,
+        0.22301925301478503
+      ],
+      "stopMeanHorizontalSpeed": 0.000518480907336977,
+      "stepDistance": 0.06666125354374454,
+      "stepCount": 12,
+      "speed": 0.04,
+      "cycleWindow": [
+        7.0,
+        27.0
+      ],
+      "cycleMeanVx": 0.04099497418497466
+    },
+    {
+      "source": "cpu-straight\\seed245171-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.220766111463735,
+      "meanCommand": [
+        0.04999999329447746,
+        0.0
+      ],
+      "meanActual": [
+        0.05074841957990924,
+        -0.03939469938006842
+      ],
+      "rolling1sMAE": [
+        0.03948279266590142,
+        0.08969726579260062
+      ],
+      "rolling1sP95": [
+        0.05124986890194273,
+        0.2223483727488133
+      ],
+      "stopMeanHorizontalSpeed": 0.0008071665668851846,
+      "stepDistance": 0.06605888059444001,
+      "stepCount": 15,
+      "speed": 0.05,
+      "cycleWindow": [
+        6.0,
+        26.0
+      ],
+      "cycleMeanVx": 0.05120496220692392
+    },
+    {
+      "source": "cpu-straight\\seed245177-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.305836794089018,
+      "meanCommand": [
+        0.04999999329447746,
+        0.0
+      ],
+      "meanActual": [
+        0.051411665009940016,
+        -0.037227885516669265
+      ],
+      "rolling1sMAE": [
+        0.03978838825998147,
+        0.0901179235035397
+      ],
+      "rolling1sP95": [
+        0.05226191426293712,
+        0.21839625591073641
+      ],
+      "stopMeanHorizontalSpeed": 0.0011167938729178583,
+      "stepDistance": 0.06692765754450242,
+      "stepCount": 15,
+      "speed": 0.05,
+      "cycleWindow": [
+        6.0,
+        26.0
+      ],
+      "cycleMeanVx": 0.05164528413408074
+    },
+    {
+      "source": "cpu-straight\\seed245171-trial0-speed0.06.json",
+      "completed": true,
+      "maxTiltDeg": 5.220766111463735,
+      "meanCommand": [
+        0.059999991208314896,
+        0.0
+      ],
+      "meanActual": [
+        0.06196444416859346,
+        -0.05080313282335537
+      ],
+      "rolling1sMAE": [
+        0.03624626045792857,
+        0.11727371209630555
+      ],
+      "rolling1sP95": [
+        0.05617255087120092,
+        0.2536488823530503
+      ],
+      "stopMeanHorizontalSpeed": 0.0002475598336965739,
+      "stepDistance": 0.06747943843906994,
+      "stepCount": 18,
+      "speed": 0.06,
+      "cycleWindow": [
+        7.0,
+        27.0
+      ],
+      "cycleMeanVx": 0.06156960566516545
+    },
+    {
+      "source": "cpu-straight\\seed245177-trial0-speed0.06.json",
+      "completed": true,
+      "maxTiltDeg": 5.305836794089018,
+      "meanCommand": [
+        0.059999991208314896,
+        0.0
+      ],
+      "meanActual": [
+        0.06179074746579122,
+        -0.032913831888407935
+      ],
+      "rolling1sMAE": [
+        0.03610880235836152,
+        0.10453603057068825
+      ],
+      "rolling1sP95": [
+        0.055966502077332045,
+        0.23035831505238225
+      ],
+      "stopMeanHorizontalSpeed": 0.0002534264915444462,
+      "stepDistance": 0.06729595479732127,
+      "stepCount": 18,
+      "speed": 0.06,
+      "cycleWindow": [
+        7.0,
+        27.0
+      ],
+      "cycleMeanVx": 0.061125262990228434
+    },
+    {
+      "source": "cpu-straight\\seed245171-trial0-speed0.075.json",
+      "completed": true,
+      "maxTiltDeg": 5.286386102285524,
+      "meanCommand": [
+        0.07499998807907104,
+        0.0
+      ],
+      "meanActual": [
+        0.07787799539467938,
+        0.005853687467429262
+      ],
+      "rolling1sMAE": [
+        0.025614713421968496,
+        0.09809753733517028
+      ],
+      "rolling1sP95": [
+        0.05264436755570855,
+        0.20675897251254904
+      ],
+      "stopMeanHorizontalSpeed": 0.0008640302430948635,
+      "stepDistance": 0.06448183059311628,
+      "stepCount": 23,
+      "speed": 0.075,
+      "cycleWindow": [
+        6.0,
+        26.000000000000004
+      ],
+      "cycleMeanVx": 0.0766391823159812
+    },
+    {
+      "source": "cpu-straight\\seed245177-trial0-speed0.075.json",
+      "completed": true,
+      "maxTiltDeg": 5.305836794089018,
+      "meanCommand": [
+        0.07499998807907104,
+        0.0
+      ],
+      "meanActual": [
+        0.0774105223647289,
+        -0.007057296810649634
+      ],
+      "rolling1sMAE": [
+        0.025229917062213017,
+        0.08740466066705567
+      ],
+      "rolling1sP95": [
+        0.05251376361981962,
+        0.19631329219163524
+      ],
+      "stopMeanHorizontalSpeed": 0.0007888745253462392,
+      "stepDistance": 0.06375381731912723,
+      "stepCount": 23,
+      "speed": 0.075,
+      "cycleWindow": [
+        6.0,
+        26.000000000000004
+      ],
+      "cycleMeanVx": 0.07617365856014834
+    },
+    {
+      "source": "cpu-straight\\seed245171-trial0-speed0.1.json",
+      "completed": true,
+      "maxTiltDeg": 5.220766111463735,
+      "meanCommand": [
+        0.09999998658895493,
+        0.0
+      ],
+      "meanActual": [
+        0.10347064914356849,
+        -0.005698330656261385
+      ],
+      "rolling1sMAE": [
+        0.0036557239999837625,
+        0.03593002853102368
+      ],
+      "rolling1sP95": [
+        0.006131277933872635,
+        0.09564825555886437
+      ],
+      "stopMeanHorizontalSpeed": 0.0017461216608496474,
+      "stepDistance": 0.060998006995590395,
+      "stepCount": 33,
+      "speed": 0.1,
+      "cycleWindow": [
+        6.0,
+        27.0
+      ],
+      "cycleMeanVx": 0.10272881538074606
+    },
+    {
+      "source": "cpu-straight\\seed245177-trial0-speed0.1.json",
+      "completed": true,
+      "maxTiltDeg": 5.305836794089018,
+      "meanCommand": [
+        0.09999998658895493,
+        0.0
+      ],
+      "meanActual": [
+        0.10277468288643656,
+        -0.02217417864881544
+      ],
+      "rolling1sMAE": [
+        0.003304703371173893,
+        0.03681442789497053
+      ],
+      "rolling1sP95": [
+        0.005778445547330522,
+        0.08707074052279742
+      ],
+      "stopMeanHorizontalSpeed": 0.0005260060619620876,
+      "stepDistance": 0.060721738456538554,
+      "stepCount": 33,
+      "speed": 0.1,
+      "cycleWindow": [
+        6.0,
+        27.0
+      ],
+      "cycleMeanVx": 0.10308104579299493
+    }
+  ],
+  "limitation": "Foot distance from fixed17-27s window; additional mean velocity from complete cycles after6s, not a replacement for fixed-window metrics."
+}

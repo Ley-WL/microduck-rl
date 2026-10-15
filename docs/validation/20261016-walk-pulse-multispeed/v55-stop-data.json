@@ -1,0 +1,9 @@
+{
+  "sourceHashes": {
+    "artifacts\\walk-pulse-stop-recovery-v53-20261016\\cpu-straight\\seed227171-trial0-speed0.2.json": "b632248b9ee22243b43f030ebd9ce7847b8986ba8ca95f229508d6f6f4b639c3",
+    "artifacts\\walk-pulse-stop-recovery-v53-20261016\\cpu-straight\\seed227171-trial0-speed0.4.json": "eeb8c5e9f16792b0cac9d254bf0268a1c25d610e5559a37dfa282238c47cec48",
+    "artifacts\\walk-pulse-stop-recovery-v53-20261016\\cpu-straight\\seed227177-trial0-speed0.2.json": "408d7a3bf6230153d74736941f99e3d6d65dd2ed59909b9c68ea89d81bb265bd",
+    "artifacts\\walk-pulse-stop-recovery-v53-20261016\\cpu-straight\\seed227177-trial0-speed0.4.json": "4fda8dae0fa2bfed5ef9a9e6d0ae78ffb54b9c14b73f26766250ae37438dc508"
+  },
+  "dataSha256": "ab738d80a1c58d3441fd3aabcd8777c2a0da7f0d7d3ff3f3758e86a183806cd1"
+}

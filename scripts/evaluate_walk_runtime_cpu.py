@@ -64,10 +64,10 @@ def run(args):
     assert not (stride_after or stride_path) or stride_period
     assert 0<=stride_after<args.seconds
     if stride_period:
-        assert .4<=stride_period<=3. and .2<=stride_duty<=.8
+        assert .4<=stride_period<=3. and .1<=stride_duty<=.8
         assert .5<=stride_gain<=1.5
         assert args.turn_rate==0 and not args.feedback_teacher and not args.stop_teacher_onnx
-        assert all(0<abs(v)<=.05 for v in args.speeds)
+        assert all(0<abs(v)<=.1 for v in args.speeds)
     donor_physics=module('kissqy_physics', ROOT/'scripts/kissqy_walk_physics.py')
     aligned=args.physics_profile=='kissqy' or args.body_contract is not None
     if aligned:
