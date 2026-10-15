@@ -15,7 +15,7 @@ OUT=ROOT/'evidence'
 p=argparse.ArgumentParser()
 p.add_argument('--checkpoint',type=Path,default=Path('inputs/candidate.pt'))
 p.add_argument('--collect-training',action='store_true',help='Separate seeds and whole-world critic dataset; never reuse calibration seeds for fitting')
-p.add_argument('--task',choices=['walk_low_speed_mean_tracking','walk_mean_motion_tracking','walk_motion_critic_context','walk_continuous_coverage'],default='walk_low_speed_mean_tracking')
+p.add_argument('--task',choices=['walk_low_speed_mean_tracking','walk_mean_motion_tracking','walk_motion_critic_context','walk_continuous_coverage','walk_relative_cycle_context'],default='walk_low_speed_mean_tracking')
 p.add_argument('--spec',type=Path,help='Explicit case/seeds manifest for a new independent experiment')
 a=p.parse_args()
 module=importlib.import_module('mjlab_microduck.tasks.'+a.task)

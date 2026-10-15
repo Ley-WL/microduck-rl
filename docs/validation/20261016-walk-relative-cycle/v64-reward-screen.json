@@ -1,0 +1,27 @@
+{
+  "seeds": [
+    254151,
+    254157
+  ],
+  "speeds": [
+    0.0,
+    0.03,
+    0.04,
+    0.06,
+    0.085,
+    0.2
+  ],
+  "yaw": [
+    -0.45,
+    0.0,
+    0.45
+  ],
+  "purpose": "Independent frozen reward ranking; no actor update",
+  "rankingCriteria": {
+    "speedImprovement": 0.01,
+    "yawNonRegression": 0.05,
+    "yawImprovement": 0.05,
+    "speedNonRegression": 0.01
+  },
+  "decision": "Require no loss of correct ranking in either seed for speed or yaw, and inspect full start/stop score tradeoffs; insufficient eligible cases do not establish improvement"
+}

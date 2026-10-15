@@ -20,10 +20,15 @@ env=os.environ.copy();env.update(PYTHONPATH=str(ROOT/'src')+':'+str(ROOT/'script
     OMP_NUM_THREADS='4',OPENBLAS_NUM_THREADS='1',WANDB_MODE='offline')
 status=1
 try:
+    spec_path=ROOT/'inputs/reward-screen.json'
+    spec=json.loads(spec_path.read_text()) if spec_path.exists() else dict(
+        seeds=[253151,253157],speeds=[.025,.035,.05,.075,.2],yaw=[-.6,0.,.6])
+    assert len(spec['seeds'])==2 and len(set(spec['seeds']))==2
     stages=[('reward-test','scripts/server/test_walk_cycle_mean_tracking.py',[],None),
         ('audit','scripts/server/evaluate_walk_tracking_transfer.py',
-         ['--candidate','inputs/candidate.pt','--long-hold','--seeds','253151','253157',
-          '--speed-grid','.025','.035','.05','.075','.2','--reward-audit-task','walk_cycle_mean_tracking',
+         ['--candidate','inputs/candidate.pt','--long-hold','--seeds',*[str(x) for x in spec['seeds']],
+          '--speed-grid',*[str(x) for x in spec['speeds']],
+          '--yaw-grid',*[str(x) for x in spec['yaw']],'--reward-audit-task','walk_cycle_mean_tracking',
           '--trace-motion','--output','reward-audit.json'],None)]
     for name,path,args,task in stages:
         if task:env['MICRODUCK_WALK_TRANSFER_TASK']=task

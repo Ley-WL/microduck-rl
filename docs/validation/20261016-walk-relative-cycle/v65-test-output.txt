@@ -1,0 +1,6 @@
+[mdp] Patches 1-2 active: NaN-safe reward/advantage
+[mdp] Patch 4 active: ONNX export filters passive_* joints
+[mdp] Patch 5 active: MICRODUCK_WARM_START=1 restarts curricula after checkpoint load
+Period-averaged low-speed preference; exact legacy replay; faster/rest/pure-yaw parity; stop decay and critic-memory consistency passed
+Relative cost, sign/cap, zero/pure-yaw/faster scale parity, critic contract and partial reset passed
+Real reward-time trajectory independent relative-cost replay max error 1.4756038260177462e-06
