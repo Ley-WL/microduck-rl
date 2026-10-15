@@ -56,6 +56,14 @@ class BacklashController(bam_cpu.MujocoController):
         self.mujoco_model.dof_damping[ids]=damping
 
 def run(args):
+    stride_period=getattr(args,'stride_teacher_period',0.)
+    stride_duty=getattr(args,'stride_teacher_duty',.5)
+    stride_gain=getattr(args,'stride_teacher_gain',1.)
+    if stride_period:
+        assert .4<=stride_period<=3. and .2<=stride_duty<=.8
+        assert .5<=stride_gain<=1.5
+        assert args.turn_rate==0 and not args.feedback_teacher and not args.stop_teacher_onnx
+        assert all(0<abs(v)<=.05 for v in args.speeds)
     donor_physics=module('kissqy_physics', ROOT/'scripts/kissqy_walk_physics.py')
     aligned=args.physics_profile=='kissqy' or args.body_contract is not None
     if aligned:
@@ -139,6 +147,8 @@ def run(args):
         privilegedFeedbackTeacher=getattr(args,'feedback_teacher',False),
         feedbackTeacherSha256=hashlib.sha256(feedback_path.read_bytes()).hexdigest() if feedback_path else None,
         feedbackAfterSeconds=feedback_after,
+        strideTeacher=dict(periodSeconds=stride_period,duty=stride_duty,gain=stride_gain,simulationOnly=True,
+            commandMetricsUnmodified=True,runtimeAccepted=False),
         stopTeacherSha256=hashlib.sha256(stop_path.read_bytes()).hexdigest() if stop_path else None,
         feedbackVxCorrectionLimit=getattr(args,'feedback_vx_limit',.12),
         feedbackQueryVxLimit=getattr(args,'feedback_query_vx_limit',.3),
@@ -209,6 +219,7 @@ def run(args):
                     initial=mechanical.encode_target(np.asarray(real_start['homeRadians'])+np.asarray(real_start['filteredActionRadians']))
                 start=data.time;start_qpos=data.qpos.copy();previous=np.zeros(14,dtype=np.float32)
                 filtered=previous.copy();command=np.zeros(3,dtype=np.float32)
+                stride_query=np.zeros(3,dtype=np.float32)
                 history=deque([initial.copy() for _ in range(delay+1)],maxlen=delay+1)
                 velocity_previous=data.qvel[vadr].copy()+(data.qvel[passive_vadr] if args.backlash else 0);rows=[];fallen=None
                 if real_start:
@@ -242,6 +253,12 @@ def run(args):
                     encoder_q=data.qpos[qadr]+(data.qpos[passive_qadr] if args.backlash else 0)
                     obs=np.concatenate([gyro,gravity,observed_angles(encoder_q)-home,velocity_previous,previous,command,np.zeros(10)]).astype(np.float32)
                     query=obs.copy()
+                    if stride_period:
+                        # Offline demonstration only: target/metrics remain the original command.
+                        phase=max(0.,t-2.)%stride_period
+                        pulse=target_command*stride_gain/stride_duty if phase<stride_period*stride_duty else np.zeros(3,dtype=np.float32)
+                        stride_query=command_step(stride_query,pulse)
+                        query[48:51]=stride_query
                     feedback_active=teacher is not None and t>=feedback_after
                     if feedback_active:
                         body_velocity=data.xmat[trunk].reshape(3,3).T@data.qvel[:3]
@@ -259,7 +276,7 @@ def run(args):
                     tilt=float(np.degrees(np.arccos(np.clip(-gravity[2],-1,1))))
                     contact_pairs=[[model.geom(c.geom1).name,model.geom(c.geom2).name] for c in data.contact]
                     rows.append(dict(time=t,tilt=tilt,command=command.tolist(),raw=raw.tolist(),target=target.tolist(),contacts=contact_pairs,
-                        qpos=data.qpos.tolist(),velocity=data.qvel.tolist(),obs=obs.tolist(),teacherCommand=query[48:51].tolist() if feedback_active else None,clipped=(np.abs(desired-np.clip(desired,np.asarray(list(mechanical.LIMITS.values()))[:,0],np.asarray(list(mechanical.LIMITS.values()))[:,1]))>1e-7).tolist()))
+                        qpos=data.qpos.tolist(),velocity=data.qvel.tolist(),obs=obs.tolist(),teacherCommand=query[48:51].tolist() if feedback_active or stride_period else None,clipped=(np.abs(desired-np.clip(desired,np.asarray(list(mechanical.LIMITS.values()))[:,0],np.asarray(list(mechanical.LIMITS.values()))[:,1]))>1e-7).tolist()))
                     if tilt>=60:fallen=t;break
                     velocity_previous=data.qvel[vadr].copy()+(data.qvel[passive_vadr] if args.backlash else 0)
                     steps=max(1,round(cadence[tick%len(cadence)]/dt)) if cadence else decimation
@@ -303,4 +320,7 @@ if __name__=='__main__':
     p.add_argument('--feedback-teacher',action='store_true',help='Privileged simulation-only feedback demonstration; not a deployed policy')
     p.add_argument('--feedback-teacher-onnx',type=Path,help='Simulation-only teacher policy; defaults to the tested policy')
     p.add_argument('--feedback-after',type=float,default=0.,help='Start simulation teacher after this many seconds, retaining student state')
+    p.add_argument('--stride-teacher-period',type=float,default=0.,help='Offline pulsed-step demonstration period; zero disables, never runtime')
+    p.add_argument('--stride-teacher-duty',type=float,default=.5,help='Offline moving duty fraction; pulse command is target/duty')
+    p.add_argument('--stride-teacher-gain',type=float,default=1.,help='Offline demonstration amplitude calibration; scoring command stays original')
     run(p.parse_args())
