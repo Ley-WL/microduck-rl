@@ -1,0 +1,5 @@
+{
+  "sourceCount": 644,
+  "sourceVerified": true,
+  "testLog": "[mdp] Patches 1-2 active: NaN-safe reward/advantage\n[mdp] Patch 4 active: ONNX export filters passive_* joints\n[mdp] Patch 5 active: MICRODUCK_WARM_START=1 restarts curricula after checkpoint load\ntrack_linear_velocity new [0.99812912940979, 0.8406238555908203, 0.49935245513916016, 5.993659942760132e-05, 4.640219799512124e-07, 2.7811948924427732e-11] legacy [0.6042215824127197, 0.8406237363815308, 0.49935194849967957, 5.993659942760132e-05, 4.640219799512124e-07, 2.7811948924427732e-11]\ntrack_angular_velocity new [0.9870954155921936, 1.0, 0.05293101444840431, 0.31890660524368286, 0.18009233474731445, 0.4074001908302307] legacy [0.20314061641693115, 1.0, 0.052930478006601334, 0.31890660524368286, 0.18009233474731445, 0.4074001908302307]\nNon-low-speed parity, zero-command preservation, drift penalty, oscillation and partial reset passed\n"
+}

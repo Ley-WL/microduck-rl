@@ -22,6 +22,8 @@ p.add_argument('--long-hold', action='store_true', help='30s: move1-11, stop11-1
 p.add_argument('--fixed-actuator', action='store_true', help='7.4V/no droop/4 physics ticks; other DR retained')
 p.add_argument('--nominal-dr', action='store_true', help='Disable listed parameter/sensor DR; reset distribution remains')
 p.add_argument('--trace-motion',action='store_true',help='Save body velocity and stop transients for diagnosis')
+p.add_argument('--reward-audit-task',choices=['walk_low_speed_focused_control','walk_low_speed_air_window','walk_low_speed_mean_tracking'],
+    help='Frozen diagnostic: use and record training rewards without optimizing')
 p.add_argument('--stop-teacher-checkpoint',type=Path,help='Simulation-only stop controller diagnostic; not deployment')
 p.add_argument('--feedback-vx-limit',type=float,default=.12)
 p.add_argument('--feedback-query-vx-limit',type=float,default=.3)
@@ -29,6 +31,7 @@ p.add_argument('--feedback-teacher', action='store_true', help='Privileged simul
 a = p.parse_args()
 assert not a.baseline_cache or a.speed_grid==[-.2,-.1,0.,.1,.2], 'Changed speed grid cannot reuse legacy cache'
 assert not a.baseline_cache or a.baseline_checkpoint==Path('inputs/seed.pt'), 'Explicit baseline cannot reuse legacy cache'
+assert not a.reward_audit_task or (a.long_hold and not a.baseline_cache), 'Reward audit requires uncached long hold'
 assert sum(bool(x) for x in (a.feedback_teacher,a.teacher_map,a.stop_teacher_checkpoint))<=1, 'Select one simulation teacher'
 assert not a.nominal_dr or a.fixed_actuator, 'Nominal DR requires fixed actuator'
 assert not ((a.long_hold or a.fixed_actuator or a.nominal_dr) and a.baseline_cache), 'Diagnostic profiles cannot reuse legacy baseline cache'
@@ -53,6 +56,9 @@ for seed in a.seeds:
         torch.manual_seed(seed)
         cfg = make_cfg(); cfg.scene.num_envs = worlds; cfg.episode_length_s = 26.
         if a.long_hold: cfg.episode_length_s = 32.
+        if a.reward_audit_task:
+            import importlib
+            cfg.rewards=importlib.import_module('mjlab_microduck.tasks.'+a.reward_audit_task).make_cfg().rewards
         if a.fixed_actuator:
             actuator = cfg.scene.entities['robot'].articulation.actuators[0]
             actuator.vin_range = (7.4,7.4)
@@ -117,6 +123,15 @@ for seed in a.seeds:
             steps = torch.zeros((worlds, 2), device=env.device); distance = torch.zeros_like(steps)
             airsum = torch.zeros_like(steps)
             motion_trace=[]
+            if a.reward_audit_task:
+                reward_names=env.reward_manager.active_terms
+                reward_windows=[(1.,3.),(5.,11.),(11.3,16.),(16.,18.),(20.,26.),(26.3,30.)]
+                reward_sum=torch.zeros((worlds,6,len(reward_names)),device=env.device)
+                reward_legacy_sum=torch.zeros_like(reward_sum)
+                legacy_terms=[(i,c) for i,c in enumerate(env.reward_manager._term_cfgs) if hasattr(c.func,'legacy_reward')]
+                reward_actual=torch.zeros((worlds,6,3),device=env.device)
+                reward_command=torch.zeros_like(reward_actual)
+                reward_count=torch.zeros((worlds,6),device=env.device)
             command_hash = hashlib.sha256()
             for tick in range(1500 if a.long_hold else 1200):
                 with torch.inference_mode():
@@ -135,7 +150,7 @@ for seed in a.seeds:
                         has_moved|=moving_now
                         stopped=has_moved & ~moving_now
                         action=torch.where(stopped[:,None],stop_actor(obs),action)
-                obs, _, done, timeout, _ = env.step(action)
+                obs, reward, done, timeout, _ = env.step(action)
                 tilt = torch.rad2deg(torch.acos((-robot.data.projected_gravity_b[:, 2]).clamp(-1, 1)))
                 peak = torch.maximum(peak, torch.where(~failed, tilt, 0.))
                 failed |= done | timeout | (tilt >= 45.)
@@ -145,6 +160,21 @@ for seed in a.seeds:
                 command_hash.update(command.cpu().numpy().tobytes())
                 phase = ((tick + 1) * .02) if a.long_hold else ((tick + 1) * .02) % 12.
                 actual = torch.cat((robot.data.root_link_lin_vel_b[:, :2], robot.data.root_link_ang_vel_b[:, 2:3]), -1)
+                if a.reward_audit_task:
+                    term_reward=env.reward_manager._step_reward
+                    legacy_reward=term_reward.clone()
+                    for i,term_cfg in legacy_terms:
+                        legacy_reward[:,i]=torch.nan_to_num(term_cfg.func.legacy_reward*term_cfg.weight)
+                    scale=env.step_dt if env.reward_manager._scale_by_dt else 1.
+                    if tick in (0,500,1499):
+                        torch.testing.assert_close(term_reward[live].sum(-1)*scale,reward[live],atol=1e-5,rtol=1e-5)
+                    for index,(start,end) in enumerate(reward_windows):
+                        if start<=phase<end:
+                            reward_sum[:,index]+=torch.where(live[:,None],term_reward,0.)
+                            reward_legacy_sum[:,index]+=torch.where(live[:,None],legacy_reward,0.)
+                            reward_actual[:,index]+=torch.where(live[:,None],actual,0.)
+                            reward_command[:,index]+=torch.where(live[:,None],command,0.)
+                            reward_count[:,index]+=live
                 if a.trace_motion:
                     motion_trace.append(torch.cat((actual,command,tilt[:,None],live[:,None]),-1).detach().clone())
                 motion_window = (5. <= phase < 11. or 20. <= phase < 26.) if a.long_hold else (2. <= phase < 4. or 8. <= phase < 10.)
@@ -183,6 +213,14 @@ for seed in a.seeds:
                 stepAirTime=(airsum / steps.clamp_min(1)).cpu().tolist(),
                 initialStateSha256=hashlib.sha256(initial.numpy().tobytes()).hexdigest(),
                 commandTraceSha256=command_hash.hexdigest())
+            if a.reward_audit_task:
+                row['rewardAudit']=dict(task=a.reward_audit_task,terms=reward_names,
+                    phases=['startupForward','steadyForward','stopFirst','startupReverse','steadyReverse','stopSecond'],
+                    meanWeightedRate=(reward_sum/reward_count.clamp_min(1)[:,:,None]).cpu().tolist(),
+                    meanLegacyWeightedRate=(reward_legacy_sum/reward_count.clamp_min(1)[:,:,None]).cpu().tolist(),
+                    meanActual=(reward_actual/reward_count.clamp_min(1)[:,:,None]).cpu().tolist(),
+                    meanCommand=(reward_command/reward_count.clamp_min(1)[:,:,None]).cpu().tolist(),
+                    samples=reward_count.cpu().tolist(),optimizationSteps=0)
             if a.trace_motion:
                 trace_name=Path(a.output).stem+f'-{label}-{seed}-motion.npz'
                 np.savez_compressed(ROOT/'evidence'/trace_name,values=torch.stack(motion_trace).cpu().numpy(),dt=.02,columns=np.array(['vx','vy','yaw','commandVx','commandVy','commandYaw','tilt','live']))
