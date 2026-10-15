@@ -1,0 +1,111 @@
+{
+  "accepted": false,
+  "training": false,
+  "hypothesis": "EMA(actual)-currentCommand replaces EMA(actual-command) only for tracking_bias",
+  "limitation": "Same-trajectory counterfactual, not independent gait validation; other rewards and physical trajectories unchanged",
+  "checks": [
+    {
+      "seed": 257151,
+      "policy": "baseline",
+      "verifiedWorlds": 72
+    },
+    {
+      "seed": 257151,
+      "policy": "candidate",
+      "verifiedWorlds": 72
+    },
+    {
+      "seed": 257157,
+      "policy": "baseline",
+      "verifiedWorlds": 72
+    },
+    {
+      "seed": 257157,
+      "policy": "candidate",
+      "verifiedWorlds": 72
+    }
+  ],
+  "failed": [],
+  "summary": [
+    {
+      "seed": 257151,
+      "criterion": "speedWinner",
+      "phase": "start",
+      "eligible": 25,
+      "correctOldNew": [
+        22,
+        19
+      ]
+    },
+    {
+      "seed": 257151,
+      "criterion": "speedWinner",
+      "phase": "walk",
+      "eligible": 22,
+      "correctOldNew": [
+        20,
+        20
+      ]
+    },
+    {
+      "seed": 257151,
+      "criterion": "yawWinner",
+      "phase": "start",
+      "eligible": 16,
+      "correctOldNew": [
+        12,
+        12
+      ]
+    },
+    {
+      "seed": 257151,
+      "criterion": "yawWinner",
+      "phase": "walk",
+      "eligible": 7,
+      "correctOldNew": [
+        6,
+        5
+      ]
+    },
+    {
+      "seed": 257157,
+      "criterion": "speedWinner",
+      "phase": "start",
+      "eligible": 17,
+      "correctOldNew": [
+        15,
+        10
+      ]
+    },
+    {
+      "seed": 257157,
+      "criterion": "speedWinner",
+      "phase": "walk",
+      "eligible": 23,
+      "correctOldNew": [
+        22,
+        23
+      ]
+    },
+    {
+      "seed": 257157,
+      "criterion": "yawWinner",
+      "phase": "start",
+      "eligible": 18,
+      "correctOldNew": [
+        14,
+        10
+      ]
+    },
+    {
+      "seed": 257157,
+      "criterion": "yawWinner",
+      "phase": "walk",
+      "eligible": 5,
+      "correctOldNew": [
+        4,
+        4
+      ]
+    }
+  ]
+}

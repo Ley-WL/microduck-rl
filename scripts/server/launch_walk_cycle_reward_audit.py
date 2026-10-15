@@ -24,12 +24,16 @@ try:
     spec=json.loads(spec_path.read_text()) if spec_path.exists() else dict(
         seeds=[253151,253157],speeds=[.025,.035,.05,.075,.2],yaw=[-.6,0.,.6])
     assert len(spec['seeds'])==2 and len(set(spec['seeds']))==2
-    stages=[('reward-test','scripts/server/test_walk_cycle_mean_tracking.py',[],None),
+    reward_task=spec.get('task','walk_cycle_mean_tracking')
+    assert reward_task in ('walk_cycle_mean_tracking','walk_relative_cycle_context')
+    test='test_walk_relative_cycle_context.py' if reward_task=='walk_relative_cycle_context' else 'test_walk_cycle_mean_tracking.py'
+    stages=[('reward-test','scripts/server/'+test,[],None),
         ('audit','scripts/server/evaluate_walk_tracking_transfer.py',
          ['--candidate','inputs/candidate.pt','--long-hold','--seeds',*[str(x) for x in spec['seeds']],
           '--speed-grid',*[str(x) for x in spec['speeds']],
-          '--yaw-grid',*[str(x) for x in spec['yaw']],'--reward-audit-task','walk_cycle_mean_tracking',
-          '--trace-motion','--output','reward-audit.json'],None)]
+          '--yaw-grid',*[str(x) for x in spec['yaw']],'--reward-audit-task',reward_task,
+          '--trace-motion',*(['--trace-rewards'] if spec.get('fullRewards') else []),
+          '--output','reward-audit.json'],None)]
     for name,path,args,task in stages:
         if task:env['MICRODUCK_WALK_TRANSFER_TASK']=task
         for attempt in range(30):
