@@ -1,0 +1,109 @@
+[
+  {
+    "initialLowValidationRms": [
+      0.010511007159948349,
+      0.010264931246638298
+    ],
+    "lowValidationRms": [
+      0.0068045142106711864,
+      0.008087191730737686
+    ],
+    "transitionWeight": 1.0,
+    "stopWeight": 8.0,
+    "steps": 500,
+    "initialValidationRms": 0.005560988560318947,
+    "validationRms": 0.005287454929202795,
+    "initialGpuValidationRms": 0.008814129047095776,
+    "gpuValidationRms": 0.008188590407371521,
+    "policySha256": "b0809f25896126e15fd7c29f9daf34f889dbebf21456347a1f6976ecf7965587",
+    "onnxMaxError": 7.003545761108398e-07,
+    "normalizerUnchanged": true,
+    "feedbackUsedAtRuntime": false,
+    "hardwareAccess": false,
+    "lost": 0,
+    "bias": {
+      "baseline": [
+        0.013333683901767776,
+        0.06384607345453333
+      ],
+      "candidate": [
+        0.01285474419104465,
+        0.0570813095433247
+      ]
+    },
+    "stopPassed": false,
+    "strideRetained": true,
+    "cpuBaseline": {
+      "error": [
+        0.005493420307295234,
+        0.06398998243122793
+      ],
+      "stop": 0.0029071531345286595,
+      "stride": 0.1047556726976322
+    },
+    "cpuCandidate": {
+      "error": [
+        0.004741572874076041,
+        0.05449267173757467
+      ],
+      "stop": 0.004222766210305308,
+      "stride": 0.10425160430512186
+    },
+    "cpuPassed": false,
+    "cpuDirectionsPassed": true,
+    "gpuTrackingPreserved": true,
+    "startup": {
+      "gpuDirectionsPassed": true,
+      "cpuDirectionsPassed": false,
+      "gpu": {
+        "baseline": {
+          "vxError": 0.020768079889627405,
+          "yawError": 0.05077921091534184,
+          "started": 66,
+          "total": 96,
+          "survived": true,
+          "maxStop": [
+            0.010978552512824535,
+            0.045484550297260284
+          ]
+        },
+        "candidate": {
+          "vxError": 0.016705760242833396,
+          "yawError": 0.04964038656862613,
+          "started": 76,
+          "total": 96,
+          "survived": true,
+          "maxStop": [
+            0.012628912925720215,
+            0.04647265002131462
+          ]
+        }
+      },
+      "cpu": {
+        "baseline": {
+          "vxError": 0.0212571739294363,
+          "yawError": 0.058982916938703674,
+          "started": 8,
+          "total": 12,
+          "survived": true,
+          "maxStop": 0.007278393907956512
+        },
+        "candidate": {
+          "vxError": 0.014001387723699106,
+          "yawError": 0.05974156959461056,
+          "started": 9,
+          "total": 12,
+          "survived": true,
+          "maxStop": 0.007713111155707596
+        }
+      },
+      "gpuPassed": false,
+      "cpuPassed": false,
+      "continueTraining": false,
+      "score": 0.030707147966532504,
+      "finalLargeStrideAccepted": false
+    },
+    "continueTraining": false,
+    "originalScreenAccepted": false
+  }
+]

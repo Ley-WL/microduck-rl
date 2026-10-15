@@ -1,0 +1,274 @@
+{
+  "simulationOnly": true,
+  "rolloutAcceptance": false,
+  "datasets": [
+    {
+      "path": "artifacts\\walk-low-feedback-v27-20261016\\data\\feedback-data.npz",
+      "sha256": "9eb0af11947451c1d46908f51a0e820de92bc4a4556535584f50577d274075fe",
+      "validationWorlds": 10,
+      "models": {
+        "baseline": {
+          "sha256": "457f276135822ed25bed4da0875cf014f4933b6dcda4056c245bd94a9c82f7f7",
+          "oracleError": 4.172325134277344e-07,
+          "phases": {
+            "stop": {
+              "frames": 2404,
+              "rms": 0.0010369938099756837
+            },
+            "startupFirst2s": {
+              "frames": 1000,
+              "rms": 0.02149539813399315
+            },
+            "sustained": {
+              "frames": 11596,
+              "rms": 0.010141215287148952
+            },
+            "stopStraight": {
+              "frames": 2380,
+              "rms": 0.0009797986131161451
+            },
+            "startupFirst2sStraight": {
+              "frames": 984,
+              "rms": 0.021525949239730835
+            },
+            "sustainedStraight": {
+              "frames": 2304,
+              "rms": 0.015902971848845482
+            }
+          }
+        },
+        "candidate": {
+          "sha256": "b0809f25896126e15fd7c29f9daf34f889dbebf21456347a1f6976ecf7965587",
+          "oracleError": 3.2782554626464844e-07,
+          "phases": {
+            "stop": {
+              "frames": 2404,
+              "rms": 0.0010462170466780663
+            },
+            "startupFirst2s": {
+              "frames": 1000,
+              "rms": 0.01087893545627594
+            },
+            "sustained": {
+              "frames": 11596,
+              "rms": 0.007032782305032015
+            },
+            "stopStraight": {
+              "frames": 2380,
+              "rms": 0.0009952530963346362
+            },
+            "startupFirst2sStraight": {
+              "frames": 984,
+              "rms": 0.010781995952129364
+            },
+            "sustainedStraight": {
+              "frames": 2304,
+              "rms": 0.008230186998844147
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "artifacts\\walk-low-gpu-data-v27-20261016\\gpu-feedback-data.pt",
+      "sha256": "dc731198c414e1639e8af1d483694bdd471807bd39baf8f2802350914175611d",
+      "validationWorlds": 10,
+      "models": {
+        "baseline": {
+          "sha256": "457f276135822ed25bed4da0875cf014f4933b6dcda4056c245bd94a9c82f7f7",
+          "oracleError": 3.427267074584961e-07,
+          "phases": {
+            "stop": {
+              "frames": 4786,
+              "rms": 0.0012777685187757015
+            },
+            "startupFirst2s": {
+              "frames": 2000,
+              "rms": 0.01577047072350979
+            },
+            "sustained": {
+              "frames": 8214,
+              "rms": 0.01144163403660059
+            },
+            "stopStraight": {
+              "frames": 4738,
+              "rms": 0.0011955098016187549
+            },
+            "startupFirst2sStraight": {
+              "frames": 400,
+              "rms": 0.027224058285355568
+            },
+            "sustainedStraight": {
+              "frames": 1606,
+              "rms": 0.018457408994436264
+            }
+          }
+        },
+        "candidate": {
+          "sha256": "b0809f25896126e15fd7c29f9daf34f889dbebf21456347a1f6976ecf7965587",
+          "oracleError": 5.364418029785156e-07,
+          "phases": {
+            "stop": {
+              "frames": 4786,
+              "rms": 0.0013811009703204036
+            },
+            "startupFirst2s": {
+              "frames": 2000,
+              "rms": 0.011720064096152782
+            },
+            "sustained": {
+              "frames": 8214,
+              "rms": 0.009212948381900787
+            },
+            "stopStraight": {
+              "frames": 4738,
+              "rms": 0.0012988968519493937
+            },
+            "startupFirst2sStraight": {
+              "frames": 400,
+              "rms": 0.01749427244067192
+            },
+            "sustainedStraight": {
+              "frames": 1606,
+              "rms": 0.01288063358515501
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "artifacts\\walk-feedback-stop-v11-20261016\\data\\feedback-data.npz",
+      "sha256": "126eb80d54d69194db0ddcb588cf287dddef390224474a11f20aefa302b7d9c7",
+      "validationWorlds": 25,
+      "models": {
+        "baseline": {
+          "sha256": "457f276135822ed25bed4da0875cf014f4933b6dcda4056c245bd94a9c82f7f7",
+          "oracleError": 3.2782554626464844e-07,
+          "phases": {
+            "stop": {
+              "frames": 7596,
+              "rms": 0.0010187801672145724
+            },
+            "startupFirst2s": {
+              "frames": 2400,
+              "rms": 0.011456008069217205
+            },
+            "sustained": {
+              "frames": 27504,
+              "rms": 0.005570866633206606
+            },
+            "stopStraight": {
+              "frames": 7536,
+              "rms": 0.0009248123387806118
+            },
+            "startupFirst2sStraight": {
+              "frames": 2000,
+              "rms": 0.011739558540284634
+            },
+            "sustainedStraight": {
+              "frames": 4634,
+              "rms": 0.003868235507979989
+            }
+          }
+        },
+        "candidate": {
+          "sha256": "b0809f25896126e15fd7c29f9daf34f889dbebf21456347a1f6976ecf7965587",
+          "oracleError": 3.5762786865234375e-07,
+          "phases": {
+            "stop": {
+              "frames": 7596,
+              "rms": 0.0009952991968020797
+            },
+            "startupFirst2s": {
+              "frames": 2400,
+              "rms": 0.010121753439307213
+            },
+            "sustained": {
+              "frames": 27504,
+              "rms": 0.005422338377684355
+            },
+            "stopStraight": {
+              "frames": 7536,
+              "rms": 0.0009064216865226626
+            },
+            "startupFirst2sStraight": {
+              "frames": 2000,
+              "rms": 0.010326235555112362
+            },
+            "sustainedStraight": {
+              "frames": 4634,
+              "rms": 0.004066620487719774
+            }
+          }
+        }
+      }
+    },
+    {
+      "path": "artifacts\\walk-feedback-gpu-data-v13-20261016\\gpu-feedback-data.pt",
+      "sha256": "02303bb93adc2db3e11b2e48806202b33c51ee70a95ab29968b792fad919696d",
+      "validationWorlds": 25,
+      "models": {
+        "baseline": {
+          "sha256": "457f276135822ed25bed4da0875cf014f4933b6dcda4056c245bd94a9c82f7f7",
+          "oracleError": 3.5762786865234375e-07,
+          "phases": {
+            "stop": {
+              "frames": 12916,
+              "rms": 0.0012341972906142473
+            },
+            "startupFirst2s": {
+              "frames": 4800,
+              "rms": 0.014170031063258648
+            },
+            "sustained": {
+              "frames": 19784,
+              "rms": 0.009876583702862263
+            },
+            "stopStraight": {
+              "frames": 12796,
+              "rms": 0.0011408382561057806
+            },
+            "startupFirst2sStraight": {
+              "frames": 800,
+              "rms": 0.011513388715684414
+            },
+            "sustainedStraight": {
+              "frames": 3264,
+              "rms": 0.009182429872453213
+            }
+          }
+        },
+        "candidate": {
+          "sha256": "b0809f25896126e15fd7c29f9daf34f889dbebf21456347a1f6976ecf7965587",
+          "oracleError": 5.21540641784668e-07,
+          "phases": {
+            "stop": {
+              "frames": 12916,
+              "rms": 0.0013469072291627526
+            },
+            "startupFirst2s": {
+              "frames": 4800,
+              "rms": 0.01289392914623022
+            },
+            "sustained": {
+              "frames": 19784,
+              "rms": 0.009250742383301258
+            },
+            "stopStraight": {
+              "frames": 12796,
+              "rms": 0.0012399067636579275
+            },
+            "startupFirst2sStraight": {
+              "frames": 800,
+              "rms": 0.010118481703102589
+            },
+            "sustainedStraight": {
+              "frames": 3264,
+              "rms": 0.008873829618096352
+            }
+          }
+        }
+      }
+    }
+  ]
+}
