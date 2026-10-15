@@ -15,3 +15,13 @@ try:t.query([0,0,0],[float('nan'),0])
 except ValueError:pass
 else:raise AssertionError('Non-finite measurement accepted')
 print('feedback teacher saturation/reset/slew/finite checks passed')
+
+# Wider bounds only affect saturation; default behavior remains parity-tested.
+wide=FeedbackTeacher(vx_limit=.25)
+for _ in range(500):q=wide.query([-.05,0,0],[0,0])
+assert q[0]<-.2 and q[0]>=-.3
+np.testing.assert_allclose(wide.query([-.04,0,0],[0,0],enabled=False),[-.04,0,0])
+for bound in (0,-1,.31,float('nan')):
+    try:FeedbackTeacher(vx_limit=bound)
+    except ValueError:pass
+    else:raise AssertionError('Invalid bound accepted')

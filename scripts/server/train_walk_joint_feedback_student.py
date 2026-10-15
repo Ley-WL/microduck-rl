@@ -12,6 +12,13 @@ from mjlab_microduck.tasks.walk_tracking_transfer import make_cfg,rl_cfg
 
 ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'evidence'
 torch.manual_seed(212131)
+options_path=ROOT/'inputs/training-options.json'
+options=json.loads(options_path.read_text()) if options_path.exists() else {}
+stop_weight=float(options.get('stopWeight',1.))
+assert 1 <= stop_weight <= 16
+def imitation_loss(observation,prediction,target):
+    weight=torch.where(observation[:,48:51].norm(dim=-1)<.02,stop_weight,1.)
+    return ((prediction-target).square().mean(-1)*weight).sum()/weight.sum()
 data_audit=json.loads((ROOT/'inputs/data-audit.json').read_text())
 assert hashlib.sha256((ROOT/'inputs/feedback-data.npz').read_bytes()).hexdigest()==data_audit['dataSha256']
 assert len(data_audit['worlds'])==75 and all(w['valid'] for w in data_audit['worlds'])
@@ -66,7 +73,7 @@ try:
         for _ in range(previous,total):
             ids=torch.randint(len(x),(512,),device=env.device)
             aid=torch.randint(len(gx),(512,),device=env.device)
-            loss=(predict(x[ids])-y[ids]).square().mean()+(predict(gx[aid])-gy[aid]).square().mean()
+            loss=imitation_loss(x[ids],predict(x[ids]),y[ids])+imitation_loss(gx[aid],predict(gx[aid]),gy[aid])
             optimizer.zero_grad();loss.backward();torch.nn.utils.clip_grad_norm_(actor.parameters(),1.);optimizer.step()
         assert all(torch.equal(actor.state_dict()[k],v) for k,v in normalizer.items())
         assert all(bool(torch.isfinite(v).all()) for v in actor.state_dict().values())
@@ -85,7 +92,7 @@ try:
         meta['walkExecution']['policySha256']=sha
         meta['feedbackDistillation']=dict(steps=total,feedbackUsedAtRuntime=False,accepted=False)
         (stage/'policy.metadata.json').write_text(json.dumps(meta,indent=2))
-        audit=dict(steps=total,initialValidationRms=initial,validationRms=rms,initialGpuValidationRms=initial_gpu,gpuValidationRms=gpu_rms,policySha256=sha,
+        audit=dict(stopWeight=stop_weight,steps=total,initialValidationRms=initial,validationRms=rms,initialGpuValidationRms=initial_gpu,gpuValidationRms=gpu_rms,policySha256=sha,
             onnxMaxError=error,normalizerUnchanged=True,feedbackUsedAtRuntime=False,hardwareAccess=False)
         (stage/'audit.json').write_text(json.dumps(audit,indent=2))
         if total==5:

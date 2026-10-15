@@ -7,7 +7,9 @@ import numpy as np
 
 
 class FeedbackTeacher:
-    def __init__(self):
+    def __init__(self, vx_limit=.12):
+        if not 0 < vx_limit <= .3:raise ValueError("Invalid simulation vx correction bound")
+        self.vx_limit=vx_limit
         self.filtered=np.zeros(2)
         self.integral=np.zeros(2)
         self.correction=np.zeros(2)
@@ -28,7 +30,7 @@ class FeedbackTeacher:
         self.integral[reversal]=0;self.correction[reversal]=0
         self.filtered += dt/(.35+dt)*(actual-self.filtered)
         error=desired-self.filtered
-        bounds=np.array([.12,.6])
+        bounds=np.array([self.vx_limit,.6])
         self.integral=np.clip(self.integral+dt*np.array([.8,.8])*error,-bounds,bounds)
         target=np.clip(np.array([.3,.2])*error+self.integral,-bounds,bounds)
         self.correction += np.clip(target-self.correction,-dt*np.array([.3,1.2]),dt*np.array([.3,1.2]))

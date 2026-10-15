@@ -1,0 +1,10 @@
+{
+  "remote": "/CodeRepo/Code/leiwu30/1_code/microduck-training/walk-joint-stop-v16-20261016",
+  "sourceArchiveSha256": "8ce7e511b96d387beb07e4f6a4e0d6f85323464379dddfb4d4e680836b9cca00",
+  "output": "{\"pid\": 2098780}\n",
+  "launcherPid": 2098780,
+  "workerPid": 2099203,
+  "sourceHashesVerified": 621,
+  "stopWeight": 8,
+  "hardwareAccess": false
+}

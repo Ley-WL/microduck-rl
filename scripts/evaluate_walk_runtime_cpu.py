@@ -126,6 +126,7 @@ def run(args):
     manifest=dict(simulationOnly=True,hardwareAccess=False,training=False,policySha256=meta['policySha256'],
         policyForwardDiagnostic=getattr(args,'policy_forward',False),
         privilegedFeedbackTeacher=getattr(args,'feedback_teacher',False),
+        feedbackVxCorrectionLimit=getattr(args,'feedback_vx_limit',.12),
         hardwareProfile="microduck-replica-hd1910-v1",bodyContractApplied=aligned,physicsProfile='kissqy' if aligned else 'local',physicsAudit=physics_audit,bodyGroundMeshes=contacts,
         massKg=float(model.body_mass.sum()),bamKp=args.bam_kp,voltage=args.voltage,friction=args.friction,
         contactTimeconst=args.contact_timeconst,compliantContactIsNotMeasuredCarpet=True,
@@ -203,7 +204,7 @@ def run(args):
                 teacher=None
                 if getattr(args,'feedback_teacher',False):
                     from walk_feedback_teacher import FeedbackTeacher
-                    teacher=FeedbackTeacher()
+                    teacher=FeedbackTeacher(vx_limit=getattr(args,"feedback_vx_limit",.12))
                 for tick in range(round(args.seconds/.02)):
                     t=float(data.time-start)
                     if t>=args.seconds:break
@@ -275,5 +276,6 @@ if __name__=='__main__':
     p.add_argument('--turn-rate',type=float,default=0.,help='Signed yaw command in rad/s during walking')
     p.add_argument('--turn-at',type=float,default=4.,help='Start turning after the initial straight walk')
     p.add_argument('--policy-forward',action='store_true',help='Diagnostic: refresh constraints before each policy observation, as mjlab does')
+    p.add_argument('--feedback-vx-limit',type=float,default=.12,help='Simulation teacher correction bound; runtime unchanged')
     p.add_argument('--feedback-teacher',action='store_true',help='Privileged simulation-only feedback demonstration; not a deployed policy')
     run(p.parse_args())
