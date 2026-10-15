@@ -1,0 +1,34 @@
+{
+  "control-smoke/stage-audit.json": {
+    "seed": 68131,
+    "surface": false,
+    "worlds": 64,
+    "iterations": 5,
+    "rolloutSteps": 7680,
+    "adamSteps": [
+      40
+    ],
+    "actorNormalizerUnchanged": true,
+    "finite": true,
+    "onnxTorchMaxError": 2.1457672119140625e-06,
+    "policySha256": "c5fd6a3b6bde3a0912410546a3e7e5df7347659a2d36d64fa855e5d3e1e9bac8",
+    "hardwareAccess": false,
+    "accepted": false
+  },
+  "stride-smoke/stage-audit.json": {
+    "seed": 68131,
+    "surface": false,
+    "worlds": 64,
+    "iterations": 5,
+    "rolloutSteps": 7680,
+    "adamSteps": [
+      40
+    ],
+    "actorNormalizerUnchanged": true,
+    "finite": true,
+    "onnxTorchMaxError": 3.0994415283203125e-06,
+    "policySha256": "2032a50b72c9416f28b3f609632edf0578b9612e21a441c2be6c2ce371d97526",
+    "hardwareAccess": false,
+    "accepted": false
+  }
+}
