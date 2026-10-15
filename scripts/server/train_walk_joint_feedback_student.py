@@ -6,6 +6,7 @@ import numpy as np
 import torch
 import onnxruntime as ort
 from tensordict import TensorDict
+from walk_stop_transition import stop_transition_mask
 from mjlab.envs import ManagerBasedRlEnv
 from mjlab.rl import MjlabOnPolicyRunner,RslRlVecEnvWrapper
 from mjlab_microduck.tasks.walk_tracking_transfer import make_cfg,rl_cfg
@@ -15,9 +16,11 @@ torch.manual_seed(212131)
 options_path=ROOT/'inputs/training-options.json'
 options=json.loads(options_path.read_text()) if options_path.exists() else {}
 stop_weight=float(options.get('stopWeight',1.))
-assert 1 <= stop_weight <= 16
-def imitation_loss(observation,prediction,target):
+transition_weight=float(options.get('transitionWeight',1.))
+assert 1 <= stop_weight <= 16 and 1 <= transition_weight <= 16
+def imitation_loss(observation,prediction,target,transition=None):
     weight=torch.where(observation[:,48:51].norm(dim=-1)<.02,stop_weight,1.)
+    if transition is not None:weight=weight*torch.where(transition,transition_weight,1.)
     return ((prediction-target).square().mean(-1)*weight).sum()/weight.sum()
 data_audit=json.loads((ROOT/'inputs/data-audit.json').read_text())
 assert hashlib.sha256((ROOT/'inputs/feedback-data.npz').read_bytes()).hexdigest()==data_audit['dataSha256']
@@ -33,6 +36,9 @@ try:
     for parameter in actor.distribution.parameters():parameter.requires_grad_(False)
     def predict(x):return actor(TensorDict({'actor':x},batch_size=[len(x)]))
     data=np.load(ROOT/'inputs/feedback-data.npz');mask=data['validation']
+    assert data['observation'].shape==(112500,61)
+    transition=stop_transition_mask(data['observation'].reshape(75,1500,61).transpose(1,0,2)[:,:,48:51]).T.flatten()
+    tx=torch.tensor(transition[~mask],device=env.device)
     x=torch.tensor(data['observation'][~mask],device=env.device)
     y=torch.tensor(data['target'][~mask],device=env.device)
     vx=torch.tensor(data['observation'][mask],device=env.device)
@@ -44,6 +50,8 @@ try:
     assert gpu['observation'].shape==(1500,100,61) and gpu['target'].shape==(1500,100,14)
     assert bool(gpu['survived'].all()) and int(gpu['validationWorlds'].sum())==25
     train_worlds=~gpu['validationWorlds'];valid_worlds=gpu['validationWorlds']
+    gpu_transition=stop_transition_mask(gpu['observation'].numpy()[:,:,48:51])
+    gtx=torch.tensor(gpu_transition[:,train_worlds.numpy()].flatten(),device=env.device)
     gx=gpu['observation'][:,train_worlds].flatten(0,1).to(env.device)
     gy=gpu['target'][:,train_worlds].flatten(0,1).to(env.device)
     gvx=gpu['observation'][:,valid_worlds].flatten(0,1).to(env.device)
@@ -73,7 +81,7 @@ try:
         for _ in range(previous,total):
             ids=torch.randint(len(x),(512,),device=env.device)
             aid=torch.randint(len(gx),(512,),device=env.device)
-            loss=imitation_loss(x[ids],predict(x[ids]),y[ids])+imitation_loss(gx[aid],predict(gx[aid]),gy[aid])
+            loss=imitation_loss(x[ids],predict(x[ids]),y[ids],tx[ids])+imitation_loss(gx[aid],predict(gx[aid]),gy[aid],gtx[aid])
             optimizer.zero_grad();loss.backward();torch.nn.utils.clip_grad_norm_(actor.parameters(),1.);optimizer.step()
         assert all(torch.equal(actor.state_dict()[k],v) for k,v in normalizer.items())
         assert all(bool(torch.isfinite(v).all()) for v in actor.state_dict().values())
@@ -92,7 +100,7 @@ try:
         meta['walkExecution']['policySha256']=sha
         meta['feedbackDistillation']=dict(steps=total,feedbackUsedAtRuntime=False,accepted=False)
         (stage/'policy.metadata.json').write_text(json.dumps(meta,indent=2))
-        audit=dict(stopWeight=stop_weight,steps=total,initialValidationRms=initial,validationRms=rms,initialGpuValidationRms=initial_gpu,gpuValidationRms=gpu_rms,policySha256=sha,
+        audit=dict(transitionWeight=transition_weight,stopWeight=stop_weight,steps=total,initialValidationRms=initial,validationRms=rms,initialGpuValidationRms=initial_gpu,gpuValidationRms=gpu_rms,policySha256=sha,
             onnxMaxError=error,normalizerUnchanged=True,feedbackUsedAtRuntime=False,hardwareAccess=False)
         (stage/'audit.json').write_text(json.dumps(audit,indent=2))
         if total==5:

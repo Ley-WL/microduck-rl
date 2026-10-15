@@ -1,0 +1,10 @@
+{
+  "remote": "/CodeRepo/Code/leiwu30/1_code/microduck-training/walk-stop-transition-v22-20261016",
+  "sourceArchiveSha256": "3309c3e58315da69a4f58cad50160140bafbce2b915056b7c8517dac25be6ad5",
+  "output": "{\"pid\": 2266575}\n",
+  "launcherPid": 2266575,
+  "workerPid": 2266925,
+  "sourceHashesVerified": 624,
+  "smokePassed": true,
+  "hardwareAccess": false
+}

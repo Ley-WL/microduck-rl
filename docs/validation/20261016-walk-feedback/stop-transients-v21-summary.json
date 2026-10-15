@@ -1,0 +1,30 @@
+{
+  "v6-baseline-218151-motion.npz": {
+    "events": 112,
+    "settled": 112,
+    "meanSettleSeconds": 0.8262500000000002,
+    "meanTailHorizontal": 0.0010736908976208984,
+    "meanFirstSecondTravel": 0.07758233676265393
+  },
+  "v6-baseline-218157-motion.npz": {
+    "events": 112,
+    "settled": 112,
+    "meanSettleSeconds": 0.8230357142857143,
+    "meanTailHorizontal": 0.0011088489918620326,
+    "meanFirstSecondTravel": 0.07772799554680075
+  },
+  "v6-candidate-218151-motion.npz": {
+    "events": 112,
+    "settled": 112,
+    "meanSettleSeconds": 0.8560714285714285,
+    "meanTailHorizontal": 0.001123231389751059,
+    "meanFirstSecondTravel": 0.08119126858322748
+  },
+  "v6-candidate-218157-motion.npz": {
+    "events": 112,
+    "settled": 112,
+    "meanSettleSeconds": 0.8601785714285715,
+    "meanTailHorizontal": 0.0011791796275377106,
+    "meanFirstSecondTravel": 0.08041674909847123
+  }
+}
