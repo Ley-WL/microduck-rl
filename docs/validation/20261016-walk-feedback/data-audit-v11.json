@@ -1,0 +1,393 @@
+{
+  "worlds": [
+    {
+      "source": "yaw-0.6\\seed207101-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.6\\seed207101-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.6\\seed207101-trial0-speed0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.6\\seed207101-trial0-speed0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.6\\seed207101-trial0-speed0.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.6\\seed207107-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.6\\seed207107-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.6\\seed207107-trial0-speed0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.6\\seed207107-trial0-speed0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.6\\seed207107-trial0-speed0.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.6\\seed207111-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw-0.6\\seed207111-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw-0.6\\seed207111-trial0-speed0.1.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw-0.6\\seed207111-trial0-speed0.2.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw-0.6\\seed207111-trial0-speed0.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw-0.3\\seed207101-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.3\\seed207101-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.3\\seed207101-trial0-speed0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.3\\seed207101-trial0-speed0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.3\\seed207101-trial0-speed0.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.3\\seed207107-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.3\\seed207107-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.3\\seed207107-trial0-speed0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.3\\seed207107-trial0-speed0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.3\\seed207107-trial0-speed0.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw-0.3\\seed207111-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw-0.3\\seed207111-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw-0.3\\seed207111-trial0-speed0.1.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw-0.3\\seed207111-trial0-speed0.2.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw-0.3\\seed207111-trial0-speed0.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0\\seed207101-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0\\seed207101-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0\\seed207101-trial0-speed0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0\\seed207101-trial0-speed0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0\\seed207101-trial0-speed0.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0\\seed207107-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0\\seed207107-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0\\seed207107-trial0-speed0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0\\seed207107-trial0-speed0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0\\seed207107-trial0-speed0.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0\\seed207111-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0\\seed207111-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0\\seed207111-trial0-speed0.1.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0\\seed207111-trial0-speed0.2.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0\\seed207111-trial0-speed0.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0.3\\seed207101-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.3\\seed207101-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.3\\seed207101-trial0-speed0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.3\\seed207101-trial0-speed0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.3\\seed207101-trial0-speed0.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.3\\seed207107-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.3\\seed207107-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.3\\seed207107-trial0-speed0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.3\\seed207107-trial0-speed0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.3\\seed207107-trial0-speed0.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.3\\seed207111-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0.3\\seed207111-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0.3\\seed207111-trial0-speed0.1.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0.3\\seed207111-trial0-speed0.2.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0.3\\seed207111-trial0-speed0.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0.6\\seed207101-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.6\\seed207101-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.6\\seed207101-trial0-speed0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.6\\seed207101-trial0-speed0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.6\\seed207101-trial0-speed0.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.6\\seed207107-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.6\\seed207107-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.6\\seed207107-trial0-speed0.1.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.6\\seed207107-trial0-speed0.2.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.6\\seed207107-trial0-speed0.json",
+      "valid": true,
+      "validation": false
+    },
+    {
+      "source": "yaw0.6\\seed207111-trial0-speed-0.1.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0.6\\seed207111-trial0-speed-0.2.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0.6\\seed207111-trial0-speed0.1.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0.6\\seed207111-trial0-speed0.2.json",
+      "valid": true,
+      "validation": true
+    },
+    {
+      "source": "yaw0.6\\seed207111-trial0-speed0.json",
+      "valid": true,
+      "validation": true
+    }
+  ],
+  "seeds": [
+    207101,
+    207107,
+    207111
+  ],
+  "frames": 112500,
+  "trainingWorlds": 50,
+  "validationWorlds": 25,
+  "teacherPolicySha256": "bf67effad2d5443e3afa010974c7e486f1edabc1361aeb2c8994f803f2c6a96c",
+  "teacherSourceSha256": "2a8233169bbcb51a8214d7291d94e0d9e6c363e70cbb39cb6e7ec01915515198",
+  "dataSha256": "126eb80d54d69194db0ddcb588cf287dddef390224474a11f20aefa302b7d9c7",
+  "desiredCommandRetained": true,
+  "privilegedTeacherOnly": true,
+  "hardwareAccess": false
+}

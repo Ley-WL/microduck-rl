@@ -125,6 +125,7 @@ def run(args):
     assert session.get_inputs()[0].shape==[1,61] and session.get_outputs()[0].shape==[1,14]
     manifest=dict(simulationOnly=True,hardwareAccess=False,training=False,policySha256=meta['policySha256'],
         policyForwardDiagnostic=getattr(args,'policy_forward',False),
+        privilegedFeedbackTeacher=getattr(args,'feedback_teacher',False),
         hardwareProfile="microduck-replica-hd1910-v1",bodyContractApplied=aligned,physicsProfile='kissqy' if aligned else 'local',physicsAudit=physics_audit,bodyGroundMeshes=contacts,
         massKg=float(model.body_mass.sum()),bamKp=args.bam_kp,voltage=args.voltage,friction=args.friction,
         contactTimeconst=args.contact_timeconst,compliantContactIsNotMeasuredCarpet=True,
@@ -199,6 +200,10 @@ def run(args):
                     filtered=np.asarray(real_start['emaPreviousRadians'],dtype=np.float32)
                     command=np.asarray(real_start['commandTwist'],dtype=np.float32)
                 pushed=False
+                teacher=None
+                if getattr(args,'feedback_teacher',False):
+                    from walk_feedback_teacher import FeedbackTeacher
+                    teacher=FeedbackTeacher()
                 for tick in range(round(args.seconds/.02)):
                     t=float(data.time-start)
                     if t>=args.seconds:break
@@ -219,7 +224,12 @@ def run(args):
                     gyro,gravity=imu.root_body_imu_observation(model,data,trunk)
                     encoder_q=data.qpos[qadr]+(data.qpos[passive_qadr] if args.backlash else 0)
                     obs=np.concatenate([gyro,gravity,observed_angles(encoder_q)-home,velocity_previous,previous,command,np.zeros(10)]).astype(np.float32)
-                    raw=session.run(None,{session.get_inputs()[0].name:obs[None]})[0][0]
+                    query=obs.copy()
+                    if teacher is not None:
+                        body_velocity=data.xmat[trunk].reshape(3,3).T@data.qvel[:3]
+                        query[48:51]=teacher.query(command,[body_velocity[0],gyro[2]],
+                            enabled=np.linalg.norm(target_command)>.001)
+                    raw=session.run(None,{session.get_inputs()[0].name:query[None]})[0][0]
                     if not np.isfinite(raw).all():raise ValueError('Non-finite frozen policy output')
                     voltage_scale=np.float32(7.4/np.clip(args.voltage,6.,9.5)) if args.voltage_compensation else np.float32(1.)
                     filtered=action_step(filtered,raw*voltage_scale,tick>0,action_scale);desired=home.astype(np.float64)+filtered
@@ -227,7 +237,7 @@ def run(args):
                     tilt=float(np.degrees(np.arccos(np.clip(-gravity[2],-1,1))))
                     contact_pairs=[[model.geom(c.geom1).name,model.geom(c.geom2).name] for c in data.contact]
                     rows.append(dict(time=t,tilt=tilt,command=command.tolist(),raw=raw.tolist(),target=target.tolist(),contacts=contact_pairs,
-                        qpos=data.qpos.tolist(),velocity=data.qvel.tolist(),obs=obs.tolist(),clipped=(np.abs(desired-np.clip(desired,np.asarray(list(mechanical.LIMITS.values()))[:,0],np.asarray(list(mechanical.LIMITS.values()))[:,1]))>1e-7).tolist()))
+                        qpos=data.qpos.tolist(),velocity=data.qvel.tolist(),obs=obs.tolist(),teacherCommand=query[48:51].tolist() if teacher is not None else None,clipped=(np.abs(desired-np.clip(desired,np.asarray(list(mechanical.LIMITS.values()))[:,0],np.asarray(list(mechanical.LIMITS.values()))[:,1]))>1e-7).tolist()))
                     if tilt>=60:fallen=t;break
                     velocity_previous=data.qvel[vadr].copy()+(data.qvel[passive_vadr] if args.backlash else 0)
                     steps=max(1,round(cadence[tick%len(cadence)]/dt)) if cadence else decimation
@@ -265,4 +275,5 @@ if __name__=='__main__':
     p.add_argument('--turn-rate',type=float,default=0.,help='Signed yaw command in rad/s during walking')
     p.add_argument('--turn-at',type=float,default=4.,help='Start turning after the initial straight walk')
     p.add_argument('--policy-forward',action='store_true',help='Diagnostic: refresh constraints before each policy observation, as mjlab does')
+    p.add_argument('--feedback-teacher',action='store_true',help='Privileged simulation-only feedback demonstration; not a deployed policy')
     run(p.parse_args())
