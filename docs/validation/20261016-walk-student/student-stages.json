@@ -1,0 +1,44 @@
+[
+  {
+    "supervisedSteps": 500,
+    "initialValidationRms": 0.02937612310051918,
+    "validationRms": 0.003876113798469305,
+    "validationP99": 0.014139380306005478,
+    "normalizerUnchanged": true,
+    "finite": true,
+    "onnxTorchMaxError": 7.450580596923828e-07,
+    "policySha256": "4281a76d1127ae472ade7ab6708dfd556e4ae8ae1676543e2fb14ad74ddd44a2",
+    "teacherMapUsedAtRuntime": false,
+    "hardwareAccess": false,
+    "lostOriginalSuccesses": 0,
+    "originalScreenAccepted": false
+  },
+  {
+    "supervisedSteps": 1500,
+    "initialValidationRms": 0.02937612310051918,
+    "validationRms": 0.0025928725954145193,
+    "validationP99": 0.009506965056061745,
+    "normalizerUnchanged": true,
+    "finite": true,
+    "onnxTorchMaxError": 5.774199962615967e-07,
+    "policySha256": "349e3140feb41365cf4eac98551afd1919719278826793e262c7bef3d5189af4",
+    "teacherMapUsedAtRuntime": false,
+    "hardwareAccess": false,
+    "lostOriginalSuccesses": 0,
+    "originalScreenAccepted": false
+  },
+  {
+    "supervisedSteps": 3000,
+    "initialValidationRms": 0.02937612310051918,
+    "validationRms": 0.0020487455185502768,
+    "validationP99": 0.007446882780641317,
+    "normalizerUnchanged": true,
+    "finite": true,
+    "onnxTorchMaxError": 7.152557373046875e-07,
+    "policySha256": "bf67effad2d5443e3afa010974c7e486f1edabc1361aeb2c8994f803f2c6a96c",
+    "teacherMapUsedAtRuntime": false,
+    "hardwareAccess": false,
+    "lostOriginalSuccesses": 0,
+    "originalScreenAccepted": false
+  }
+]
