@@ -1,0 +1,39 @@
+{
+  "records": [
+    {
+      "updates": 5,
+      "validationRms": 0.011196212843060493,
+      "initialValidationRms": 0.007742127403616905,
+      "normalizerUnchanged": true,
+      "finite": true,
+      "onnxMaxError": 4.023313522338867e-07,
+      "policySha256": "619220ca5e9b263e78c9d3ee4de5bd2ef96f47bffec937bbe6389b1c1052c18a",
+      "stopValidationRms": 0.009254208765923977,
+      "initialStopValidationRms": 0.0026920430827885866
+    },
+    {
+      "updates": 100,
+      "validationRms": 0.007402422837913036,
+      "initialValidationRms": 0.007742127403616905,
+      "normalizerUnchanged": true,
+      "finite": true,
+      "onnxMaxError": 4.470348358154297e-07,
+      "policySha256": "beea3d535b6c268771bda8140f5d73b7f49cae2e7e0bd365a7b9144f7625d9f2",
+      "stopValidationRms": 0.002371917711570859,
+      "initialStopValidationRms": 0.0026920430827885866
+    },
+    {
+      "updates": 500,
+      "validationRms": 0.006441265344619751,
+      "initialValidationRms": 0.007742127403616905,
+      "normalizerUnchanged": true,
+      "finite": true,
+      "onnxMaxError": 4.507601261138916e-07,
+      "policySha256": "3523d885c34cc58fea1aa89f0e8d1d9e0d13b3c442112590e593af85f189eec9",
+      "stopValidationRms": 0.002257268875837326,
+      "initialStopValidationRms": 0.0026920430827885866
+    }
+  ],
+  "hardwareAccess": false,
+  "accepted": false
+}
