@@ -1,0 +1,240 @@
+{
+  "simulationOnly": true,
+  "optimizationSteps": 0,
+  "accepted": false,
+  "excludedWorlds": [
+    {
+      "seed": 237157,
+      "world": 41,
+      "baselineSurvived": false,
+      "candidateSurvived": true,
+      "reason": "Not both survived; reset rewards excluded"
+    }
+  ],
+  "legacySameTrajectoryScores": true,
+  "allMoving": {
+    "count": 286,
+    "candidateHigher": 59,
+    "meanRate": {
+      "baseline": {
+        "track_linear_velocity": 2.2553606041400998,
+        "track_angular_velocity": 0.3843525448859624,
+        "upright": 1.8420956647479452,
+        "pose": 0.6036231714737165,
+        "body_ang_vel": -0.020751289752777055,
+        "angular_momentum": -3.876724585691778e-07,
+        "dof_pos_limits": -1.8335896555555763e-07,
+        "action_rate_l2": -0.01444860534242813,
+        "air_time": 1.4117832221351303,
+        "foot_clearance": -0.00655562639315678,
+        "foot_swing_height": -0.006008694326903258,
+        "foot_slip": -0.0005864910038394298,
+        "self_collisions": 0.0,
+        "head_pose_tracking": 1.9359738914283005,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": -1.6740307916815464,
+        "long_stride": 0.31742338245861296,
+        "failure_cost": 0.0
+      },
+      "candidate": {
+        "track_linear_velocity": 2.1245886799846807,
+        "track_angular_velocity": 0.3978412378761735,
+        "upright": 1.8424514448726095,
+        "pose": 0.6549192033447586,
+        "body_ang_vel": -0.019532950253909206,
+        "angular_momentum": -3.7912184611668307e-07,
+        "dof_pos_limits": 0.0,
+        "action_rate_l2": -0.011565219547776128,
+        "air_time": 1.3654895116138708,
+        "foot_clearance": -0.005456598286477665,
+        "foot_swing_height": -0.002786966019538614,
+        "foot_slip": -0.0003831996401642189,
+        "self_collisions": 0.0,
+        "head_pose_tracking": 1.936429290921538,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": -2.660515643135234,
+        "long_stride": 0.20326662353510627,
+        "failure_cost": 0.0
+      }
+    },
+    "meanTotal": {
+      "baseline": 7.028230411737692,
+      "candidate": 5.824745036143791
+    }
+  },
+  "allStraight": {
+    "count": 94,
+    "candidateHigher": 19,
+    "meanRate": {
+      "baseline": {
+        "track_linear_velocity": 2.201584852122246,
+        "track_angular_velocity": 0.38451110960994944,
+        "upright": 1.8471184778720775,
+        "pose": 0.6377895785138962,
+        "body_ang_vel": -0.018643080959500912,
+        "angular_momentum": -3.363675047310462e-07,
+        "dof_pos_limits": 0.0,
+        "action_rate_l2": -0.013354187810729997,
+        "air_time": 1.2228723447373573,
+        "foot_clearance": -0.006193140584889292,
+        "foot_swing_height": -0.0061883685718404444,
+        "foot_slip": -0.0005994339311301074,
+        "self_collisions": 0.0,
+        "head_pose_tracking": 1.940278687375657,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": -1.152489150933763,
+        "long_stride": 0.33182828583248464,
+        "failure_cost": 0.0
+      },
+      "candidate": {
+        "track_linear_velocity": 2.0048546532684184,
+        "track_angular_velocity": 0.4111633888901548,
+        "upright": 1.8434728548881856,
+        "pose": 0.7011665584559136,
+        "body_ang_vel": -0.016296504979357206,
+        "angular_momentum": -3.002252057389203e-07,
+        "dof_pos_limits": 0.0,
+        "action_rate_l2": -0.009735511745724748,
+        "air_time": 1.0875531941493775,
+        "foot_clearance": -0.0045659145571165785,
+        "foot_swing_height": -0.0026284285105499837,
+        "foot_slip": -0.0003410181284124597,
+        "self_collisions": 0.0,
+        "head_pose_tracking": 1.9412776574175408,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": -2.354397344937984,
+        "long_stride": 0.198703280162534,
+        "failure_cost": 0.0
+      }
+    },
+    "meanTotal": {
+      "baseline": 7.368515636904309,
+      "candidate": 5.800226564147775
+    }
+  },
+  "yawRegressed": {
+    "count": 58,
+    "candidateHigher": 2,
+    "meanRate": {
+      "baseline": {
+        "track_linear_velocity": 2.9972576930605133,
+        "track_angular_velocity": 0.5233105201402615,
+        "upright": 1.8687707596811756,
+        "pose": 0.6466902818145424,
+        "body_ang_vel": -0.02015857080575721,
+        "angular_momentum": -3.8505057263733007e-07,
+        "dof_pos_limits": 0.0,
+        "action_rate_l2": -0.010363576114819995,
+        "air_time": 1.5058620736516755,
+        "foot_clearance": -0.0058830109151915225,
+        "foot_swing_height": -0.0026372553364690876,
+        "foot_slip": -0.0002639337493245217,
+        "self_collisions": 0.0,
+        "head_pose_tracking": 1.9544473619296634,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": -0.3668210190431825,
+        "long_stride": 0.29452553365764944,
+        "failure_cost": 0.0
+      },
+      "candidate": {
+        "track_linear_velocity": 2.899397633199034,
+        "track_angular_velocity": 0.4895930151487219,
+        "upright": 1.867865698090915,
+        "pose": 0.6835497854084804,
+        "body_ang_vel": -0.0196790741114267,
+        "angular_momentum": -3.8489829499855567e-07,
+        "dof_pos_limits": 0.0,
+        "action_rate_l2": -0.009026774165124214,
+        "air_time": 1.4693103472477402,
+        "foot_clearance": -0.005686184146505748,
+        "foot_swing_height": -0.0017949232263570845,
+        "foot_slip": -0.00017478279896122645,
+        "self_collisions": 0.0,
+        "head_pose_tracking": 1.9382586643613617,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": -1.248213231049735,
+        "long_stride": 0.17144937504982127,
+        "failure_cost": 0.0
+      }
+    },
+    "meanTotal": {
+      "baseline": 9.384736472920164,
+      "candidate": 8.23484916410967
+    }
+  },
+  "speedRegressed": {
+    "count": 99,
+    "candidateHigher": 8,
+    "meanRate": {
+      "baseline": {
+        "track_linear_velocity": 1.6930865446726482,
+        "track_angular_velocity": 0.2153119748796929,
+        "upright": 1.8538672671173557,
+        "pose": 0.5895425150490771,
+        "body_ang_vel": -0.022557521088406293,
+        "angular_momentum": -4.258656128348031e-07,
+        "dof_pos_limits": 0.0,
+        "action_rate_l2": -0.01428749223681863,
+        "air_time": 1.4826262695620758,
+        "foot_clearance": -0.007046641455022524,
+        "foot_swing_height": -0.008190945936086902,
+        "foot_slip": -0.000563794923602307,
+        "self_collisions": 0.0,
+        "head_pose_tracking": 1.949051406648424,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": -1.1105197833644018,
+        "long_stride": 0.46948969526912526,
+        "failure_cost": 0.0
+      },
+      "candidate": {
+        "track_linear_velocity": 1.4312675336394647,
+        "track_angular_velocity": 0.23876558754103955,
+        "upright": 1.8467311702593407,
+        "pose": 0.6553999956208046,
+        "body_ang_vel": -0.019623020530527918,
+        "angular_momentum": -3.88899301122909e-07,
+        "dof_pos_limits": 0.0,
+        "action_rate_l2": -0.010818644096774415,
+        "air_time": 1.359898992259093,
+        "foot_clearance": -0.005542471198545301,
+        "foot_swing_height": -0.0031832357953952843,
+        "foot_slip": -0.0003069091109867212,
+        "self_collisions": 0.0,
+        "head_pose_tracking": 1.9386304219563801,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": -1.9304465814070269,
+        "long_stride": 0.272492784031142,
+        "failure_cost": 0.0
+      }
+    },
+    "meanTotal": {
+      "baseline": 7.089809068328447,
+      "candidate": 5.773265234268707
+    }
+  },
+  "limitations": "Matched reset states and command sequence, not same-state counterfactuals or proof of PPO gradient cause. Scores are weighted reward rates, not discounted returns."
+}

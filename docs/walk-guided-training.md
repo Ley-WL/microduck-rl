@@ -367,3 +367,12 @@ v40完成200轮/1600Adam/导出，actor SHA5a22e811；价值训练第199轮目�
 新实验奖励walk_mean_motion_tracking继承低速均值项，只把所有非零运动（含原地转向）扩展为.7s EMA的三轴线性/角速度误差；零指令用原评分、原低速完全保持，所有其它奖励/物理/PD不动。legacy_reward现在保存同条轨迹旧低速均值/高速瞬时评分，用于真正配对。真实mjlab函数合成检查：准确振荡linear旧.604低于减速.841，新.998高于.841；angular旧.203低于减速.721，新.987高于.721。严格low/stop/legacy值、配置/错误方向/部分reset通过，不能据此宣称实际步态改善。
 
 独立walk-motion-reward-v41-20261016 launcher3389446/worker3393080活跃，冻结v28与v40actor，237151/237157、±.05/.2/.4×yaw0±.6×4，记录同轨迹新旧reward，先验证真实评分顺序再定是否训练。新增速度退化筛选预先定义：原vx误差<.03且候选误差增加>.02；同时保留全部运动/直行/旧yaw筛选，不筛除坏例。无优化器更新/实机/部署，目标未完成。
+
+
+## 2026-10-16 v41/v41b完成，增强真实跟踪评分差距
+
+v41原模型237157/world41(+.05直行)摔倒后reset改变整批指令hash，分析器按原门拒绝。新增逐环境command SHA，不放宽存活环境完整指令配对；失败例保存排除reset后得分。合成测试验证坏环境reset可记录、任一存活环境hash不匹配或证据缺失必须报错。独立v41b只重跑237157，237151有效配对直接复用；重跑仍同一失败，合并baseline143/144、candidate144/144，286有效运动阶段。
+
+速度退化99阶段旧91/99、新92/99偏好准确原actor，总分差1.31654→1.90420(+44.6%)。旧总奖励多数已经正确，不能把它称普遍奖励倒置或唯一PPO根因；仅支持更强跟踪激励的实验。954有效低速/停止窗口全奖励向量精确保持，linear/angular以外奖励逐值保持。完整证据docs/validation/20261016-walk-motion-reward。两轮job0/source-check/终止PID，归档SHA842c1f38ec9c16ca9fd573fb6f7d5bb9037f2f2cf9f975a532e58bb3698edc31和1802d999a86b0b13cd3a7ea176d8ea3cc59e7423e00f7d60428044c1c2fe1780核验。
+
+独立walk-motion-critic-v42-20261016 launcher3464687/worker3473133已确认活跃。新任务walk_mean_motion_tracking仅扩展运动时均值评分，v28actor冻结/fresh critic LR3e-4，原32s环境/PD/HD1910/几何保持。配置/奖励边界测试及64×5通过，40Adam/finite/normalizer/导出actor仍b0809f25；1024×200在途，结束显式--task walk_mean_motion_tracking的冻结价值回报校验，不把旧奖励critic直接当新奖励已校准。actor尚未更新，不自动继续或部署。目标未完成。

@@ -1,5 +1,6 @@
 """Frozen on-policy value calibration against long discounted reward tails."""
 import argparse
+import importlib
 import hashlib
 import json
 from dataclasses import asdict
@@ -8,13 +9,15 @@ import numpy as np
 import torch
 from mjlab.envs import ManagerBasedRlEnv
 from mjlab.rl import MjlabOnPolicyRunner, RslRlVecEnvWrapper
-from mjlab_microduck.tasks.walk_low_speed_mean_tracking import make_cfg, rl_cfg
 
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'evidence'
 p=argparse.ArgumentParser()
 p.add_argument('--checkpoint',type=Path,default=Path('inputs/candidate.pt'))
+p.add_argument('--task',choices=['walk_low_speed_mean_tracking','walk_mean_motion_tracking'],default='walk_low_speed_mean_tracking')
 a=p.parse_args()
+module=importlib.import_module('mjlab_microduck.tasks.'+a.task)
+make_cfg,rl_cfg=module.make_cfg,module.rl_cfg
 checkpoint=ROOT/a.checkpoint
 reports=[]
 for seed in (235151,235157):
@@ -78,7 +81,7 @@ for seed in (235151,235157):
         reports.append(dict(seed=seed,worlds=env.num_envs,survivedFirst30=int(live[1499].sum()),
             survived60=int(alive.sum()),gamma=gamma,unobservedTailDiscount=gamma**1500,phases=result))
         (OUT/'critic-quality.json').write_text(json.dumps(dict(results=reports,
-            optimizationSteps=0,actorAndCriticUnchanged=True,stochasticTrainingPolicy=True,
+            optimizationSteps=0,actorAndCriticUnchanged=True,stochasticTrainingPolicy=True,task=a.task,
             checkpointSha256=hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
             limitation='Frozen critic on its own final actor distribution; 64s diagnostic episode differs from 32s training timeout, first 30s only scored. Value fit does not prove policy gradient causality.',
             hardwareAccess=False,accepted=False),indent=2))

@@ -12,19 +12,26 @@ a=p.parse_args()
 data=json.loads(a.source.read_text(encoding='utf-8'))
 seeds=sorted({r['seed'] for r in data['results']})
 assert len(data['comparisons'])==len(seeds)
-records=[]
+records=[];excluded=[]
 for seed in seeds:
     b,c=[next(r for r in data['results'] if r['seed']==seed and r['policy']==label)
          for label in ('baseline','candidate')]
     assert b['initialStateSha256']==c['initialStateSha256']
-    assert b['commandTraceSha256']==c['commandTraceSha256']
+    batch_commands_match=b['commandTraceSha256']==c['commandTraceSha256']
+    if not batch_commands_match:
+        assert 'commandWorldSha256' in b and 'commandWorldSha256' in c,'Per-world command hashes required after an environment resets'
     bb,cc=b['rewardAudit'],c['rewardAudit']
     terms=bb['terms'];assert terms==cc['terms']
     for world in range(len(b['survival'])):
+        if not (b['survival'][world] and c['survival'][world]):
+            excluded.append(dict(seed=seed,world=world,baselineSurvived=b['survival'][world],
+                candidateSurvived=c['survival'][world],reason='Not both survived; reset rewards excluded'))
+            continue
+        if not batch_commands_match:
+            assert b['commandWorldSha256'][world]==c['commandWorldSha256'][world]
         for phase in (1,4):
             cmd=np.array(bb['meanCommand'][world][phase])
             assert np.allclose(cmd,cc['meanCommand'][world][phase],atol=1e-7)
-            if not (b['survival'][world] and c['survival'][world]):continue
             if min(bb['samples'][world][phase],cc['samples'][world][phase])<299:continue
             actual=[np.array(row['meanActual'][world][phase]) for row in (bb,cc)]
             errors=[np.abs(v-cmd) for v in actual]
@@ -46,6 +53,7 @@ def summarize(rows):
         meanTotal={label:float(np.mean([r[label+'Total'] for r in rows])) for label in ('baseline','candidate')})
 
 result=dict(simulationOnly=True,optimizationSteps=0,accepted=False,
+    excludedWorlds=excluded,
     legacySameTrajectoryScores=a.legacy,
     allMoving=summarize(records),allStraight=summarize([r for r in records if r['straight']]),
     yawRegressed=summarize([r for r in records if r['yawRegressed']]),pairs=records,

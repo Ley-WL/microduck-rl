@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "optimizationSteps": 0,
+  "gaitAccepted": false,
+  "sourceSha256": "f83dedf34aec2441dd5252a2d0f163e057c7f8b0efdeeea44fecf73159d0ffff",
+  "oldPreferenceForMoreAccurate": 91,
+  "newPreferenceForMoreAccurate": 92,
+  "pairedRegressedPhases": 99,
+  "oldMeanRewardGap": 1.3165438340597397,
+  "newMeanRewardGap": 1.904197020749388,
+  "gapIncreaseFraction": 0.44636051720172554,
+  "exactParity": [
+    {
+      "seed": 237151,
+      "policy": "baseline",
+      "exactStopAndLowWindows": 240
+    },
+    {
+      "seed": 237151,
+      "policy": "candidate",
+      "exactStopAndLowWindows": 240
+    },
+    {
+      "seed": 237157,
+      "policy": "baseline",
+      "exactStopAndLowWindows": 234
+    },
+    {
+      "seed": 237157,
+      "policy": "candidate",
+      "exactStopAndLowWindows": 240
+    }
+  ],
+  "scope": "Stronger measured tracking preference; old total rewards already mostly favored accurate gait. Not proof of the sole PPO failure cause or of learned gait improvement."
+}

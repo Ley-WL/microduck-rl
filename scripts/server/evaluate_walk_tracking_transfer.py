@@ -139,6 +139,7 @@ for seed in a.seeds:
                 reward_command=torch.zeros_like(reward_actual)
                 reward_count=torch.zeros((worlds,6),device=env.device)
             command_hash = hashlib.sha256()
+            command_world_hashes = [hashlib.sha256() for _ in range(worlds)]
             for tick in range(1500 if a.long_hold else 1200):
                 with torch.inference_mode():
                     query=obs
@@ -170,7 +171,10 @@ for seed in a.seeds:
                 live = ~failed
                 command = env.command_manager.get_command('twist')
                 # Failed worlds are excluded permanently; compare only original commands.
-                command_hash.update(command.cpu().numpy().tobytes())
+                command_array=command.cpu().numpy()
+                command_hash.update(command_array.tobytes())
+                for world,hasher in enumerate(command_world_hashes):
+                    hasher.update(command_array[world].tobytes())
                 phase = ((tick + 1) * .02) if a.long_hold else ((tick + 1) * .02) % 12.
                 actual = torch.cat((robot.data.root_link_lin_vel_b[:, :2], robot.data.root_link_ang_vel_b[:, 2:3]), -1)
                 if a.reward_audit_task:
@@ -225,7 +229,8 @@ for seed in a.seeds:
                 stepCount=steps.cpu().tolist(), stepDistance=(distance / steps.clamp_min(1)).cpu().tolist(),
                 stepAirTime=(airsum / steps.clamp_min(1)).cpu().tolist(),
                 initialStateSha256=hashlib.sha256(initial.numpy().tobytes()).hexdigest(),
-                commandTraceSha256=command_hash.hexdigest())
+                commandTraceSha256=command_hash.hexdigest(),
+                commandWorldSha256=[h.hexdigest() for h in command_world_hashes])
             if a.reward_audit_task:
                 row['rewardAudit']=dict(task=a.reward_audit_task,terms=reward_names,
                     phases=['startupForward','steadyForward','stopFirst','startupReverse','steadyReverse','stopSecond'],
