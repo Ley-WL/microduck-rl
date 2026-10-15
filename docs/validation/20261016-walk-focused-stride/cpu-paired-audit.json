@@ -1,0 +1,434 @@
+[
+  {
+    "arm": "control",
+    "case": "cpu-yaw-0.6\\seed227171-trial0-speed-0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw-0.6\\seed227171-trial0-speed-0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw-0.6\\seed227171-trial0-speed-0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw-0.6\\seed227171-trial0-speed0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw-0.6\\seed227171-trial0-speed0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw-0.6\\seed227171-trial0-speed0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw-0.6\\seed227177-trial0-speed-0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw-0.6\\seed227177-trial0-speed-0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw-0.6\\seed227177-trial0-speed-0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw-0.6\\seed227177-trial0-speed0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw-0.6\\seed227177-trial0-speed0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw-0.6\\seed227177-trial0-speed0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0\\seed227171-trial0-speed-0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0\\seed227171-trial0-speed-0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0\\seed227171-trial0-speed-0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0\\seed227171-trial0-speed0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0\\seed227171-trial0-speed0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0\\seed227171-trial0-speed0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0\\seed227177-trial0-speed-0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0\\seed227177-trial0-speed-0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0\\seed227177-trial0-speed-0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0\\seed227177-trial0-speed0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0\\seed227177-trial0-speed0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0\\seed227177-trial0-speed0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0.6\\seed227171-trial0-speed-0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0.6\\seed227171-trial0-speed-0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0.6\\seed227171-trial0-speed-0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0.6\\seed227171-trial0-speed0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0.6\\seed227171-trial0-speed0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0.6\\seed227171-trial0-speed0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0.6\\seed227177-trial0-speed-0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0.6\\seed227177-trial0-speed-0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0.6\\seed227177-trial0-speed-0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0.6\\seed227177-trial0-speed0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0.6\\seed227177-trial0-speed0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "control",
+    "case": "cpu-yaw0.6\\seed227177-trial0-speed0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw-0.6\\seed227171-trial0-speed-0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw-0.6\\seed227171-trial0-speed-0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw-0.6\\seed227171-trial0-speed-0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw-0.6\\seed227171-trial0-speed0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw-0.6\\seed227171-trial0-speed0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw-0.6\\seed227171-trial0-speed0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw-0.6\\seed227177-trial0-speed-0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw-0.6\\seed227177-trial0-speed-0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw-0.6\\seed227177-trial0-speed-0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw-0.6\\seed227177-trial0-speed0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw-0.6\\seed227177-trial0-speed0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw-0.6\\seed227177-trial0-speed0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0\\seed227171-trial0-speed-0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0\\seed227171-trial0-speed-0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0\\seed227171-trial0-speed-0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0\\seed227171-trial0-speed0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0\\seed227171-trial0-speed0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0\\seed227171-trial0-speed0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0\\seed227177-trial0-speed-0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0\\seed227177-trial0-speed-0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0\\seed227177-trial0-speed-0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0\\seed227177-trial0-speed0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0\\seed227177-trial0-speed0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0\\seed227177-trial0-speed0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0.6\\seed227171-trial0-speed-0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0.6\\seed227171-trial0-speed-0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0.6\\seed227171-trial0-speed-0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0.6\\seed227171-trial0-speed0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0.6\\seed227171-trial0-speed0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0.6\\seed227171-trial0-speed0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0.6\\seed227177-trial0-speed-0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0.6\\seed227177-trial0-speed-0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0.6\\seed227177-trial0-speed-0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0.6\\seed227177-trial0-speed0.05.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0.6\\seed227177-trial0-speed0.2.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  },
+  {
+    "arm": "stride",
+    "case": "cpu-yaw0.6\\seed227177-trial0-speed0.4.json",
+    "initialStateEqual": true,
+    "commonCommandsEqual": true
+  }
+]

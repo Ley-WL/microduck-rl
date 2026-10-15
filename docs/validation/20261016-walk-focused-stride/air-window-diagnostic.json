@@ -1,0 +1,54 @@
+{
+  "analyticOnly": true,
+  "notRolloutOrLearnedBehavior": true,
+  "assumption": "Symmetric alternating gait without double support; foot travel approximately 2 * body speed * swing duration.",
+  "oldWeight": 3.0,
+  "oldWindow": [
+    0.125,
+    0.3
+  ],
+  "rows": [
+    {
+      "airSeconds": 0.18,
+      "constantBodySpeed": 0.05,
+      "idealizedFootTravel": 0.018,
+      "airRewardPerSecond": 1.0
+    },
+    {
+      "airSeconds": 0.25,
+      "constantBodySpeed": 0.05,
+      "idealizedFootTravel": 0.025,
+      "airRewardPerSecond": 1.44
+    },
+    {
+      "airSeconds": 0.3,
+      "constantBodySpeed": 0.05,
+      "idealizedFootTravel": 0.03,
+      "airRewardPerSecond": 1.6
+    },
+    {
+      "airSeconds": 0.4,
+      "constantBodySpeed": 0.05,
+      "idealizedFootTravel": 0.04000000000000001,
+      "airRewardPerSecond": 1.2
+    },
+    {
+      "airSeconds": 0.6,
+      "constantBodySpeed": 0.05,
+      "idealizedFootTravel": 0.06,
+      "airRewardPerSecond": 0.8
+    },
+    {
+      "airSeconds": 0.8,
+      "constantBodySpeed": 0.05,
+      "idealizedFootTravel": 0.08000000000000002,
+      "airRewardPerSecond": 0.6
+    },
+    {
+      "airSeconds": 1.0,
+      "constantBodySpeed": 0.05,
+      "idealizedFootTravel": 0.1,
+      "airRewardPerSecond": 0.48
+    }
+  ]
+}
