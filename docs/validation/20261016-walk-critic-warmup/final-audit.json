@@ -1,0 +1,14 @@
+{
+  "actorExactlyMatchesV28": true,
+  "checkpointSha256": "5286e66f81003cf6356e4d65457a54a1ae1eb659bbb5e318886467380387201b",
+  "returnChecks": [
+    {
+      "source": "critic-235151.npz",
+      "cpuFloat64ReturnMaxError": 4.249502247688497e-05
+    },
+    {
+      "source": "critic-235157.npz",
+      "cpuFloat64ReturnMaxError": 3.951720051631469e-05
+    }
+  ]
+}

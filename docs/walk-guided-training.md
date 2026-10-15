@@ -351,3 +351,10 @@ v35提示训练采样帮助低速启动而确定性输出仍停滞，但随机�
 v38两seed各48/48完整60s，首30s实际折扣回报18.161/18.143、预测8.936/9.145，RMSE9.742/9.489，EV .114/.156。actor/critic逐值未变、CPU float64折扣重算误差<4.53e-5；job0/source-check/完整归档c49ec57d下载核验。停止阶段低估更大。这支持价值拟合不足的诊断，不证明唯一策略退化根因（均值偏差并不自动等于优势方向错误）。详见docs/validation/20261016-walk-critic。
 
 已启动独立walk-critic-warmup-v39-20261016，launcher3262330/worker3267654核验活跃。原v28actor及归一化全冻结，新critic仅LR3e-4、原mean_tracking/HD1910/PD/32s训练环境保持。64×5已通过：40Adam、actor全state逐值未变、actor优化器state数0、ONNX SHA仍b0809f25896126e15fd7c29f9daf34f889dbebf21456347a1f6976ecf7965587。1024×200在途，之后同冻结价值回报审计；其actor为v28/.05而v38为v36/.005，不把二者差异当严格单因子配对。只先验证绝对拟合质量，再考虑恢复actor训练，不自动续训/部署。
+
+
+## 2026-10-16 v39通过价值准备门/v40恢复动作微调
+
+v39完成：actor全state精确等于v28、ONNX哈希保持，只有critic1600次Adam更新。两独立seed实际回报18.704/18.586、预测17.930/17.893、RMSE2.173/2.144、EV .600/.633；读取结果前已声明整体偏差<20%/RMSE比例<30%/EV>.3及运动/停止各阶段偏差<25%/RMSE<35%，10/10通过。仅作为critic初始化，不是新的合格行走策略。CPU float64回报重算误差<4.25e-5。job0/source-check/旧PID已终止；完整78894280字节归档7261ebc338bf2273a52aa46e08a6fda4179ed73d90c2556013f4bc8b67c484c8下载核验。
+
+独立walk-warm-critic-v40-20261016 launcher3322754/worker3327987已确认活跃。仍从v28 actor开始，仅加载v39 critic和其normalizer，明确不加载优化器/iteration；critic checkpoint SHA5286e66f81003cf6356e4d65457a54a1ae1eb659bbb5e318886467380387201b与通过报告绑定。LR1e-5、anchor5、原200轮噪声渐减、低速均值奖励、HD1910/STL/PD不变。64×5/40Adam/finite/actor normalizer/61→14导出通过，载入前后actor逐值未变；1024×200正式在途，新增逐轮value拟合记录。结束236151/236157全11速度×3yaw×4确定性筛选，实际起步/速度/转向/步幅/停止均须检查，再做CPU配对。658源hash核验。与v36是配置对照而非逐位同轨迹，不提前归因或宣称动作改善。无实机/部署。

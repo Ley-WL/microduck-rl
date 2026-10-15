@@ -15,8 +15,10 @@ p=argparse.ArgumentParser();p.add_argument('--surface',action='store_true')
 p.add_argument('--envs',type=int,required=True);p.add_argument('--iterations',type=int,required=True)
 p.add_argument('--output',type=Path,required=True)
 p.add_argument('--noise-schedule',choices=['fixed','anneal'])
-p.add_argument('--critic-only',action='store_true');a=p.parse_args()
+p.add_argument('--critic-only',action='store_true')
+p.add_argument('--critic-checkpoint',type=Path);a=p.parse_args()
 assert not (a.critic_only and a.noise_schedule)
+assert not a.critic_checkpoint or (TASK=='walk_low_speed_mean_tracking' and (a.critic_only or a.noise_schedule))
 if a.noise_schedule or a.critic_only:
     assert TASK=='walk_low_speed_mean_tracking'
     assert (a.envs,a.iterations) in [(64,5),(1024,200)]
@@ -33,6 +35,16 @@ try:
     if actor_only:
         assert not runner.alg.optimizer.state
         assert all(group['lr']==1e-5 for group in runner.alg.optimizer.param_groups)
+    critic_source=None
+    if a.critic_checkpoint:
+        critic_path=ROOT/a.critic_checkpoint
+        before_load={k:v.clone() for k,v in runner.alg.actor.state_dict().items()}
+        runner.load(str(critic_path),load_cfg={'critic':True},map_location='cuda:0')
+        assert all(torch.equal(v,runner.alg.actor.state_dict()[k]) for k,v in before_load.items())
+        assert not runner.alg.optimizer.state
+        critic_source=dict(sha256=hashlib.sha256(critic_path.read_bytes()).hexdigest(),
+            actorUnchangedOnLoad=True,optimizerStatesLoaded=False,iterationLoaded=False)
+        (a.output/'critic-load-audit.json').write_text(json.dumps(critic_source,indent=2))
     env.common_step_counter=0;runner.current_learning_iteration=0
     actor=runner.alg.actor
     frozen_actor=None
@@ -65,7 +77,7 @@ try:
         assert rl['num_steps_per_env']==24 and abs(env.step_dt-.02)<1e-9
         noise=RolloutNoise(runner.alg,a.noise_schedule)
     value_stats=[]
-    if a.critic_only:
+    if a.critic_only or a.critic_checkpoint:
         original_update=runner.alg.update
         def value_update():
             storage=runner.alg.storage
@@ -78,6 +90,9 @@ try:
             return original_update()
         runner.alg.update=value_update
     runner.learn(num_learning_iterations=a.iterations,init_at_random_ep_len=False)
+    if value_stats:
+        assert len(value_stats)==a.iterations
+        (a.output/'value-learning.json').write_text(json.dumps(value_stats,indent=2))
     if a.critic_only:
         assert all(torch.equal(actor.state_dict()[k],v) for k,v in frozen_actor.items())
         assert all(parameter not in runner.alg.optimizer.state for parameter in actor.parameters())
@@ -114,11 +129,13 @@ try:
     meta.update(policySha256=sha,artifactType='diagnostic-transfer-policy',hardwareValidated=False)
     meta['walkExecution']['policySha256']=sha
     meta['transferExperiment']=dict(surface=a.surface,seed=68131,worlds=a.envs,iterations=a.iterations,
-        originalDonorResume=False,critic='fresh-initialized',actorNormalizerFrozen=True,
+        originalDonorResume=False,critic='pretrained' if critic_source else 'fresh-initialized',actorNormalizerFrozen=True,
+        criticInitializer=critic_source,
         criticOnly=a.critic_only,accepted=False)
     (a.output/'policy.metadata.json').write_text(json.dumps(meta,indent=2))
     (a.output/'stage-audit.json').write_text(json.dumps(dict(seed=68131,surface=a.surface,worlds=a.envs,
         iterations=a.iterations,rolloutSteps=a.envs*24*a.iterations,adamSteps=sorted(steps),actorNormalizerUnchanged=True,
         finite=True,onnxTorchMaxError=error,policySha256=sha,hardwareAccess=False,
-        criticOnly=a.critic_only,actorExactlyUnchanged=bool(a.critic_only),accepted=False),indent=2))
+        criticOnly=a.critic_only,criticInitializer=critic_source,
+        actorExactlyUnchanged=bool(a.critic_only),accepted=False),indent=2))
 finally:env.close()
