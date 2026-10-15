@@ -1,0 +1,396 @@
+{
+  "simulationOnly": true,
+  "hardwareValidated": false,
+  "windowSeconds": [
+    7.0,
+    17.0
+  ],
+  "seconds": 20.0,
+  "rollingSeconds": 1.0,
+  "results": [
+    {
+      "source": "cpu-v16-straight\\seed209101-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 4.011614705480544,
+      "meanCommand": [
+        -0.04999999329447746,
+        0.0
+      ],
+      "meanActual": [
+        -0.00011986644953767799,
+        0.00270125387327428
+      ],
+      "rolling1sMAE": [
+        0.04989264973244456,
+        0.0027355144464369843
+      ],
+      "rolling1sP95": [
+        0.05017025833978079,
+        0.0033845590489365892
+      ],
+      "stopMeanHorizontalSpeed": 0.0017918194154828823,
+      "stepDistance": null,
+      "stepCount": 0
+    },
+    {
+      "source": "cpu-v16-straight\\seed209101-trial0-speed-0.15.json",
+      "completed": true,
+      "maxTiltDeg": 4.795614888444043,
+      "meanCommand": [
+        -0.1499999761581421,
+        0.0
+      ],
+      "meanActual": [
+        -0.1607809383782411,
+        -0.08273644865763356
+      ],
+      "rolling1sMAE": [
+        0.010507027750254524,
+        0.08205498214074523
+      ],
+      "rolling1sP95": [
+        0.014051550089363821,
+        0.1378926980592641
+      ],
+      "stopMeanHorizontalSpeed": 0.0026358967814539246,
+      "stepDistance": 0.08119530688284124,
+      "stepCount": 37
+    },
+    {
+      "source": "cpu-v16-straight\\seed209101-trial0-speed-0.3.json",
+      "completed": true,
+      "maxTiltDeg": 6.8536772065787925,
+      "meanCommand": [
+        -0.2999999523162842,
+        0.0
+      ],
+      "meanActual": [
+        -0.28171383896483143,
+        0.06386498999560747
+      ],
+      "rolling1sMAE": [
+        0.01822751444486397,
+        0.06632450022772807
+      ],
+      "rolling1sP95": [
+        0.02242790394901879,
+        0.10270098105220153
+      ],
+      "stopMeanHorizontalSpeed": 0.0032726514577013574,
+      "stepDistance": 0.1365133405471971,
+      "stepCount": 38
+    },
+    {
+      "source": "cpu-v16-straight\\seed209101-trial0-speed-0.4.json",
+      "completed": true,
+      "maxTiltDeg": 6.335443402557243,
+      "meanCommand": [
+        -0.3999999463558197,
+        0.0
+      ],
+      "meanActual": [
+        -0.33468073836969314,
+        0.17986434836462759
+      ],
+      "rolling1sMAE": [
+        0.06536528617703619,
+        0.18283394561549796
+      ],
+      "rolling1sP95": [
+        0.06935773737376881,
+        0.29248943299735464
+      ],
+      "stopMeanHorizontalSpeed": 0.0031406537322640864,
+      "stepDistance": 0.15625131928050043,
+      "stepCount": 39
+    },
+    {
+      "source": "cpu-v16-straight\\seed209101-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 3.155909028875074,
+      "meanCommand": [
+        0.04999999329447746,
+        0.0
+      ],
+      "meanActual": [
+        -9.647471020670764e-05,
+        0.002080633215948485
+      ],
+      "rolling1sMAE": [
+        0.05008762540004988,
+        0.0021079786942788067
+      ],
+      "rolling1sP95": [
+        0.050301065309259686,
+        0.003809047035389754
+      ],
+      "stopMeanHorizontalSpeed": 0.000744858692885067,
+      "stepDistance": null,
+      "stepCount": 0
+    },
+    {
+      "source": "cpu-v16-straight\\seed209101-trial0-speed0.15.json",
+      "completed": true,
+      "maxTiltDeg": 5.0602554989819755,
+      "meanCommand": [
+        0.1499999761581421,
+        0.0
+      ],
+      "meanActual": [
+        0.15699498676436782,
+        0.01635571456357269
+      ],
+      "rolling1sMAE": [
+        0.007325748604995528,
+        0.030752977557077975
+      ],
+      "rolling1sP95": [
+        0.012662871897838891,
+        0.0745923425075268
+      ],
+      "stopMeanHorizontalSpeed": 0.0012869860043679571,
+      "stepDistance": 0.08557663180087759,
+      "stepCount": 36
+    },
+    {
+      "source": "cpu-v16-straight\\seed209101-trial0-speed0.3.json",
+      "completed": true,
+      "maxTiltDeg": 6.38392274787893,
+      "meanCommand": [
+        0.2999999523162842,
+        0.0
+      ],
+      "meanActual": [
+        0.32223041985900375,
+        0.08307859413172283
+      ],
+      "rolling1sMAE": [
+        0.02161712788061666,
+        0.08253026636619946
+      ],
+      "rolling1sP95": [
+        0.026368123350835472,
+        0.11933246201139368
+      ],
+      "stopMeanHorizontalSpeed": 0.003292090536524848,
+      "stepDistance": 0.15791651643896054,
+      "stepCount": 38
+    },
+    {
+      "source": "cpu-v16-straight\\seed209101-trial0-speed0.4.json",
+      "completed": true,
+      "maxTiltDeg": 6.633773839079519,
+      "meanCommand": [
+        0.3999999463558197,
+        0.0
+      ],
+      "meanActual": [
+        0.3845152246028776,
+        0.13689800175203748
+      ],
+      "rolling1sMAE": [
+        0.01601368268454187,
+        0.1383479257685047
+      ],
+      "rolling1sP95": [
+        0.02327738265151838,
+        0.19053492432524327
+      ],
+      "stopMeanHorizontalSpeed": 0.004506174437077042,
+      "stepDistance": 0.18452569941220648,
+      "stepCount": 39
+    },
+    {
+      "source": "cpu-v16-straight\\seed209107-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 4.163709511753871,
+      "meanCommand": [
+        -0.04999999329447746,
+        0.0
+      ],
+      "meanActual": [
+        -0.0001019834761292368,
+        0.002612115113152789
+      ],
+      "rolling1sMAE": [
+        0.04988571596577039,
+        0.0025964349168664125
+      ],
+      "rolling1sP95": [
+        0.05019203522107736,
+        0.003290575415011524
+      ],
+      "stopMeanHorizontalSpeed": 0.001669914073346085,
+      "stepDistance": null,
+      "stepCount": 0
+    },
+    {
+      "source": "cpu-v16-straight\\seed209107-trial0-speed-0.15.json",
+      "completed": true,
+      "maxTiltDeg": 4.892788452327657,
+      "meanCommand": [
+        -0.1499999761581421,
+        0.0
+      ],
+      "meanActual": [
+        -0.16290072167045436,
+        -0.06834847487703
+      ],
+      "rolling1sMAE": [
+        0.012766382899998485,
+        0.0689249955873378
+      ],
+      "rolling1sP95": [
+        0.01599353066057513,
+        0.10974609220070328
+      ],
+      "stopMeanHorizontalSpeed": 0.000905262591579245,
+      "stepDistance": 0.08173491067823124,
+      "stepCount": 37
+    },
+    {
+      "source": "cpu-v16-straight\\seed209107-trial0-speed-0.3.json",
+      "completed": true,
+      "maxTiltDeg": 7.050113424771548,
+      "meanCommand": [
+        -0.2999999523162842,
+        0.0
+      ],
+      "meanActual": [
+        -0.28488106159697457,
+        0.057925498243819026
+      ],
+      "rolling1sMAE": [
+        0.015595639676601998,
+        0.061553410690689765
+      ],
+      "rolling1sP95": [
+        0.01855734765011662,
+        0.10560933351585539
+      ],
+      "stopMeanHorizontalSpeed": 0.0030670344279453894,
+      "stepDistance": 0.13701665905103017,
+      "stepCount": 39
+    },
+    {
+      "source": "cpu-v16-straight\\seed209107-trial0-speed-0.4.json",
+      "completed": true,
+      "maxTiltDeg": 6.577594318411408,
+      "meanCommand": [
+        -0.3999999463558197,
+        0.0
+      ],
+      "meanActual": [
+        -0.3310568727104231,
+        0.1905244113845953
+      ],
+      "rolling1sMAE": [
+        0.06870196830965855,
+        0.19272755676280193
+      ],
+      "rolling1sP95": [
+        0.073481818833588,
+        0.23680185428728098
+      ],
+      "stopMeanHorizontalSpeed": 0.006408686808497036,
+      "stepDistance": 0.1558971333247945,
+      "stepCount": 39
+    },
+    {
+      "source": "cpu-v16-straight\\seed209107-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 3.6313074673155046,
+      "meanCommand": [
+        0.04999999329447746,
+        0.0
+      ],
+      "meanActual": [
+        -0.0001267528007494352,
+        0.003129930528408862
+      ],
+      "rolling1sMAE": [
+        0.05013205314217321,
+        0.003321281369489343
+      ],
+      "rolling1sP95": [
+        0.050312034481900886,
+        0.01113139154552123
+      ],
+      "stopMeanHorizontalSpeed": 0.0007654753844292367,
+      "stepDistance": null,
+      "stepCount": 0
+    },
+    {
+      "source": "cpu-v16-straight\\seed209107-trial0-speed0.15.json",
+      "completed": true,
+      "maxTiltDeg": 5.037009696360612,
+      "meanCommand": [
+        0.1499999761581421,
+        0.0
+      ],
+      "meanActual": [
+        0.15808204441452622,
+        0.012906023992655167
+      ],
+      "rolling1sMAE": [
+        0.008725899780573526,
+        0.0367864111589717
+      ],
+      "rolling1sP95": [
+        0.014066319394551744,
+        0.07866257478889611
+      ],
+      "stopMeanHorizontalSpeed": 0.0029454877951633715,
+      "stepDistance": 0.08602136263582166,
+      "stepCount": 36
+    },
+    {
+      "source": "cpu-v16-straight\\seed209107-trial0-speed0.3.json",
+      "completed": true,
+      "maxTiltDeg": 6.318598069642485,
+      "meanCommand": [
+        0.2999999523162842,
+        0.0
+      ],
+      "meanActual": [
+        0.32179152557547813,
+        0.0844171403216466
+      ],
+      "rolling1sMAE": [
+        0.02187426797316629,
+        0.08134765929751987
+      ],
+      "rolling1sP95": [
+        0.025914471183938158,
+        0.11614363444635141
+      ],
+      "stopMeanHorizontalSpeed": 0.004476248464725306,
+      "stepDistance": 0.15753480266728306,
+      "stepCount": 38
+    },
+    {
+      "source": "cpu-v16-straight\\seed209107-trial0-speed0.4.json",
+      "completed": true,
+      "maxTiltDeg": 6.611295002909238,
+      "meanCommand": [
+        0.3999999463558197,
+        0.0
+      ],
+      "meanActual": [
+        0.38795411970558225,
+        0.14230543592112152
+      ],
+      "rolling1sMAE": [
+        0.011668945379177769,
+        0.14856119759437086
+      ],
+      "rolling1sP95": [
+        0.01691017108706099,
+        0.194844063479532
+      ],
+      "stopMeanHorizontalSpeed": 0.00449649610176786,
+      "stepDistance": 0.185649668142501,
+      "stepCount": 39
+    }
+  ]
+}

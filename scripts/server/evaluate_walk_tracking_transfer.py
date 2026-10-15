@@ -14,6 +14,7 @@ p = argparse.ArgumentParser()
 p.add_argument('--seeds', type=int, nargs='+', default=[191051, 191057])
 p.add_argument('--output', default='tracking-screen.json')
 p.add_argument('--candidate', default='evidence/main/final.pt')
+p.add_argument('--baseline-checkpoint',type=Path,default=Path('inputs/seed.pt'))
 p.add_argument('--baseline-cache', type=Path)
 p.add_argument('--teacher-map', type=Path, help='Offline diagnostic teacher queries only')
 p.add_argument('--long-hold', action='store_true', help='30s: move1-11, stop11-16, reverse16-26, stop26-30')
@@ -21,6 +22,7 @@ p.add_argument('--fixed-actuator', action='store_true', help='7.4V/no droop/4 ph
 p.add_argument('--nominal-dr', action='store_true', help='Disable listed parameter/sensor DR; reset distribution remains')
 p.add_argument('--feedback-teacher', action='store_true', help='Privileged simulation reference, never a deployed policy')
 a = p.parse_args()
+assert not a.baseline_cache or a.baseline_checkpoint==Path('inputs/seed.pt'), 'Explicit baseline cannot reuse legacy cache'
 assert not (a.feedback_teacher and a.teacher_map), 'Select one simulation teacher'
 assert not a.nominal_dr or a.fixed_actuator, 'Nominal DR requires fixed actuator'
 assert not ((a.long_hold or a.fixed_actuator or a.nominal_dr) and a.baseline_cache), 'Diagnostic profiles cannot reuse legacy baseline cache'
@@ -34,7 +36,7 @@ if a.teacher_map:
 for seed in a.seeds:
     starts = None
     expected_start = None
-    for label, checkpoint in [('baseline', 'inputs/seed.pt'), ('candidate', a.candidate)]:
+    for label, checkpoint in [('baseline', a.baseline_checkpoint), ('candidate', a.candidate)]:
         baseline_rows = [r for r in cached if r['seed']==seed and r['policy']=='baseline']
         if label=='baseline' and baseline_rows:
             assert len(baseline_rows)==1
@@ -198,7 +200,7 @@ for seed in a.seeds:
         aggregate=aggregate, directionRegressionPassed=bool(directional), passed=bool(passed)))
 result = dict(cases=cases, results=rows, comparisons=comparisons, accepted=all(r['passed'] for r in comparisons),
     longHold=a.long_hold, fixedActuator=a.fixed_actuator, nominalDr=a.nominal_dr, privilegedFeedbackTeacher=a.feedback_teacher,
-    candidateCheckpoint=a.candidate, baselineCache=str(a.baseline_cache) if a.baseline_cache else None,
+    candidateCheckpoint=a.candidate, baselineCheckpoint=str(a.baseline_checkpoint), baselineCache=str(a.baseline_cache) if a.baseline_cache else None,
     teacherMap=str(a.teacher_map) if a.teacher_map else None,
     teacherMapSha256=hashlib.sha256(a.teacher_map.read_bytes()).hexdigest() if a.teacher_map else None,
     deploymentAccepted=False, hardwareValidated=False, simulationOnly=True,

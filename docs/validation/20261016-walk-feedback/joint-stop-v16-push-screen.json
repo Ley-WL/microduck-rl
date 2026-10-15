@@ -1,0 +1,488 @@
+[
+  {
+    "model": "v6",
+    "direction": "backward",
+    "results": [
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.086527400492836,
+        "distanceM": -0.8478658106185915,
+        "movingMeanVx": -0.04516342184423054,
+        "clippedFrames": 50,
+        "pushApplied": true
+      },
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.058894339462948,
+        "distanceM": 1.939939031127956,
+        "movingMeanVx": 0.11787605885160543,
+        "clippedFrames": 1,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.150870459986177,
+        "distanceM": -0.9115343225787741,
+        "movingMeanVx": -0.049376214182183235,
+        "clippedFrames": 49,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.2330217877250655,
+        "distanceM": 2.298549925261726,
+        "movingMeanVx": 0.1451273210658549,
+        "clippedFrames": 1,
+        "pushApplied": true
+      }
+    ]
+  },
+  {
+    "model": "v6",
+    "direction": "left",
+    "results": [
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.640731403756374,
+        "distanceM": -0.6813242295358141,
+        "movingMeanVx": -0.03094286053002058,
+        "clippedFrames": 54,
+        "pushApplied": true
+      },
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.729821179380207,
+        "distanceM": 2.4690146374112825,
+        "movingMeanVx": 0.15836736952963013,
+        "clippedFrames": 1,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.687176705864614,
+        "distanceM": -0.7481474154876909,
+        "movingMeanVx": -0.036601812407663074,
+        "clippedFrames": 50,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.772458803763349,
+        "distanceM": 2.5501680592856384,
+        "movingMeanVx": 0.16454595318900583,
+        "clippedFrames": 1,
+        "pushApplied": true
+      }
+    ]
+  },
+  {
+    "model": "v6",
+    "direction": "right",
+    "results": [
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.086527400492836,
+        "distanceM": -1.357250849682863,
+        "movingMeanVx": -0.08357996601104173,
+        "clippedFrames": 55,
+        "pushApplied": true
+      },
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 6.457492682611414,
+        "distanceM": 1.8852455718896668,
+        "movingMeanVx": 0.11547454782744485,
+        "clippedFrames": 1,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.150870459986177,
+        "distanceM": -1.0448785052707739,
+        "movingMeanVx": -0.06016370373499388,
+        "clippedFrames": 54,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.765497714117608,
+        "distanceM": 1.9238389087816812,
+        "movingMeanVx": 0.11780889737841616,
+        "clippedFrames": 1,
+        "pushApplied": true
+      }
+    ]
+  },
+  {
+    "model": "v11",
+    "direction": "backward",
+    "results": [
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.531892820239262,
+        "distanceM": -2.8279997022332033,
+        "movingMeanVx": -0.1885766967174199,
+        "clippedFrames": 49,
+        "pushApplied": true
+      },
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 4.986628271336701,
+        "distanceM": 3.0609806788910503,
+        "movingMeanVx": 0.2027183605572686,
+        "clippedFrames": 0,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.793403273816096,
+        "distanceM": -2.644581948900752,
+        "movingMeanVx": -0.17535347207843688,
+        "clippedFrames": 47,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.150870459986177,
+        "distanceM": 3.023484322623488,
+        "movingMeanVx": 0.19982429503183788,
+        "clippedFrames": 0,
+        "pushApplied": true
+      }
+    ]
+  },
+  {
+    "model": "v11",
+    "direction": "left",
+    "results": [
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.531892820239262,
+        "distanceM": -2.9420772849985863,
+        "movingMeanVx": -0.19705465531129912,
+        "clippedFrames": 48,
+        "pushApplied": true
+      },
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.6496495486835885,
+        "distanceM": 3.159278942250548,
+        "movingMeanVx": 0.2101063828432562,
+        "clippedFrames": 0,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.793403273816096,
+        "distanceM": -2.62568662711587,
+        "movingMeanVx": -0.1740928643109987,
+        "clippedFrames": 55,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.564764384409907,
+        "distanceM": 3.1715359076596523,
+        "movingMeanVx": 0.2110784192374315,
+        "clippedFrames": 0,
+        "pushApplied": true
+      }
+    ]
+  },
+  {
+    "model": "v11",
+    "direction": "right",
+    "results": [
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 8.27159122920069,
+        "distanceM": -2.878987618164634,
+        "movingMeanVx": -0.1912665672658826,
+        "clippedFrames": 52,
+        "pushApplied": true
+      },
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 6.252931165711988,
+        "distanceM": 3.150298126245726,
+        "movingMeanVx": 0.20910502088917898,
+        "clippedFrames": 1,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 8.329975836858349,
+        "distanceM": -2.5888673997271217,
+        "movingMeanVx": -0.17078627923518802,
+        "clippedFrames": 48,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 6.055977132532278,
+        "distanceM": 3.154621196976799,
+        "movingMeanVx": 0.2094515067553548,
+        "clippedFrames": 1,
+        "pushApplied": true
+      }
+    ]
+  },
+  {
+    "model": "v16",
+    "direction": "backward",
+    "results": [
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.931297537546235,
+        "distanceM": -3.132406257937627,
+        "movingMeanVx": -0.2090340456509292,
+        "clippedFrames": 55,
+        "pushApplied": true
+      },
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.081582268624555,
+        "distanceM": 3.0592834204881623,
+        "movingMeanVx": 0.20079238830456386,
+        "clippedFrames": 0,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.87230276782037,
+        "distanceM": -3.149860756507397,
+        "movingMeanVx": -0.2106707791352779,
+        "clippedFrames": 51,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.150870459986177,
+        "distanceM": 3.1312535356886753,
+        "movingMeanVx": 0.20638441019219683,
+        "clippedFrames": 0,
+        "pushApplied": true
+      }
+    ]
+  },
+  {
+    "model": "v16",
+    "direction": "left",
+    "results": [
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.931297537546235,
+        "distanceM": -3.0598368848979636,
+        "movingMeanVx": -0.20450256607439132,
+        "clippedFrames": 54,
+        "pushApplied": true
+      },
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.124879121394564,
+        "distanceM": 3.1669052273078555,
+        "movingMeanVx": 0.20946959272662594,
+        "clippedFrames": 0,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.87230276782037,
+        "distanceM": -3.038167525577272,
+        "movingMeanVx": -0.20286565650698668,
+        "clippedFrames": 51,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 5.710323974408141,
+        "distanceM": 3.2109458624939236,
+        "movingMeanVx": 0.2123316633578185,
+        "clippedFrames": 0,
+        "pushApplied": true
+      }
+    ]
+  },
+  {
+    "model": "v16",
+    "direction": "right",
+    "results": [
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 7.2863889204792445,
+        "distanceM": -3.0128612593667747,
+        "movingMeanVx": -0.2007342823915328,
+        "clippedFrames": 50,
+        "pushApplied": true
+      },
+      {
+        "seed": 217101,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 6.194119689410929,
+        "distanceM": 3.142799966342781,
+        "movingMeanVx": 0.20753124393646724,
+        "clippedFrames": 1,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": -0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 7.673703321331113,
+        "distanceM": -2.838876147897146,
+        "movingMeanVx": -0.18773794285125062,
+        "clippedFrames": 49,
+        "pushApplied": true
+      },
+      {
+        "seed": 217107,
+        "trial": 0,
+        "speed": 0.2,
+        "fallSeconds": null,
+        "completed": true,
+        "maxTiltDeg": 6.3581088640164625,
+        "distanceM": 3.1353189509584487,
+        "movingMeanVx": 0.2071170452042075,
+        "clippedFrames": 0,
+        "pushApplied": true
+      }
+    ]
+  }
+]

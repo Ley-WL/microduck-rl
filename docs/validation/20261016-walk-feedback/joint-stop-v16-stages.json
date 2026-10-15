@@ -1,0 +1,96 @@
+[
+  {
+    "stopWeight": 8.0,
+    "steps": 500,
+    "initialValidationRms": 0.005941842682659626,
+    "validationRms": 0.005706327501684427,
+    "initialGpuValidationRms": 0.01203636173158884,
+    "gpuValidationRms": 0.008814129047095776,
+    "policySha256": "457f276135822ed25bed4da0875cf014f4933b6dcda4056c245bd94a9c82f7f7",
+    "onnxMaxError": 7.301568984985352e-07,
+    "normalizerUnchanged": true,
+    "feedbackUsedAtRuntime": false,
+    "hardwareAccess": false,
+    "lost": 0,
+    "bias": {
+      "baseline": [
+        0.01400230805693828,
+        0.08428242506037502
+      ],
+      "candidate": [
+        0.013022918215718467,
+        0.05862658588874107
+      ]
+    },
+    "stopPassed": true,
+    "strideRetained": true,
+    "cpuBaseline": {
+      "error": [
+        0.004628459850921897,
+        0.05889828037307898
+      ],
+      "stop": 0.004006283817741796,
+      "stride": 0.10443426249666803
+    },
+    "cpuCandidate": {
+      "error": [
+        0.005337579123129908,
+        0.06006990022733783
+      ],
+      "stop": 0.003356426164780437,
+      "stride": 0.10461990303083606
+    },
+    "cpuPassed": true,
+    "cpuDirectionsPassed": true,
+    "gpuTrackingImproved": true,
+    "continueTraining": true,
+    "originalScreenAccepted": false
+  },
+  {
+    "stopWeight": 8.0,
+    "steps": 1500,
+    "initialValidationRms": 0.005941842682659626,
+    "validationRms": 0.004896546248346567,
+    "initialGpuValidationRms": 0.01203636173158884,
+    "gpuValidationRms": 0.007232895586639643,
+    "policySha256": "290e314c2d78789f461d44898f8c281bbde5b83553cd29de9e6a340ab6b7f465",
+    "onnxMaxError": 8.493661880493164e-07,
+    "normalizerUnchanged": true,
+    "feedbackUsedAtRuntime": false,
+    "hardwareAccess": false,
+    "lost": 0,
+    "bias": {
+      "baseline": [
+        0.013898603497545044,
+        0.08413069995790844
+      ],
+      "candidate": [
+        0.01223833681016977,
+        0.05121977811052905
+      ]
+    },
+    "stopPassed": false,
+    "strideRetained": true,
+    "cpuBaseline": {
+      "error": [
+        0.004628459850921897,
+        0.05889828037307898
+      ],
+      "stop": 0.004006283817741796,
+      "stride": 0.10443426249666803
+    },
+    "cpuCandidate": {
+      "error": [
+        0.004640275841414275,
+        0.05443488366850305
+      ],
+      "stop": 0.0037200102264157444,
+      "stride": 0.1040657509310995
+    },
+    "cpuPassed": true,
+    "cpuDirectionsPassed": true,
+    "gpuTrackingImproved": true,
+    "continueTraining": false,
+    "originalScreenAccepted": false
+  }
+]

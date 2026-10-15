@@ -7,8 +7,10 @@ import numpy as np
 
 
 class FeedbackTeacher:
-    def __init__(self, vx_limit=.12):
+    def __init__(self, vx_limit=.12, query_vx_limit=.3):
         if not 0 < vx_limit <= .3:raise ValueError("Invalid simulation vx correction bound")
+        if not 0 < query_vx_limit <= .6:raise ValueError("Invalid simulation query bound")
+        self.query_vx_limit=query_vx_limit
         self.vx_limit=vx_limit
         self.filtered=np.zeros(2)
         self.integral=np.zeros(2)
@@ -35,7 +37,7 @@ class FeedbackTeacher:
         target=np.clip(np.array([.3,.2])*error+self.integral,-bounds,bounds)
         self.correction += np.clip(target-self.correction,-dt*np.array([.3,1.2]),dt*np.array([.3,1.2]))
         result=np.asarray(command,dtype=np.float32).copy()
-        result[[0,2]]=np.clip(desired+self.correction,[-.3,-1.2],[.3,1.2])
+        result[[0,2]]=np.clip(desired+self.correction,[-self.query_vx_limit,-1.2],[self.query_vx_limit,1.2])
         self.previous[:]=desired
         return result
 

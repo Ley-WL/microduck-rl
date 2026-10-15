@@ -25,3 +25,11 @@ for bound in (0,-1,.31,float('nan')):
     try:FeedbackTeacher(vx_limit=bound)
     except ValueError:pass
     else:raise AssertionError('Invalid bound accepted')
+
+wide=FeedbackTeacher(vx_limit=.25,query_vx_limit=.5)
+for _ in range(500):q=wide.query([.4,0,0],[.2,0])
+assert .4<q[0]<=.5
+for bound in (0,.61,float('nan')):
+    try:FeedbackTeacher(query_vx_limit=bound)
+    except ValueError:pass
+    else:raise AssertionError('Invalid query bound accepted')
