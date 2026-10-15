@@ -7,3 +7,7 @@ v44改变目标估计方式：保留v43 critic初始权重，以冻结actor完�
 只优化critic，actor与两类normalizer逐值不变，导出actor SHA必须与v28精确一致。LR1e-4、batch2048、梯度裁剪1，5更新冒烟、100更新筛选、最多500更新；100更新验证RMSE未优于初值即停止。5步只检查实现，不作改善判断。选定模型再跑原价值门，未自动启动PPO或部署。价值拟合合格不等于速度、转向、大步幅和停止验收通过。
 
 远端独立目录walk-mc-critic-v44-20261016，launcher3632318。启动时context-test阶段，结果待后续核验。
+
+## 完成结果与下一轮
+
+> **2026-10-16 v44完成通过价值门/v45动作微调启动：** 完整回报监督critic 5/100/500更新，whole-world留出RMSE2.415→.988、EV -2.178→.390；独立235151/235157各48/48，完整循环RMSE1.004/1.003、EV .435/.450，原10项价值门通过，非步态验收。actor精确v28，normalizer不变；数据分组/float64回报重算通过（误差<4.38e-5），job0/source-check/完整归档19332178395cff7134366db21d54529d935294bad25a9392915e2fb5c273886e核验。独立walk-mc-transfer-v45-20261016 launcher3692374已启动，v28actor+仅v44step500critic（ad4e86cb），空Adam/iteration0/LR1e-5/anchor5/200轮anneal；64×5/40Adam/finite/normalizer及正规导出误差3.34e-6通过，1024×200主训练活跃，新增240151/240157宽速度确定性筛选。无实机/PD/部署，目标未完成；追踪进程勿重复启动。详见docs/validation/20261016-walk-mc-critic。

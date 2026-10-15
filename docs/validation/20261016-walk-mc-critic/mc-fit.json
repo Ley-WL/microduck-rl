@@ -1,0 +1,31 @@
+{
+  "initial": {
+    "rmse": 2.4150390625,
+    "explainedVariance": -2.1775264739990234
+  },
+  "records": [
+    {
+      "steps": 5,
+      "rmse": 2.0367250442504883,
+      "explainedVariance": -1.619279146194458
+    },
+    {
+      "steps": 100,
+      "rmse": 1.14348566532135,
+      "explainedVariance": 0.18031638860702515
+    },
+    {
+      "steps": 500,
+      "rmse": 0.9878864288330078,
+      "explainedVariance": 0.3899965286254883
+    }
+  ],
+  "sourceHashes": {
+    "239101": "e6d708957840f6b570d5d6170792def337d60e804a16bee22ea049c05a5b0f3d",
+    "239107": "0bb698603bce1bd74f48d2120abb9fe3225b7bf8a93b3832686bf1fbc9d3aa52"
+  },
+  "actorUnchanged": true,
+  "normalizersUnchanged": true,
+  "wholeWorldHoldout": true,
+  "gaitAccepted": false
+}
