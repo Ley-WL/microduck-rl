@@ -62,7 +62,7 @@ class RuntimeWalkAction(JointPositionAction):
         self._refs=torch.tensor(REFERENCES,device=self.device,dtype=torch.float64)
         self._directions=torch.tensor(DIRECTIONS,device=self.device,dtype=torch.float64)
     def process_actions(self,actions):
-        target=.9*actions
+        target=float(metadata()['walkExecution']['actionScale'])*actions
         self._filtered=torch.where(self._initialized,(1-self._alpha)*self._filtered+self._alpha*target,target)
         self._initialized.fill_(True);self._raw_actions.copy_(actions)
         bounded=(self._home+self._filtered.double()).clamp(self._bounds[:,0],self._bounds[:,1])

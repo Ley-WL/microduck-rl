@@ -8081,3 +8081,64 @@ def hd1910_sit_target_error_cost(env):
     term = env.action_manager.get_term('joint_pos')
     actual = env.scene['robot'].data.joint_pos[:, term.target_ids]
     return ((term.position_target - actual) / .25).square().mean(-1)
+
+
+# Stop-focused walking transfer (2026-10-15); same 61D velocity command layout.
+def walk_stop_schedule(time_s, speed, yaw):
+    """Two stop opportunities per 12s cycle, alternating travel direction."""
+    phase = torch.remainder(time_s, 12.)
+    moving = ((phase >= 1.) & (phase < 4.)) | ((phase >= 7.) & (phase < 10.))
+    direction = torch.where(phase < 7., 1., -1.)
+    return torch.stack((speed * direction * moving, torch.zeros_like(speed), yaw * direction * moving), dim=-1)
+
+
+class WalkStopCommand(UniformVelocityCommand):
+    def __init__(self, cfg, env):
+        super().__init__(cfg, env)
+        self.stop_time = torch.zeros(self.num_envs, device=self.device)
+        self.stop_speed = torch.zeros_like(self.stop_time)
+        self.stop_yaw = torch.zeros_like(self.stop_time)
+
+    def reset(self, env_ids=None):
+        ids = slice(None) if env_ids is None else env_ids
+        n = self.stop_time[ids].numel()
+        self.stop_time[ids] = 0.
+        self.stop_speed[ids] = (.1 + .15 * torch.rand(n, device=self.device)) * torch.where(torch.rand(n, device=self.device) < .5, -1., 1.)
+        self.stop_yaw[ids] = torch.where(torch.rand(n, device=self.device) < .5, 0., (torch.rand(n, device=self.device) * 2 - 1) * .6)
+        self.vel_command_b[ids] = 0.
+        return {}
+
+    def compute(self, dt):
+        self.stop_time += dt
+        self.vel_command_b[:] = walk_stop_schedule(self.stop_time, self.stop_speed, self.stop_yaw)
+        self.is_standing_env[:] = self.vel_command_b.norm(dim=-1) < .001
+        self.is_heading_env[:] = False
+        self.is_world_env[:] = False
+
+    def _update_command(self):
+        pass
+
+    def _resample_command(self, env_ids):
+        pass
+
+
+@_dataclass(kw_only=True)
+class WalkStopCommandCfg(UniformVelocityCommandCfg):
+    def build(self, env):
+        return WalkStopCommand(self, env)
+
+
+def walk_stop_motion_cost(env):
+    """Positive cost only after raw stick release; permit corrective footsteps."""
+    robot = env.scene['robot']
+    stopped = env.command_manager.get_command('twist').norm(dim=-1) < .001
+    velocity = robot.data.root_link_lin_vel_b[:, :2].square().sum(-1)
+    angular = robot.data.root_link_ang_vel_b.square().sum(-1)
+    return stopped * (velocity + .01 * angular)
+
+
+def walk_stop_tilt_cost(env):
+    robot = env.scene['robot']
+    stopped = env.command_manager.get_command('twist').norm(dim=-1) < .001
+    tilt = torch.acos((-robot.data.projected_gravity_b[:, 2]).clamp(-1., 1.))
+    return stopped * torch.relu(tilt - .12).square()
