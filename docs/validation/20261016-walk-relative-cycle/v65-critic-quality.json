@@ -1,0 +1,250 @@
+{
+  "results": [
+    {
+      "seed": 255151,
+      "worlds": 96,
+      "survivedFirst30": 96,
+      "survived60": 96,
+      "gamma": 0.99,
+      "unobservedTailDiscount": 2.8365594903161287e-07,
+      "phases": [
+        {
+          "phase": "stand",
+          "samples": 4800,
+          "meanReturn": 20.00023078918457,
+          "meanPrediction": 19.521181106567383,
+          "rmse": 1.9856008291244507,
+          "bias": -0.4790509045124054,
+          "explainedVariance": 0.38340526819229126,
+          "targetStd": 2.453972339630127
+        },
+        {
+          "phase": "forward",
+          "samples": 28800,
+          "meanReturn": 20.595027923583984,
+          "meanPrediction": 20.236974716186523,
+          "rmse": 1.7543073892593384,
+          "bias": -0.3580508828163147,
+          "explainedVariance": 0.4545334577560425,
+          "targetStd": 2.3253180980682373
+        },
+        {
+          "phase": "stopFirst",
+          "samples": 24000,
+          "meanReturn": 20.68453025817871,
+          "meanPrediction": 20.744871139526367,
+          "rmse": 1.9152677059173584,
+          "bias": 0.06034049391746521,
+          "explainedVariance": 0.5898256897926331,
+          "targetStd": 2.989025592803955
+        },
+        {
+          "phase": "reverse",
+          "samples": 28800,
+          "meanReturn": 20.621795654296875,
+          "meanPrediction": 20.48925018310547,
+          "rmse": 1.9550281763076782,
+          "bias": -0.13254530727863312,
+          "explainedVariance": 0.5224325656890869,
+          "targetStd": 2.8225083351135254
+        },
+        {
+          "phase": "stopSecond",
+          "samples": 19200,
+          "meanReturn": 20.589597702026367,
+          "meanPrediction": 20.382400512695312,
+          "rmse": 1.2446167469024658,
+          "bias": -0.20719344913959503,
+          "explainedVariance": 0.7427438497543335,
+          "targetStd": 2.4196360111236572
+        },
+        {
+          "phase": "fullCycle",
+          "samples": 144000,
+          "meanReturn": 20.922847747802734,
+          "meanPrediction": 20.722652435302734,
+          "rmse": 1.934700608253479,
+          "bias": -0.20019233226776123,
+          "explainedVariance": 0.5164958238601685,
+          "targetStd": 2.7674264907836914
+        }
+      ]
+    },
+    {
+      "seed": 255157,
+      "worlds": 96,
+      "survivedFirst30": 96,
+      "survived60": 96,
+      "gamma": 0.99,
+      "unobservedTailDiscount": 2.8365594903161287e-07,
+      "phases": [
+        {
+          "phase": "stand",
+          "samples": 4800,
+          "meanReturn": 19.39994239807129,
+          "meanPrediction": 19.460424423217773,
+          "rmse": 2.869835138320923,
+          "bias": 0.06048252433538437,
+          "explainedVariance": 0.29447853565216064,
+          "targetStd": 3.4159016609191895
+        },
+        {
+          "phase": "forward",
+          "samples": 28800,
+          "meanReturn": 20.746376037597656,
+          "meanPrediction": 20.34053611755371,
+          "rmse": 2.0159389972686768,
+          "bias": -0.4058394432067871,
+          "explainedVariance": 0.3763009309768677,
+          "targetStd": 2.500379800796509
+        },
+        {
+          "phase": "stopFirst",
+          "samples": 24000,
+          "meanReturn": 21.022417068481445,
+          "meanPrediction": 20.773386001586914,
+          "rmse": 1.212225317955017,
+          "bias": -0.2490321397781372,
+          "explainedVariance": 0.5120566487312317,
+          "targetStd": 1.6983821392059326
+        },
+        {
+          "phase": "reverse",
+          "samples": 28800,
+          "meanReturn": 20.8971004486084,
+          "meanPrediction": 20.624488830566406,
+          "rmse": 1.6300404071807861,
+          "bias": -0.272615522146225,
+          "explainedVariance": 0.4264114499092102,
+          "targetStd": 2.1219630241394043
+        },
+        {
+          "phase": "stopSecond",
+          "samples": 19200,
+          "meanReturn": 20.698368072509766,
+          "meanPrediction": 20.551244735717773,
+          "rmse": 1.2419086694717407,
+          "bias": -0.14712175726890564,
+          "explainedVariance": 0.5762256383895874,
+          "targetStd": 1.894319772720337
+        },
+        {
+          "phase": "fullCycle",
+          "samples": 144000,
+          "meanReturn": 21.091915130615234,
+          "meanPrediction": 20.803497314453125,
+          "rmse": 1.8147684335708618,
+          "bias": -0.288418710231781,
+          "explainedVariance": 0.4334113597869873,
+          "targetStd": 2.3803019523620605
+        }
+      ]
+    }
+  ],
+  "cases": [
+    [
+      -0.2,
+      -0.6
+    ],
+    [
+      -0.2,
+      0.0
+    ],
+    [
+      -0.2,
+      0.6
+    ],
+    [
+      -0.075,
+      -0.6
+    ],
+    [
+      -0.075,
+      0.0
+    ],
+    [
+      -0.075,
+      0.6
+    ],
+    [
+      -0.035,
+      -0.6
+    ],
+    [
+      -0.035,
+      0.0
+    ],
+    [
+      -0.035,
+      0.6
+    ],
+    [
+      0.0,
+      -0.6
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.6
+    ],
+    [
+      0.035,
+      -0.6
+    ],
+    [
+      0.035,
+      0.0
+    ],
+    [
+      0.035,
+      0.6
+    ],
+    [
+      0.05,
+      -0.6
+    ],
+    [
+      0.05,
+      0.0
+    ],
+    [
+      0.05,
+      0.6
+    ],
+    [
+      0.075,
+      -0.6
+    ],
+    [
+      0.075,
+      0.0
+    ],
+    [
+      0.075,
+      0.6
+    ],
+    [
+      0.2,
+      -0.6
+    ],
+    [
+      0.2,
+      0.0
+    ],
+    [
+      0.2,
+      0.6
+    ]
+  ],
+  "optimizationSteps": 0,
+  "actorAndCriticUnchanged": true,
+  "stochasticTrainingPolicy": true,
+  "task": "walk_relative_cycle_context",
+  "checkpointSha256": "aecadc901934840021e5f316c56112144728d0be843a0caf7b17622e2ad71b14",
+  "limitation": "Frozen critic on its own final actor distribution; 64s diagnostic episode differs from 32s training timeout, first 30s only scored. Value fit does not prove policy gradient causality.",
+  "hardwareAccess": false,
+  "accepted": false
+}

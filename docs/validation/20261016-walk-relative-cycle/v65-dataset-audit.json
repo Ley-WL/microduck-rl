@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "seed": 255101,
+      "maxReturnError": 4.4338848084635174e-05,
+      "trainingSamples": 108000,
+      "validationSamples": 36000,
+      "sha256": "06043b0c64696f1190a65ee307ecb7e38ea4b6d29c9f2b149a71431dd1363661",
+      "checkpointSha256": "6e1d270702ab09ed36d880932eebcaba557b868a32cec1a27eb542525c395522"
+    },
+    {
+      "seed": 255107,
+      "maxReturnError": 5.191889287914364e-05,
+      "trainingSamples": 108000,
+      "validationSamples": 36000,
+      "sha256": "456bc5926eba7911c3691ee367f74b889b56d9303a822eda2ccf0dd926a9f2e6",
+      "checkpointSha256": "6e1d270702ab09ed36d880932eebcaba557b868a32cec1a27eb542525c395522"
+    }
+  ],
+  "hardwareAccess": false,
+  "gaitAccepted": false
+}

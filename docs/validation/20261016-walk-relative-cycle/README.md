@@ -17,3 +17,13 @@ v64在新254151/254157种子、0/.03/.04/.06/.085/.2速度、yaw0±.45下冻结v
 完成后下载walk-relative-cycle-critic-v65-20261016，按v65-critic-spec.json运行check_walk_mc_dataset.py和check_walk_critic_readiness.py；值域/归一化/actor精确导出、source-check及完整归档核验后再决定是否有限动作训练。即便价值门通过，必须重新CPU/GPU宽速度/转向/停止/步幅和抗扰验收，尤其观察已知低速yaw取舍。
 
 最新：launcher313029，context-test全部通过，真实轨迹相对cost重放最大误差1.48e-6；进入collect。证据v65-test-output.txt。
+
+## v65校准完成与v66微调
+
+v65没有增加到500次：留出RMSE初始2.040，5步2.023，100步2.110，触发预设早停。选择mc-step5，不能称100步有改善。该版本独立255151/157各96/96存活，完整循环EV .516/.433、原10项价值门通过，完整回报独立float64/whole-world split复算也通过。actor与normalizer逐值保持v55，job0/source-check；归档SHA `bf9914c8953212db1a10df8fb17d2ea9f610eaa0a3ffa6fd5f61283dbecb0048`。这是有界动作实验的价值初始化证据，不是步态合格。
+
+v66 launcher371931独立启动。v55step500 actor+v65step5 critic，读取readiness中的SHA匹配唯一checkpoint，避免默认取100或500。只加载actor/critic，空Adam/iteration0，固定低噪声.005，LR1e-5/anchor5。新奖励配置/实际输入重放/噪声log-prob测试通过，先64×5，后1024×200，完成再用256151/157×13速度×yaw0±.6×4world原模型配对。所有PD/物理/运行时输入保持，当前没有部署或步态改善结论。
+
+CPU应使用同新256171/256177×9速度×3yaw配对，核对初始qpos、首velocity和全命令；特别检查v61退化的.025/.035/.05低速以及+.2停止残速、倒退/原地转向和大步。GPU/CPU通过后仍需连续指令和抗扰，不能把value门或训练reward上升当最终验收。
+
+最新：v66的64×5冒烟/40Adam/finite/normalizer通过，正规ONNX导出误差2.86e-6；已进入1024×200主训练。证据v66-smoke-audit.json。
