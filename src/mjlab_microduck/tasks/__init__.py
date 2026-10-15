@@ -107,6 +107,52 @@ from .microduck_roulade_env_cfg import (
 from .backlash import make_backlash_variant
 
 # Standard velocity task
+from .microduck_hd1910_dance_env_cfg import make_hd1910_dance_env_cfg, HD1910DanceRlCfg
+from .microduck_hd1910_dance_env_cfg import make_hd1910_dance_stable_env_cfg, HD1910DanceStableRlCfg
+from .microduck_hd1910_dance_env_cfg import make_hd1910_dance_recovery_env_cfg, HD1910DanceRecoveryRlCfg
+from .microduck_hd1910_dance_env_cfg import make_hd1910_dance_expressive_env_cfg, HD1910DanceExpressiveRlCfg
+from .microduck_hd1910_dance_env_cfg import make_hd1910_dance_resilient_env_cfg, HD1910DanceResilientRlCfg
+
+register_mjlab_task(
+    task_id="Mjlab-Dance10Resilient-Flat-MicroDuck-HD1910",
+    env_cfg=make_hd1910_dance_resilient_env_cfg(),
+    play_env_cfg=make_hd1910_dance_resilient_env_cfg(play=True),
+    rl_cfg=HD1910DanceResilientRlCfg,
+    runner_cls=MicroduckOnPolicyRunner,
+)
+
+register_mjlab_task(
+    task_id="Mjlab-Dance10Expressive-Flat-MicroDuck-HD1910",
+    env_cfg=make_hd1910_dance_expressive_env_cfg(),
+    play_env_cfg=make_hd1910_dance_expressive_env_cfg(play=True),
+    rl_cfg=HD1910DanceExpressiveRlCfg,
+    runner_cls=MicroduckOnPolicyRunner,
+)
+
+register_mjlab_task(
+    task_id="Mjlab-Dance10Recovery-Flat-MicroDuck-HD1910",
+    env_cfg=make_hd1910_dance_recovery_env_cfg(),
+    play_env_cfg=make_hd1910_dance_recovery_env_cfg(play=True),
+    rl_cfg=HD1910DanceRecoveryRlCfg,
+    runner_cls=MicroduckOnPolicyRunner,
+)
+
+register_mjlab_task(
+    task_id="Mjlab-Dance10Stable-Flat-MicroDuck-HD1910",
+    env_cfg=make_hd1910_dance_stable_env_cfg(),
+    play_env_cfg=make_hd1910_dance_stable_env_cfg(play=True),
+    rl_cfg=HD1910DanceStableRlCfg,
+    runner_cls=MicroduckOnPolicyRunner,
+)
+
+register_mjlab_task(
+    task_id="Mjlab-Dance10-Flat-MicroDuck-HD1910",
+    env_cfg=make_hd1910_dance_env_cfg(),
+    play_env_cfg=make_hd1910_dance_env_cfg(play=True),
+    rl_cfg=HD1910DanceRlCfg,
+    runner_cls=MicroduckOnPolicyRunner,
+)
+
 register_mjlab_task(
     task_id="Mjlab-Velocity-Flat-MicroDuck",
     env_cfg=make_microduck_velocity_env_cfg(),

@@ -274,6 +274,14 @@ def run_export(task_id: str, cfg: ExportConfig) -> ExportResult:
         export_geometry_manifest_sha256=hashlib.sha256((ROBOT_ROOT / "hardware-inputs.json").read_bytes()).hexdigest(),
         hardware_provenance_scope="export configuration; checkpoint training provenance must be verified separately",
     )
+    if task_id in ("Mjlab-Dance10-Flat-MicroDuck-HD1910", "Mjlab-Dance10Stable-Flat-MicroDuck-HD1910", "Mjlab-Dance10Recovery-Flat-MicroDuck-HD1910", "Mjlab-Dance10Expressive-Flat-MicroDuck-HD1910", "Mjlab-Dance10Resilient-Flat-MicroDuck-HD1910"):
+        metadata.update(
+            dance_command_schedule="mdp.duck_dance_targets:v1; 100BPM; 10 beats; 1s entry+6s dance+1s exit",
+            dance_runtime_requirement="61D obs; scheduled head/body commands; EMA old=.45,new=.55; raw action history; HD1910 P5",
+            deployment_status="simulation candidate; requires runtime scheduler integration and evaluation",
+        )
+        if task_id in ("Mjlab-Dance10Expressive-Flat-MicroDuck-HD1910", "Mjlab-Dance10Resilient-Flat-MicroDuck-HD1910"):
+            metadata['dance_command_gains'] = '2,2,2,2.5,1,2,2.5,2,1,1; full amplitude required at inference'
     attach_metadata_to_onnx(onnx_path, metadata)
 
     print(f"Written {onnx_path}")

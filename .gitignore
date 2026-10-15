@@ -42,3 +42,5 @@ logdir/.claude/worktrees/
 .venv-preview/
 .venv-audit/
 .local/
+MJDATA.TXT
+MJMODEL.TXT

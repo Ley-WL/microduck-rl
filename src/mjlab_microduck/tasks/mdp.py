@@ -5427,6 +5427,90 @@ class UniformPoseCommandCfg(CommandTermCfg):
         return UniformPoseCommand(self, env)
 
 
+def duck_dance_targets(time_s: torch.Tensor) -> torch.Tensor:
+    """Original ten-beat duck groove, 100 BPM; 1 s lead-in + 6 s + 1 s rest.
+
+    Returns head(4) then body(6) command deltas, NOT servo targets. Quintic
+    interpolation gives zero velocity/acceleration at beat boundaries and wrap.
+    The exact same function is required in a future runtime command scheduler.
+    """
+    keys = time_s.new_tensor([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, .04, .25, -.06, 0, .006, -.002, .055, 0, 0],
+        [0, .04, -.25, .06, 0, -.006, -.002, -.055, 0, 0],
+        [0, .04, .25, -.06, 0, .006, -.002, .055, 0, 0],
+        [0, .04, -.25, .06, 0, -.006, -.002, -.055, 0, 0],
+        [.10, -.16, .22, -.05, 0, .006, -.006, .05, 0, 0],
+        [-.04, .08, -.22, .05, 0, -.006, 0, -.05, 0, 0],
+        [.10, -.16, .22, -.05, 0, .006, -.006, .05, 0, 0],
+        [-.04, .08, -.22, .05, 0, -.006, 0, -.05, 0, 0],
+        [.10, -.16, 0, 0, 0, 0, -.006, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    ])
+    beat = ((torch.remainder(time_s, 8.0) - 1.0) / .6).clamp(0, 10)
+    index = beat.floor().long().clamp(max=9)
+    u = (beat - index).unsqueeze(-1)
+    blend = u**3 * (10 - 15*u + 6*u*u)
+    return keys[index] + blend * (keys[index + 1] - keys[index])
+
+
+class DuckDanceCommand(UniformPoseCommand):
+    def _targets(self, times):
+        targets = duck_dance_targets(times)
+        fraction = 1. if self.cfg.ramp_steps == 0 else min(1., self._env.common_step_counter / self.cfg.ramp_steps)
+        strength = self.cfg.start_fraction + (1-self.cfg.start_fraction)*fraction
+        gains = targets.new_tensor(self.cfg.gains)
+        return targets * (1 + (gains-1)*strength)
+
+    def _update_command(self):
+        targets = self._targets(self._env.episode_length_buf * self._env.step_dt)
+        self._command.copy_(targets[:, :4] if self.cfg.part == "head" else targets[:, 4:])
+
+    def _resample_command(self, env_ids):
+        targets = self._targets(self._env.episode_length_buf[env_ids] * self._env.step_dt)
+        self._command[env_ids] = targets[:, :4] if self.cfg.part == "head" else targets[:, 4:]
+
+
+@dataclass(kw_only=True)
+class DuckDanceCommandCfg(UniformPoseCommandCfg):
+    part: str = "head"
+    gains: tuple[float, ...] = (1.,)*10
+    ramp_steps: int = 0
+    start_fraction: float = 1.
+
+    def build(self, env):
+        if self.part not in ("head", "body"):
+            raise ValueError(self.part)
+        return DuckDanceCommand(self, env)
+
+
+def duck_dance_tracking(env, nominal_height: float, z_std: float = .012, roll_std: float = .07):
+    """Track actual head/body motion; fallen poses cannot collect head reward."""
+    asset = env.scene["robot"]
+    cmd = env.command_manager.get_command("body_pose")
+    rel = asset.data.root_link_pos_w - env.scene.terrain.env_origins
+    q = asset.data.root_link_quat_w
+    w, x, y, z = q.unbind(-1)
+    roll = torch.atan2(2*(w*x+y*z), 1-2*(x*x+y*y))
+    pitch = torch.asin((2*(w*y-z*x)).clamp(-1, 1))
+    yaw = torch.atan2(2*(w*z+x*y), 1-2*(y*y+z*z))
+    upright = (1 - 2*(x*x+y*y) > .85) & (rel[:, 2] > nominal_height - .025)
+    body_error = ((rel[:, 1]-cmd[:, 1])/.009)**2 + ((rel[:, 2]-nominal_height-cmd[:, 2])/z_std)**2
+    body_error += ((roll-cmd[:, 3])/roll_std)**2 + (pitch/.12)**2
+    body_error += (rel[:, 0]/.035)**2 + (wrap_to_pi(yaw)/.2)**2
+    body = torch.exp(-body_error / 3)
+    head = head_pose_tracking(env, std=.18, fine_std=.07, fine_weight=.3)
+    return upright.float() * body * (.25 + .75 * head)
+
+
+def duck_dance_balance_cost(env):
+    """Allow the commanded roll, penalize excessive tilt and uncommanded spin."""
+    robot = env.scene['robot']
+    q = robot.data.root_link_quat_w
+    tilt = torch.acos((1-2*(q[:,1]**2+q[:,2]**2)).clamp(-1+1e-7,1-1e-7))
+    return torch.relu(tilt-.14).square() + .05*robot.data.root_link_ang_vel_b[:,2].square()
+
+
 def zero_command_padding(
     env: ManagerBasedRlEnv,
     dim: int,
