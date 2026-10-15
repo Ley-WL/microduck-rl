@@ -1,0 +1,109 @@
+{
+  "simulationOnly": true,
+  "hardwareValidated": false,
+  "deploymentAccepted": false,
+  "seeds": [
+    204101,
+    204107
+  ],
+  "schedule": "stand0-1/move1-11/stop11-16/reverse16-26/stop26-30",
+  "movingWindows": [
+    [
+      5,
+      11
+    ],
+    [
+      20,
+      26
+    ]
+  ],
+  "profiles": [
+    {
+      "profile": "randomized",
+      "originalGateAccepted": false,
+      "policies": {
+        "baseline": {
+          "survived": 120,
+          "total": 120,
+          "meanPhaseVxBias": 0.06204371244526309,
+          "meanPhaseYawBias": 0.21559179464065703,
+          "stopMean": [
+            0.004187671034499848,
+            0.02542716467869468
+          ],
+          "maxTiltDeg": 13.473967552185059
+        },
+        "candidate": {
+          "survived": 120,
+          "total": 120,
+          "meanPhaseVxBias": 0.012990349427262042,
+          "meanPhaseYawBias": 0.07436575499271687,
+          "stopMean": [
+            0.006222638406810196,
+            0.03175915361110431
+          ],
+          "maxTiltDeg": 12.074224472045898
+        }
+      },
+      "lostOriginalSuccesses": 0
+    },
+    {
+      "profile": "fixed-actuator",
+      "originalGateAccepted": false,
+      "policies": {
+        "baseline": {
+          "survived": 120,
+          "total": 120,
+          "meanPhaseVxBias": 0.06211371789631208,
+          "meanPhaseYawBias": 0.21335704899289945,
+          "stopMean": [
+            0.00401319453085307,
+            0.023759766115108504
+          ],
+          "maxTiltDeg": 13.634430885314941
+        },
+        "candidate": {
+          "survived": 120,
+          "total": 120,
+          "meanPhaseVxBias": 0.011057690667031514,
+          "meanPhaseYawBias": 0.07608665285054789,
+          "stopMean": [
+            0.006133377039805055,
+            0.030763710451234754
+          ],
+          "maxTiltDeg": 14.651917457580566
+        }
+      },
+      "lostOriginalSuccesses": 0
+    },
+    {
+      "profile": "nominal-dr",
+      "originalGateAccepted": false,
+      "policies": {
+        "baseline": {
+          "survived": 120,
+          "total": 120,
+          "meanPhaseVxBias": 0.06022322611622064,
+          "meanPhaseYawBias": 0.21658753473644196,
+          "stopMean": [
+            0.0031513801014322477,
+            0.019355879299109802
+          ],
+          "maxTiltDeg": 5.623018264770508
+        },
+        "candidate": {
+          "survived": 120,
+          "total": 120,
+          "meanPhaseVxBias": 0.007179030469107772,
+          "meanPhaseYawBias": 0.028157472613202117,
+          "stopMean": [
+            0.005528262768348213,
+            0.02488287796343987
+          ],
+          "maxTiltDeg": 6.346808910369873
+        }
+      },
+      "lostOriginalSuccesses": 0
+    }
+  ]
+}

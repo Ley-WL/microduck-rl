@@ -62,3 +62,15 @@ v5将教师前向参考也改为与转向相关的二维表，在前述内部边
 已读服务器实际安装的mjlab执行路径：ManagerBasedRlEnv.step在每个decimation物理子步调用scene.write_data_to_sim，Entity._apply_actuator_controls依次get_command/apply_delay/compute。因此delay3–6按5ms物理步执行，不能归因于误用了20ms策略步。CPU/GPU的DR、接触、IMU、初始化差异仍需隔离，尚未定位最终原因。
 
 公开紧凑证据见docs/validation/20261016-walk-student/；原始轨迹在artifacts/walk-longhold-20261016。分析命令：`.venv-preview/Scripts/python.exe -X utf8 scripts/analyze_walk_runtime.py artifacts/walk-longhold-20261016 --seconds 30 --window 17 27`。滚动1秒误差为新增诊断，未覆盖原失败门结论。
+
+## v7长保持诊断完成（2026-10-16，无新增训练）
+
+新增评估选项`--long-hold`（30秒，1–11秒运动、11–16秒停止、16–26秒反向、26–30秒停止）、`--fixed-actuator`（固定7.4V/无压降/4物理步延迟，其他DR保留）及`--nominal-dr`（还关闭列明的质量/重心/摩擦/电机/惯量/编码器/IMU参数随机化，仍保留初态分布）。不复用旧短循环基线缓存；命令时段冒烟通过。默认原筛选保持不变，新增条件也没有通过原瞬时yaw门。
+
+GPU0的walk-longhold-v7b-20261016和GPU1的walk-longhold-nominal-v7-20261016均正常结束，job.exit=0；评估脚本SHA核验、完整归档下载通过（分别4f40c6ba…、5e16735b…）。最初v7因本地Windows路径拼接生成反斜杠Linux路径，在评估开始前失败；保留失败目录，改PurePosixPath后独立v7b执行，无重训。
+
+每条件原/候选各120例（15命令×4初态×seed204101/204107），均存活。5–11秒与20–26秒相位平均速度偏差：随机条件.06204→.01299m/s，yaw偏差.21559→.07437rad/s；固定执行器.06211→.01106/.21336→.07609；关闭列明DR后.06022→.00718/.21659→.02816。候选停止水平残速约.0055–.0062m/s，高于原.0032–.0042，仍须改进；相位均值不是瞬时误差，更不等于部署通过。
+
+关闭DR后候选前进−.6转向约−.69、后退约−.58，与CPU约−.95/−.91仍不同，因此不能只归因于随机化或短保持。实际编译模型对照已检查两边脚接触参数、求解器选项、质量惯量、关节阻尼/惯量/摩擦求解参数（CPU必须捕获evaluate_walk_runtime_cpu全部覆盖后的模型，单独compile会漏掉stiff friction设置）。已见差异为15个servo碰撞体GPU被禁用而CPU启用；已查CPU代表直走轨迹无非脚接触，这尚不能解释转向差异，不能当作已找到根因。下一步继续核对执行路径与实际运动，再决定持续跟踪参考/奖励调整；不修改PD，不盲加监督轮数。
+
+证据摘要：docs/validation/20261016-walk-student/longhold-gpu-summary.json。完整GPU结果/日志/编译物理在上述artifacts目录。CPU并排30秒视频artifacts/walk-longhold-20261016/student-longhold.mp4已生成，检查运动与停止帧，候选迈步变大且停止保持直立；这不覆盖抗扰动或实机验收。没有活跃训练/评估进程，也没有主板操作。

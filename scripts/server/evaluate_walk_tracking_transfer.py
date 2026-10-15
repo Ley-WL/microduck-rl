@@ -2,6 +2,7 @@
 import argparse, hashlib, json
 from pathlib import Path
 from dataclasses import asdict
+from types import MethodType
 import numpy as np
 import torch
 from mjlab.envs import ManagerBasedRlEnv
@@ -15,7 +16,12 @@ p.add_argument('--output', default='tracking-screen.json')
 p.add_argument('--candidate', default='evidence/main/final.pt')
 p.add_argument('--baseline-cache', type=Path)
 p.add_argument('--teacher-map', type=Path, help='Offline diagnostic teacher queries only')
+p.add_argument('--long-hold', action='store_true', help='30s: move1-11, stop11-16, reverse16-26, stop26-30')
+p.add_argument('--fixed-actuator', action='store_true', help='7.4V/no droop/4 physics ticks; other DR retained')
+p.add_argument('--nominal-dr', action='store_true', help='Disable listed parameter/sensor DR; reset distribution remains')
 a = p.parse_args()
+assert not a.nominal_dr or a.fixed_actuator, 'Nominal DR requires fixed actuator'
+assert not ((a.long_hold or a.fixed_actuator or a.nominal_dr) and a.baseline_cache), 'Diagnostic profiles cannot reuse legacy baseline cache'
 ROOT = Path(__file__).resolve().parents[2]
 cases = [(v, yaw) for v in (-.2, -.1, 0., .1, .2) for yaw in (-.6, 0., .6)]
 rows = []
@@ -34,6 +40,20 @@ for seed in a.seeds:
             continue
         torch.manual_seed(seed)
         cfg = make_cfg(); cfg.scene.num_envs = 60; cfg.episode_length_s = 26.
+        if a.long_hold: cfg.episode_length_s = 32.
+        if a.fixed_actuator:
+            actuator = cfg.scene.entities['robot'].articulation.actuators[0]
+            actuator.vin_range = (7.4,7.4)
+            actuator.vin_drop_gain_range = (0.,0.)
+            actuator.delay_min_lag = actuator.delay_max_lag = 4
+        if a.nominal_dr:
+            for event in ('randomize_com','randomize_head_com','randomize_motor_gains',
+                'randomize_mass_inertia','randomize_joint_friction','randomize_joint_damping',
+                'randomize_armature','randomize_base_orientation','encoder_bias'):
+                cfg.events.pop(event,None)
+            cfg.events['foot_friction'].params['ranges'] = (1.,1.)
+            for term_cfg in cfg.observations['actor'].terms.values():
+                if 'max_angle_deg' in term_cfg.params: term_cfg.params['max_angle_deg'] = 0.
         cfg.observations['actor'].enable_corruption = False
         env = ManagerBasedRlEnv(cfg, device='cuda:0')
         try:
@@ -52,6 +72,18 @@ for seed in a.seeds:
             term = env.command_manager.get_term('twist')
             grid = torch.tensor(cases, device=env.device).repeat_interleave(4, dim=0)
             term.stop_speed[:] = grid[:, 0]; term.stop_yaw[:] = grid[:, 1]
+            if a.long_hold:
+                def long_compute(self, dt):
+                    self.stop_time += dt
+                    t = self.stop_time
+                    move = ((t >= 1.) & (t < 11.)) | ((t >= 16.) & (t < 26.))
+                    direction = torch.where(t < 16., 1., -1.)
+                    self.vel_command_b[:] = torch.stack((self.stop_speed*direction*move,
+                        torch.zeros_like(t), self.stop_yaw*direction*move), -1)
+                    self.is_standing_env[:] = ~move
+                    self.is_heading_env[:] = False
+                    self.is_world_env[:] = False
+                term.compute = MethodType(long_compute, term)
             failed = torch.zeros(60, device=env.device, dtype=torch.bool)
             peak = torch.zeros(60, device=env.device)
             sums = torch.zeros((60, 2, 8), device=env.device)
@@ -62,7 +94,7 @@ for seed in a.seeds:
             steps = torch.zeros((60, 2), device=env.device); distance = torch.zeros_like(steps)
             airsum = torch.zeros_like(steps)
             command_hash = hashlib.sha256()
-            for tick in range(1200):
+            for tick in range(1500 if a.long_hold else 1200):
                 with torch.inference_mode():
                     query=obs
                     if a.teacher_map and label=='candidate':
@@ -76,16 +108,18 @@ for seed in a.seeds:
                 command = env.command_manager.get_command('twist')
                 # Failed worlds are excluded permanently; compare only original commands.
                 command_hash.update(command.cpu().numpy().tobytes())
-                phase = ((tick + 1) * .02) % 12.
+                phase = ((tick + 1) * .02) if a.long_hold else ((tick + 1) * .02) % 12.
                 actual = torch.cat((robot.data.root_link_lin_vel_b[:, :2], robot.data.root_link_ang_vel_b[:, 2:3]), -1)
-                if 2. <= phase < 4. or 8. <= phase < 10.:
-                    direction = 0 if phase < 7. else 1
+                motion_window = (5. <= phase < 11. or 20. <= phase < 26.) if a.long_hold else (2. <= phase < 4. or 8. <= phase < 10.)
+                if motion_window:
+                    direction = 0 if phase < (16. if a.long_hold else 7.) else 1
                     values = torch.cat((command[:, 0:1], actual[:, 0:1], command[:, 2:3], actual[:, 2:3],
                         (actual[:, 0:1] - command[:, 0:1]).abs(),
                         (actual[:, 2:3] - command[:, 2:3]).abs(), actual[:, 1:2].abs(), tilt[:, None]), -1)
                     sums[:, direction] += torch.where(live[:, None], values, 0.)
                     counts[:, direction] += live
-                if 4.3 <= phase < 7. or 10.3 <= phase < 12.:
+                stop_window = (11.3 <= phase < 16. or 26.3 <= phase < 30.) if a.long_hold else (4.3 <= phase < 7. or 10.3 <= phase < 12.)
+                if stop_window:
                     stop += torch.where(live[:, None], torch.stack((actual[:, :2].norm(dim=-1), actual[:, 2].abs()), -1), 0.)
                     stopcount += live
                 xy = robot.data.site_pos_w[:, feet, :2]
@@ -151,6 +185,7 @@ for seed in a.seeds:
     comparisons.append(dict(seed=seed, lost=lost, paired=int(keep.sum()), perCase=per_case,
         aggregate=aggregate, directionRegressionPassed=bool(directional), passed=bool(passed)))
 result = dict(cases=cases, results=rows, comparisons=comparisons, accepted=all(r['passed'] for r in comparisons),
+    longHold=a.long_hold, fixedActuator=a.fixed_actuator, nominalDr=a.nominal_dr,
     candidateCheckpoint=a.candidate, baselineCache=str(a.baseline_cache) if a.baseline_cache else None,
     teacherMap=str(a.teacher_map) if a.teacher_map else None,
     teacherMapSha256=hashlib.sha256(a.teacher_map.read_bytes()).hexdigest() if a.teacher_map else None,
