@@ -4,13 +4,15 @@
 
 ## 视频展示
 
-点击预览图观看完整视频。
+**[▶ 在线直接播放 · 一行三列](https://ley-wl.github.io/microduck-rl/video/)**
+
+展示页可直接播放、拖动进度和全屏；点击下方任意预览图进入。
 
 <table>
   <tr>
-    <td width="33%" align="center"><a href="video/08288c57a2226f89b68db60cc7066e7c.mp4"><img src="video/08288c57a2226f89b68db60cc7066e7c.jpg" alt="演示视频 1" width="100%" /></a><br /><a href="video/08288c57a2226f89b68db60cc7066e7c.mp4">▶ 演示视频 1</a></td>
-    <td width="33%" align="center"><a href="video/438346ea7100bbcf72a77474617a78a1.mp4"><img src="video/438346ea7100bbcf72a77474617a78a1.jpg" alt="演示视频 2" width="100%" /></a><br /><a href="video/438346ea7100bbcf72a77474617a78a1.mp4">▶ 演示视频 2</a></td>
-    <td width="33%" align="center"><a href="video/a81c2f37753d642eee83210dca4a0f32.mp4"><img src="video/a81c2f37753d642eee83210dca4a0f32.jpg" alt="演示视频 3" width="100%" /></a><br /><a href="video/a81c2f37753d642eee83210dca4a0f32.mp4">▶ 演示视频 3</a></td>
+    <td width="33%" align="center"><a href="https://ley-wl.github.io/microduck-rl/video/"><img src="video/08288c57a2226f89b68db60cc7066e7c.jpg" alt="演示视频 1" width="100%" /></a><br /><a href="https://ley-wl.github.io/microduck-rl/video/">▶ 演示视频 1</a></td>
+    <td width="33%" align="center"><a href="https://ley-wl.github.io/microduck-rl/video/"><img src="video/438346ea7100bbcf72a77474617a78a1.jpg" alt="演示视频 2" width="100%" /></a><br /><a href="https://ley-wl.github.io/microduck-rl/video/">▶ 演示视频 2</a></td>
+    <td width="33%" align="center"><a href="https://ley-wl.github.io/microduck-rl/video/"><img src="video/a81c2f37753d642eee83210dca4a0f32.jpg" alt="演示视频 3" width="100%" /></a><br /><a href="https://ley-wl.github.io/microduck-rl/video/">▶ 演示视频 3</a></td>
   </tr>
 </table>
 
