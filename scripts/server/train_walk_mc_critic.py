@@ -1,14 +1,17 @@
 """Fit only the value network to full sampled returns, with whole-world holdout."""
-import hashlib,json
+import hashlib,json,importlib
 from pathlib import Path
 from dataclasses import asdict
 import torch
 from tensordict import TensorDict
 from mjlab.envs import ManagerBasedRlEnv
 from mjlab.rl import MjlabOnPolicyRunner,RslRlVecEnvWrapper
-from mjlab_microduck.tasks.walk_motion_critic_context import make_cfg,rl_cfg
 ROOT=Path(__file__).resolve().parents[2];OUT=ROOT/'evidence'
-torch.manual_seed(239131)
+spec_path=ROOT/'inputs/critic-spec.json'
+spec=json.loads(spec_path.read_text()) if spec_path.exists() else None
+module=importlib.import_module('mjlab_microduck.tasks.'+(spec['task'] if spec else 'walk_motion_critic_context'))
+make_cfg,rl_cfg=module.make_cfg,module.rl_cfg
+torch.manual_seed(spec['fitSeed'] if spec else 239131)
 cfg=make_cfg();cfg.scene.num_envs=64
 env=ManagerBasedRlEnv(cfg,device='cuda:0')
 try:
@@ -21,11 +24,13 @@ try:
     norms={k:v.detach().clone() for k,v in critic.state_dict().items() if 'normalizer' in k}
     for p in actor.parameters():p.requires_grad_(False)
     train_x=[];train_y=[];valid_x=[];valid_y=[];sources={}
-    for seed in (239101,239107):
+    for seed in (spec['collectionSeeds'] if spec else (239101,239107)):
         path=OUT/f'critic-data-{seed}.pt';data=torch.load(path,weights_only=False)
         assert data['checkpointSha256']==hashlib.sha256(checkpoint.read_bytes()).hexdigest()
         x,y,live,hold=data['observations'],data['returns'],data['live'],data['validationWorlds']
-        assert x.shape==(1500,48,86) and hold.sum()==12
+        worlds=len(spec['collectionCases'])*4 if spec else 48
+        assert x.shape==(1500,worlds,86) and hold.sum()==worlds//4
+        assert torch.equal(hold,torch.arange(worlds)%4==3)
         for selected,xx,yy in [(~hold,train_x,train_y),(hold,valid_x,valid_y)]:
             mask=live[:,selected];xx.append(x[:,selected][mask]);yy.append(y[:,selected][mask])
         sources[str(seed)]=hashlib.sha256(path.read_bytes()).hexdigest()

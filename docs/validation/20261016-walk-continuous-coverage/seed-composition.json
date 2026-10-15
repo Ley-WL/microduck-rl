@@ -1,0 +1,9 @@
+{
+  "actorSource": "D:\\Users\\wl\\Desktop\\MicroDuck\\microduck-rl\\artifacts\\walk-pulse-multispeed-v55-20261016\\downloaded\\evidence\\step500\\checkpoint.pt",
+  "actorUnchanged": true,
+  "actorStd": 0.005,
+  "criticSource": "v45",
+  "criticUncalibrated": true,
+  "optimizerRestored": false,
+  "contextSha256": "74ff7ecc6de60dbb360123b41982434a74401d65356694af0ae49f34b85871c7"
+}

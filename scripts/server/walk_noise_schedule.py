@@ -3,7 +3,9 @@ import torch
 
 
 def sigma_at(iteration, mode):
-    assert mode in ('fixed', 'anneal')
+    assert mode in ('fixed', 'anneal', 'low')
+    if mode == 'low':
+        return .005
     if mode == 'fixed':
         return .05
     # 200 x 24 x .02 = 96 seconds: warmup and final plateau each exceed a cycle.

@@ -1,0 +1,250 @@
+{
+  "results": [
+    {
+      "seed": 251151,
+      "worlds": 96,
+      "survivedFirst30": 96,
+      "survived60": 96,
+      "gamma": 0.99,
+      "unobservedTailDiscount": 2.8365594903161287e-07,
+      "phases": [
+        {
+          "phase": "stand",
+          "samples": 4800,
+          "meanReturn": 20.092945098876953,
+          "meanPrediction": 19.708024978637695,
+          "rmse": 1.3652089834213257,
+          "bias": -0.384920209646225,
+          "explainedVariance": 0.38721901178359985,
+          "targetStd": 1.673244595527649
+        },
+        {
+          "phase": "forward",
+          "samples": 28800,
+          "meanReturn": 20.900209426879883,
+          "meanPrediction": 21.022640228271484,
+          "rmse": 1.1264913082122803,
+          "bias": 0.12242941558361053,
+          "explainedVariance": 0.5739439725875854,
+          "targetStd": 1.7155932188034058
+        },
+        {
+          "phase": "stopFirst",
+          "samples": 24000,
+          "meanReturn": 20.85883903503418,
+          "meanPrediction": 20.646297454833984,
+          "rmse": 1.2319058179855347,
+          "bias": -0.21254345774650574,
+          "explainedVariance": 0.6054953336715698,
+          "targetStd": 1.9319207668304443
+        },
+        {
+          "phase": "reverse",
+          "samples": 28800,
+          "meanReturn": 21.005224227905273,
+          "meanPrediction": 21.04014015197754,
+          "rmse": 1.0793825387954712,
+          "bias": 0.034917060285806656,
+          "explainedVariance": 0.5598809719085693,
+          "targetStd": 1.6261590719223022
+        },
+        {
+          "phase": "stopSecond",
+          "samples": 19200,
+          "meanReturn": 20.597272872924805,
+          "meanPrediction": 20.469566345214844,
+          "rmse": 1.1624047756195068,
+          "bias": -0.12770575284957886,
+          "explainedVariance": 0.6531171798706055,
+          "targetStd": 1.9616841077804565
+        },
+        {
+          "phase": "fullCycle",
+          "samples": 144000,
+          "meanReturn": 21.16354751586914,
+          "meanPrediction": 21.140756607055664,
+          "rmse": 1.120495319366455,
+          "bias": -0.02279198169708252,
+          "explainedVariance": 0.6049978733062744,
+          "targetStd": 1.7824628353118896
+        }
+      ]
+    },
+    {
+      "seed": 251157,
+      "worlds": 96,
+      "survivedFirst30": 96,
+      "survived60": 96,
+      "gamma": 0.99,
+      "unobservedTailDiscount": 2.8365594903161287e-07,
+      "phases": [
+        {
+          "phase": "stand",
+          "samples": 4800,
+          "meanReturn": 19.73033905029297,
+          "meanPrediction": 19.423274993896484,
+          "rmse": 1.608306646347046,
+          "bias": -0.3070649802684784,
+          "explainedVariance": 0.40271443128585815,
+          "targetStd": 2.0427465438842773
+        },
+        {
+          "phase": "forward",
+          "samples": 28800,
+          "meanReturn": 20.809711456298828,
+          "meanPrediction": 20.816770553588867,
+          "rmse": 1.1928905248641968,
+          "bias": 0.0070607964880764484,
+          "explainedVariance": 0.40884220600128174,
+          "targetStd": 1.5514625310897827
+        },
+        {
+          "phase": "stopFirst",
+          "samples": 24000,
+          "meanReturn": 20.674087524414062,
+          "meanPrediction": 20.39910125732422,
+          "rmse": 1.2145582437515259,
+          "bias": -0.2749869227409363,
+          "explainedVariance": 0.6693885326385498,
+          "targetStd": 2.0574662685394287
+        },
+        {
+          "phase": "reverse",
+          "samples": 28800,
+          "meanReturn": 20.88900375366211,
+          "meanPrediction": 20.892547607421875,
+          "rmse": 1.153684377670288,
+          "bias": 0.0035428854171186686,
+          "explainedVariance": 0.6250476241111755,
+          "targetStd": 1.884069561958313
+        },
+        {
+          "phase": "stopSecond",
+          "samples": 19200,
+          "meanReturn": 20.425485610961914,
+          "meanPrediction": 20.20154571533203,
+          "rmse": 1.179002046585083,
+          "bias": -0.22393865883350372,
+          "explainedVariance": 0.7058321833610535,
+          "targetStd": 2.1342151165008545
+        },
+        {
+          "phase": "fullCycle",
+          "samples": 144000,
+          "meanReturn": 21.043479919433594,
+          "meanPrediction": 20.929990768432617,
+          "rmse": 1.2035807371139526,
+          "bias": -0.11348901689052582,
+          "explainedVariance": 0.6003554463386536,
+          "targetStd": 1.895391583442688
+        }
+      ]
+    }
+  ],
+  "cases": [
+    [
+      -0.2,
+      -0.6
+    ],
+    [
+      -0.2,
+      0.0
+    ],
+    [
+      -0.2,
+      0.6
+    ],
+    [
+      -0.075,
+      -0.6
+    ],
+    [
+      -0.075,
+      0.0
+    ],
+    [
+      -0.075,
+      0.6
+    ],
+    [
+      -0.035,
+      -0.6
+    ],
+    [
+      -0.035,
+      0.0
+    ],
+    [
+      -0.035,
+      0.6
+    ],
+    [
+      0.0,
+      -0.6
+    ],
+    [
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.6
+    ],
+    [
+      0.035,
+      -0.6
+    ],
+    [
+      0.035,
+      0.0
+    ],
+    [
+      0.035,
+      0.6
+    ],
+    [
+      0.05,
+      -0.6
+    ],
+    [
+      0.05,
+      0.0
+    ],
+    [
+      0.05,
+      0.6
+    ],
+    [
+      0.075,
+      -0.6
+    ],
+    [
+      0.075,
+      0.0
+    ],
+    [
+      0.075,
+      0.6
+    ],
+    [
+      0.2,
+      -0.6
+    ],
+    [
+      0.2,
+      0.0
+    ],
+    [
+      0.2,
+      0.6
+    ]
+  ],
+  "optimizationSteps": 0,
+  "actorAndCriticUnchanged": true,
+  "stochasticTrainingPolicy": true,
+  "task": "walk_continuous_coverage",
+  "checkpointSha256": "b68a823561ade2fd9bee8b4dfe0ca2f4107bc5585077d418c93e84eb4d754313",
+  "limitation": "Frozen critic on its own final actor distribution; 64s diagnostic episode differs from 32s training timeout, first 30s only scored. Value fit does not prove policy gradient causality.",
+  "hardwareAccess": false,
+  "accepted": false
+}

@@ -1,0 +1,91 @@
+{
+  "passed": true,
+  "gaitAccepted": false,
+  "hardwareAccepted": false,
+  "task": "walk_continuous_coverage",
+  "sourceSha256": "eb0302aef38c4b51056d2691dc18f1ccef93883df03c2a7837f72d3399eabc02",
+  "checkpointSha256": "b68a823561ade2fd9bee8b4dfe0ca2f4107bc5585077d418c93e84eb4d754313",
+  "checks": [
+    {
+      "seed": 251151,
+      "phase": "forward",
+      "biasFraction": 0.00585780807660967,
+      "rmseFraction": 0.053898565569562816,
+      "explainedVariance": 0.5739439725875854,
+      "passed": true
+    },
+    {
+      "seed": 251151,
+      "phase": "stopFirst",
+      "biasFraction": 0.010189611099137448,
+      "rmseFraction": 0.05905917467009765,
+      "explainedVariance": 0.6054953336715698,
+      "passed": true
+    },
+    {
+      "seed": 251151,
+      "phase": "reverse",
+      "biasFraction": 0.0016623036206116582,
+      "rmseFraction": 0.05138638498138573,
+      "explainedVariance": 0.5598809719085693,
+      "passed": true
+    },
+    {
+      "seed": 251151,
+      "phase": "stopSecond",
+      "biasFraction": 0.006200129193678284,
+      "rmseFraction": 0.05643488741402715,
+      "explainedVariance": 0.6531171798706055,
+      "passed": true
+    },
+    {
+      "seed": 251151,
+      "phase": "fullCycle",
+      "biasFraction": 0.0010769452370871342,
+      "rmseFraction": 0.05294458873335248,
+      "explainedVariance": 0.6049978733062744,
+      "passed": true
+    },
+    {
+      "seed": 251157,
+      "phase": "forward",
+      "biasFraction": 0.0003393029501107877,
+      "rmseFraction": 0.05732374172363281,
+      "explainedVariance": 0.40884220600128174,
+      "passed": true
+    },
+    {
+      "seed": 251157,
+      "phase": "stopFirst",
+      "biasFraction": 0.013301042786831767,
+      "rmseFraction": 0.058747852465907004,
+      "explainedVariance": 0.6693885326385498,
+      "passed": true
+    },
+    {
+      "seed": 251157,
+      "phase": "reverse",
+      "biasFraction": 0.00016960528414369956,
+      "rmseFraction": 0.05522926757423903,
+      "explainedVariance": 0.6250476241111755,
+      "passed": true
+    },
+    {
+      "seed": 251157,
+      "phase": "stopSecond",
+      "biasFraction": 0.010963688359669682,
+      "rmseFraction": 0.05772210605129203,
+      "explainedVariance": 0.7058321833610535,
+      "passed": true
+    },
+    {
+      "seed": 251157,
+      "phase": "fullCycle",
+      "biasFraction": 0.005393072691637804,
+      "rmseFraction": 0.05719494787563388,
+      "explainedVariance": 0.6003554463386536,
+      "passed": true
+    }
+  ],
+  "scope": "Readiness to investigate actor refinement with this value initializer; not evidence of gait improvement."
+}

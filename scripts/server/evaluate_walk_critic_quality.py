@@ -15,16 +15,19 @@ OUT=ROOT/'evidence'
 p=argparse.ArgumentParser()
 p.add_argument('--checkpoint',type=Path,default=Path('inputs/candidate.pt'))
 p.add_argument('--collect-training',action='store_true',help='Separate seeds and whole-world critic dataset; never reuse calibration seeds for fitting')
-p.add_argument('--task',choices=['walk_low_speed_mean_tracking','walk_mean_motion_tracking','walk_motion_critic_context'],default='walk_low_speed_mean_tracking')
+p.add_argument('--task',choices=['walk_low_speed_mean_tracking','walk_mean_motion_tracking','walk_motion_critic_context','walk_continuous_coverage'],default='walk_low_speed_mean_tracking')
+p.add_argument('--spec',type=Path,help='Explicit case/seeds manifest for a new independent experiment')
 a=p.parse_args()
 module=importlib.import_module('mjlab_microduck.tasks.'+a.task)
 make_cfg,rl_cfg=module.make_cfg,module.rl_cfg
 checkpoint=ROOT/a.checkpoint
 reports=[]
-for seed in ((239101,239107) if a.collect_training else (235151,235157)):
+spec=json.loads(a.spec.read_text()) if a.spec else None
+seeds=(spec['collectionSeeds'] if a.collect_training else spec['validationSeeds']) if spec else ((239101,239107) if a.collect_training else (235151,235157))
+for seed in seeds:
     torch.manual_seed(seed)
     cfg=make_cfg()
-    cases=[(v,yaw) for v in (-.2,-.05,.05,.2) for yaw in (-.6,0.,.6)]
+    cases=spec['collectionCases' if a.collect_training else 'validationCases'] if spec else [(v,yaw) for v in (-.2,-.05,.05,.2) for yaw in (-.6,0.,.6)]
     cfg.scene.num_envs=len(cases)*4
     # First 30s are scored; another 30s reduces missing-tail discount to gamma^1500.
     # Training episode ends at 32s; the first scored cycle retains the same commands.
@@ -90,7 +93,8 @@ for seed in ((239101,239107) if a.collect_training else (235151,235157)):
                 OUT/f'critic-data-{seed}.pt')
         reports.append(dict(seed=seed,worlds=env.num_envs,survivedFirst30=int(live[1499].sum()),
             survived60=int(alive.sum()),gamma=gamma,unobservedTailDiscount=gamma**1500,phases=result))
-        (OUT/'critic-quality.json').write_text(json.dumps(dict(results=reports,
+        report_name='critic-collection-quality.json' if spec and a.collect_training else 'critic-quality.json'
+        (OUT/report_name).write_text(json.dumps(dict(results=reports,cases=cases,
             optimizationSteps=0,actorAndCriticUnchanged=True,stochasticTrainingPolicy=True,task=a.task,
             checkpointSha256=hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
             limitation='Frozen critic on its own final actor distribution; 64s diagnostic episode differs from 32s training timeout, first 30s only scored. Value fit does not prove policy gradient causality.',

@@ -7,11 +7,16 @@ from pathlib import Path
 p=argparse.ArgumentParser()
 p.add_argument('source',type=Path)
 p.add_argument('--output',type=Path,required=True)
+p.add_argument('--spec',type=Path,help='Independent experiment seeds; acceptance thresholds remain unchanged')
 a=p.parse_args()
 data=json.loads(a.source.read_text(encoding='utf-8'))
 assert data['optimizationSteps']==0 and data['actorAndCriticUnchanged']
 assert len(data['results'])==2
-assert {r['seed'] for r in data['results']}=={235151,235157}
+spec=json.loads(a.spec.read_text()) if a.spec else None
+if spec:
+    assert set(spec['collectionSeeds']).isdisjoint(spec['validationSeeds'])
+    assert data['task']==spec['task']
+assert {r['seed'] for r in data['results']}==set(spec['validationSeeds'] if spec else [235151,235157])
 rows=[]
 for result in data['results']:
     assert result['unobservedTailDiscount']<1e-6
