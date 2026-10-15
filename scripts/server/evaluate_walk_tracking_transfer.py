@@ -14,6 +14,7 @@ p = argparse.ArgumentParser()
 p.add_argument('--speed-grid',type=float,nargs='+',default=[-.2,-.1,0.,.1,.2])
 p.add_argument('--yaw-grid',type=float,nargs='+',default=[-.6,0.,.6])
 p.add_argument('--pulse-teacher',action='store_true',help='Offline large-step clocked reference; never deploy')
+p.add_argument('--collect-pulse-demo',action='store_true',help='Record original actor inputs; candidate forward/first stop only, baseline full cycle')
 p.add_argument('--seeds', type=int, nargs='+', default=[191051, 191057])
 p.add_argument('--output', default='tracking-screen.json')
 p.add_argument('--candidate', default='evidence/main/final.pt')
@@ -36,6 +37,7 @@ assert not a.baseline_cache or a.speed_grid==[-.2,-.1,0.,.1,.2], 'Changed speed 
 assert not a.baseline_cache or a.yaw_grid==[-.6,0.,.6]
 assert len(a.yaw_grid)==len(set(a.yaw_grid)) and all(np.isfinite(a.yaw_grid))
 assert not a.pulse_teacher or (a.long_hold and a.yaw_grid==[0.] and all(.035<=abs(v)<=.1 for v in a.speed_grid) and not any((a.feedback_teacher,a.teacher_map,a.stop_teacher_checkpoint,a.stochastic_candidate)))
+assert not a.collect_pulse_demo or a.pulse_teacher
 assert not a.baseline_cache or a.baseline_checkpoint==Path('inputs/seed.pt'), 'Explicit baseline cannot reuse legacy cache'
 assert not a.reward_audit_task or (a.long_hold and not a.baseline_cache), 'Reward audit requires uncached long hold'
 assert sum(bool(x) for x in (a.feedback_teacher,a.teacher_map,a.stop_teacher_checkpoint))<=1, 'Select one simulation teacher'
@@ -133,6 +135,8 @@ for seed in a.seeds:
             lift_dir = torch.zeros_like(lift_xy); valid = torch.zeros((worlds, 2), device=env.device, dtype=torch.bool)
             steps = torch.zeros((worlds, 2), device=env.device); distance = torch.zeros_like(steps)
             airsum = torch.zeros_like(steps)
+            phase_steps=torch.zeros((worlds,2,2),device=env.device)
+            phase_distance=torch.zeros_like(phase_steps)
             motion_trace=[]
             if a.reward_audit_task:
                 reward_names=env.reward_manager.active_terms
@@ -149,6 +153,7 @@ for seed in a.seeds:
                 from walk_pulse_reference import PulseReference
                 pulse=PulseReference(worlds,env.device)
             command_world_hashes = [hashlib.sha256() for _ in range(worlds)]
+            demo_obs=[];demo_actions=[];demo_live=[]
             for tick in range(1500 if a.long_hold else 1200):
                 with torch.inference_mode():
                     query=obs
@@ -178,6 +183,10 @@ for seed in a.seeds:
                         has_moved|=moving_now
                         stopped=has_moved & ~moving_now
                         action=torch.where(stopped[:,None],stop_actor(obs),action)
+                    if a.collect_pulse_demo and (label=='baseline' or tick<800):
+                        demo_obs.append(obs['actor'].detach().cpu().clone())
+                        demo_actions.append(action.detach().cpu().clone())
+                        demo_live.append((~failed).detach().cpu().clone())
                 obs, reward, done, timeout, _ = env.step(action)
                 if pulse is not None:pulse.reset(done|timeout)
                 tilt = torch.rad2deg(torch.acos((-robot.data.projected_gravity_b[:, 2]).clamp(-1, 1)))
@@ -237,12 +246,19 @@ for seed in a.seeds:
                 steps += landing
                 distance += torch.where(landing, progress, 0.)
                 airsum += torch.where(landing, sensor.data.last_air_time, 0.)
+                movement_phase=0 if phase<(16. if a.long_hold else 7.) else 1
+                phase_steps[:,movement_phase]+=landing
+                phase_distance[:,movement_phase]+=torch.where(landing,progress,0.)
+            assert torch.equal(phase_steps.sum(1),steps)
+            torch.testing.assert_close(phase_distance.sum(1),distance,atol=1e-5,rtol=1e-5)
             metrics = (sums / counts.clamp_min(1)[:, :, None]).cpu().tolist()
             row = dict(policy=label, seed=seed, survival=live.cpu().tolist(), maxTiltDeg=peak.cpu().tolist(),
                 metrics=metrics, metricColumns=['commandVx', 'actualVx', 'commandYaw', 'actualYaw', 'vxMAE', 'yawMAE', 'absVy', 'tilt'],
                 stop=(stop / stopcount.clamp_min(1)[:, None]).cpu().tolist(),
                 stepCount=steps.cpu().tolist(), stepDistance=(distance / steps.clamp_min(1)).cpu().tolist(),
                 stepAirTime=(airsum / steps.clamp_min(1)).cpu().tolist(),
+                phaseStepCount=phase_steps.cpu().tolist(),
+                phaseStepDistance=(phase_distance/phase_steps.clamp_min(1)).cpu().tolist(),
                 initialStateSha256=hashlib.sha256(initial.numpy().tobytes()).hexdigest(),
                 commandTraceSha256=command_hash.hexdigest(),
                 commandWorldSha256=[h.hexdigest() for h in command_world_hashes])
@@ -258,6 +274,13 @@ for seed in a.seeds:
                 trace_name=Path(a.output).stem+f'-{label}-{seed}-motion.npz'
                 np.savez_compressed(ROOT/'evidence'/trace_name,values=torch.stack(motion_trace).cpu().numpy(),dt=.02,columns=np.array(['vx','vy','yaw','commandVx','commandVy','commandYaw','tilt','live']))
                 row['motionTrace']=trace_name
+            if a.collect_pulse_demo:
+                name=f'pulse-data-{label}-{seed}.pt'
+                torch.save(dict(observation=torch.stack(demo_obs),target=torch.stack(demo_actions),
+                    live=torch.stack(demo_live),validationWorlds=torch.arange(worlds)%4==3,
+                    cases=cases,seed=seed,policy=label,clockAtRuntime=False,
+                    checkpointSha256=hashlib.sha256((ROOT/checkpoint).read_bytes()).hexdigest()),ROOT/'evidence'/name)
+                row['demonstrationFile']=name
             rows.append(row)
             print(label, seed, 'survived', int(live.sum()), flush=True)
             (ROOT / 'evidence' / a.output).write_text(json.dumps(dict(cases=cases, results=rows, accepted=False), indent=2))

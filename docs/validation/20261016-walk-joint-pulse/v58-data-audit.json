@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "seed": 249101,
+      "policy": "baseline",
+      "frames": 1500,
+      "worlds": 16,
+      "liveSamples": 24000,
+      "validationWorlds": 4,
+      "checkpointSha256": "158a045b4bb4172ac3dccced92d46258fd2e49807f576ed6033b40a44bc8e224",
+      "sha256": "a764c6e57e77f20dc25788c67e59ecc3cfae4349e3633332cc5dec4d452a9765"
+    },
+    {
+      "seed": 249101,
+      "policy": "candidate",
+      "frames": 800,
+      "worlds": 16,
+      "liveSamples": 12800,
+      "validationWorlds": 4,
+      "checkpointSha256": "158a045b4bb4172ac3dccced92d46258fd2e49807f576ed6033b40a44bc8e224",
+      "sha256": "ec90b2309cf9976d078643ab4a328b558c54f7ceb70ada12b6e74e068606bad7"
+    },
+    {
+      "seed": 249107,
+      "policy": "baseline",
+      "frames": 1500,
+      "worlds": 16,
+      "liveSamples": 24000,
+      "validationWorlds": 4,
+      "checkpointSha256": "158a045b4bb4172ac3dccced92d46258fd2e49807f576ed6033b40a44bc8e224",
+      "sha256": "450831ed27b992434ba554d39cea91649119b716af6f8abff60c72981b92977d"
+    },
+    {
+      "seed": 249107,
+      "policy": "candidate",
+      "frames": 800,
+      "worlds": 16,
+      "liveSamples": 12800,
+      "validationWorlds": 4,
+      "checkpointSha256": "158a045b4bb4172ac3dccced92d46258fd2e49807f576ed6033b40a44bc8e224",
+      "sha256": "2e31b1cd38299ea29b0970314eebe014ea6a67b2dd9c83ed55a3316c47393835"
+    }
+  ],
+  "optimizationSteps": 0,
+  "accepted": false,
+  "hardwareAccess": false
+}

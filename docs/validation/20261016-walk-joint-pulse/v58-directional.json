@@ -1,0 +1,112 @@
+{
+  "results": [
+    {
+      "speed": 0.035,
+      "baseline": {
+        "forwardVxYaw": [
+          7.580927513117786e-05,
+          0.0001261038496522815
+        ],
+        "reverseVxYaw": [
+          -7.211971791321048e-06,
+          3.7346639146562666e-05
+        ],
+        "forwardFootTravel": 0.0,
+        "reverseFootTravel": 0.0
+      },
+      "candidate": {
+        "forwardVxYaw": [
+          0.03390517644584179,
+          -0.021472991327755153
+        ],
+        "reverseVxYaw": [
+          -0.02910845121368766,
+          0.06123258336447179
+        ],
+        "forwardFootTravel": 0.05316059687174857,
+        "reverseFootTravel": 0.04238068754784763
+      }
+    },
+    {
+      "speed": 0.05,
+      "baseline": {
+        "forwardVxYaw": [
+          0.040045605039949805,
+          0.02455737148920889
+        ],
+        "reverseVxYaw": [
+          -0.0220629237062262,
+          0.026824660093552666
+        ],
+        "forwardFootTravel": 0.02193467936012894,
+        "reverseFootTravel": 0.009940559044480324
+      },
+      "candidate": {
+        "forwardVxYaw": [
+          0.05313913570716977,
+          -0.03902878554072231
+        ],
+        "reverseVxYaw": [
+          -0.039549161680042744,
+          0.09155784267932177
+        ],
+        "forwardFootTravel": 0.04505003592930734,
+        "reverseFootTravel": 0.038629773538559675
+      }
+    },
+    {
+      "speed": 0.075,
+      "baseline": {
+        "forwardVxYaw": [
+          0.0818831343203783,
+          -0.016883817967027426
+        ],
+        "reverseVxYaw": [
+          -0.07614222774282098,
+          0.0139025314419996
+        ],
+        "forwardFootTravel": 0.0439925086684525,
+        "reverseFootTravel": 0.03909114294219762
+      },
+      "candidate": {
+        "forwardVxYaw": [
+          0.08047131588682532,
+          -0.014084962196648121
+        ],
+        "reverseVxYaw": [
+          -0.06391513906419277,
+          0.14615138341468992
+        ],
+        "forwardFootTravel": 0.054714924190193415,
+        "reverseFootTravel": 0.039790884242393076
+      }
+    },
+    {
+      "speed": 0.1,
+      "baseline": {
+        "forwardVxYaw": [
+          0.10295628197491169,
+          -0.01691574859432876
+        ],
+        "reverseVxYaw": [
+          -0.10941886622458696,
+          -0.010232655869913287
+        ],
+        "forwardFootTravel": 0.05623571737669408,
+        "reverseFootTravel": 0.05423867027275264
+      },
+      "candidate": {
+        "forwardVxYaw": [
+          0.09928644075989723,
+          -0.011946659244131297
+        ],
+        "reverseVxYaw": [
+          -0.08987359702587128,
+          0.10886320611461997
+        ],
+        "forwardFootTravel": 0.05840350524522364,
+        "reverseFootTravel": 0.04444301454350352
+      }
+    }
+  ]
+}
