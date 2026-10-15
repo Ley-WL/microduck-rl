@@ -44,7 +44,10 @@ class FeedbackTeacher:
 
 class TensorFeedbackTeacher:
     """Batched equivalent for GPU demonstration generation; no runtime use."""
-    def __init__(self):
+    def __init__(self, vx_limit=.12, query_vx_limit=.3):
+        if not 0 < vx_limit <= .3 or not 0 < query_vx_limit <= .6:
+            raise ValueError("Invalid simulation feedback bounds")
+        self.vx_limit=vx_limit;self.query_vx_limit=query_vx_limit
         self.filtered=None
 
     def query(self, command, actual, dt=.02, enabled=None):
@@ -63,13 +66,13 @@ class TensorFeedbackTeacher:
         self.correction=torch.where(reversal,0.,self.correction)
         self.filtered=self.filtered+dt/(.35+dt)*(actual-self.filtered)
         error=desired-self.filtered
-        bounds=desired.new_tensor([.12,.6])
+        bounds=desired.new_tensor([self.vx_limit,.6])
         self.integral=(self.integral+dt*.8*error).clamp(-bounds,bounds)
         target=(desired.new_tensor([.3,.2])*error+self.integral).clamp(-bounds,bounds)
         slew=dt*desired.new_tensor([.3,1.2])
         self.correction=self.correction+(target-self.correction).clamp(-slew,slew)
         result=command.clone()
-        corrected=(desired+self.correction).clamp(desired.new_tensor([-.3,-1.2]),desired.new_tensor([.3,1.2]))
+        corrected=(desired+self.correction).clamp(desired.new_tensor([-self.query_vx_limit,-1.2]),desired.new_tensor([self.query_vx_limit,1.2]))
         result[:,[0,2]]=torch.where(active[:,None],corrected,desired)
         for name in ('filtered','integral','correction'):
             setattr(self,name,torch.where(active[:,None],getattr(self,name),0.))

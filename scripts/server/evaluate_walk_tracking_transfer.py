@@ -23,6 +23,8 @@ p.add_argument('--fixed-actuator', action='store_true', help='7.4V/no droop/4 ph
 p.add_argument('--nominal-dr', action='store_true', help='Disable listed parameter/sensor DR; reset distribution remains')
 p.add_argument('--trace-motion',action='store_true',help='Save body velocity and stop transients for diagnosis')
 p.add_argument('--stop-teacher-checkpoint',type=Path,help='Simulation-only stop controller diagnostic; not deployment')
+p.add_argument('--feedback-vx-limit',type=float,default=.12)
+p.add_argument('--feedback-query-vx-limit',type=float,default=.3)
 p.add_argument('--feedback-teacher', action='store_true', help='Privileged simulation reference, never a deployed policy')
 a = p.parse_args()
 assert not a.baseline_cache or a.speed_grid==[-.2,-.1,0.,.1,.2], 'Changed speed grid cannot reuse legacy cache'
@@ -70,7 +72,7 @@ for seed in a.seeds:
             feedback=None
             if a.feedback_teacher and label=='candidate':
                 from walk_feedback_teacher import TensorFeedbackTeacher
-                feedback=TensorFeedbackTeacher()
+                feedback=TensorFeedbackTeacher(vx_limit=a.feedback_vx_limit,query_vx_limit=a.feedback_query_vx_limit)
             agent = asdict(rl_cfg()); agent['upload_model'] = False
             runner = MjlabOnPolicyRunner(RslRlVecEnvWrapper(env), agent, log_dir=None, device=env.device)
             runner.load(str(ROOT / checkpoint), load_cfg={'actor': True}, map_location=env.device)
@@ -224,7 +226,7 @@ for seed in a.seeds:
     comparisons.append(dict(seed=seed, lost=lost, paired=int(keep.sum()), perCase=per_case,
         aggregate=aggregate, directionRegressionPassed=bool(directional), passed=bool(passed)))
 result = dict(cases=cases, results=rows, comparisons=comparisons, accepted=all(r['passed'] for r in comparisons),
-    longHold=a.long_hold, fixedActuator=a.fixed_actuator, nominalDr=a.nominal_dr, privilegedFeedbackTeacher=a.feedback_teacher,
+    longHold=a.long_hold, fixedActuator=a.fixed_actuator, nominalDr=a.nominal_dr, privilegedFeedbackTeacher=a.feedback_teacher,feedbackVxLimit=a.feedback_vx_limit,feedbackQueryVxLimit=a.feedback_query_vx_limit,
     stopTeacherCheckpoint=str(a.stop_teacher_checkpoint) if a.stop_teacher_checkpoint else None,
     stopTeacherSha256=hashlib.sha256((ROOT/a.stop_teacher_checkpoint).read_bytes()).hexdigest() if a.stop_teacher_checkpoint else None,
     candidateCheckpoint=a.candidate, baselineCheckpoint=str(a.baseline_checkpoint), baselineCache=str(a.baseline_cache) if a.baseline_cache else None,

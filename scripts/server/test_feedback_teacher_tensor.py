@@ -19,3 +19,14 @@ for step in range(700):
     np.testing.assert_array_equal(command,before)
     worst=max(worst,float(abs(actual_tensor-expected).max()))
 print('Tensor feedback parity passed',worst)
+
+scalar=[FeedbackTeacher(vx_limit=.25,query_vx_limit=.6) for _ in range(4)]
+tensor=TensorFeedbackTeacher(vx_limit=.25,query_vx_limit=.6)
+for step in range(500):
+    command=np.array([[-.4,0,.6],[-.05,0,0],[.05,0,0],[.4,0,-.6]],dtype=np.float32)
+    actual=rng.normal(0,.05,(4,2)).astype(np.float32)
+    enabled=np.full(4,step<450)
+    expected=np.stack([t.query(c,v,enabled=bool(e)) for t,c,v,e in zip(scalar,command,actual,enabled)])
+    observed=tensor.query(torch.tensor(command),torch.tensor(actual),enabled=torch.tensor(enabled)).numpy()
+    np.testing.assert_allclose(observed,expected,atol=2e-6,rtol=2e-6)
+print('Wide feedback bound and stop parity passed')
