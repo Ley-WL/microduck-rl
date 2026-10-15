@@ -124,6 +124,7 @@ def run(args):
     session=ort.InferenceSession(str(args.onnx),sess_options=opts,providers=['CPUExecutionProvider'])
     assert session.get_inputs()[0].shape==[1,61] and session.get_outputs()[0].shape==[1,14]
     manifest=dict(simulationOnly=True,hardwareAccess=False,training=False,policySha256=meta['policySha256'],
+        policyForwardDiagnostic=getattr(args,'policy_forward',False),
         hardwareProfile="microduck-replica-hd1910-v1",bodyContractApplied=aligned,physicsProfile='kissqy' if aligned else 'local',physicsAudit=physics_audit,bodyGroundMeshes=contacts,
         massKg=float(model.body_mass.sum()),bamKp=args.bam_kp,voltage=args.voltage,friction=args.friction,
         contactTimeconst=args.contact_timeconst,compliantContactIsNotMeasuredCarpet=True,
@@ -211,6 +212,10 @@ def run(args):
                     target_command=np.asarray([speed if 2<=t<args.seconds-3 else 0.,0,0],dtype=np.float32)
                     if turn_at<=t<args.seconds-3:target_command[2]=turn_rate
                     command=command_step(command,target_command)
+                    if getattr(args, 'policy_forward', False):
+                        # Diagnostic parity with mjlab's once-per-policy forward.
+                        # This also refreshes constraint loads read by BAM.
+                        mujoco.mj_forward(model, data)
                     gyro,gravity=imu.root_body_imu_observation(model,data,trunk)
                     encoder_q=data.qpos[qadr]+(data.qpos[passive_qadr] if args.backlash else 0)
                     obs=np.concatenate([gyro,gravity,observed_angles(encoder_q)-home,velocity_previous,previous,command,np.zeros(10)]).astype(np.float32)
@@ -259,4 +264,5 @@ if __name__=='__main__':
     p.add_argument('--push-direction',choices=['forward','backward','left','right'],default='backward')
     p.add_argument('--turn-rate',type=float,default=0.,help='Signed yaw command in rad/s during walking')
     p.add_argument('--turn-at',type=float,default=4.,help='Start turning after the initial straight walk')
+    p.add_argument('--policy-forward',action='store_true',help='Diagnostic: refresh constraints before each policy observation, as mjlab does')
     run(p.parse_args())

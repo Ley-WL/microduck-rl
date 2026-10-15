@@ -40,9 +40,30 @@ class FrictionDRBamActuator(BamActuator):
         external_torque: torch.Tensor,
         stribeck_coeff: torch.Tensor,
     ) -> torch.Tensor:
-        base = super()._compute_friction_budget(
-            motor_torque, external_torque, stribeck_coeff
-        )
+        bam = self._bam_model
+        if bam.quadratic and bam.directional and bam.load_dependent and bam.stribeck:
+            # Match Model.compute_frictions: the quadratic gearbox term is
+            # active only for opposite torque signs and strictly unequal loads.
+            # The pinned BAM Torch bridge omits that sign/equality gate.
+            motor = motor_torque.abs()
+            external = external_torque.abs()
+            quadratic = torch.where(motor > external,
+                bam.load_friction_external_quad.value * external.square(),
+                torch.where(external > motor,
+                    bam.load_friction_motor_quad.value * motor.square(), 0.))
+            quadratic = torch.where(torch.sign(motor_torque) != torch.sign(external_torque),
+                quadratic, 0.)
+            base = (bam.friction_base.value
+                + (external_torque * bam.load_friction_external.value
+                    - motor_torque * bam.load_friction_motor.value).abs()
+                + stribeck_coeff * (bam.friction_stribeck.value
+                    + (external_torque * bam.load_friction_external_stribeck.value
+                        - motor_torque * bam.load_friction_motor_stribeck.value).abs()
+                    + quadratic))
+        else:
+            base = super()._compute_friction_budget(
+                motor_torque, external_torque, stribeck_coeff
+            )
         fs = getattr(self, "friction_scale", None)
         return base if fs is None else base * fs  # (N, J) * (N, 1)
 

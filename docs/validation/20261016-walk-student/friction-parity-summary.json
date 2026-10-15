@@ -1,0 +1,53 @@
+{
+  "simulationOnly": true,
+  "hardwareValidated": false,
+  "frictionUnitCases": 2205,
+  "floatPrecisions": [
+    32,
+    64
+  ],
+  "frictionScales": [
+    0.9,
+    1,
+    1.1
+  ],
+  "originalScreenAccepted": false,
+  "comparisons": {
+    "before": {
+      "baseline": {
+        "survived": 120,
+        "meanPhaseVxBias": 0.06022322611622064,
+        "meanPhaseYawBias": 0.21658753473644196
+      },
+      "candidate": {
+        "survived": 120,
+        "meanPhaseVxBias": 0.007179030469107772,
+        "meanPhaseYawBias": 0.028157472613202117
+      }
+    },
+    "after": {
+      "baseline": {
+        "survived": 120,
+        "meanPhaseVxBias": 0.060206024975037194,
+        "meanPhaseYawBias": 0.21711699088290762
+      },
+      "candidate": {
+        "survived": 120,
+        "meanPhaseVxBias": 0.00723564336161265,
+        "meanPhaseYawBias": 0.027434493441857437
+      }
+    }
+  },
+  "sourceAudit": {
+    "passed": true,
+    "hashes": {
+      "src/mjlab_microduck/actuator/friction_dr_bam.py": "cfc259241854ca2ffa3e091fc28bc5b52b0b65a5fd5e2d0f4929a1fe1f8308a3",
+      "scripts/server/test_bam_friction_parity.py": "10a2d9e0c951a4500ef2c0bc40862e07fb518af25cfbab912b7c6e1089ccbda0"
+    }
+  },
+  "archive": {
+    "sha256": "3324a2a6b20eacd181484e36c6b3e0113ac08db3d44fb290efb60d763f03494a",
+    "verified": true,
+    "bytes": 65489
+  }
+}

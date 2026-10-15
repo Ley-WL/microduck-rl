@@ -21,7 +21,10 @@ env=ManagerBasedRlEnv(cfg,device='cuda:0')
 try:
     rl=asdict(rl_cfg());rl.update(upload_model=False,logger='tensorboard')
     runner=MjlabOnPolicyRunner(RslRlVecEnvWrapper(env),rl,log_dir=str(a.output/'logs'),device='cuda:0')
-    runner.load(str(ROOT/'inputs/seed.pt'),map_location='cuda:0')
+    runner.load(str(ROOT/'inputs/seed.pt'),load_cfg={'actor':True} if TASK=='walk_sustained_transfer' else None,map_location='cuda:0')
+    if TASK=='walk_sustained_transfer':
+        assert not runner.alg.optimizer.state
+        assert all(group['lr']==1e-5 for group in runner.alg.optimizer.param_groups)
     env.common_step_counter=0;runner.current_learning_iteration=0
     actor=runner.alg.actor
     normalizer={k:v.clone() for k,v in actor.state_dict().items() if k.startswith('obs_normalizer.')}
@@ -37,7 +40,7 @@ try:
             td=TensorDict({'actor':sample},batch_size=[len(sample)])
             with torch.no_grad():target=anchor(td)
             loss=(actor(td)-target).square().mean()
-            (10.*loss).backward()
+            ((5. if TASK=='walk_sustained_transfer' else 10.)*loss).backward()
             torch.nn.utils.clip_grad_norm_(actor.parameters(),runner.alg.max_grad_norm)
             anchor_stats.append(float(loss.detach()))
         hook=runner.alg.optimizer.register_step_pre_hook(retain)
@@ -46,8 +49,8 @@ try:
     if TASK!='walk_stop_transfer':
         hook.remove()
         assert len(anchor_stats)==a.iterations*8
-        (a.output/'retention.json').write_text(json.dumps(dict(coefficient=10.,
-            loss=anchor_stats,source='original deployed actor; on-policy samples',
+        (a.output/'retention.json').write_text(json.dumps(dict(coefficient=5. if TASK=='walk_sustained_transfer' else 10.,
+            loss=anchor_stats,source='input seed actor; on-policy samples',
             notHistoricalCheckpointResume=True)))
     assert all(torch.equal(actor.state_dict()[k],v) for k,v in normalizer.items()),'Actor normalizer drift'
     steps={int(v['step']) for v in runner.alg.optimizer.state.values()}

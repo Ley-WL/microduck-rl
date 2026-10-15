@@ -1,0 +1,22 @@
+[
+  {
+    "improvement": [
+      -0.15160563571463948,
+      -0.15084281663115562,
+      0.02347409648899009
+    ],
+    "score": -0.09299145195226834,
+    "lost": 0,
+    "screenAccepted": false,
+    "continueTraining": false,
+    "task": "walk_sustained_transfer",
+    "iterations": 150,
+    "adamSteps": 1200,
+    "policySha256": "62651bb89856b85e50511e58028d7620ed2cf147f3dcab6d4480e308f4b22831",
+    "onnxTorchMaxError": 2.6226043701171875e-06,
+    "normalizerUnchanged": true,
+    "finite": true,
+    "retentionMean": 0.0004237465868244783,
+    "hardwareAccess": false
+  }
+]

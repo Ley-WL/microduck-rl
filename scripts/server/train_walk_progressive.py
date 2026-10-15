@@ -11,15 +11,18 @@ from mjlab.rl import MjlabOnPolicyRunner, RslRlVecEnvWrapper
 from walk_transfer_task import make_cfg, rl_cfg, TASK
 
 p=argparse.ArgumentParser();p.add_argument('--output',type=Path,required=True);a=p.parse_args()
-assert TASK in ('walk_tracking_transfer','walk_stride_transfer')
+assert TASK in ('walk_tracking_transfer','walk_stride_transfer','walk_sustained_transfer')
+sustained = TASK == 'walk_sustained_transfer'
 ROOT=Path(__file__).resolve().parents[2];a.output.mkdir(parents=True,exist_ok=False)
 torch.manual_seed(68131);cfg=make_cfg();cfg.scene.num_envs=1024
 env=ManagerBasedRlEnv(cfg,device='cuda:0')
 try:
     agent=asdict(rl_cfg());agent.update(upload_model=False,logger='tensorboard')
     runner=MjlabOnPolicyRunner(RslRlVecEnvWrapper(env),agent,log_dir=str(a.output/'logs'),device=env.device)
-    runner.load(str(ROOT/'inputs/seed.pt'),map_location=env.device)
+    runner.load(str(ROOT/'inputs/seed.pt'),load_cfg={'actor':True} if sustained else None,map_location=env.device)
     assert not runner.alg.optimizer.state
+    if sustained:
+        assert all(group['lr']==1e-5 for group in runner.alg.optimizer.param_groups)
     runner.current_learning_iteration=0;env.common_step_counter=0
     actor=runner.alg.actor;normalizer={k:v.clone() for k,v in actor.state_dict().items() if k.startswith('obs_normalizer.')}
     actor.update_normalization=lambda *args,**kwargs:None
@@ -31,7 +34,7 @@ try:
         sample=rows[torch.randint(len(rows),(512,),device=env.device)]
         td=TensorDict({'actor':sample},batch_size=[len(sample)])
         with torch.no_grad():target=anchor(td)
-        loss=(actor(td)-target).square().mean();(10.*loss).backward()
+        loss=(actor(td)-target).square().mean();((5. if sustained else 10.)*loss).backward()
         torch.nn.utils.clip_grad_norm_(actor.parameters(),runner.alg.max_grad_norm)
         retention.append(float(loss.detach()))
     hook=runner.alg.optimizer.register_step_pre_hook(retain)
@@ -58,6 +61,8 @@ try:
         meta['progressiveTransfer']=dict(task=TASK,totalIterations=total,accepted=False,actorNormalizerFrozen=True)
         (stage/'policy.metadata.json').write_text(json.dumps(meta,indent=2))
         audit=dict(task=TASK,iterations=total,adamSteps=total*8,policySha256=sha,onnxTorchMaxError=error,
+            optimizerLearningRates=[g['lr'] for g in runner.alg.optimizer.param_groups],
+            anchorCoefficient=5. if sustained else 10.,
             normalizerUnchanged=True,finite=True,retentionMean=float(np.mean(retention)),hardwareAccess=False)
         (stage/'audit.json').write_text(json.dumps(audit,indent=2))
         # Save/restore all RNG states: screening must not alter future PPO samples.
@@ -65,8 +70,9 @@ try:
         (a.output/'progress.json').write_text(json.dumps(dict(stage='screen',totalIterations=total,task=TASK)))
         result_name=f'{a.output.name}-iter{total}-screen.json'
         args=[sys.executable,'scripts/server/evaluate_walk_tracking_transfer.py','--candidate',str(stage/'checkpoint.pt'),'--output',result_name]
+        if sustained: args+=['--long-hold','--seeds','205151','205157']
         cache=ROOT/'evidence/progressive-baseline.json'
-        if cache.exists():args+=['--baseline-cache',str(cache)]
+        if cache.exists() and not sustained:args+=['--baseline-cache',str(cache)]
         with (stage/'screen.log').open('w') as log:subprocess.run(args,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,check=True)
         torch.set_rng_state(cpu_rng);torch.cuda.set_rng_state_all(gpu_rng);np.random.set_state(np_rng)
         result=json.loads((ROOT/'evidence'/result_name).read_text())
@@ -74,12 +80,23 @@ try:
         improvements=[]
         for comparison in result['comparisons']:
             b= comparison['aggregate']['baseline'];c=comparison['aggregate']['candidate']
+            if sustained:
+                # The target is sustained tracking, not suppression of gait yaw.
+                rr=[r for r in result['results'] if r['seed']==comparison['seed']]
+                keep=np.array(rr[0]['survival']) & np.array(rr[1]['survival'])
+                b,c=[dict(vxMAE=float(np.abs(np.array(r['metrics'])[keep,:,1]-np.array(r['metrics'])[keep,:,0]).mean()),
+                    yawMAE=float(np.abs(np.array(r['metrics'])[keep,:,3]-np.array(r['metrics'])[keep,:,2]).mean()),
+                    stepDistance=comparison['aggregate'][r['policy']]['stepDistance']) for r in rr]
             improvements.append([(b['vxMAE']-c['vxMAE'])/b['vxMAE'],(b['yawMAE']-c['yawMAE'])/b['yawMAE'],(c['stepDistance']-b['stepDistance'])/b['stepDistance']])
         improvement=np.mean(improvements,axis=0)
         score=float(improvement.mean());lost=sum(len(c['lost']) for c in result['comparisons'])
         # Continuation is exploration, not acceptance: allow at most two new
         # failures while metrics improve; final candidate still requires zero.
         continuing=(lost<=2 and min(improvement)>-.03 and score>previous_score+.01)
+        if sustained:
+            stop_ok=all(bool(np.all(np.array(c['candidate']['stop']) <= np.array(c['baseline']['stop'])*1.05+np.array([.001,.01])))
+                for comparison in result['comparisons'] for c in comparison['perCase'] if c['paired'])
+            continuing=continuing and stop_ok and lost==0
         record=dict(improvement=improvement.tolist(),score=score,lost=lost,
             screenAccepted=result['accepted'],continueTraining=bool(continuing),**audit)
         stages.append(record);(a.output/'stages.json').write_text(json.dumps(stages,indent=2))
