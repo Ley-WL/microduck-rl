@@ -2,12 +2,24 @@
 
 本项目使用当前本地 `robot/replica` STL/MJCF 和 HD1910 BAM M6 动力学。所有已注册的 MicroDuck 任务都使用这套硬件；旧任务 ID 仅保留名称兼容，不再选择官方 XL330 参数。
 
+## 视频展示
+
+点击预览图观看完整视频。
+
+<table>
+  <tr>
+    <td width="33%" align="center"><a href="video/08288c57a2226f89b68db60cc7066e7c.mp4"><img src="video/08288c57a2226f89b68db60cc7066e7c.jpg" alt="演示视频 1" width="100%" /></a><br /><a href="video/08288c57a2226f89b68db60cc7066e7c.mp4">▶ 演示视频 1</a></td>
+    <td width="33%" align="center"><a href="video/438346ea7100bbcf72a77474617a78a1.mp4"><img src="video/438346ea7100bbcf72a77474617a78a1.jpg" alt="演示视频 2" width="100%" /></a><br /><a href="video/438346ea7100bbcf72a77474617a78a1.mp4">▶ 演示视频 2</a></td>
+    <td width="33%" align="center"><a href="video/a81c2f37753d642eee83210dca4a0f32.mp4"><img src="video/a81c2f37753d642eee83210dca4a0f32.jpg" alt="演示视频 3" width="100%" /></a><br /><a href="video/a81c2f37753d642eee83210dca4a0f32.mp4">▶ 演示视频 3</a></td>
+  </tr>
+</table>
+
 ## 唯一硬件入口
 本仓库是基于 [pollen-robotics/microduck_rl](https://github.com/pollen-robotics/microduck_rl) 的 HD1910 适配与训练实验分支。
 
 十拍舞蹈训练任务、奖励、评估和续训脚本见 [训练记录](docs/dance10-training.md)。包含 Dance10、Dance10Expressive（大幅）及 Dance10Resilient（抗扰）任务。
 
-已部署的 v5 推理权重与 metadata 位于 [microduck-observer/models](https://github.com/Ley-WL/microduck-observer/tree/main/models)（`dance10.onnx` / `dance10.metadata.json`），ONNX SHA256：`cd353fb203dd8edeb468476651280d9e03dcaabca53aef0fbfb91d9c66c8ee02`。完整 PPO checkpoint、日志、视频及本地 `artifacts/` 未随代码发布；ONNX 不能替代续训 checkpoint。服务器编排脚本保留历史实验路径，运行前需配置自己的路径和种子 checkpoint。
+已部署的 v5 推理权重与 metadata 位于 [microduck-observer/models](https://github.com/Ley-WL/microduck-observer/tree/main/models)（`dance10.onnx` / `dance10.metadata.json`），ONNX SHA256：`cd353fb203dd8edeb468476651280d9e03dcaabca53aef0fbfb91d9c66c8ee02`。完整 PPO checkpoint、训练日志及本地 `artifacts/` 未随代码发布；演示视频见上方；ONNX 不能替代续训 checkpoint。服务器编排脚本保留历史实验路径，运行前需配置自己的路径和种子 checkpoint。
 
 v5 抗扰评估仍有失败与退化案例，公开与部署不代表实机稳定性验收。代码为 Apache-2.0；3D 模型沿用上游 CC BY-SA-NC 等原声明，不代表所有资源均可无限制商用。
 
