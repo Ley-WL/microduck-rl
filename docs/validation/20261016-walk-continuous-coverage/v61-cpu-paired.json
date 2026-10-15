@@ -1,0 +1,3925 @@
+{
+  "simulationOnly": true,
+  "accepted": false,
+  "paired": 54,
+  "lost": [],
+  "groups": [
+    {
+      "command": [
+        -0.2,
+        -0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          -0.2000572118886794,
+          -0.7317755311421372
+        ],
+        "rolling1sMAE": [
+          0.0022739872710906897,
+          0.13361749851503255
+        ],
+        "footTravelIncludingNoSteps": 0.09866333110937901,
+        "stopSpeed": 0.003914262668164677
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          -0.19959667834774328,
+          -0.6786102182179383
+        ],
+        "rolling1sMAE": [
+          0.0022667956587076417,
+          0.0796187626535152
+        ],
+        "footTravelIncludingNoSteps": 0.0967592423165056,
+        "stopSpeed": 0.006321309023424931
+      }
+    },
+    {
+      "command": [
+        -0.2,
+        0.0
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          -0.20606872575077625,
+          -0.04665358990307281
+        ],
+        "rolling1sMAE": [
+          0.005537095525086914,
+          0.04265382200810838
+        ],
+        "footTravelIncludingNoSteps": 0.1009597201706105,
+        "stopSpeed": 0.005811729922105981
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          -0.2084275342203245,
+          -0.051814184393366214
+        ],
+        "rolling1sMAE": [
+          0.008472338848467317,
+          0.04983100835172402
+        ],
+        "footTravelIncludingNoSteps": 0.1021339114125625,
+        "stopSpeed": 0.008315569189636232
+      }
+    },
+    {
+      "command": [
+        -0.2,
+        0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          -0.20901963708457766,
+          0.6258934213658267
+        ],
+        "rolling1sMAE": [
+          0.009125599293816065,
+          0.03770751095770255
+        ],
+        "footTravelIncludingNoSteps": 0.10129013729611594,
+        "stopSpeed": 0.01984349234828741
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          -0.2114937317283967,
+          0.7065805261780997
+        ],
+        "rolling1sMAE": [
+          0.011514168686056286,
+          0.10224144422179707
+        ],
+        "footTravelIncludingNoSteps": 0.10189574203994904,
+        "stopSpeed": 0.0072262617079223105
+      }
+    },
+    {
+      "command": [
+        -0.05,
+        -0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          -0.04987845605288441,
+          -0.7337841681534051
+        ],
+        "rolling1sMAE": [
+          0.0029928836924550725,
+          0.13361041917818234
+        ],
+        "footTravelIncludingNoSteps": 0.025069525201064695,
+        "stopSpeed": 0.0014552568684897365
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          -0.05342791924086879,
+          -0.7092853862996971
+        ],
+        "rolling1sMAE": [
+          0.0033400440658584774,
+          0.10792617559741377
+        ],
+        "footTravelIncludingNoSteps": 0.026850927552537953,
+        "stopSpeed": 0.002064237808665528
+      }
+    },
+    {
+      "command": [
+        -0.05,
+        0.0
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          -0.04296260003706448,
+          -0.0188937276270751
+        ],
+        "rolling1sMAE": [
+          0.007154579963293715,
+          0.02246368851541175
+        ],
+        "footTravelIncludingNoSteps": 0.021927482745091605,
+        "stopSpeed": 0.002533728541807577
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          -0.04652515079695415,
+          0.007902023441978046
+        ],
+        "rolling1sMAE": [
+          0.0033630452213854753,
+          0.022056095698253675
+        ],
+        "footTravelIncludingNoSteps": 0.023889823939893876,
+        "stopSpeed": 0.001229967747545484
+      }
+    },
+    {
+      "command": [
+        -0.05,
+        0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          -0.04219250833666201,
+          0.6400710721377113
+        ],
+        "rolling1sMAE": [
+          0.0076505921148441935,
+          0.04149159604687204
+        ],
+        "footTravelIncludingNoSteps": 0.01984321387225091,
+        "stopSpeed": 0.0075247179860475
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          -0.049536506296391544,
+          0.6864014222224336
+        ],
+        "rolling1sMAE": [
+          0.002034135719289426,
+          0.08462124326847947
+        ],
+        "footTravelIncludingNoSteps": 0.02305539757449389,
+        "stopSpeed": 0.0035930376637178163
+      }
+    },
+    {
+      "command": [
+        0.0,
+        -0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          -0.006055435512115643,
+          -0.7304553886395193
+        ],
+        "rolling1sMAE": [
+          0.006410077600193376,
+          0.13193046131592367
+        ],
+        "footTravelIncludingNoSteps": 0.0,
+        "stopSpeed": 0.002578704302437179
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          -0.007149151564756538,
+          -0.6910779498876447
+        ],
+        "rolling1sMAE": [
+          0.007941987732053787,
+          0.08995384993161523
+        ],
+        "footTravelIncludingNoSteps": 0.0,
+        "stopSpeed": 0.0022935757822676543
+      }
+    },
+    {
+      "command": [
+        0.0,
+        0.0
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          3.0486481052137068e-05,
+          -0.00220811008265835
+        ],
+        "rolling1sMAE": [
+          6.712109712026434e-05,
+          0.0022287960281054623
+        ],
+        "footTravelIncludingNoSteps": 0.0,
+        "stopSpeed": 0.004035255154048617
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          1.9320020446072615e-05,
+          -0.002822480483202723
+        ],
+        "rolling1sMAE": [
+          5.924254616154588e-05,
+          0.0028379750978226887
+        ],
+        "footTravelIncludingNoSteps": 0.0,
+        "stopSpeed": 0.003774979427073781
+      }
+    },
+    {
+      "command": [
+        0.0,
+        0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.005775498066308183,
+          0.5978092332576427
+        ],
+        "rolling1sMAE": [
+          0.005145352126934087,
+          0.022201985067906806
+        ],
+        "footTravelIncludingNoSteps": 0.0,
+        "stopSpeed": 0.00631976363894261
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          -8.473213166974291e-05,
+          0.6349821388587574
+        ],
+        "rolling1sMAE": [
+          0.001816523281190726,
+          0.03602192985762382
+        ],
+        "footTravelIncludingNoSteps": 0.0,
+        "stopSpeed": 0.002561158414157817
+      }
+    },
+    {
+      "command": [
+        0.025,
+        -0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.01850386211292797,
+          -0.7634818206297934
+        ],
+        "rolling1sMAE": [
+          0.007396218605405898,
+          0.1660927536900444
+        ],
+        "footTravelIncludingNoSteps": 0.010069364743393809,
+        "stopSpeed": 0.006173208227106773
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.013884719906654963,
+          -0.7397820061089351
+        ],
+        "rolling1sMAE": [
+          0.011098050990303723,
+          0.14173276649783328
+        ],
+        "footTravelIncludingNoSteps": 0.0076641036211954295,
+        "stopSpeed": 0.005065832743385937
+      }
+    },
+    {
+      "command": [
+        0.025,
+        0.0
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.006174839481762766,
+          -0.0004258687043964674
+        ],
+        "rolling1sMAE": [
+          0.02457748024091459,
+          0.01419927787386364
+        ],
+        "footTravelIncludingNoSteps": 0.02070902178547961,
+        "stopSpeed": 0.0018648208109349304
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          1.1548960158723086e-05,
+          -0.0031343570424814437
+        ],
+        "rolling1sMAE": [
+          0.024977495634141915,
+          0.0031815794849375826
+        ],
+        "footTravelIncludingNoSteps": 0.0,
+        "stopSpeed": 0.00232253445125254
+      }
+    },
+    {
+      "command": [
+        0.025,
+        0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.029865690853783593,
+          0.6520647764439595
+        ],
+        "rolling1sMAE": [
+          0.0044652872389378175,
+          0.049888773051035534
+        ],
+        "footTravelIncludingNoSteps": 0.017428158439501358,
+        "stopSpeed": 0.007542132269945591
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.025983006942029433,
+          0.6779953382879962
+        ],
+        "rolling1sMAE": [
+          0.0018459181484784854,
+          0.0775185895458262
+        ],
+        "footTravelIncludingNoSteps": 0.014992626600352298,
+        "stopSpeed": 0.004391933541379849
+      }
+    },
+    {
+      "command": [
+        0.035,
+        -0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.0293229952202819,
+          -0.7533860690969745
+        ],
+        "rolling1sMAE": [
+          0.005894236221323365,
+          0.15063591649687177
+        ],
+        "footTravelIncludingNoSteps": 0.01600621817027372,
+        "stopSpeed": 0.00751351814961454
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.02440187027911092,
+          -0.7311091113186836
+        ],
+        "rolling1sMAE": [
+          0.01073262205760036,
+          0.13262462500085903
+        ],
+        "footTravelIncludingNoSteps": 0.013177693507153303,
+        "stopSpeed": 0.003947784435999178
+      }
+    },
+    {
+      "command": [
+        0.035,
+        0.0
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.03514895736906598,
+          -0.015518314226108528
+        ],
+        "rolling1sMAE": [
+          0.027904580678636607,
+          0.06710953487945659
+        ],
+        "footTravelIncludingNoSteps": 0.04707809286408131,
+        "stopSpeed": 0.006282778159863799
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.00013093351023534797,
+          -0.0010846135057745222
+        ],
+        "rolling1sMAE": [
+          0.03483050257834405,
+          0.001964820350689356
+        ],
+        "footTravelIncludingNoSteps": 0.0,
+        "stopSpeed": 0.00467655755336784
+      }
+    },
+    {
+      "command": [
+        0.035,
+        0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.03715135950762613,
+          0.6726470273535536
+        ],
+        "rolling1sMAE": [
+          0.0025974569558616526,
+          0.06523062943119268
+        ],
+        "footTravelIncludingNoSteps": 0.021281356557638256,
+        "stopSpeed": 0.003155987875175544
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.03371461442821101,
+          0.6966445556203744
+        ],
+        "rolling1sMAE": [
+          0.0024986511033597506,
+          0.09473637485455556
+        ],
+        "footTravelIncludingNoSteps": 0.01935976260452612,
+        "stopSpeed": 0.007297962394587989
+      }
+    },
+    {
+      "command": [
+        0.05,
+        -0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.045565577034184776,
+          -0.7420201394940922
+        ],
+        "rolling1sMAE": [
+          0.0053871062442161135,
+          0.14035298479236852
+        ],
+        "footTravelIncludingNoSteps": 0.023345516229310203,
+        "stopSpeed": 0.0034513802016088854
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.04082375003986931,
+          -0.705068459585781
+        ],
+        "rolling1sMAE": [
+          0.009003264418484612,
+          0.10395755972362504
+        ],
+        "footTravelIncludingNoSteps": 0.02172600718397314,
+        "stopSpeed": 0.0026303563165684324
+      }
+    },
+    {
+      "command": [
+        0.05,
+        0.0
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.05926386577015072,
+          -0.028699364163076273
+        ],
+        "rolling1sMAE": [
+          0.03169416706028677,
+          0.11254086380235723
+        ],
+        "footTravelIncludingNoSteps": 0.06073993926405296,
+        "stopSpeed": 0.02804320775838084
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.03402091325625318,
+          0.001964017986368878
+        ],
+        "rolling1sMAE": [
+          0.03146296766012723,
+          0.05419792164206971
+        ],
+        "footTravelIncludingNoSteps": 0.04927729413043706,
+        "stopSpeed": 0.004479448063571359
+      }
+    },
+    {
+      "command": [
+        0.05,
+        0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.045209651550444534,
+          0.6703650470562383
+        ],
+        "rolling1sMAE": [
+          0.004605789062270255,
+          0.07589508412226116
+        ],
+        "footTravelIncludingNoSteps": 0.025831791471104357,
+        "stopSpeed": 0.002905030580093966
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.04305998459104307,
+          0.7013021821032303
+        ],
+        "rolling1sMAE": [
+          0.006923090352137919,
+          0.10910876695598573
+        ],
+        "footTravelIncludingNoSteps": 0.024466013999523327,
+        "stopSpeed": 0.003007356625213162
+      }
+    },
+    {
+      "command": [
+        0.075,
+        -0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.07043549077452305,
+          -0.6581782372610728
+        ],
+        "rolling1sMAE": [
+          0.005322186020371074,
+          0.05895866830330251
+        ],
+        "footTravelIncludingNoSteps": 0.03838716397586983,
+        "stopSpeed": 0.008055037028384938
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.06659683586608575,
+          -0.6496650894008321
+        ],
+        "rolling1sMAE": [
+          0.009050156668108829,
+          0.052181974248862964
+        ],
+        "footTravelIncludingNoSteps": 0.03513316360912186,
+        "stopSpeed": 0.007499794038158911
+      }
+    },
+    {
+      "command": [
+        0.075,
+        0.0
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.09992989425347287,
+          0.004742479374458621
+        ],
+        "rolling1sMAE": [
+          0.024537919480460562,
+          0.06531648556979243
+        ],
+        "footTravelIncludingNoSteps": 0.06881513491912518,
+        "stopSpeed": 0.011954291761829942
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.08034085513500785,
+          -0.03021248712643298
+        ],
+        "rolling1sMAE": [
+          0.01569127778077349,
+          0.06334175698146853
+        ],
+        "footTravelIncludingNoSteps": 0.06043381448736083,
+        "stopSpeed": 0.0008440658662842653
+      }
+    },
+    {
+      "command": [
+        0.075,
+        0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.07008630625795034,
+          0.6877534425909828
+        ],
+        "rolling1sMAE": [
+          0.00507961545019295,
+          0.08620230786806093
+        ],
+        "footTravelIncludingNoSteps": 0.03857357583450545,
+        "stopSpeed": 0.003923882922838783
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.06417952721688942,
+          0.6986899939007647
+        ],
+        "rolling1sMAE": [
+          0.010464685736450163,
+          0.09438699519749319
+        ],
+        "footTravelIncludingNoSteps": 0.03504541768243907,
+        "stopSpeed": 0.005002114716085889
+      }
+    },
+    {
+      "command": [
+        0.2,
+        -0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.18434197154201742,
+          -0.8638420020938327
+        ],
+        "rolling1sMAE": [
+          0.016520083688419104,
+          0.26849524780944006
+        ],
+        "footTravelIncludingNoSteps": 0.0960864660541455,
+        "stopSpeed": 0.006453229258614511
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.1744341464813031,
+          -0.8887787736586146
+        ],
+        "rolling1sMAE": [
+          0.02532129277014117,
+          0.2905041348395971
+        ],
+        "footTravelIncludingNoSteps": 0.09261492586277623,
+        "stopSpeed": 0.02338992265592481
+      }
+    },
+    {
+      "command": [
+        0.2,
+        0.0
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.20057591759987495,
+          -0.0915654491857785
+        ],
+        "rolling1sMAE": [
+          0.0022181590932206533,
+          0.09583889353596728
+        ],
+        "footTravelIncludingNoSteps": 0.10624615809842589,
+        "stopSpeed": 0.0032702621642581938
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.18895429126676827,
+          -0.050900336933819124
+        ],
+        "rolling1sMAE": [
+          0.01160072837563174,
+          0.05714365879145216
+        ],
+        "footTravelIncludingNoSteps": 0.1006698604999556,
+        "stopSpeed": 0.023747018184726305
+      }
+    },
+    {
+      "command": [
+        0.2,
+        0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.19345585313575236,
+          0.5612171174182283
+        ],
+        "rolling1sMAE": [
+          0.006910888320240343,
+          0.04942246920090024
+        ],
+        "footTravelIncludingNoSteps": 0.1014140343767975,
+        "stopSpeed": 0.0066859608015294
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.1826499757251891,
+          0.5767178663404523
+        ],
+        "rolling1sMAE": [
+          0.017191988821108513,
+          0.03425414018354503
+        ],
+        "footTravelIncludingNoSteps": 0.096026799440221,
+        "stopSpeed": 0.014806998082098507
+      }
+    },
+    {
+      "command": [
+        0.4,
+        -0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.37969478022381264,
+          -0.4335323013379978
+        ],
+        "rolling1sMAE": [
+          0.019825942963826178,
+          0.16260644786809508
+        ],
+        "footTravelIncludingNoSteps": 0.17654506927363106,
+        "stopSpeed": 0.009791974157805508
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.3673696244561198,
+          -0.49494961756721123
+        ],
+        "rolling1sMAE": [
+          0.03283881961535145,
+          0.10642970330284232
+        ],
+        "footTravelIncludingNoSteps": 0.17076094427216143,
+        "stopSpeed": 0.007682472685595236
+      }
+    },
+    {
+      "command": [
+        0.4,
+        0.0
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.39580209180724724,
+          -0.024605204354583455
+        ],
+        "rolling1sMAE": [
+          0.0048012049190689745,
+          0.05569126863651237
+        ],
+        "footTravelIncludingNoSteps": 0.18616794057026886,
+        "stopSpeed": 0.007164880467249427
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.38491862929607,
+          -0.07443976319814444
+        ],
+        "rolling1sMAE": [
+          0.01531154068513902,
+          0.07630908445458007
+        ],
+        "footTravelIncludingNoSteps": 0.18095488611965777,
+        "stopSpeed": 0.0073433392318781095
+      }
+    },
+    {
+      "command": [
+        0.4,
+        0.6
+      ],
+      "worlds": 2,
+      "baseline": {
+        "survived": 2,
+        "actual": [
+          0.37299984612138626,
+          0.40706074919752444
+        ],
+        "rolling1sMAE": [
+          0.027475714704911024,
+          0.1906129704334087
+        ],
+        "footTravelIncludingNoSteps": 0.17445970541990394,
+        "stopSpeed": 0.009511647543945881
+      },
+      "candidate": {
+        "survived": 2,
+        "actual": [
+          0.3659011925057583,
+          0.39649648816377114
+        ],
+        "rolling1sMAE": [
+          0.03441596779181552,
+          0.20380718637448636
+        ],
+        "footTravelIncludingNoSteps": 0.17177766847972403,
+        "stopSpeed": 0.006479828192760526
+      }
+    }
+  ],
+  "rows": [
+    {
+      "source": "cpu-yaw-0.6/seed252171-trial0-speed-0.05.json",
+      "command": [
+        -0.05,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed-0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.618338309003975,
+        "meanCommand": [
+          -0.04999999329447746,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          -0.05006164891106529,
+          -0.7366490302855258
+        ],
+        "rolling1sMAE": [
+          0.0028414534205057056,
+          0.13612052685801862
+        ],
+        "rolling1sP95": [
+          0.006879552994762467,
+          0.16929048202617425
+        ],
+        "stopMeanHorizontalSpeed": 0.001294814399688605,
+        "stepDistance": 0.024690455820406427,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed-0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.651421667709291,
+        "meanCommand": [
+          -0.04999999329447746,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          -0.05300813734077703,
+          -0.7139944205721696
+        ],
+        "rolling1sMAE": [
+          0.0030649799386584507,
+          0.11128809578925496
+        ],
+        "rolling1sP95": [
+          0.006755441364229455,
+          0.1432578091913746
+        ],
+        "stopMeanHorizontalSpeed": 0.0017404703732441305,
+        "stepDistance": 0.027088756354331923,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252171-trial0-speed-0.2.json",
+      "command": [
+        -0.2,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed-0.2.json",
+        "completed": true,
+        "maxTiltDeg": 5.856787015576783,
+        "meanCommand": [
+          -0.19999997317790985,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          -0.20033735414851703,
+          -0.7286898172413853
+        ],
+        "rolling1sMAE": [
+          0.0021889484900856756,
+          0.13263259765768073
+        ],
+        "rolling1sP95": [
+          0.004975611919661791,
+          0.16308009725080697
+        ],
+        "stopMeanHorizontalSpeed": 0.0037795260927957117,
+        "stepDistance": 0.09876596288337225,
+        "stepCount": 38
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed-0.2.json",
+        "completed": true,
+        "maxTiltDeg": 5.866354002243276,
+        "meanCommand": [
+          -0.19999997317790985,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          -0.20053774421571818,
+          -0.679939757112616
+        ],
+        "rolling1sMAE": [
+          0.0021110463708640614,
+          0.07897159662565423
+        ],
+        "rolling1sP95": [
+          0.0051636944870539735,
+          0.11641732480268274
+        ],
+        "stopMeanHorizontalSpeed": 0.00758992386974676,
+        "stepDistance": 0.09745160991729693,
+        "stepCount": 39
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252171-trial0-speed0.025.json",
+      "command": [
+        0.025,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.025.json",
+        "completed": true,
+        "maxTiltDeg": 5.05942243170108,
+        "meanCommand": [
+          0.02499999664723873,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.019188310409026476,
+          -0.758502573636198
+        ],
+        "rolling1sMAE": [
+          0.006838088253638823,
+          0.16822320070417576
+        ],
+        "rolling1sP95": [
+          0.015606831548346006,
+          0.2612398819270356
+        ],
+        "stopMeanHorizontalSpeed": 0.0021969629324101628,
+        "stepDistance": 0.010390916609140674,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.025.json",
+        "completed": true,
+        "maxTiltDeg": 5.550999912583079,
+        "meanCommand": [
+          0.02499999664723873,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.013606119823203132,
+          -0.7416806522632133
+        ],
+        "rolling1sMAE": [
+          0.011233493423194112,
+          0.1422853637434581
+        ],
+        "rolling1sP95": [
+          0.018101512513681327,
+          0.21599138794232942
+        ],
+        "stopMeanHorizontalSpeed": 0.0035711644998040735,
+        "stepDistance": 0.0077728467237355115,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252171-trial0-speed0.035.json",
+      "command": [
+        0.035,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.035.json",
+        "completed": true,
+        "maxTiltDeg": 4.831354590588825,
+        "meanCommand": [
+          0.034999992698431015,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.028351242363613437,
+          -0.7530349188323184
+        ],
+        "rolling1sMAE": [
+          0.006812713350041109,
+          0.14825033563560672
+        ],
+        "rolling1sP95": [
+          0.014152786477127066,
+          0.1964632550516882
+        ],
+        "stopMeanHorizontalSpeed": 0.006367422705659816,
+        "stepDistance": 0.015557761274489646,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.035.json",
+        "completed": true,
+        "maxTiltDeg": 5.106054208740353,
+        "meanCommand": [
+          0.034999992698431015,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.024287240614804126,
+          -0.7319442297265871
+        ],
+        "rolling1sMAE": [
+          0.010759732833924793,
+          0.1304624640763342
+        ],
+        "rolling1sP95": [
+          0.017176933120323173,
+          0.17725690034953404
+        ],
+        "stopMeanHorizontalSpeed": 0.0019346984399941558,
+        "stepDistance": 0.01315617361529671,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252171-trial0-speed0.05.json",
+      "command": [
+        0.05,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.05.json",
+        "completed": true,
+        "maxTiltDeg": 5.069864627765508,
+        "meanCommand": [
+          0.04999999329447746,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.04537853835017467,
+          -0.7425486984682261
+        ],
+        "rolling1sMAE": [
+          0.005323585307801399,
+          0.14198495060298078
+        ],
+        "rolling1sP95": [
+          0.011477935465541104,
+          0.19724928790194668
+        ],
+        "stopMeanHorizontalSpeed": 0.005063856055619816,
+        "stepDistance": 0.0232548972065302,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.05.json",
+        "completed": true,
+        "maxTiltDeg": 5.216898128273552,
+        "meanCommand": [
+          0.04999999329447746,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.04074738086235971,
+          -0.7067347978320633
+        ],
+        "rolling1sMAE": [
+          0.008982741724891075,
+          0.10540566398061954
+        ],
+        "rolling1sP95": [
+          0.015018892343221003,
+          0.15115047505804652
+        ],
+        "stopMeanHorizontalSpeed": 0.0013751789140130921,
+        "stepDistance": 0.02200630032870727,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252171-trial0-speed0.075.json",
+      "command": [
+        0.075,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.075.json",
+        "completed": true,
+        "maxTiltDeg": 5.519737590927765,
+        "meanCommand": [
+          0.07499998807907104,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.0711431807109462,
+          -0.6655485535551876
+        ],
+        "rolling1sMAE": [
+          0.004989987334652815,
+          0.06493232909053796
+        ],
+        "rolling1sP95": [
+          0.01071663822733002,
+          0.12274789899875602
+        ],
+        "stopMeanHorizontalSpeed": 0.011271827641864466,
+        "stepDistance": 0.038566328144875005,
+        "stepCount": 36
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.075.json",
+        "completed": true,
+        "maxTiltDeg": 5.4235234672353,
+        "meanCommand": [
+          0.07499998807907104,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.06688848493494179,
+          -0.6621129778192851
+        ],
+        "rolling1sMAE": [
+          0.008855774051222235,
+          0.06118615207538845
+        ],
+        "rolling1sP95": [
+          0.016502987473241124,
+          0.11960058166118642
+        ],
+        "stopMeanHorizontalSpeed": 0.004002056251788751,
+        "stepDistance": 0.03543202498196756,
+        "stepCount": 36
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252171-trial0-speed0.2.json",
+      "command": [
+        0.2,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.2.json",
+        "completed": true,
+        "maxTiltDeg": 6.4370066349418265,
+        "meanCommand": [
+          0.19999997317790985,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.18361039745799657,
+          -0.8587904288308672
+        ],
+        "rolling1sMAE": [
+          0.01683685992192896,
+          0.2648476931920586
+        ],
+        "rolling1sP95": [
+          0.02335487046151552,
+          0.3447230515850976
+        ],
+        "stopMeanHorizontalSpeed": 0.006697559897861288,
+        "stepDistance": 0.09637638976553423,
+        "stepCount": 36
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.2.json",
+        "completed": true,
+        "maxTiltDeg": 6.112352503278815,
+        "meanCommand": [
+          0.19999997317790985,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.17381050706011578,
+          -0.8913229625839573
+        ],
+        "rolling1sMAE": [
+          0.025763892883650892,
+          0.29654924762305107
+        ],
+        "rolling1sP95": [
+          0.03233684757080449,
+          0.3532791307381348
+        ],
+        "stopMeanHorizontalSpeed": 0.02316968770274342,
+        "stepDistance": 0.09260768114673164,
+        "stepCount": 35
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252171-trial0-speed0.4.json",
+      "command": [
+        0.4,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.4.json",
+        "completed": true,
+        "maxTiltDeg": 6.923560225051553,
+        "meanCommand": [
+          0.3999999463558197,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.3781673191624941,
+          -0.42195656686709326
+        ],
+        "rolling1sMAE": [
+          0.021122706483286856,
+          0.17531195526305735
+        ],
+        "rolling1sP95": [
+          0.025888939654443485,
+          0.2522048069502302
+        ],
+        "stopMeanHorizontalSpeed": 0.008874818291960249,
+        "stepDistance": 0.17586582246574128,
+        "stepCount": 39
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.4.json",
+        "completed": true,
+        "maxTiltDeg": 6.861100457462749,
+        "meanCommand": [
+          0.3999999463558197,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.365935112206722,
+          -0.48572704669567196
+        ],
+        "rolling1sMAE": [
+          0.034605695416564004,
+          0.1177319558178966
+        ],
+        "rolling1sP95": [
+          0.04104276879432221,
+          0.17234572655383434
+        ],
+        "stopMeanHorizontalSpeed": 0.008125702575613434,
+        "stepDistance": 0.17016033757843527,
+        "stepCount": 39
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252171-trial0-speed0.json",
+      "command": [
+        0.0,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.json",
+        "completed": true,
+        "maxTiltDeg": 5.474172453863485,
+        "meanCommand": [
+          0.0,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          -0.005842701439728654,
+          -0.7379609082561095
+        ],
+        "rolling1sMAE": [
+          0.006377891558912284,
+          0.13693201431885973
+        ],
+        "rolling1sP95": [
+          0.010979775660487131,
+          0.19129330255368415
+        ],
+        "stopMeanHorizontalSpeed": 0.0015899991206403626,
+        "stepDistance": 0.0,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252171-trial0-speed0.json",
+        "completed": true,
+        "maxTiltDeg": 5.5620960026425585,
+        "meanCommand": [
+          0.0,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          -0.0072105418957661505,
+          -0.690062418948405
+        ],
+        "rolling1sMAE": [
+          0.008003064070848954,
+          0.08982143712691834
+        ],
+        "rolling1sP95": [
+          0.012597523694231255,
+          0.1354957583784122
+        ],
+        "stopMeanHorizontalSpeed": 0.002175317892051287,
+        "stepDistance": 0.0,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252177-trial0-speed-0.05.json",
+      "command": [
+        -0.05,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed-0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.792578148195543,
+        "meanCommand": [
+          -0.04999999329447746,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          -0.04969526319470352,
+          -0.7309193060212844
+        ],
+        "rolling1sMAE": [
+          0.003144313964404439,
+          0.13110031149834608
+        ],
+        "rolling1sP95": [
+          0.00730604778129656,
+          0.16816366605101166
+        ],
+        "stopMeanHorizontalSpeed": 0.0016156993372908682,
+        "stepDistance": 0.02544859458172296,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed-0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.708467600553968,
+        "meanCommand": [
+          -0.04999999329447746,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          -0.053847701140960554,
+          -0.7045763520272245
+        ],
+        "rolling1sMAE": [
+          0.003615108193058504,
+          0.10456425540557258
+        ],
+        "rolling1sP95": [
+          0.0075516715124924975,
+          0.14399158336932033
+        ],
+        "stopMeanHorizontalSpeed": 0.002388005244086925,
+        "stepDistance": 0.026613098750743983,
+        "stepCount": 38
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252177-trial0-speed-0.2.json",
+      "command": [
+        -0.2,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed-0.2.json",
+        "completed": true,
+        "maxTiltDeg": 5.903443617125369,
+        "meanCommand": [
+          -0.19999997317790985,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          -0.19977706962884176,
+          -0.7348612450428893
+        ],
+        "rolling1sMAE": [
+          0.002359026052095704,
+          0.13460239937238436
+        ],
+        "rolling1sP95": [
+          0.007253057730088452,
+          0.16942090976620477
+        ],
+        "stopMeanHorizontalSpeed": 0.004048999243533642,
+        "stepDistance": 0.09856069933538578,
+        "stepCount": 39
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed-0.2.json",
+        "completed": true,
+        "maxTiltDeg": 5.9085955264754615,
+        "meanCommand": [
+          -0.19999997317790985,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          -0.19865561247976837,
+          -0.6772806793232605
+        ],
+        "rolling1sMAE": [
+          0.002422544946551222,
+          0.08026592868137615
+        ],
+        "rolling1sP95": [
+          0.006445546297799492,
+          0.11838646623652721
+        ],
+        "stopMeanHorizontalSpeed": 0.005052694177103103,
+        "stepDistance": 0.09606687471571425,
+        "stepCount": 39
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252177-trial0-speed0.025.json",
+      "command": [
+        0.025,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.025.json",
+        "completed": true,
+        "maxTiltDeg": 5.277289767580115,
+        "meanCommand": [
+          0.02499999664723873,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.017819413816829464,
+          -0.7684610676233888
+        ],
+        "rolling1sMAE": [
+          0.007954348957172973,
+          0.163962306675913
+        ],
+        "rolling1sP95": [
+          0.014888343944307398,
+          0.22417270024922686
+        ],
+        "stopMeanHorizontalSpeed": 0.010149453521803383,
+        "stepDistance": 0.009747812877646944,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.025.json",
+        "completed": true,
+        "maxTiltDeg": 5.502998311941942,
+        "meanCommand": [
+          0.02499999664723873,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.014163319990106792,
+          -0.7378833599546567
+        ],
+        "rolling1sMAE": [
+          0.010962608557413335,
+          0.14118016925220847
+        ],
+        "rolling1sP95": [
+          0.018012674458096355,
+          0.20174907791100793
+        ],
+        "stopMeanHorizontalSpeed": 0.006560500986967801,
+        "stepDistance": 0.0075553605186553475,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252177-trial0-speed0.035.json",
+      "command": [
+        0.035,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.035.json",
+        "completed": true,
+        "maxTiltDeg": 4.69755106013845,
+        "meanCommand": [
+          0.034999992698431015,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.030294748076950366,
+          -0.7537372193616304
+        ],
+        "rolling1sMAE": [
+          0.004975759092605622,
+          0.15302149735813683
+        ],
+        "rolling1sP95": [
+          0.011241603096054244,
+          0.21537140871528065
+        ],
+        "stopMeanHorizontalSpeed": 0.008659613593569263,
+        "stepDistance": 0.0164546750660578,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.035.json",
+        "completed": true,
+        "maxTiltDeg": 4.922290674879157,
+        "meanCommand": [
+          0.034999992698431015,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.02451649994341772,
+          -0.73027399291078
+        ],
+        "rolling1sMAE": [
+          0.010705511281275927,
+          0.1347867859253839
+        ],
+        "rolling1sP95": [
+          0.019647728873433704,
+          0.19642246500832755
+        ],
+        "stopMeanHorizontalSpeed": 0.0059608704320042,
+        "stepDistance": 0.013199213399009894,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252177-trial0-speed0.05.json",
+      "command": [
+        0.05,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.05.json",
+        "completed": true,
+        "maxTiltDeg": 5.142473466284431,
+        "meanCommand": [
+          0.04999999329447746,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.04575261571819488,
+          -0.7414915805199583
+        ],
+        "rolling1sMAE": [
+          0.005450627180630827,
+          0.1387210189817563
+        ],
+        "rolling1sP95": [
+          0.012422051615907412,
+          0.19080914146758574
+        ],
+        "stopMeanHorizontalSpeed": 0.001838904347597954,
+        "stepDistance": 0.023436135252090207,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.962316722532876,
+        "meanCommand": [
+          0.04999999329447746,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.04090011921737891,
+          -0.7034021213394986
+        ],
+        "rolling1sMAE": [
+          0.009023787112078147,
+          0.10250945546663054
+        ],
+        "rolling1sP95": [
+          0.014997270359232644,
+          0.14570003064514367
+        ],
+        "stopMeanHorizontalSpeed": 0.0038855337191237723,
+        "stepDistance": 0.021445714039239016,
+        "stepCount": 36
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252177-trial0-speed0.075.json",
+      "command": [
+        0.075,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.075.json",
+        "completed": true,
+        "maxTiltDeg": 5.389377092533002,
+        "meanCommand": [
+          0.07499998807907104,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.0697278008380999,
+          -0.650807920966958
+        ],
+        "rolling1sMAE": [
+          0.005654384706089332,
+          0.05298500751606705
+        ],
+        "rolling1sP95": [
+          0.011371078877218149,
+          0.10087656545382799
+        ],
+        "stopMeanHorizontalSpeed": 0.004838246414905408,
+        "stepDistance": 0.03820799980686465,
+        "stepCount": 36
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.075.json",
+        "completed": true,
+        "maxTiltDeg": 5.39818087887742,
+        "meanCommand": [
+          0.07499998807907104,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.06630518679722973,
+          -0.6372172009823791
+        ],
+        "rolling1sMAE": [
+          0.009244539284995424,
+          0.04317779642233747
+        ],
+        "rolling1sP95": [
+          0.016882101893270288,
+          0.12186334936352125
+        ],
+        "stopMeanHorizontalSpeed": 0.010997531824529071,
+        "stepDistance": 0.034834302236276156,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252177-trial0-speed0.2.json",
+      "command": [
+        0.2,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.2.json",
+        "completed": true,
+        "maxTiltDeg": 6.534684751357564,
+        "meanCommand": [
+          0.19999997317790985,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.18507354562603828,
+          -0.8688935753567981
+        ],
+        "rolling1sMAE": [
+          0.01620330745490925,
+          0.27214280242682154
+        ],
+        "rolling1sP95": [
+          0.022476927503426343,
+          0.345979554876684
+        ],
+        "stopMeanHorizontalSpeed": 0.006208898619367733,
+        "stepDistance": 0.09579654234275677,
+        "stepCount": 36
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.2.json",
+        "completed": true,
+        "maxTiltDeg": 6.159851636710377,
+        "meanCommand": [
+          0.19999997317790985,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.1750577859024904,
+          -0.886234584733272
+        ],
+        "rolling1sMAE": [
+          0.024878692656631445,
+          0.2844590220561431
+        ],
+        "rolling1sP95": [
+          0.031682242767046606,
+          0.34907776574002525
+        ],
+        "stopMeanHorizontalSpeed": 0.023610157609106203,
+        "stepDistance": 0.09262217057882081,
+        "stepCount": 36
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252177-trial0-speed0.4.json",
+      "command": [
+        0.4,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.4.json",
+        "completed": true,
+        "maxTiltDeg": 6.971249662242484,
+        "meanCommand": [
+          0.3999999463558197,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.3812222412851312,
+          -0.4451080358089023
+        ],
+        "rolling1sMAE": [
+          0.0185291794443655,
+          0.1499009404731328
+        ],
+        "rolling1sP95": [
+          0.027221431743466674,
+          0.23211994707390518
+        ],
+        "stopMeanHorizontalSpeed": 0.010709130023650768,
+        "stepDistance": 0.17722431608152087,
+        "stepCount": 39
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.4.json",
+        "completed": true,
+        "maxTiltDeg": 6.82113337014454,
+        "meanCommand": [
+          0.3999999463558197,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          0.36880413670551765,
+          -0.5041721884387506
+        ],
+        "rolling1sMAE": [
+          0.031071943814138896,
+          0.09512745078778806
+        ],
+        "rolling1sP95": [
+          0.03578893071887525,
+          0.17658056426851146
+        ],
+        "stopMeanHorizontalSpeed": 0.007239242795577037,
+        "stepDistance": 0.17136155096588762,
+        "stepCount": 39
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw-0.6/seed252177-trial0-speed0.json",
+      "command": [
+        0.0,
+        -0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.json",
+        "completed": true,
+        "maxTiltDeg": 5.398548549881529,
+        "meanCommand": [
+          0.0,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          -0.006268169584502631,
+          -0.722949869022929
+        ],
+        "rolling1sMAE": [
+          0.006442263641474469,
+          0.12692890831298762
+        ],
+        "rolling1sP95": [
+          0.011345331183503452,
+          0.16307437729215735
+        ],
+        "stopMeanHorizontalSpeed": 0.003567409484233995,
+        "stepDistance": 0.0,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw-0.6\\seed252177-trial0-speed0.json",
+        "completed": true,
+        "maxTiltDeg": 5.3559420568663985,
+        "meanCommand": [
+          0.0,
+          -0.5999999046325684
+        ],
+        "meanActual": [
+          -0.007087761233746924,
+          -0.6920934808268843
+        ],
+        "rolling1sMAE": [
+          0.00788091139325862,
+          0.09008626273631211
+        ],
+        "rolling1sP95": [
+          0.01272624777659829,
+          0.12675311388779562
+        ],
+        "stopMeanHorizontalSpeed": 0.0024118336724840215,
+        "stepDistance": 0.0,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252171-trial0-speed-0.05.json",
+      "command": [
+        -0.05,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed-0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.618338309003975,
+        "meanCommand": [
+          -0.04999999329447746,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          -0.04133091788319668,
+          0.6428129912302052
+        ],
+        "rolling1sMAE": [
+          0.008398828411313342,
+          0.041657869836128424
+        ],
+        "rolling1sP95": [
+          0.01267249458128161,
+          0.07359802944923388
+        ],
+        "stopMeanHorizontalSpeed": 0.003745538621480058,
+        "stepDistance": 0.01925283317964958,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed-0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.651421667709291,
+        "meanCommand": [
+          -0.04999999329447746,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          -0.04933788795250138,
+          0.6833462605504041
+        ],
+        "rolling1sMAE": [
+          0.0019302900346937718,
+          0.07875337349117514
+        ],
+        "rolling1sP95": [
+          0.004709418898605103,
+          0.11727112651219786
+        ],
+        "stopMeanHorizontalSpeed": 0.004465145748847115,
+        "stepDistance": 0.023089658714300156,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252171-trial0-speed-0.2.json",
+      "command": [
+        -0.2,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed-0.2.json",
+        "completed": true,
+        "maxTiltDeg": 5.856787015576783,
+        "meanCommand": [
+          -0.19999997317790985,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          -0.20970625066516121,
+          0.6192255565571766
+        ],
+        "rolling1sMAE": [
+          0.00955853233850755,
+          0.03957957970879732
+        ],
+        "rolling1sP95": [
+          0.013756560913075007,
+          0.09683225825635902
+        ],
+        "stopMeanHorizontalSpeed": 0.01900287858930273,
+        "stepDistance": 0.10187462646216724,
+        "stepCount": 38
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed-0.2.json",
+        "completed": true,
+        "maxTiltDeg": 5.866354002243276,
+        "meanCommand": [
+          -0.19999997317790985,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          -0.2118739706906476,
+          0.7133942093218865
+        ],
+        "rolling1sMAE": [
+          0.012005595771506582,
+          0.10643926620120378
+        ],
+        "rolling1sP95": [
+          0.015431606542643455,
+          0.1728438491942134
+        ],
+        "stopMeanHorizontalSpeed": 0.007337807186492985,
+        "stepDistance": 0.1021032962781398,
+        "stepCount": 38
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252171-trial0-speed0.025.json",
+      "command": [
+        0.025,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.025.json",
+        "completed": true,
+        "maxTiltDeg": 5.333597575420999,
+        "meanCommand": [
+          0.02499999664723873,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.03017542887706486,
+          0.6518964322284156
+        ],
+        "rolling1sMAE": [
+          0.00460071966433813,
+          0.048490927876741016
+        ],
+        "rolling1sP95": [
+          0.008383065707697875,
+          0.08657337578790616
+        ],
+        "stopMeanHorizontalSpeed": 0.007545466499499852,
+        "stepDistance": 0.017797841162877973,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.025.json",
+        "completed": true,
+        "maxTiltDeg": 5.715134436999944,
+        "meanCommand": [
+          0.02499999664723873,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.026070648110305746,
+          0.6758100247782683
+        ],
+        "rolling1sMAE": [
+          0.0019240359174147825,
+          0.07499096648514515
+        ],
+        "rolling1sP95": [
+          0.004235728481918629,
+          0.11795859089605473
+        ],
+        "stopMeanHorizontalSpeed": 0.0024982139760908293,
+        "stepDistance": 0.015284932371972272,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252171-trial0-speed0.035.json",
+      "command": [
+        0.035,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.035.json",
+        "completed": true,
+        "maxTiltDeg": 4.831354590588825,
+        "meanCommand": [
+          0.034999992698431015,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.03640338235568887,
+          0.6808452465887314
+        ],
+        "rolling1sMAE": [
+          0.0021785788716826844,
+          0.07189885078887602
+        ],
+        "rolling1sP95": [
+          0.005523274330055268,
+          0.11657183151156886
+        ],
+        "stopMeanHorizontalSpeed": 0.0033252584915829915,
+        "stepDistance": 0.020770121074647103,
+        "stepCount": 36
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.035.json",
+        "completed": true,
+        "maxTiltDeg": 5.336432439494347,
+        "meanCommand": [
+          0.034999992698431015,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.033993743576591524,
+          0.6989159962444296
+        ],
+        "rolling1sMAE": [
+          0.0024183951843020778,
+          0.09597440638641094
+        ],
+        "rolling1sP95": [
+          0.005694086187477571,
+          0.15048036138185122
+        ],
+        "stopMeanHorizontalSpeed": 0.007781346804802859,
+        "stepDistance": 0.019681514688489176,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252171-trial0-speed0.05.json",
+      "command": [
+        0.05,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.05.json",
+        "completed": true,
+        "maxTiltDeg": 5.16273732695111,
+        "meanCommand": [
+          0.04999999329447746,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.04518689428172234,
+          0.6742361972952381
+        ],
+        "rolling1sMAE": [
+          0.004764293297932209,
+          0.08050519514641784
+        ],
+        "rolling1sP95": [
+          0.010082389730386995,
+          0.13534588611952697
+        ],
+        "stopMeanHorizontalSpeed": 0.003356227944091286,
+        "stepDistance": 0.025758743063491806,
+        "stepCount": 36
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.05.json",
+        "completed": true,
+        "maxTiltDeg": 5.561080273032258,
+        "meanCommand": [
+          0.04999999329447746,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.04378856455368779,
+          0.698917653788514
+        ],
+        "rolling1sMAE": [
+          0.00660521091550715,
+          0.10461315291515931
+        ],
+        "rolling1sP95": [
+          0.01102129627168099,
+          0.16279667912994283
+        ],
+        "stopMeanHorizontalSpeed": 0.003444174084488412,
+        "stepDistance": 0.024787892904959977,
+        "stepCount": 36
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252171-trial0-speed0.075.json",
+      "command": [
+        0.075,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.075.json",
+        "completed": true,
+        "maxTiltDeg": 5.519737590927765,
+        "meanCommand": [
+          0.07499998807907104,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.07064779511011704,
+          0.6912500831708525
+        ],
+        "rolling1sMAE": [
+          0.004425510553048594,
+          0.08881786605487511
+        ],
+        "rolling1sP95": [
+          0.008378093707661308,
+          0.13847932851345515
+        ],
+        "stopMeanHorizontalSpeed": 0.002910994228527444,
+        "stepDistance": 0.03871554155372043,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.075.json",
+        "completed": true,
+        "maxTiltDeg": 5.4235234672353,
+        "meanCommand": [
+          0.07499998807907104,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.06406562908932789,
+          0.7005411785085692
+        ],
+        "rolling1sMAE": [
+          0.010360431578639348,
+          0.08942342416011648
+        ],
+        "rolling1sP95": [
+          0.014892232270596287,
+          0.1458762298190095
+        ],
+        "stopMeanHorizontalSpeed": 0.0020620978676400958,
+        "stepDistance": 0.035108034759886136,
+        "stepCount": 36
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252171-trial0-speed0.2.json",
+      "command": [
+        0.2,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.2.json",
+        "completed": true,
+        "maxTiltDeg": 6.4370066349418265,
+        "meanCommand": [
+          0.19999997317790985,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.19346168050085288,
+          0.56178084645093
+        ],
+        "rolling1sMAE": [
+          0.0067275205518638175,
+          0.04932231795452209
+        ],
+        "rolling1sP95": [
+          0.012570810512357759,
+          0.1037737286873974
+        ],
+        "stopMeanHorizontalSpeed": 0.004738693526224815,
+        "stepDistance": 0.10118517341575606,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.2.json",
+        "completed": true,
+        "maxTiltDeg": 6.112352503278815,
+        "meanCommand": [
+          0.19999997317790985,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.18221343305326362,
+          0.5813050643317327
+        ],
+        "rolling1sMAE": [
+          0.01754372874253306,
+          0.03198085553327814
+        ],
+        "rolling1sP95": [
+          0.021699421841282082,
+          0.07731312376275015
+        ],
+        "stopMeanHorizontalSpeed": 0.011590480948462505,
+        "stepDistance": 0.09589103790708123,
+        "stepCount": 36
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252171-trial0-speed0.4.json",
+      "command": [
+        0.4,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.4.json",
+        "completed": true,
+        "maxTiltDeg": 6.923560225051553,
+        "meanCommand": [
+          0.3999999463558197,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.37329122379092433,
+          0.40865593290806596
+        ],
+        "rolling1sMAE": [
+          0.026831832042544662,
+          0.19628144235778278
+        ],
+        "rolling1sP95": [
+          0.031519619099092025,
+          0.247865002419112
+        ],
+        "stopMeanHorizontalSpeed": 0.007623593250275949,
+        "stepDistance": 0.17447289496473883,
+        "stepCount": 40
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.4.json",
+        "completed": true,
+        "maxTiltDeg": 6.861100457462749,
+        "meanCommand": [
+          0.3999999463558197,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.3659429433064506,
+          0.4038706839020882
+        ],
+        "rolling1sMAE": [
+          0.034403108960917826,
+          0.19797233630229522
+        ],
+        "rolling1sP95": [
+          0.04003511082842128,
+          0.23495974894450172
+        ],
+        "stopMeanHorizontalSpeed": 0.006745234509221014,
+        "stepDistance": 0.1717104865297935,
+        "stepCount": 39
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252171-trial0-speed0.json",
+      "command": [
+        0.0,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.json",
+        "completed": true,
+        "maxTiltDeg": 5.394527186105093,
+        "meanCommand": [
+          0.0,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.005917675292346537,
+          0.5968160458542838
+        ],
+        "rolling1sMAE": [
+          0.005345291049584234,
+          0.019582588594618172
+        ],
+        "rolling1sP95": [
+          0.0088093124710288,
+          0.04799058252937755
+        ],
+        "stopMeanHorizontalSpeed": 0.0036582092127346966,
+        "stepDistance": 0.0,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252171-trial0-speed0.json",
+        "completed": true,
+        "maxTiltDeg": 5.404835821923006,
+        "meanCommand": [
+          0.0,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.00039280537948075165,
+          0.6328842666417785
+        ],
+        "rolling1sMAE": [
+          0.0018893963803585526,
+          0.03477976392324364
+        ],
+        "rolling1sP95": [
+          0.004926867766989144,
+          0.07275117274475833
+        ],
+        "stopMeanHorizontalSpeed": 0.002672343812963244,
+        "stepDistance": 0.0,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252177-trial0-speed-0.05.json",
+      "command": [
+        -0.05,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed-0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.792578148195543,
+        "meanCommand": [
+          -0.04999999329447746,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          -0.04305409879012733,
+          0.6373291530452174
+        ],
+        "rolling1sMAE": [
+          0.0069023558183750455,
+          0.04132532225761565
+        ],
+        "rolling1sP95": [
+          0.010707642472783805,
+          0.07961762364029254
+        ],
+        "stopMeanHorizontalSpeed": 0.011303897350614942,
+        "stepDistance": 0.02043359456485224,
+        "stepCount": 36
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed-0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.708467600553968,
+        "meanCommand": [
+          -0.04999999329447746,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          -0.04973512464028171,
+          0.6894565838944631
+        ],
+        "rolling1sMAE": [
+          0.00213798140388508,
+          0.09048911304578379
+        ],
+        "rolling1sP95": [
+          0.005807567305195952,
+          0.12576812264396608
+        ],
+        "stopMeanHorizontalSpeed": 0.002720929578588518,
+        "stepDistance": 0.023021136434687624,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252177-trial0-speed-0.2.json",
+      "command": [
+        -0.2,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed-0.2.json",
+        "completed": true,
+        "maxTiltDeg": 5.903443617125369,
+        "meanCommand": [
+          -0.19999997317790985,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          -0.20833302350399407,
+          0.6325612861744769
+        ],
+        "rolling1sMAE": [
+          0.00869266624912458,
+          0.035835442206607775
+        ],
+        "rolling1sP95": [
+          0.012288499556133422,
+          0.08215811723196452
+        ],
+        "stopMeanHorizontalSpeed": 0.020684106107272095,
+        "stepDistance": 0.10070564813006463,
+        "stepCount": 38
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed-0.2.json",
+        "completed": true,
+        "maxTiltDeg": 5.9085955264754615,
+        "meanCommand": [
+          -0.19999997317790985,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          -0.21111349276614583,
+          0.6997668430343131
+        ],
+        "rolling1sMAE": [
+          0.011022741600605991,
+          0.09804362224239035
+        ],
+        "rolling1sP95": [
+          0.015645205822280406,
+          0.13598131507648814
+        ],
+        "stopMeanHorizontalSpeed": 0.007114716229351636,
+        "stepDistance": 0.10168818780175828,
+        "stepCount": 38
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252177-trial0-speed0.025.json",
+      "command": [
+        0.025,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.025.json",
+        "completed": true,
+        "maxTiltDeg": 5.073986531739394,
+        "meanCommand": [
+          0.02499999664723873,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.02955595283050233,
+          0.6522331206595035
+        ],
+        "rolling1sMAE": [
+          0.004329854813537506,
+          0.051286618225330045
+        ],
+        "rolling1sP95": [
+          0.007912764806058986,
+          0.0921020224509917
+        ],
+        "stopMeanHorizontalSpeed": 0.00753879804039133,
+        "stepDistance": 0.017058475716124746,
+        "stepCount": 36
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.025.json",
+        "completed": true,
+        "maxTiltDeg": 5.394875876963904,
+        "meanCommand": [
+          0.02499999664723873,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.02589536577375312,
+          0.680180651797724
+        ],
+        "rolling1sMAE": [
+          0.0017678003795421884,
+          0.08004621260650725
+        ],
+        "rolling1sP95": [
+          0.003976039293683,
+          0.12359763444341809
+        ],
+        "stopMeanHorizontalSpeed": 0.006285653106668869,
+        "stepDistance": 0.014700320828732325,
+        "stepCount": 36
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252177-trial0-speed0.035.json",
+      "command": [
+        0.035,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.035.json",
+        "completed": true,
+        "maxTiltDeg": 4.911698592620923,
+        "meanCommand": [
+          0.034999992698431015,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.03789933665956338,
+          0.6644488081183758
+        ],
+        "rolling1sMAE": [
+          0.0030163350400406208,
+          0.05856240807350933
+        ],
+        "rolling1sP95": [
+          0.006967602899686829,
+          0.09841702692639928
+        ],
+        "stopMeanHorizontalSpeed": 0.002986717258768096,
+        "stepDistance": 0.021792592040629406,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.035.json",
+        "completed": true,
+        "maxTiltDeg": 5.134032147732544,
+        "meanCommand": [
+          0.034999992698431015,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.03343548527983049,
+          0.6943731149963192
+        ],
+        "rolling1sMAE": [
+          0.002578907022417424,
+          0.09349834332270018
+        ],
+        "rolling1sP95": [
+          0.0063750381070886855,
+          0.141509447145082
+        ],
+        "stopMeanHorizontalSpeed": 0.00681457798437312,
+        "stepDistance": 0.019038010520563066,
+        "stepCount": 36
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252177-trial0-speed0.05.json",
+      "command": [
+        0.05,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.05.json",
+        "completed": true,
+        "maxTiltDeg": 5.142473466284431,
+        "meanCommand": [
+          0.04999999329447746,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.04523240881916673,
+          0.6664938968172386
+        ],
+        "rolling1sMAE": [
+          0.004447284826608301,
+          0.07128497309810448
+        ],
+        "rolling1sP95": [
+          0.008227237394522195,
+          0.12543954679473246
+        ],
+        "stopMeanHorizontalSpeed": 0.002453833216096647,
+        "stepDistance": 0.02590483987871691,
+        "stepCount": 36
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.05.json",
+        "completed": true,
+        "maxTiltDeg": 5.506344184168953,
+        "meanCommand": [
+          0.04999999329447746,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.04233140462839835,
+          0.7036867104179465
+        ],
+        "rolling1sMAE": [
+          0.007240969788768687,
+          0.11360438099681215
+        ],
+        "rolling1sP95": [
+          0.011787971989267381,
+          0.1651840412495443
+        ],
+        "stopMeanHorizontalSpeed": 0.0025705391659379124,
+        "stepDistance": 0.02414413509408668,
+        "stepCount": 36
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252177-trial0-speed0.075.json",
+      "command": [
+        0.075,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.075.json",
+        "completed": true,
+        "maxTiltDeg": 5.389377092533002,
+        "meanCommand": [
+          0.07499998807907104,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.06952481740578363,
+          0.6842568020111132
+        ],
+        "rolling1sMAE": [
+          0.005733720347337305,
+          0.08358674968124676
+        ],
+        "rolling1sP95": [
+          0.010212544157833181,
+          0.1457316614269581
+        ],
+        "stopMeanHorizontalSpeed": 0.004936771617150121,
+        "stepDistance": 0.03843161011529048,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.075.json",
+        "completed": true,
+        "maxTiltDeg": 5.498035283391112,
+        "meanCommand": [
+          0.07499998807907104,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.06429342534445096,
+          0.6968388092929602
+        ],
+        "rolling1sMAE": [
+          0.010568939894260975,
+          0.09935056623486992
+        ],
+        "rolling1sP95": [
+          0.01401660541117308,
+          0.15640249942400658
+        ],
+        "stopMeanHorizontalSpeed": 0.007942131564531682,
+        "stepDistance": 0.034982800604992016,
+        "stepCount": 36
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252177-trial0-speed0.2.json",
+      "command": [
+        0.2,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.2.json",
+        "completed": true,
+        "maxTiltDeg": 6.534684751357564,
+        "meanCommand": [
+          0.19999997317790985,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.19345002577065182,
+          0.5606533883855266
+        ],
+        "rolling1sMAE": [
+          0.007094256088616868,
+          0.04952262044727838
+        ],
+        "rolling1sP95": [
+          0.011575392799949239,
+          0.09589184241601374
+        ],
+        "stopMeanHorizontalSpeed": 0.008633228076833983,
+        "stepDistance": 0.10164289533783893,
+        "stepCount": 37
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.2.json",
+        "completed": true,
+        "maxTiltDeg": 6.159851636710377,
+        "meanCommand": [
+          0.19999997317790985,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.1830865183971146,
+          0.5721306683491719
+        ],
+        "rolling1sMAE": [
+          0.01684024889968397,
+          0.036527424833811925
+        ],
+        "rolling1sP95": [
+          0.020897451496501497,
+          0.07932428775207512
+        ],
+        "stopMeanHorizontalSpeed": 0.01802351521573451,
+        "stepDistance": 0.09616256097336075,
+        "stepCount": 36
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252177-trial0-speed0.4.json",
+      "command": [
+        0.4,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.4.json",
+        "completed": true,
+        "maxTiltDeg": 6.971249662242484,
+        "meanCommand": [
+          0.3999999463558197,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.37270846845184824,
+          0.405465565486983
+        ],
+        "rolling1sMAE": [
+          0.02811959736727739,
+          0.18494449850903463
+        ],
+        "rolling1sP95": [
+          0.03255480776139133,
+          0.27225159977440117
+        ],
+        "stopMeanHorizontalSpeed": 0.011399701837615813,
+        "stepDistance": 0.17444651587506904,
+        "stepCount": 40
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.4.json",
+        "completed": true,
+        "maxTiltDeg": 6.82113337014454,
+        "meanCommand": [
+          0.3999999463558197,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.365859441705066,
+          0.38912229242545404
+        ],
+        "rolling1sMAE": [
+          0.03442882662271322,
+          0.20964203644667753
+        ],
+        "rolling1sP95": [
+          0.038814403886110245,
+          0.24549669768459637
+        ],
+        "stopMeanHorizontalSpeed": 0.00621442187630004,
+        "stepDistance": 0.17184485042965456,
+        "stepCount": 39
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0.6/seed252177-trial0-speed0.json",
+      "command": [
+        0.0,
+        0.6
+      ],
+      "baseline": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.json",
+        "completed": true,
+        "maxTiltDeg": 5.282986456606964,
+        "meanCommand": [
+          0.0,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          0.005633320840269831,
+          0.5988024206610015
+        ],
+        "rolling1sMAE": [
+          0.004945413204283941,
+          0.02482138154119544
+        ],
+        "rolling1sP95": [
+          0.008742761467522866,
+          0.0579499332523946
+        ],
+        "stopMeanHorizontalSpeed": 0.008981318065150522,
+        "stepDistance": 0.0,
+        "stepCount": 36
+      },
+      "candidate": {
+        "source": "cpu-yaw0.6\\seed252177-trial0-speed0.json",
+        "completed": true,
+        "maxTiltDeg": 5.465569208362439,
+        "meanCommand": [
+          0.0,
+          0.5999999046325684
+        ],
+        "meanActual": [
+          -0.0005622696428202375,
+          0.6370800110757363
+        ],
+        "rolling1sMAE": [
+          0.0017436501820228996,
+          0.037264095792004
+        ],
+        "rolling1sP95": [
+          0.004256942409808694,
+          0.07329784017966631
+        ],
+        "stopMeanHorizontalSpeed": 0.00244997301535239,
+        "stepDistance": 0.0,
+        "stepCount": 37
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252171-trial0-speed-0.05.json",
+      "command": [
+        -0.05,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed-0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.618338309003975,
+        "meanCommand": [
+          -0.04999999329447746,
+          0.0
+        ],
+        "meanActual": [
+          -0.042352354387604145,
+          -0.010181047726902176
+        ],
+        "rolling1sMAE": [
+          0.007518364442806481,
+          0.01796571830270362
+        ],
+        "rolling1sP95": [
+          0.011500801393216471,
+          0.03853613585184826
+        ],
+        "stopMeanHorizontalSpeed": 0.003354513038066242,
+        "stepDistance": 0.021735598826769592,
+        "stepCount": 38
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed-0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.651421667709291,
+        "meanCommand": [
+          -0.04999999329447746,
+          0.0
+        ],
+        "meanActual": [
+          -0.04706910825881677,
+          0.00567933693113182
+        ],
+        "rolling1sMAE": [
+          0.0029615550316455337,
+          0.018819533255933354
+        ],
+        "rolling1sP95": [
+          0.006465405901777013,
+          0.04483792307481827
+        ],
+        "stopMeanHorizontalSpeed": 0.0010903790620356588,
+        "stepDistance": 0.024134006834985393,
+        "stepCount": 38
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252171-trial0-speed-0.2.json",
+      "command": [
+        -0.2,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed-0.2.json",
+        "completed": true,
+        "maxTiltDeg": 5.856787015576783,
+        "meanCommand": [
+          -0.19999997317790985,
+          0.0
+        ],
+        "meanActual": [
+          -0.2048274614141851,
+          -0.04438466736867083
+        ],
+        "rolling1sMAE": [
+          0.004378792317425621,
+          0.03819976499464731
+        ],
+        "rolling1sP95": [
+          0.007919137937054569,
+          0.06832807714491146
+        ],
+        "stopMeanHorizontalSpeed": 0.00814821696022229,
+        "stepDistance": 0.10089555797976928,
+        "stepCount": 38
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed-0.2.json",
+        "completed": true,
+        "maxTiltDeg": 5.866354002243276,
+        "meanCommand": [
+          -0.19999997317790985,
+          0.0
+        ],
+        "meanActual": [
+          -0.20788779149745854,
+          -0.05747132637823601
+        ],
+        "rolling1sMAE": [
+          0.008248539730872176,
+          0.05717999589290345
+        ],
+        "rolling1sP95": [
+          0.011884830512868372,
+          0.10114898756654098
+        ],
+        "stopMeanHorizontalSpeed": 0.0069788830557200926,
+        "stepDistance": 0.10156385989052219,
+        "stepCount": 38
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252171-trial0-speed0.025.json",
+      "command": [
+        0.025,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.025.json",
+        "completed": true,
+        "maxTiltDeg": 5.05942243170108,
+        "meanCommand": [
+          0.02499999664723873,
+          0.0
+        ],
+        "meanActual": [
+          0.01213340088573166,
+          6.24640486613511e-05
+        ],
+        "rolling1sMAE": [
+          0.02436186872956676,
+          0.027239407115032033
+        ],
+        "rolling1sP95": [
+          0.03468925318467758,
+          0.1295850795539375
+        ],
+        "stopMeanHorizontalSpeed": 0.0005530248437280714,
+        "stepDistance": 0.04141804357095922,
+        "stepCount": 6
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.025.json",
+        "completed": true,
+        "maxTiltDeg": 3.575314842319056,
+        "meanCommand": [
+          0.02499999664723873,
+          0.0
+        ],
+        "meanActual": [
+          -1.0002034179980705e-06,
+          -0.0031242313446167044
+        ],
+        "rolling1sMAE": [
+          0.02499555584801832,
+          0.0032134771503596017
+        ],
+        "rolling1sP95": [
+          0.025150628209556655,
+          0.004404060435742902
+        ],
+        "stopMeanHorizontalSpeed": 0.002456986738095387,
+        "stepDistance": null,
+        "stepCount": 0
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252171-trial0-speed0.035.json",
+      "command": [
+        0.035,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.035.json",
+        "completed": true,
+        "maxTiltDeg": 4.868193813457032,
+        "meanCommand": [
+          0.034999992698431015,
+          0.0
+        ],
+        "meanActual": [
+          0.034963387367754964,
+          -0.016342404565476278
+        ],
+        "rolling1sMAE": [
+          0.027817890327566396,
+          0.0668859487570198
+        ],
+        "rolling1sP95": [
+          0.03748983523011654,
+          0.17876012424182974
+        ],
+        "stopMeanHorizontalSpeed": 0.0008838238128238378,
+        "stepDistance": 0.04703294658080715,
+        "stepCount": 15
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.035.json",
+        "completed": true,
+        "maxTiltDeg": 4.885699468297502,
+        "meanCommand": [
+          0.034999992698431015,
+          0.0
+        ],
+        "meanActual": [
+          0.0001235101001927858,
+          -0.0008717956971295999
+        ],
+        "rolling1sMAE": [
+          0.034764430991639984,
+          0.001771239094512724
+        ],
+        "rolling1sP95": [
+          0.03497272311434257,
+          0.003997292042545584
+        ],
+        "stopMeanHorizontalSpeed": 0.0046780711930561715,
+        "stepDistance": null,
+        "stepCount": 0
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252171-trial0-speed0.05.json",
+      "command": [
+        0.05,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.05.json",
+        "completed": true,
+        "maxTiltDeg": 5.069864627765508,
+        "meanCommand": [
+          0.04999999329447746,
+          0.0
+        ],
+        "meanActual": [
+          0.05456952256567408,
+          -0.009822021116423189
+        ],
+        "rolling1sMAE": [
+          0.03094027919109268,
+          0.09688238800124684
+        ],
+        "rolling1sP95": [
+          0.04591932825347162,
+          0.22793483534854936
+        ],
+        "stopMeanHorizontalSpeed": 0.009495727871660876,
+        "stepDistance": 0.05831001784350209,
+        "stepCount": 18
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.05.json",
+        "completed": true,
+        "maxTiltDeg": 5.216898128273552,
+        "meanCommand": [
+          0.04999999329447746,
+          0.0
+        ],
+        "meanActual": [
+          0.03710818092117779,
+          -0.004790777721400738
+        ],
+        "rolling1sMAE": [
+          0.030053369477121537,
+          0.058740349436681175
+        ],
+        "rolling1sP95": [
+          0.05124265782358468,
+          0.15688271285360525
+        ],
+        "stopMeanHorizontalSpeed": 0.0003027724577918454,
+        "stepDistance": 0.04924489984947766,
+        "stepCount": 15
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252171-trial0-speed0.075.json",
+      "command": [
+        0.075,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.075.json",
+        "completed": true,
+        "maxTiltDeg": 5.519737590927765,
+        "meanCommand": [
+          0.07499998807907104,
+          0.0
+        ],
+        "meanActual": [
+          0.10328452079132983,
+          0.016114014853031156
+        ],
+        "rolling1sMAE": [
+          0.02516950159813536,
+          0.060877080799672696
+        ],
+        "rolling1sP95": [
+          0.04940562402848675,
+          0.12982249384263225
+        ],
+        "stopMeanHorizontalSpeed": 0.00980499981934105,
+        "stepDistance": 0.07083672971837644,
+        "stepCount": 28
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.075.json",
+        "completed": true,
+        "maxTiltDeg": 5.4235234672353,
+        "meanCommand": [
+          0.07499998807907104,
+          0.0
+        ],
+        "meanActual": [
+          0.07723501284153486,
+          -0.0403097199913294
+        ],
+        "rolling1sMAE": [
+          0.01621907394629807,
+          0.06628484514391308
+        ],
+        "rolling1sP95": [
+          0.03270612137196183,
+          0.1530225691672178
+        ],
+        "stopMeanHorizontalSpeed": 0.0003896425869475311,
+        "stepDistance": 0.059241309785688624,
+        "stepCount": 25
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252171-trial0-speed0.2.json",
+      "command": [
+        0.2,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.2.json",
+        "completed": true,
+        "maxTiltDeg": 6.4370066349418265,
+        "meanCommand": [
+          0.19999997317790985,
+          0.0
+        ],
+        "meanActual": [
+          0.20075103897614618,
+          -0.08810915276380343
+        ],
+        "rolling1sMAE": [
+          0.0022296672318448596,
+          0.09070666375063527
+        ],
+        "rolling1sP95": [
+          0.00515068796919303,
+          0.15498275557449528
+        ],
+        "stopMeanHorizontalSpeed": 0.0026509744181554052,
+        "stepDistance": 0.10629401921394854,
+        "stepCount": 36
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.2.json",
+        "completed": true,
+        "maxTiltDeg": 6.112352503278815,
+        "meanCommand": [
+          0.19999997317790985,
+          0.0
+        ],
+        "meanActual": [
+          0.18951366075508766,
+          -0.041652920043699096
+        ],
+        "rolling1sMAE": [
+          0.011140828821786382,
+          0.05059656267124671
+        ],
+        "rolling1sP95": [
+          0.016972447789505733,
+          0.09651843599626063
+        ],
+        "stopMeanHorizontalSpeed": 0.023178815890273152,
+        "stepDistance": 0.10096405698853896,
+        "stepCount": 36
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252171-trial0-speed0.4.json",
+      "command": [
+        0.4,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.4.json",
+        "completed": true,
+        "maxTiltDeg": 6.923560225051553,
+        "meanCommand": [
+          0.3999999463558197,
+          0.0
+        ],
+        "meanActual": [
+          0.3934622434996141,
+          -0.05303373286866562
+        ],
+        "rolling1sMAE": [
+          0.007254942991701751,
+          0.06964199829197096
+        ],
+        "rolling1sP95": [
+          0.017764374670151465,
+          0.2048407113322347
+        ],
+        "stopMeanHorizontalSpeed": 0.008341228527653588,
+        "stepDistance": 0.18515654403529608,
+        "stepCount": 39
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.4.json",
+        "completed": true,
+        "maxTiltDeg": 6.861100457462749,
+        "meanCommand": [
+          0.3999999463558197,
+          0.0
+        ],
+        "meanActual": [
+          0.38743229852314354,
+          -0.07373926482661057
+        ],
+        "rolling1sMAE": [
+          0.012628619758093674,
+          0.0749446375861782
+        ],
+        "rolling1sP95": [
+          0.01644650783409011,
+          0.11742907601939073
+        ],
+        "stopMeanHorizontalSpeed": 0.007208269741028018,
+        "stepDistance": 0.18173093473514887,
+        "stepCount": 39
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252171-trial0-speed0.json",
+      "command": [
+        0.0,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.json",
+        "completed": true,
+        "maxTiltDeg": 3.5596248929630776,
+        "meanCommand": [
+          0.0,
+          0.0
+        ],
+        "meanActual": [
+          2.2697308397912967e-05,
+          -0.002389843051471657
+        ],
+        "rolling1sMAE": [
+          5.412196010330108e-05,
+          0.0024203594655560026
+        ],
+        "rolling1sP95": [
+          0.0001203738073640992,
+          0.0034562033755783867
+        ],
+        "stopMeanHorizontalSpeed": 0.004766970585199587,
+        "stepDistance": null,
+        "stepCount": 0
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252171-trial0-speed0.json",
+        "completed": true,
+        "maxTiltDeg": 3.575314842319056,
+        "meanCommand": [
+          0.0,
+          0.0
+        ],
+        "meanActual": [
+          3.182686958723402e-05,
+          -0.0027585085340270047
+        ],
+        "rolling1sMAE": [
+          6.814690848374317e-05,
+          0.0027637979871121127
+        ],
+        "rolling1sP95": [
+          0.00017225303588790135,
+          0.004501446969527229
+        ],
+        "stopMeanHorizontalSpeed": 0.0032013732442721077,
+        "stepDistance": null,
+        "stepCount": 0
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252177-trial0-speed-0.05.json",
+      "command": [
+        -0.05,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed-0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.792578148195543,
+        "meanCommand": [
+          -0.04999999329447746,
+          0.0
+        ],
+        "meanActual": [
+          -0.04357284568652482,
+          -0.02760640752724802
+        ],
+        "rolling1sMAE": [
+          0.006790795483780949,
+          0.02696165872811988
+        ],
+        "rolling1sP95": [
+          0.011537967979140182,
+          0.08129379199238262
+        ],
+        "stopMeanHorizontalSpeed": 0.0017129440455489124,
+        "stepDistance": 0.022119366663413617,
+        "stepCount": 38
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed-0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.708467600553968,
+        "meanCommand": [
+          -0.04999999329447746,
+          0.0
+        ],
+        "meanActual": [
+          -0.04598119333509153,
+          0.010124709952824272
+        ],
+        "rolling1sMAE": [
+          0.003764535411125417,
+          0.025292658140573993
+        ],
+        "rolling1sP95": [
+          0.007824249526711107,
+          0.05276284817697249
+        ],
+        "stopMeanHorizontalSpeed": 0.0013695564330553096,
+        "stepDistance": 0.023645641044802355,
+        "stepCount": 38
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252177-trial0-speed-0.2.json",
+      "command": [
+        -0.2,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed-0.2.json",
+        "completed": true,
+        "maxTiltDeg": 5.903443617125369,
+        "meanCommand": [
+          -0.19999997317790985,
+          0.0
+        ],
+        "meanActual": [
+          -0.20730999008736742,
+          -0.048922512437474794
+        ],
+        "rolling1sMAE": [
+          0.006695398732748207,
+          0.04710787902156945
+        ],
+        "rolling1sP95": [
+          0.009775134742446429,
+          0.07394555539704187
+        ],
+        "stopMeanHorizontalSpeed": 0.0034752428839896713,
+        "stepDistance": 0.10102388236145173,
+        "stepCount": 38
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed-0.2.json",
+        "completed": true,
+        "maxTiltDeg": 5.9085955264754615,
+        "meanCommand": [
+          -0.19999997317790985,
+          0.0
+        ],
+        "meanActual": [
+          -0.20896727694319045,
+          -0.046157042408496426
+        ],
+        "rolling1sMAE": [
+          0.008696137966062457,
+          0.042482020810544585
+        ],
+        "rolling1sP95": [
+          0.011484848104639614,
+          0.08767997147109556
+        ],
+        "stopMeanHorizontalSpeed": 0.009652255323552373,
+        "stepDistance": 0.10270396293460282,
+        "stepCount": 38
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252177-trial0-speed0.025.json",
+      "command": [
+        0.025,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.025.json",
+        "completed": true,
+        "maxTiltDeg": 5.073986531739394,
+        "meanCommand": [
+          0.02499999664723873,
+          0.0
+        ],
+        "meanActual": [
+          0.00021627807779387085,
+          -0.0009142014574542859
+        ],
+        "rolling1sMAE": [
+          0.02479309175226242,
+          0.0011591486326952452
+        ],
+        "rolling1sP95": [
+          0.02502517919521078,
+          0.0035923034882171393
+        ],
+        "stopMeanHorizontalSpeed": 0.0031766167781417894,
+        "stepDistance": null,
+        "stepCount": 0
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.025.json",
+        "completed": true,
+        "maxTiltDeg": 2.7884309020390075,
+        "meanCommand": [
+          0.02499999664723873,
+          0.0
+        ],
+        "meanActual": [
+          2.4098123735444242e-05,
+          -0.0031444827403461833
+        ],
+        "rolling1sMAE": [
+          0.024959435420265505,
+          0.003149681819515563
+        ],
+        "rolling1sP95": [
+          0.025105719308777794,
+          0.004708422457356738
+        ],
+        "stopMeanHorizontalSpeed": 0.0021880821644096925,
+        "stepDistance": null,
+        "stepCount": 0
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252177-trial0-speed0.035.json",
+      "command": [
+        0.035,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.035.json",
+        "completed": true,
+        "maxTiltDeg": 5.918026666721595,
+        "meanCommand": [
+          0.034999992698431015,
+          0.0
+        ],
+        "meanActual": [
+          0.035334527370377004,
+          -0.014694223886740777
+        ],
+        "rolling1sMAE": [
+          0.02799127102970682,
+          0.0673331210018934
+        ],
+        "rolling1sP95": [
+          0.03668125909657366,
+          0.17231222777830435
+        ],
+        "stopMeanHorizontalSpeed": 0.01168173250690376,
+        "stepDistance": 0.04712323914735546,
+        "stepCount": 15
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.035.json",
+        "completed": true,
+        "maxTiltDeg": 4.813102381573278,
+        "meanCommand": [
+          0.034999992698431015,
+          0.0
+        ],
+        "meanActual": [
+          0.00013835692027791015,
+          -0.0012974313144194446
+        ],
+        "rolling1sMAE": [
+          0.03489657416504813,
+          0.0021584016068659883
+        ],
+        "rolling1sP95": [
+          0.035069290524068396,
+          0.00435164736899655
+        ],
+        "stopMeanHorizontalSpeed": 0.004675043913679508,
+        "stepDistance": null,
+        "stepCount": 0
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252177-trial0-speed0.05.json",
+      "command": [
+        0.05,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.05.json",
+        "completed": true,
+        "maxTiltDeg": 6.202359523798849,
+        "meanCommand": [
+          0.04999999329447746,
+          0.0
+        ],
+        "meanActual": [
+          0.06395820897462737,
+          -0.047576707209729355
+        ],
+        "rolling1sMAE": [
+          0.03244805492948086,
+          0.12819933960346763
+        ],
+        "rolling1sP95": [
+          0.046682200817368985,
+          0.27656669414832924
+        ],
+        "stopMeanHorizontalSpeed": 0.046590687645100805,
+        "stepDistance": 0.06316986068460383,
+        "stepCount": 19
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.05.json",
+        "completed": true,
+        "maxTiltDeg": 4.962316722532876,
+        "meanCommand": [
+          0.04999999329447746,
+          0.0
+        ],
+        "meanActual": [
+          0.030933645591328565,
+          0.008718813694138494
+        ],
+        "rolling1sMAE": [
+          0.03287256584313293,
+          0.04965549384745826
+        ],
+        "rolling1sP95": [
+          0.05050736376730883,
+          0.15439197267678678
+        ],
+        "stopMeanHorizontalSpeed": 0.008656123669350872,
+        "stepDistance": 0.04930968841139646,
+        "stepCount": 12
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252177-trial0-speed0.075.json",
+      "command": [
+        0.075,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.075.json",
+        "completed": true,
+        "maxTiltDeg": 5.389377092533002,
+        "meanCommand": [
+          0.07499998807907104,
+          0.0
+        ],
+        "meanActual": [
+          0.0965752677156159,
+          -0.006629056104113913
+        ],
+        "rolling1sMAE": [
+          0.023906337362785763,
+          0.06975589033991215
+        ],
+        "rolling1sP95": [
+          0.038208339185770476,
+          0.1567180828780484
+        ],
+        "stopMeanHorizontalSpeed": 0.014103583704318834,
+        "stepDistance": 0.06679354011987391,
+        "stepCount": 28
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.075.json",
+        "completed": true,
+        "maxTiltDeg": 5.39818087887742,
+        "meanCommand": [
+          0.07499998807907104,
+          0.0
+        ],
+        "meanActual": [
+          0.08344669742848083,
+          -0.020115254261536555
+        ],
+        "rolling1sMAE": [
+          0.015163481615248914,
+          0.06039866881902397
+        ],
+        "rolling1sP95": [
+          0.02958666423366387,
+          0.14118410522314206
+        ],
+        "stopMeanHorizontalSpeed": 0.0012984891456209995,
+        "stepDistance": 0.06162631918903303,
+        "stepCount": 27
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252177-trial0-speed0.2.json",
+      "command": [
+        0.2,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.2.json",
+        "completed": true,
+        "maxTiltDeg": 6.534684751357564,
+        "meanCommand": [
+          0.19999997317790985,
+          0.0
+        ],
+        "meanActual": [
+          0.2004007962236037,
+          -0.09502174560775356
+        ],
+        "rolling1sMAE": [
+          0.0022066509545964476,
+          0.10097112332129927
+        ],
+        "rolling1sP95": [
+          0.00517411853596273,
+          0.14823270225419044
+        ],
+        "stopMeanHorizontalSpeed": 0.0038895499103609823,
+        "stepDistance": 0.10619829698290324,
+        "stepCount": 36
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.2.json",
+        "completed": true,
+        "maxTiltDeg": 6.159851636710377,
+        "meanCommand": [
+          0.19999997317790985,
+          0.0
+        ],
+        "meanActual": [
+          0.18839492177844885,
+          -0.060147753823939144
+        ],
+        "rolling1sMAE": [
+          0.012060627929477099,
+          0.06369075491165761
+        ],
+        "rolling1sP95": [
+          0.017847314326492707,
+          0.12772369688928442
+        ],
+        "stopMeanHorizontalSpeed": 0.02431522047917946,
+        "stepDistance": 0.10037566401137225,
+        "stepCount": 35
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252177-trial0-speed0.4.json",
+      "command": [
+        0.4,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.4.json",
+        "completed": true,
+        "maxTiltDeg": 6.971249662242484,
+        "meanCommand": [
+          0.3999999463558197,
+          0.0
+        ],
+        "meanActual": [
+          0.39814194011488035,
+          0.0038233241594987076
+        ],
+        "rolling1sMAE": [
+          0.002347466846436199,
+          0.04174053898105379
+        ],
+        "rolling1sP95": [
+          0.006755322013299312,
+          0.09475368185604183
+        ],
+        "stopMeanHorizontalSpeed": 0.0059885324068452645,
+        "stepDistance": 0.18717933710524162,
+        "stepCount": 39
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.4.json",
+        "completed": true,
+        "maxTiltDeg": 6.82113337014454,
+        "meanCommand": [
+          0.3999999463558197,
+          0.0
+        ],
+        "meanActual": [
+          0.38240496006899655,
+          -0.07514026156967832
+        ],
+        "rolling1sMAE": [
+          0.017994461612184365,
+          0.07767353132298192
+        ],
+        "rolling1sP95": [
+          0.048247794160660794,
+          0.1701251328413832
+        ],
+        "stopMeanHorizontalSpeed": 0.007478408722728202,
+        "stepDistance": 0.18017883750416663,
+        "stepCount": 39
+      },
+      "commonCommandFrames": 1500
+    },
+    {
+      "source": "cpu-yaw0/seed252177-trial0-speed0.json",
+      "command": [
+        0.0,
+        0.0
+      ],
+      "baseline": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.json",
+        "completed": true,
+        "maxTiltDeg": 5.040846242263134,
+        "meanCommand": [
+          0.0,
+          0.0
+        ],
+        "meanActual": [
+          3.827565370636117e-05,
+          -0.0020263771138450434
+        ],
+        "rolling1sMAE": [
+          8.012023413722759e-05,
+          0.0020372325906549225
+        ],
+        "rolling1sP95": [
+          0.00018140671822806302,
+          0.0033636462345728057
+        ],
+        "stopMeanHorizontalSpeed": 0.0033035397228976483,
+        "stepDistance": null,
+        "stepCount": 0
+      },
+      "candidate": {
+        "source": "cpu-yaw0\\seed252177-trial0-speed0.json",
+        "completed": true,
+        "maxTiltDeg": 2.7884309020390075,
+        "meanCommand": [
+          0.0,
+          0.0
+        ],
+        "meanActual": [
+          6.813171304911211e-06,
+          -0.002886452432378442
+        ],
+        "rolling1sMAE": [
+          5.033818383934859e-05,
+          0.002912152208533265
+        ],
+        "rolling1sP95": [
+          0.00013568201556847265,
+          0.005905977064412542
+        ],
+        "stopMeanHorizontalSpeed": 0.004348585609875454,
+        "stepDistance": null,
+        "stepCount": 0
+      },
+      "commonCommandFrames": 1500
+    }
+  ]
+}

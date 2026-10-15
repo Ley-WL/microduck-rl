@@ -6,10 +6,10 @@ from pathlib import Path
 import numpy as np
 
 
-def audit(root):
+def audit(root, screen='joint-pulse-screen.json', cpu=True):
     report = {"accepted": False, "simulationOnly": True, "cpu": {}, "gpu": {}}
     reference = root / "baseline" / "cpu-straight"
-    for stage in ("baseline", "step100", "step500"):
+    for stage in (("baseline", "step100", "step500") if cpu else ()):
         rows = json.loads((root / stage / "cpu-body-tracking.json").read_text())["results"]
         paired = 0
         for path in sorted((root / stage / "cpu-straight").glob("seed*.json")):
@@ -21,7 +21,7 @@ def audit(root):
             paired += 1
         assert paired == len(rows)
         report["cpu"][stage] = {"paired": paired, "survived": sum(r["completed"] for r in rows), "rows": rows}
-    data = json.loads((root / "joint-pulse-screen.json").read_text())
+    data = json.loads((root / screen).read_text())
     cases = np.repeat(np.asarray(data["cases"]), 4, axis=0)
     for label in ("baseline", "candidate"):
         rows = [r for r in data["results"] if r["policy"] == label]
@@ -56,8 +56,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("root", type=Path)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--screen", default='joint-pulse-screen.json')
+    parser.add_argument("--skip-cpu", action='store_true')
     args = parser.parse_args()
-    result = audit(args.root)
+    result = audit(args.root, args.screen, not args.skip_cpu)
     args.output.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(json.dumps(dict(cpu={k: v["paired"] for k, v in result["cpu"].items()},
         gpu={k: v["survived"] for k, v in result["gpu"].items() if k != "pairing"},
