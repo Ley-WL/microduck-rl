@@ -1,0 +1,33 @@
+{
+  "records": [
+    {
+      "updates": 5,
+      "validationRms": 0.029793865978717804,
+      "initialValidationRms": 0.04229031130671501,
+      "normalizerUnchanged": true,
+      "finite": true,
+      "onnxMaxError": 4.3213367462158203e-07,
+      "policySha256": "0204c02927a7c5d299dbb134c4001ce035c019cd6d0088ff64810e0fbdfaade7"
+    },
+    {
+      "updates": 100,
+      "validationRms": 0.00924559123814106,
+      "initialValidationRms": 0.04229031130671501,
+      "normalizerUnchanged": true,
+      "finite": true,
+      "onnxMaxError": 4.470348358154297e-07,
+      "policySha256": "8ab58f4d347b72b466d5ca9acdb6926f7e68704fa4ee5d2d736bdde2d59848ff"
+    },
+    {
+      "updates": 500,
+      "validationRms": 0.005531318485736847,
+      "initialValidationRms": 0.04229031130671501,
+      "normalizerUnchanged": true,
+      "finite": true,
+      "onnxMaxError": 6.556510925292969e-07,
+      "policySha256": "fef146d96e1013f390d51ff134eefdb01fda7ad6196b41c401cfe2262b65877c"
+    }
+  ],
+  "hardwareAccess": false,
+  "accepted": false
+}

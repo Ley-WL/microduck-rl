@@ -59,6 +59,10 @@ def run(args):
     stride_period=getattr(args,'stride_teacher_period',0.)
     stride_duty=getattr(args,'stride_teacher_duty',.5)
     stride_gain=getattr(args,'stride_teacher_gain',1.)
+    stride_after=getattr(args,'stride_teacher_after',0.)
+    stride_path=getattr(args,'stride_teacher_onnx',None)
+    assert not (stride_after or stride_path) or stride_period
+    assert 0<=stride_after<args.seconds
     if stride_period:
         assert .4<=stride_period<=3. and .2<=stride_duty<=.8
         assert .5<=stride_gain<=1.5
@@ -130,6 +134,8 @@ def run(args):
                 np.testing.assert_allclose(model.joint('passive_'+name+'_backlash').range,[-np.pi/180,np.pi/180],atol=1e-12)
     opts=ort.SessionOptions();opts.intra_op_num_threads=1;opts.inter_op_num_threads=1
     session=ort.InferenceSession(str(args.onnx),sess_options=opts,providers=['CPUExecutionProvider'])
+    stride_session=ort.InferenceSession(str(stride_path),sess_options=opts,providers=['CPUExecutionProvider']) if stride_path else session
+    assert stride_session.get_inputs()[0].shape==[1,61] and stride_session.get_outputs()[0].shape==[1,14]
     assert session.get_inputs()[0].shape==[1,61] and session.get_outputs()[0].shape==[1,14]
     stop_path=getattr(args,'stop_teacher_onnx',None)
     feedback_path=getattr(args,'feedback_teacher_onnx',None)
@@ -148,6 +154,7 @@ def run(args):
         feedbackTeacherSha256=hashlib.sha256(feedback_path.read_bytes()).hexdigest() if feedback_path else None,
         feedbackAfterSeconds=feedback_after,
         strideTeacher=dict(periodSeconds=stride_period,duty=stride_duty,gain=stride_gain,simulationOnly=True,
+            afterSeconds=stride_after,teacherSha256=hashlib.sha256(stride_path.read_bytes()).hexdigest() if stride_path else None,
             commandMetricsUnmodified=True,runtimeAccepted=False),
         stopTeacherSha256=hashlib.sha256(stop_path.read_bytes()).hexdigest() if stop_path else None,
         feedbackVxCorrectionLimit=getattr(args,'feedback_vx_limit',.12),
@@ -253,7 +260,8 @@ def run(args):
                     encoder_q=data.qpos[qadr]+(data.qpos[passive_qadr] if args.backlash else 0)
                     obs=np.concatenate([gyro,gravity,observed_angles(encoder_q)-home,velocity_previous,previous,command,np.zeros(10)]).astype(np.float32)
                     query=obs.copy()
-                    if stride_period:
+                    stride_active=stride_period and t>=stride_after
+                    if stride_active:
                         # Offline demonstration only: target/metrics remain the original command.
                         phase=max(0.,t-2.)%stride_period
                         pulse=target_command*stride_gain/stride_duty if phase<stride_period*stride_duty else np.zeros(3,dtype=np.float32)
@@ -268,6 +276,7 @@ def run(args):
                     has_moved=has_moved or moving_now
                     active_session=stop_session if stop_session and has_moved and not moving_now else session
                     if feedback_active:active_session=feedback_session
+                    if stride_active:active_session=stride_session
                     raw=active_session.run(None,{active_session.get_inputs()[0].name:query[None]})[0][0]
                     if not np.isfinite(raw).all():raise ValueError('Non-finite frozen policy output')
                     voltage_scale=np.float32(7.4/np.clip(args.voltage,6.,9.5)) if args.voltage_compensation else np.float32(1.)
@@ -276,7 +285,7 @@ def run(args):
                     tilt=float(np.degrees(np.arccos(np.clip(-gravity[2],-1,1))))
                     contact_pairs=[[model.geom(c.geom1).name,model.geom(c.geom2).name] for c in data.contact]
                     rows.append(dict(time=t,tilt=tilt,command=command.tolist(),raw=raw.tolist(),target=target.tolist(),contacts=contact_pairs,
-                        qpos=data.qpos.tolist(),velocity=data.qvel.tolist(),obs=obs.tolist(),teacherCommand=query[48:51].tolist() if feedback_active or stride_period else None,clipped=(np.abs(desired-np.clip(desired,np.asarray(list(mechanical.LIMITS.values()))[:,0],np.asarray(list(mechanical.LIMITS.values()))[:,1]))>1e-7).tolist()))
+                        qpos=data.qpos.tolist(),velocity=data.qvel.tolist(),obs=obs.tolist(),teacherCommand=query[48:51].tolist() if feedback_active or stride_active else None,clipped=(np.abs(desired-np.clip(desired,np.asarray(list(mechanical.LIMITS.values()))[:,0],np.asarray(list(mechanical.LIMITS.values()))[:,1]))>1e-7).tolist()))
                     if tilt>=60:fallen=t;break
                     velocity_previous=data.qvel[vadr].copy()+(data.qvel[passive_vadr] if args.backlash else 0)
                     steps=max(1,round(cadence[tick%len(cadence)]/dt)) if cadence else decimation
@@ -323,4 +332,6 @@ if __name__=='__main__':
     p.add_argument('--stride-teacher-period',type=float,default=0.,help='Offline pulsed-step demonstration period; zero disables, never runtime')
     p.add_argument('--stride-teacher-duty',type=float,default=.5,help='Offline moving duty fraction; pulse command is target/duty')
     p.add_argument('--stride-teacher-gain',type=float,default=1.,help='Offline demonstration amplitude calibration; scoring command stays original')
+    p.add_argument('--stride-teacher-after',type=float,default=0.,help='Offline handoff time; preserve student state and action history')
+    p.add_argument('--stride-teacher-onnx',type=Path,help='Offline pulse teacher after handoff; defaults to the tested policy')
     run(p.parse_args())

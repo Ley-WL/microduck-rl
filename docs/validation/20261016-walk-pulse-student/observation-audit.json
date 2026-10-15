@@ -1,0 +1,75 @@
+{
+  "sourceHashes": {
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\p2.0-d0.2-g0.8\\seed227171-trial0-speed0.05.json": "4ff31ea20a122bde1b7c2314d53ea06bde8a93bdabdc8ab3e33a98b76392fa45",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\p2.0-d0.2-g0.8\\seed227177-trial0-speed0.05.json": "d79ecb80690db60b9aa5f2dab822974c0f4749c31eef4c0ece0956f1b6f0de8c",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242171-trial0-speed0.05.json": "c92be5ae0327140fbb17f8820c8dd0d675ccd041924d406435857a6feea9c9ce",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242177-trial0-speed0.05.json": "1c627260ca37b8ac1084c724a2813750b96afa131d651d35a7ff025ea9805595",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242181-trial0-speed0.05.json": "4c87e113de11a9f5cb0f164085bffd9dee874f3663024216e3f37df3ad8b9c70",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242189-trial0-speed0.05.json": "91bdbfbcc29d3a66f96b458c94d916af0926e5fb80e600478c4ab01de0e1dffd"
+  },
+  "actorSha256": "158a045b4bb4172ac3dccced92d46258fd2e49807f576ed6033b40a44bc8e224",
+  "worlds": [
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\p2.0-d0.2-g0.8\\seed227171-trial0-speed0.05.json",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\p2.0-d0.2-g0.8\\seed227177-trial0-speed0.05.json",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242171-trial0-speed0.05.json",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242177-trial0-speed0.05.json",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242181-trial0-speed0.05.json",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242189-trial0-speed0.05.json"
+  ],
+  "validationToTraining": {
+    "samples": 6000,
+    "normalizedInputRmsQuantiles": [
+      0.0061270385161051235,
+      0.01145125070015752,
+      0.023882394256634493
+    ],
+    "actionRmsQuantiles": [
+      0.0013305770698934793,
+      0.0031826813938096166,
+      0.009090103209018707
+    ]
+  },
+  "restartToWaiting": {
+    "samples": 440,
+    "normalizedInputRmsQuantiles": [
+      0.03479296369393935,
+      0.2736662753793792,
+      0.4101943182771536
+    ],
+    "actionRmsQuantiles": [
+      0.08367839492857486,
+      0.18563321232795715,
+      0.25154540240764617
+    ]
+  },
+  "restartToRestart": {
+    "samples": 440,
+    "normalizedInputRmsQuantiles": [
+      0.00525592393769519,
+      0.007904344598002239,
+      0.015986295514065815
+    ],
+    "actionRmsQuantiles": [
+      0.0011830108356662096,
+      0.002353179850615561,
+      0.006976329907774926
+    ]
+  },
+  "limitation": "Nearest-neighbor diagnostic only; nonzero input separation does not prove autonomous restart. Closed-loop imitation must verify it.",
+  "optimizationSteps": 0,
+  "hardwareAccess": false,
+  "dataSha256": "6babff47ed01aa31b73b02863ea8c0c1c25b3455385f62f148b71b7f256624a3",
+  "firstRestartFramesToWaiting": {
+    "samples": 68,
+    "normalizedInputRmsQuantiles": [
+      0.0053372555400968014,
+      0.008379274855283829,
+      0.038307382397431755
+    ],
+    "actionRmsQuantiles": [
+      0.03420402631163597,
+      0.035347264260053635,
+      0.09150125309824944
+    ]
+  }
+}

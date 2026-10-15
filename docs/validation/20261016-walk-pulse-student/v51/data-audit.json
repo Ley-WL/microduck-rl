@@ -1,0 +1,42 @@
+{
+  "sourceHashes": {
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\p2.0-d0.2-g0.8\\seed227171-trial0-speed0.05.json": "4ff31ea20a122bde1b7c2314d53ea06bde8a93bdabdc8ab3e33a98b76392fa45",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\p2.0-d0.2-g0.8\\seed227177-trial0-speed0.05.json": "d79ecb80690db60b9aa5f2dab822974c0f4749c31eef4c0ece0956f1b6f0de8c",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242171-trial0-speed0.05.json": "c92be5ae0327140fbb17f8820c8dd0d675ccd041924d406435857a6feea9c9ce",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242177-trial0-speed0.05.json": "1c627260ca37b8ac1084c724a2813750b96afa131d651d35a7ff025ea9805595",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242181-trial0-speed0.05.json": "4c87e113de11a9f5cb0f164085bffd9dee874f3663024216e3f37df3ad8b9c70",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242189-trial0-speed0.05.json": "91bdbfbcc29d3a66f96b458c94d916af0926e5fb80e600478c4ab01de0e1dffd",
+    "artifacts\\walk-pulse-handoff-v50-20261016\\step100\\cpu-straight\\seed243171-trial0-speed0.05.json": "2e9a857aeb9985d2a5c9f1d78fa024d7548daf98b566cc925c46495e18a248e6",
+    "artifacts\\walk-pulse-handoff-v50-20261016\\step100\\cpu-straight\\seed243177-trial0-speed0.05.json": "c9f92168fc276055146aad9412376ba128840d10c41b48963373095c47024dba",
+    "artifacts\\walk-pulse-handoff-v50-20261016\\step500\\cpu-straight\\seed243171-trial0-speed0.05.json": "57480f0b2e50955c49468ca90b3d2c3386e1dc215a90999ea50c1d1f04824769",
+    "artifacts\\walk-pulse-handoff-v50-20261016\\step500\\cpu-straight\\seed243177-trial0-speed0.05.json": "b5e99d186675b013f6e4e62d07037890272d42a072b72f8d51c3e5f83f2d0802"
+  },
+  "worlds": [
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\p2.0-d0.2-g0.8\\seed227171-trial0-speed0.05.json",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\p2.0-d0.2-g0.8\\seed227177-trial0-speed0.05.json",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242171-trial0-speed0.05.json",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242177-trial0-speed0.05.json",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242181-trial0-speed0.05.json",
+    "artifacts\\walk-pulsed-demo-v47b-20261016\\forward-holdout\\seed242189-trial0-speed0.05.json",
+    "artifacts\\walk-pulse-handoff-v50-20261016\\step100\\cpu-straight\\seed243171-trial0-speed0.05.json",
+    "artifacts\\walk-pulse-handoff-v50-20261016\\step100\\cpu-straight\\seed243177-trial0-speed0.05.json",
+    "artifacts\\walk-pulse-handoff-v50-20261016\\step500\\cpu-straight\\seed243171-trial0-speed0.05.json",
+    "artifacts\\walk-pulse-handoff-v50-20261016\\step500\\cpu-straight\\seed243177-trial0-speed0.05.json"
+  ],
+  "dataSha256": "ce17ea4d2e2a2b13454d403b3633065db41f3b5d910cc7f35c4c7d86f0323f7d",
+  "trainingWorlds": [
+    0,
+    1,
+    6,
+    8
+  ],
+  "validationWorlds": [
+    2,
+    3,
+    4,
+    5,
+    7,
+    9
+  ],
+  "clockAtRuntime": false
+}

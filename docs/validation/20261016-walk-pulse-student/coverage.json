@@ -1,0 +1,65 @@
+{
+  "rows": [
+    {
+      "stage": "baseline",
+      "source": "seed243171-trial0-speed0.05.json",
+      "normalizedNearestDemoRmsQuantiles": [
+        0.2124522813386518,
+        0.2629299074667368,
+        0.34201923871047
+      ],
+      "fractionBeyondDemoValidationP90": 1.0
+    },
+    {
+      "stage": "baseline",
+      "source": "seed243177-trial0-speed0.05.json",
+      "normalizedNearestDemoRmsQuantiles": [
+        0.2121611110766739,
+        0.2586424037904296,
+        0.33769222605368027
+      ],
+      "fractionBeyondDemoValidationP90": 1.0
+    },
+    {
+      "stage": "step100",
+      "source": "seed243171-trial0-speed0.05.json",
+      "normalizedNearestDemoRmsQuantiles": [
+        0.04232117632067142,
+        0.23727463658505854,
+        0.31529393005528145
+      ],
+      "fractionBeyondDemoValidationP90": 0.9723809523809523
+    },
+    {
+      "stage": "step100",
+      "source": "seed243177-trial0-speed0.05.json",
+      "normalizedNearestDemoRmsQuantiles": [
+        0.030397849206213582,
+        0.055436173018416815,
+        0.13324823158327348
+      ],
+      "fractionBeyondDemoValidationP90": 0.9666666666666667
+    },
+    {
+      "stage": "step500",
+      "source": "seed243171-trial0-speed0.05.json",
+      "normalizedNearestDemoRmsQuantiles": [
+        0.02328601300417933,
+        0.18724948164233102,
+        0.31133518129503074
+      ],
+      "fractionBeyondDemoValidationP90": 0.8942857142857142
+    },
+    {
+      "stage": "step500",
+      "source": "seed243177-trial0-speed0.05.json",
+      "normalizedNearestDemoRmsQuantiles": [
+        0.019082494028782794,
+        0.05900228604398111,
+        0.11930541540426023
+      ],
+      "fractionBeyondDemoValidationP90": 0.8152380952380952
+    }
+  ],
+  "limitation": "Distance to teacher observations is diagnostic, not a correct-action label or a causal proof. The validation p90 is a descriptive reference, not an acceptance gate."
+}

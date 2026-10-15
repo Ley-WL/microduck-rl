@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "worlds": 4,
+  "first500FramesExactlyMatched": true,
+  "hardwareAccess": false
+}
