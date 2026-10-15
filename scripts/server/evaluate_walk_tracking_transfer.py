@@ -12,6 +12,8 @@ from mjlab_microduck.tasks.walk_tracking_transfer import make_cfg, rl_cfg
 
 p = argparse.ArgumentParser()
 p.add_argument('--speed-grid',type=float,nargs='+',default=[-.2,-.1,0.,.1,.2])
+p.add_argument('--yaw-grid',type=float,nargs='+',default=[-.6,0.,.6])
+p.add_argument('--pulse-teacher',action='store_true',help='Offline large-step clocked reference; never deploy')
 p.add_argument('--seeds', type=int, nargs='+', default=[191051, 191057])
 p.add_argument('--output', default='tracking-screen.json')
 p.add_argument('--candidate', default='evidence/main/final.pt')
@@ -31,6 +33,9 @@ p.add_argument('--feedback-teacher', action='store_true', help='Privileged simul
 p.add_argument('--stochastic-candidate',action='store_true',help='Frozen diagnostic: training distribution samples, never deployment')
 a = p.parse_args()
 assert not a.baseline_cache or a.speed_grid==[-.2,-.1,0.,.1,.2], 'Changed speed grid cannot reuse legacy cache'
+assert not a.baseline_cache or a.yaw_grid==[-.6,0.,.6]
+assert len(a.yaw_grid)==len(set(a.yaw_grid)) and all(np.isfinite(a.yaw_grid))
+assert not a.pulse_teacher or (a.long_hold and a.yaw_grid==[0.] and all(.035<=abs(v)<=.1 for v in a.speed_grid) and not any((a.feedback_teacher,a.teacher_map,a.stop_teacher_checkpoint,a.stochastic_candidate)))
 assert not a.baseline_cache or a.baseline_checkpoint==Path('inputs/seed.pt'), 'Explicit baseline cannot reuse legacy cache'
 assert not a.reward_audit_task or (a.long_hold and not a.baseline_cache), 'Reward audit requires uncached long hold'
 assert sum(bool(x) for x in (a.feedback_teacher,a.teacher_map,a.stop_teacher_checkpoint))<=1, 'Select one simulation teacher'
@@ -39,7 +44,7 @@ assert not a.nominal_dr or a.fixed_actuator, 'Nominal DR requires fixed actuator
 assert not ((a.long_hold or a.fixed_actuator or a.nominal_dr) and a.baseline_cache), 'Diagnostic profiles cannot reuse legacy baseline cache'
 ROOT = Path(__file__).resolve().parents[2]
 assert len(a.speed_grid)==len(set(a.speed_grid)) and all(np.isfinite(a.speed_grid))
-cases = [(v, yaw) for v in a.speed_grid for yaw in (-.6, 0., .6)]
+cases = [(v, yaw) for v in a.speed_grid for yaw in a.yaw_grid]
 worlds=len(cases)*4
 rows = []
 cached = json.loads(a.baseline_cache.read_text())['results'] if a.baseline_cache else []
@@ -139,10 +144,19 @@ for seed in a.seeds:
                 reward_command=torch.zeros_like(reward_actual)
                 reward_count=torch.zeros((worlds,6),device=env.device)
             command_hash = hashlib.sha256()
+            pulse=None
+            if a.pulse_teacher and label=='candidate':
+                from walk_pulse_reference import PulseReference
+                pulse=PulseReference(worlds,env.device)
             command_world_hashes = [hashlib.sha256() for _ in range(worlds)]
             for tick in range(1500 if a.long_hold else 1200):
                 with torch.inference_mode():
                     query=obs
+                    if pulse is not None:
+                        view=obs['actor'].clone()
+                        elapsed=torch.where(term.stop_time<16.,term.stop_time-1.,term.stop_time-16.)
+                        view[:,48:51]=pulse.step(env.command_manager.get_command('twist'),elapsed)
+                        query={**obs,'actor':view}
                     if a.teacher_map and label=='candidate':
                         query=guidance.query(obs)
                     if feedback is not None:
@@ -165,6 +179,7 @@ for seed in a.seeds:
                         stopped=has_moved & ~moving_now
                         action=torch.where(stopped[:,None],stop_actor(obs),action)
                 obs, reward, done, timeout, _ = env.step(action)
+                if pulse is not None:pulse.reset(done|timeout)
                 tilt = torch.rad2deg(torch.acos((-robot.data.projected_gravity_b[:, 2]).clamp(-1, 1)))
                 peak = torch.maximum(peak, torch.where(~failed, tilt, 0.))
                 failed |= done | timeout | (tilt >= 45.)
@@ -283,7 +298,7 @@ for seed in a.seeds:
         aggregate=aggregate, directionRegressionPassed=bool(directional), passed=bool(passed)))
 result = dict(cases=cases, results=rows, comparisons=comparisons, accepted=all(r['passed'] for r in comparisons),
     stochasticCandidate=a.stochastic_candidate,actionSamplingSeedOffset=900000 if a.stochastic_candidate else None,
-    longHold=a.long_hold, fixedActuator=a.fixed_actuator, nominalDr=a.nominal_dr, privilegedFeedbackTeacher=a.feedback_teacher,feedbackVxLimit=a.feedback_vx_limit,feedbackQueryVxLimit=a.feedback_query_vx_limit,
+    longHold=a.long_hold, fixedActuator=a.fixed_actuator, nominalDr=a.nominal_dr, pulseTeacher=a.pulse_teacher, yawGrid=a.yaw_grid, privilegedFeedbackTeacher=a.feedback_teacher,feedbackVxLimit=a.feedback_vx_limit,feedbackQueryVxLimit=a.feedback_query_vx_limit,
     stopTeacherCheckpoint=str(a.stop_teacher_checkpoint) if a.stop_teacher_checkpoint else None,
     stopTeacherSha256=hashlib.sha256((ROOT/a.stop_teacher_checkpoint).read_bytes()).hexdigest() if a.stop_teacher_checkpoint else None,
     candidateCheckpoint=a.candidate, baselineCheckpoint=str(a.baseline_checkpoint), baselineCache=str(a.baseline_cache) if a.baseline_cache else None,

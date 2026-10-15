@@ -1,0 +1,262 @@
+{
+  "baseline": {
+    "0.0": {
+      "worlds": 24,
+      "survived": 24,
+      "startedPhases": 0,
+      "totalPhases": 48,
+      "phaseBias": [
+        0.0068282268667492945,
+        0.042194195405613755
+      ],
+      "stopMean": [
+        0.007437609695140661,
+        0.03190243929081286
+      ],
+      "stopMax": [
+        0.018564993515610695,
+        0.10298571735620499
+      ],
+      "footTravelMeanIncludingNoSteps": 0.0,
+      "airTimeMean": 0.0,
+      "completedFootfalls": 0
+    },
+    "0.035": {
+      "worlds": 24,
+      "survived": 24,
+      "startedPhases": 27,
+      "totalPhases": 48,
+      "phaseBias": [
+        0.016042139757602786,
+        0.04549871000214504
+      ],
+      "stopMean": [
+        0.010493217213176345,
+        0.04838277663414677
+      ],
+      "stopMax": [
+        0.06227170675992966,
+        0.29145050048828125
+      ],
+      "footTravelMeanIncludingNoSteps": 0.017454912046863075,
+      "airTimeMean": 0.23772443054864803,
+      "completedFootfalls": 1268
+    },
+    "0.05": {
+      "worlds": 48,
+      "survived": 48,
+      "startedPhases": 90,
+      "totalPhases": 96,
+      "phaseBias": [
+        0.012516775542711875,
+        0.055579286825225914
+      ],
+      "stopMean": [
+        0.010344380027769754,
+        0.04755838529672474
+      ],
+      "stopMax": [
+        0.041665203869342804,
+        0.1798904836177826
+      ],
+      "footTravelMeanIncludingNoSteps": 0.028763523790985346,
+      "airTimeMean": 0.24972037132829428,
+      "completedFootfalls": 2817
+    },
+    "0.075": {
+      "worlds": 24,
+      "survived": 24,
+      "startedPhases": 48,
+      "totalPhases": 48,
+      "phaseBias": [
+        0.011935690573106209,
+        0.05078912670190524
+      ],
+      "stopMean": [
+        0.008818665073097995,
+        0.042053525956968464
+      ],
+      "stopMax": [
+        0.013995963148772717,
+        0.05319731682538986
+      ],
+      "footTravelMeanIncludingNoSteps": 0.04287531591641406,
+      "airTimeMean": 0.2556842699026068,
+      "completedFootfalls": 1441
+    },
+    "0.2": {
+      "worlds": 48,
+      "survived": 48,
+      "startedPhases": 96,
+      "totalPhases": 96,
+      "phaseBias": [
+        0.014527331416805586,
+        0.06414703847379617
+      ],
+      "stopMean": [
+        0.012730377988191321,
+        0.06089529003171871
+      ],
+      "stopMax": [
+        0.049515027552843094,
+        0.2566080093383789
+      ],
+      "footTravelMeanIncludingNoSteps": 0.10530629420342545,
+      "airTimeMean": 0.25553075193117064,
+      "completedFootfalls": 2934
+    },
+    "0.4": {
+      "worlds": 48,
+      "survived": 48,
+      "startedPhases": 96,
+      "totalPhases": 96,
+      "phaseBias": [
+        0.04450207824508349,
+        0.1552748866008642
+      ],
+      "stopMean": [
+        0.01907345695265879,
+        0.08061775572908421
+      ],
+      "stopMax": [
+        0.05951879173517227,
+        0.3376607894897461
+      ],
+      "footTravelMeanIncludingNoSteps": 0.16650521437016627,
+      "airTimeMean": 0.2469931171896557,
+      "completedFootfalls": 3062
+    }
+  },
+  "candidate": {
+    "0.0": {
+      "worlds": 24,
+      "survived": 24,
+      "startedPhases": 0,
+      "totalPhases": 48,
+      "phaseBias": [
+        0.011213888326314722,
+        0.05273015554606294
+      ],
+      "stopMean": [
+        0.014311406727453383,
+        0.06316771106018375
+      ],
+      "stopMax": [
+        0.08048288524150848,
+        0.31854915618896484
+      ],
+      "footTravelMeanIncludingNoSteps": 0.0,
+      "airTimeMean": 0.0,
+      "completedFootfalls": 0
+    },
+    "0.035": {
+      "worlds": 24,
+      "survived": 24,
+      "startedPhases": 26,
+      "totalPhases": 48,
+      "phaseBias": [
+        0.020297631594871746,
+        0.05926956593339128
+      ],
+      "stopMean": [
+        0.016428262630749185,
+        0.07427884727561225
+      ],
+      "stopMax": [
+        0.07176541537046432,
+        0.33936676383018494
+      ],
+      "footTravelMeanIncludingNoSteps": 0.020654329385858244,
+      "airTimeMean": 0.21999691349143782,
+      "completedFootfalls": 1179
+    },
+    "0.05": {
+      "worlds": 48,
+      "survived": 48,
+      "startedPhases": 82,
+      "totalPhases": 96,
+      "phaseBias": [
+        0.016065463571142875,
+        0.06495203909738241
+      ],
+      "stopMean": [
+        0.015674949987442233,
+        0.06213917806356525
+      ],
+      "stopMax": [
+        0.09256760776042938,
+        0.3147704005241394
+      ],
+      "footTravelMeanIncludingNoSteps": 0.029176062113644246,
+      "airTimeMean": 0.24470030578474203,
+      "completedFootfalls": 2755
+    },
+    "0.075": {
+      "worlds": 24,
+      "survived": 24,
+      "startedPhases": 48,
+      "totalPhases": 48,
+      "phaseBias": [
+        0.01425407244823873,
+        0.058052198437508196
+      ],
+      "stopMean": [
+        0.014376709431720277,
+        0.05854751565493643
+      ],
+      "stopMax": [
+        0.09133736789226532,
+        0.25923803448677063
+      ],
+      "footTravelMeanIncludingNoSteps": 0.04137095948681235,
+      "airTimeMean": 0.2527060102050503,
+      "completedFootfalls": 1423
+    },
+    "0.2": {
+      "worlds": 48,
+      "survived": 48,
+      "startedPhases": 96,
+      "totalPhases": 96,
+      "phaseBias": [
+        0.012155920887986818,
+        0.06180958458329163
+      ],
+      "stopMean": [
+        0.015740593943822507,
+        0.06869983929209411
+      ],
+      "stopMax": [
+        0.05740879103541374,
+        0.28006061911582947
+      ],
+      "footTravelMeanIncludingNoSteps": 0.10344709518055122,
+      "airTimeMean": 0.25611200478548807,
+      "completedFootfalls": 2940
+    },
+    "0.4": {
+      "worlds": 48,
+      "survived": 48,
+      "startedPhases": 96,
+      "totalPhases": 96,
+      "phaseBias": [
+        0.04422039849062761,
+        0.1546386223368851
+      ],
+      "stopMean": [
+        0.030394545407034457,
+        0.11374003021046519
+      ],
+      "stopMax": [
+        0.13680024445056915,
+        0.3957660496234894
+      ],
+      "footTravelMeanIncludingNoSteps": 0.1661695116199553,
+      "airTimeMean": 0.24749027891084552,
+      "completedFootfalls": 3109
+    }
+  },
+  "lost": {
+    "247151": [],
+    "247157": []
+  }
+}
