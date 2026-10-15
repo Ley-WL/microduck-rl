@@ -4,16 +4,12 @@
 
 ## 视频展示
 
-**[▶ 在线直接播放 · 一行三列](https://ley-wl.github.io/microduck-rl/video/)**
-
-展示页可直接播放、拖动进度和全屏；点击下方任意预览图进入。
-
 <table>
-  <tr>
-    <td width="33%" align="center"><a href="https://ley-wl.github.io/microduck-rl/video/"><img src="video/08288c57a2226f89b68db60cc7066e7c.jpg" alt="演示视频 1" width="100%" /></a><br /><a href="https://ley-wl.github.io/microduck-rl/video/">▶ 演示视频 1</a></td>
-    <td width="33%" align="center"><a href="https://ley-wl.github.io/microduck-rl/video/"><img src="video/438346ea7100bbcf72a77474617a78a1.jpg" alt="演示视频 2" width="100%" /></a><br /><a href="https://ley-wl.github.io/microduck-rl/video/">▶ 演示视频 2</a></td>
-    <td width="33%" align="center"><a href="https://ley-wl.github.io/microduck-rl/video/"><img src="video/a81c2f37753d642eee83210dca4a0f32.jpg" alt="演示视频 3" width="100%" /></a><br /><a href="https://ley-wl.github.io/microduck-rl/video/">▶ 演示视频 3</a></td>
-  </tr>
+<tr>
+  <td width="33%" align="center"><video src="https://github.com/user-attachments/assets/c5ef2333-d38d-456e-afb6-89fb5f8b2f60" controls></video></td>
+  <td width="33%" align="center"><video src="https://github.com/user-attachments/assets/eb1ef356-b40e-4d24-ab92-f37a1b45dcf1" controls></video></td>
+  <td width="33%" align="center"><video src="https://github.com/user-attachments/assets/1ee32755-6e41-4c7c-9f7c-88e3762b8e5a" controls></video></td>
+</tr>
 </table>
 
 ## 唯一硬件入口
