@@ -376,3 +376,12 @@ v41原模型237157/world41(+.05直行)摔倒后reset改变整批指令hash，分
 速度退化99阶段旧91/99、新92/99偏好准确原actor，总分差1.31654→1.90420(+44.6%)。旧总奖励多数已经正确，不能把它称普遍奖励倒置或唯一PPO根因；仅支持更强跟踪激励的实验。954有效低速/停止窗口全奖励向量精确保持，linear/angular以外奖励逐值保持。完整证据docs/validation/20261016-walk-motion-reward。两轮job0/source-check/终止PID，归档SHA842c1f38ec9c16ca9fd573fb6f7d5bb9037f2f2cf9f975a532e58bb3698edc31和1802d999a86b0b13cd3a7ea176d8ea3cc59e7423e00f7d60428044c1c2fe1780核验。
 
 独立walk-motion-critic-v42-20261016 launcher3464687/worker3473133已确认活跃。新任务walk_mean_motion_tracking仅扩展运动时均值评分，v28actor冻结/fresh critic LR3e-4，原32s环境/PD/HD1910/几何保持。配置/奖励边界测试及64×5通过，40Adam/finite/normalizer/导出actor仍b0809f25；1024×200在途，结束显式--task walk_mean_motion_tracking的冻结价值回报校验，不把旧奖励critic直接当新奖励已校准。actor尚未更新，不自动继续或部署。目标未完成。
+
+
+## 2026-10-16 v42价值门失败，v43补充critic历史状态
+
+v42完成，actor仍精确v28；两个seed各48/48，实际回报21.377/21.244、预测19.688/19.656，RMSE2.267/2.139，均值比例误差通过但EV -.196/-.162失败，门槛不降、动作微调未启动。job0/source-check/回报重算和78872570字节归档12eb08587768e207f357cbe91e5e6a582a3a7bd90958470817c3726896dee64e核验。新评分目标方差较小，不能只看均值接近。详见docs/validation/20261016-walk-motion-critic。
+
+检查发现奖励EMA与30s命令计划有内部历史，原critic没有直接获得。新walk_motion_critic_context只给训练critic添加10维真实manager状态（linear3/angular3误差、phase sin/cos、stop_speed/stop_yaw），未改actor输入、奖励、动作、命令规则、物理或PD。环境先构建ObservationManager后RewardManager，因此初建回退零误差；正常观测位于reward和command compute之后，读取实际历史，不做重复EMA更新。配置、actor保持、只读与reset测试通过；不是已证明唯一原因。
+
+独立walk-context-critic-v43-20261016 launcher3537596/worker3548034已确认活跃。原v28actor冻结/fresh86维critic/LR3e-4，64×5/40Adam/finite/normalizer/61→14导出通过，actorSHA仍b0809f25896126e15fd7c29f9daf34f889dbebf21456347a1f6976ecf7965587。1024×200在途，结束仍原价值校验门，不自动actor更新/部署。准备但未启动的mean_motion动作launcher已撤除；不是遗留运行作业。目标未完成。

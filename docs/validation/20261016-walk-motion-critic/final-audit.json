@@ -1,0 +1,13 @@
+{
+  "actorMatchesV28Exactly": true,
+  "float64ReturnChecks": [
+    {
+      "source": "critic-235151.npz",
+      "maxError": 4.149923340790451e-05
+    },
+    {
+      "source": "critic-235157.npz",
+      "maxError": 3.971567702976131e-05
+    }
+  ]
+}

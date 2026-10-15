@@ -14,7 +14,7 @@ ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'evidence'
 p=argparse.ArgumentParser()
 p.add_argument('--checkpoint',type=Path,default=Path('inputs/candidate.pt'))
-p.add_argument('--task',choices=['walk_low_speed_mean_tracking','walk_mean_motion_tracking'],default='walk_low_speed_mean_tracking')
+p.add_argument('--task',choices=['walk_low_speed_mean_tracking','walk_mean_motion_tracking','walk_motion_critic_context'],default='walk_low_speed_mean_tracking')
 a=p.parse_args()
 module=importlib.import_module('mjlab_microduck.tasks.'+a.task)
 make_cfg,rl_cfg=module.make_cfg,module.rl_cfg

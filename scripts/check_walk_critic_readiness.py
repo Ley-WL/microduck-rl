@@ -27,6 +27,7 @@ for result in data['results']:
         rows.append(dict(seed=result['seed'],phase=phase['phase'],biasFraction=bias,
             rmseFraction=rmse,explainedVariance=phase['explainedVariance'],passed=passed))
 report=dict(passed=all(r['passed'] for r in rows),gaitAccepted=False,hardwareAccepted=False,
+    task=data.get('task','walk_low_speed_mean_tracking'),
     sourceSha256=hashlib.sha256(a.source.read_bytes()).hexdigest(),
     checkpointSha256=data['checkpointSha256'],checks=rows,
     scope='Readiness to investigate actor refinement with this value initializer; not evidence of gait improvement.')

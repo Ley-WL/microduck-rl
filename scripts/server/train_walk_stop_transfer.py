@@ -18,13 +18,13 @@ p.add_argument('--noise-schedule',choices=['fixed','anneal'])
 p.add_argument('--critic-only',action='store_true')
 p.add_argument('--critic-checkpoint',type=Path);a=p.parse_args()
 assert not (a.critic_only and a.noise_schedule)
-assert not a.critic_checkpoint or (TASK in ('walk_low_speed_mean_tracking','walk_mean_motion_tracking') and (a.critic_only or a.noise_schedule))
+assert not a.critic_checkpoint or (TASK in ('walk_low_speed_mean_tracking','walk_mean_motion_tracking','walk_motion_critic_context') and (a.critic_only or a.noise_schedule))
 if a.noise_schedule or a.critic_only:
-    assert TASK in ('walk_low_speed_mean_tracking','walk_mean_motion_tracking')
+    assert TASK in ('walk_low_speed_mean_tracking','walk_mean_motion_tracking','walk_motion_critic_context')
     assert (a.envs,a.iterations) in [(64,5),(1024,200)]
 else:
     assert (a.envs,a.iterations) in ([(64,5),(1024,50)] if TASK!='walk_stop_transfer' else [(64,5),(1024,100)])
-actor_only=TASK in ('walk_sustained_transfer','walk_low_speed_stride','walk_low_speed_control','walk_low_speed_focused','walk_low_speed_focused_control','walk_low_speed_air_window','walk_low_speed_mean_tracking','walk_mean_motion_tracking')
+actor_only=TASK in ('walk_sustained_transfer','walk_low_speed_stride','walk_low_speed_control','walk_low_speed_focused','walk_low_speed_focused_control','walk_low_speed_air_window','walk_low_speed_mean_tracking','walk_mean_motion_tracking','walk_motion_critic_context')
 ROOT=Path(__file__).resolve().parents[2];a.output.mkdir(parents=True,exist_ok=False)
 torch.manual_seed(68131);cfg=make_cfg(a.surface);cfg.scene.num_envs=a.envs
 env=ManagerBasedRlEnv(cfg,device='cuda:0')
@@ -128,12 +128,12 @@ try:
     sha=hashlib.sha256((a.output/'policy.onnx').read_bytes()).hexdigest()
     meta.update(policySha256=sha,artifactType='diagnostic-transfer-policy',hardwareValidated=False)
     meta['walkExecution']['policySha256']=sha
-    meta['transferExperiment']=dict(surface=a.surface,seed=68131,worlds=a.envs,iterations=a.iterations,
+    meta['transferExperiment']=dict(task=TASK,surface=a.surface,seed=68131,worlds=a.envs,iterations=a.iterations,
         originalDonorResume=False,critic='pretrained' if critic_source else 'fresh-initialized',actorNormalizerFrozen=True,
         criticInitializer=critic_source,
         criticOnly=a.critic_only,accepted=False)
     (a.output/'policy.metadata.json').write_text(json.dumps(meta,indent=2))
-    (a.output/'stage-audit.json').write_text(json.dumps(dict(seed=68131,surface=a.surface,worlds=a.envs,
+    (a.output/'stage-audit.json').write_text(json.dumps(dict(task=TASK,seed=68131,surface=a.surface,worlds=a.envs,
         iterations=a.iterations,rolloutSteps=a.envs*24*a.iterations,adamSteps=sorted(steps),actorNormalizerUnchanged=True,
         finite=True,onnxTorchMaxError=error,policySha256=sha,hardwareAccess=False,
         criticOnly=a.critic_only,criticInitializer=critic_source,
