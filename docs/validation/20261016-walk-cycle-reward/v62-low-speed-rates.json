@@ -1,0 +1,226 @@
+{
+  "diagnosticOnly": true,
+  "optimizationSteps": 0,
+  "groups": [
+    {
+      "speed": 0.025,
+      "count": 8,
+      "actual": {
+        "baseline": [
+          0.0331670915545601,
+          -0.004118750062559684,
+          0.02982169589813566
+        ],
+        "candidate": [
+          0.006371849160814236,
+          -0.0006418688575990927,
+          0.0078199204926932
+        ]
+      },
+      "total": {
+        "baseline": 10.0917760146054,
+        "candidate": 10.344686917779796
+      },
+      "candidateHigher": 5,
+      "candidateMinusBaseline": {
+        "track_linear_velocity": 0.11064255237579346,
+        "track_angular_velocity": 0.03497886657714844,
+        "upright": 0.02948082983493805,
+        "pose": 0.06745042651891708,
+        "body_ang_vel": 0.006117024097406443,
+        "angular_momentum": 1.1227525802408496e-07,
+        "dof_pos_limits": 0.0,
+        "action_rate_l2": 0.002145392105173727,
+        "air_time": -0.2312500011175871,
+        "foot_clearance": 0.0014643168436805354,
+        "foot_swing_height": 0.0017559773550601676,
+        "foot_slip": 5.0099118188956515e-05,
+        "self_collisions": 0.0,
+        "head_pose_tracking": -0.0033390074968338013,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": 0.23341431468725204,
+        "long_stride": 0.0,
+        "failure_cost": 0.0
+      }
+    },
+    {
+      "speed": 0.035,
+      "count": 8,
+      "actual": {
+        "baseline": [
+          0.03476963049081405,
+          -0.005263122875021509,
+          0.036300635372754186
+        ],
+        "candidate": [
+          0.014700160380698435,
+          -0.0029154109357989455,
+          0.006400868927812553
+        ]
+      },
+      "total": {
+        "baseline": 10.04748947346815,
+        "candidate": 10.029120141535623
+      },
+      "candidateHigher": 3,
+      "candidateMinusBaseline": {
+        "track_linear_velocity": -0.028663277626037598,
+        "track_angular_velocity": 0.04773665964603424,
+        "upright": 0.03428050875663757,
+        "pose": 0.06104811280965805,
+        "body_ang_vel": 0.005690505444341909,
+        "angular_momentum": 1.0960980678707908e-07,
+        "dof_pos_limits": 0.0,
+        "action_rate_l2": 0.0020707822132344234,
+        "air_time": -0.21750000584870577,
+        "foot_clearance": 0.0014563464477532762,
+        "foot_swing_height": 0.0023208210986922495,
+        "foot_slip": 1.3550638922693592e-05,
+        "self_collisions": 0.0,
+        "head_pose_tracking": -0.00047197937965393066,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": 0.10075735673308372,
+        "long_stride": -0.027108822476293426,
+        "failure_cost": 0.0
+      }
+    },
+    {
+      "speed": 0.05,
+      "count": 8,
+      "actual": {
+        "baseline": [
+          0.05637986632063985,
+          -0.003873980909702368,
+          -0.009343173587694764
+        ],
+        "candidate": [
+          0.03380245330259868,
+          -0.003246754142537611,
+          0.017725993790008943
+        ]
+      },
+      "total": {
+        "baseline": 10.491347415262599,
+        "candidate": 10.116353915402188
+      },
+      "candidateHigher": 3,
+      "candidateMinusBaseline": {
+        "track_linear_velocity": -0.1030036211013794,
+        "track_angular_velocity": 0.03355954587459564,
+        "upright": 0.03766953945159912,
+        "pose": 0.058879077434539795,
+        "body_ang_vel": 0.005964894842637847,
+        "angular_momentum": 1.081099092046958e-07,
+        "dof_pos_limits": 0.0,
+        "action_rate_l2": 0.002191307301229628,
+        "air_time": -0.3274999912828207,
+        "foot_clearance": 0.0014791295742497823,
+        "foot_swing_height": 0.0009772750854608603,
+        "foot_slip": 4.054173169561193e-05,
+        "self_collisions": 0.0,
+        "head_pose_tracking": -0.008178085088729858,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": -0.049051862210035324,
+        "long_stride": -0.028021359583362937,
+        "failure_cost": 0.0
+      }
+    },
+    {
+      "speed": 0.075,
+      "count": 8,
+      "actual": {
+        "baseline": [
+          0.09567597694694996,
+          -0.008262691349955276,
+          -0.07810010263347067
+        ],
+        "candidate": [
+          0.0795126104294468,
+          -0.008016099030214718,
+          -0.03514905599877238
+        ]
+      },
+      "total": {
+        "baseline": 10.650081851574303,
+        "candidate": 10.443005607615357
+      },
+      "candidateHigher": 7,
+      "candidateMinusBaseline": {
+        "track_linear_velocity": -0.0678263008594513,
+        "track_angular_velocity": 0.0386437252163887,
+        "upright": 0.019388273358345032,
+        "pose": 0.04081297665834427,
+        "body_ang_vel": 0.0032184571841042953,
+        "angular_momentum": 5.038280509483441e-08,
+        "dof_pos_limits": 0.0,
+        "action_rate_l2": 0.0009400769044116686,
+        "air_time": -0.18500001728534698,
+        "foot_clearance": 0.0006522891193299074,
+        "foot_swing_height": -5.3253170335665345e-05,
+        "foot_slip": 4.145137634431473e-05,
+        "self_collisions": 0.0,
+        "head_pose_tracking": -0.011548355221748352,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": 0.0021423734724521637,
+        "long_stride": -0.04848799109458923,
+        "failure_cost": 0.0
+      }
+    },
+    {
+      "speed": 0.2,
+      "count": 8,
+      "actual": {
+        "baseline": [
+          0.20433424599468708,
+          -0.0029119603022991214,
+          -0.06759680481627584
+        ],
+        "candidate": [
+          0.19265079870820045,
+          -0.004914067896606866,
+          -0.049223742447793484
+        ]
+      },
+      "total": {
+        "baseline": 11.449091434623398,
+        "candidate": 11.439484863785164
+      },
+      "candidateHigher": 5,
+      "candidateMinusBaseline": {
+        "track_linear_velocity": -0.013006925582885742,
+        "track_angular_velocity": 0.018777310848236084,
+        "upright": 0.0018577128648757935,
+        "pose": 0.0043183863162994385,
+        "body_ang_vel": 0.0001465771347284317,
+        "angular_momentum": 9.16141829065964e-10,
+        "dof_pos_limits": 0.0,
+        "action_rate_l2": 0.0003378177061676979,
+        "air_time": -0.01000000536441803,
+        "foot_clearance": -0.0001722461311146617,
+        "foot_swing_height": -0.00032488791111973114,
+        "foot_slip": -2.58222826232668e-07,
+        "self_collisions": 0.0,
+        "head_pose_tracking": -0.0038893520832061768,
+        "body_pose_tracking": 0.0,
+        "head_pose_bias": 0.0,
+        "stop_motion": 0.0,
+        "stop_tilt": 0.0,
+        "tracking_bias": 0.04343034513294697,
+        "long_stride": -0.05108104646205902,
+        "failure_cost": 0.0
+      }
+    }
+  ]
+}

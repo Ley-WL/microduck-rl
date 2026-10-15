@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "reports": [
+    {
+      "policy": "baseline",
+      "seed": 253151,
+      "checkedWorlds": 60,
+      "excludedFailedWorlds": 0,
+      "maxLegacyAndNewError": [
+        7.27473679518198e-07,
+        7.067439165009404e-07
+      ],
+      "rewardVsPostForwardMeanAbsoluteDifferenceVxVyYaw": [
+        0.003289177143135706,
+        0.007595549170254905,
+        0.052247833515421734
+      ]
+    },
+    {
+      "policy": "candidate",
+      "seed": 253151,
+      "checkedWorlds": 60,
+      "excludedFailedWorlds": 0,
+      "maxLegacyAndNewError": [
+        6.52019862101838e-07,
+        5.971069412247232e-07
+      ],
+      "rewardVsPostForwardMeanAbsoluteDifferenceVxVyYaw": [
+        0.0031121026861734985,
+        0.007188468845774632,
+        0.04991312700560025
+      ]
+    },
+    {
+      "policy": "baseline",
+      "seed": 253157,
+      "checkedWorlds": 60,
+      "excludedFailedWorlds": 0,
+      "maxLegacyAndNewError": [
+        9.853969158424292e-07,
+        7.273127828888448e-07
+      ],
+      "rewardVsPostForwardMeanAbsoluteDifferenceVxVyYaw": [
+        0.003316044871667158,
+        0.007646664432782705,
+        0.05218277566776928
+      ]
+    },
+    {
+      "policy": "candidate",
+      "seed": 253157,
+      "checkedWorlds": 60,
+      "excludedFailedWorlds": 0,
+      "maxLegacyAndNewError": [
+        7.465614202395443e-07,
+        6.933733680547505e-07
+      ],
+      "rewardVsPostForwardMeanAbsoluteDifferenceVxVyYaw": [
+        0.003115391757964844,
+        0.007135279209504609,
+        0.049089940768148405
+      ]
+    }
+  ],
+  "optimizationSteps": 0,
+  "gaitAccepted": false
+}

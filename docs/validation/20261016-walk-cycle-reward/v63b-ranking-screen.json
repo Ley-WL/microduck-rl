@@ -1,0 +1,145 @@
+{
+  "inSample": true,
+  "notGaitAcceptance": true,
+  "criterion": "Speed absolute error improves by >0.01m/s and yaw error does not worsen by more than 0.05rad/s",
+  "variants": {
+    "old": {
+      "eligible": 44,
+      "correct": 38,
+      "groups": [
+        {
+          "speed": 0.025,
+          "meanTotal": {
+            "baseline": 10.080319168102184,
+            "candidate": 10.316896008308042
+          },
+          "candidateHigher": 5
+        },
+        {
+          "speed": 0.035,
+          "meanTotal": {
+            "baseline": 10.226973677670738,
+            "candidate": 10.087734649009827
+          },
+          "candidateHigher": 3
+        },
+        {
+          "speed": 0.05,
+          "meanTotal": {
+            "baseline": 10.526517771966427,
+            "candidate": 10.07615084964452
+          },
+          "candidateHigher": 2
+        },
+        {
+          "speed": 0.075,
+          "meanTotal": {
+            "baseline": 10.723742400852068,
+            "candidate": 10.437937160588408
+          },
+          "candidateHigher": 6
+        },
+        {
+          "speed": 0.2,
+          "meanTotal": {
+            "baseline": 11.461845983878948,
+            "candidate": 11.429027937101988
+          },
+          "candidateHigher": 2
+        }
+      ]
+    },
+    "new": {
+      "eligible": 44,
+      "correct": 39,
+      "groups": [
+        {
+          "speed": 0.025,
+          "meanTotal": {
+            "baseline": 10.647040879642779,
+            "candidate": 10.543809670004059
+          },
+          "candidateHigher": 2
+        },
+        {
+          "speed": 0.035,
+          "meanTotal": {
+            "baseline": 10.654342133237204,
+            "candidate": 10.455577281355682
+          },
+          "candidateHigher": 2
+        },
+        {
+          "speed": 0.05,
+          "meanTotal": {
+            "baseline": 10.98919831480798,
+            "candidate": 10.55518661364583
+          },
+          "candidateHigher": 1
+        },
+        {
+          "speed": 0.075,
+          "meanTotal": {
+            "baseline": 11.026418296244962,
+            "candidate": 10.757072008780742
+          },
+          "candidateHigher": 7
+        },
+        {
+          "speed": 0.2,
+          "meanTotal": {
+            "baseline": 11.461845983878948,
+            "candidate": 11.429027937101988
+          },
+          "candidateHigher": 2
+        }
+      ]
+    },
+    "relative": {
+      "eligible": 44,
+      "correct": 40,
+      "groups": [
+        {
+          "speed": 0.025,
+          "meanTotal": {
+            "baseline": 8.654361611086843,
+            "candidate": 8.213834705870417
+          },
+          "candidateHigher": 2
+        },
+        {
+          "speed": 0.035,
+          "meanTotal": {
+            "baseline": 9.159604526446216,
+            "candidate": 8.72903103337429
+          },
+          "candidateHigher": 4
+        },
+        {
+          "speed": 0.05,
+          "meanTotal": {
+            "baseline": 10.464394447340808,
+            "candidate": 9.82894748622141
+          },
+          "candidateHigher": 1
+        },
+        {
+          "speed": 0.075,
+          "meanTotal": {
+            "baseline": 10.743152441204915,
+            "candidate": 10.37732475341236
+          },
+          "candidateHigher": 7
+        },
+        {
+          "speed": 0.2,
+          "meanTotal": {
+            "baseline": 11.461845977884476,
+            "candidate": 11.429027943938804
+          },
+          "candidateHigher": 2
+        }
+      ]
+    }
+  }
+}

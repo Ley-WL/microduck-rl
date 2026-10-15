@@ -1,0 +1,517 @@
+{
+  "diagnosticOnly": true,
+  "notGaitAcceptance": true,
+  "criterion": "Speed absolute error improves by >0.01m/s and yaw error does not worsen by more than0.05rad/s",
+  "eligible": 39,
+  "oldPreferred": 36,
+  "newPreferred": 35,
+  "rows": [
+    {
+      "seed": 253151,
+      "world": 14,
+      "phase": "steadyReverse",
+      "command": [
+        -0.034999921917915344,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 16,
+      "phase": "steadyForward",
+      "command": [
+        0.034999921917915344,
+        0.0,
+        0.0
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 25,
+      "phase": "steadyReverse",
+      "command": [
+        -0.050000131130218506,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 28,
+      "phase": "steadyForward",
+      "command": [
+        0.050000131130218506,
+        0.0,
+        0.0
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 29,
+      "phase": "steadyForward",
+      "command": [
+        0.050000131130218506,
+        0.0,
+        0.0
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 30,
+      "phase": "steadyForward",
+      "command": [
+        0.050000131130218506,
+        0.0,
+        0.0
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 31,
+      "phase": "steadyForward",
+      "command": [
+        0.050000131130218506,
+        0.0,
+        0.0
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 32,
+      "phase": "steadyForward",
+      "command": [
+        0.050000131130218506,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 35,
+      "phase": "steadyForward",
+      "command": [
+        0.050000131130218506,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 36,
+      "phase": "steadyReverse",
+      "command": [
+        -0.07500012964010239,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 40,
+      "phase": "steadyForward",
+      "command": [
+        0.07500012964010239,
+        0.0,
+        0.0
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 46,
+      "phase": "steadyForward",
+      "command": [
+        0.07500012964010239,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 47,
+      "phase": "steadyForward",
+      "command": [
+        0.07500012964010239,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 50,
+      "phase": "steadyForward",
+      "command": [
+        0.20000052452087402,
+        0.0,
+        -0.6000010371208191
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 52,
+      "phase": "steadyForward",
+      "command": [
+        0.20000052452087402,
+        0.0,
+        0.0
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 53,
+      "phase": "steadyForward",
+      "command": [
+        0.20000052452087402,
+        0.0,
+        0.0
+      ],
+      "winner": "candidate",
+      "oldPreferred": false,
+      "newPreferred": false
+    },
+    {
+      "seed": 253151,
+      "world": 55,
+      "phase": "steadyForward",
+      "command": [
+        0.20000052452087402,
+        0.0,
+        0.0
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 57,
+      "phase": "steadyForward",
+      "command": [
+        0.20000052452087402,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253151,
+      "world": 59,
+      "phase": "steadyForward",
+      "command": [
+        0.20000052452087402,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 6,
+      "phase": "steadyForward",
+      "command": [
+        0.025000065565109253,
+        0.0,
+        0.0
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": false
+    },
+    {
+      "seed": 253157,
+      "world": 6,
+      "phase": "steadyReverse",
+      "command": [
+        -0.025000065565109253,
+        0.0,
+        0.0
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 7,
+      "phase": "steadyForward",
+      "command": [
+        0.025000065565109253,
+        0.0,
+        0.0
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 16,
+      "phase": "steadyForward",
+      "command": [
+        0.034999921917915344,
+        0.0,
+        0.0
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 17,
+      "phase": "steadyReverse",
+      "command": [
+        -0.034999921917915344,
+        0.0,
+        0.0
+      ],
+      "winner": "baseline",
+      "oldPreferred": false,
+      "newPreferred": false
+    },
+    {
+      "seed": 253157,
+      "world": 30,
+      "phase": "steadyForward",
+      "command": [
+        0.050000131130218506,
+        0.0,
+        0.0
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 37,
+      "phase": "steadyForward",
+      "command": [
+        0.07500012964010239,
+        0.0,
+        -0.6000010371208191
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 37,
+      "phase": "steadyReverse",
+      "command": [
+        -0.07500012964010239,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 38,
+      "phase": "steadyForward",
+      "command": [
+        0.07500012964010239,
+        0.0,
+        -0.6000010371208191
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 38,
+      "phase": "steadyReverse",
+      "command": [
+        -0.07500012964010239,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 41,
+      "phase": "steadyReverse",
+      "command": [
+        -0.07500012964010239,
+        0.0,
+        0.0
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 42,
+      "phase": "steadyForward",
+      "command": [
+        0.07500012964010239,
+        0.0,
+        0.0
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 43,
+      "phase": "steadyForward",
+      "command": [
+        0.07500012964010239,
+        0.0,
+        0.0
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 46,
+      "phase": "steadyForward",
+      "command": [
+        0.07500012964010239,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "candidate",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 48,
+      "phase": "steadyForward",
+      "command": [
+        0.20000052452087402,
+        0.0,
+        -0.6000010371208191
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 52,
+      "phase": "steadyForward",
+      "command": [
+        0.20000052452087402,
+        0.0,
+        0.0
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 54,
+      "phase": "steadyForward",
+      "command": [
+        0.20000052452087402,
+        0.0,
+        0.0
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 55,
+      "phase": "steadyForward",
+      "command": [
+        0.20000052452087402,
+        0.0,
+        0.0
+      ],
+      "winner": "baseline",
+      "oldPreferred": false,
+      "newPreferred": false
+    },
+    {
+      "seed": 253157,
+      "world": 56,
+      "phase": "steadyForward",
+      "command": [
+        0.20000052452087402,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    },
+    {
+      "seed": 253157,
+      "world": 58,
+      "phase": "steadyForward",
+      "command": [
+        0.20000052452087402,
+        0.0,
+        0.6000010371208191
+      ],
+      "winner": "baseline",
+      "oldPreferred": true,
+      "newPreferred": true
+    }
+  ]
+}

@@ -25,7 +25,7 @@ p.add_argument('--long-hold', action='store_true', help='30s: move1-11, stop11-1
 p.add_argument('--fixed-actuator', action='store_true', help='7.4V/no droop/4 physics ticks; other DR retained')
 p.add_argument('--nominal-dr', action='store_true', help='Disable listed parameter/sensor DR; reset distribution remains')
 p.add_argument('--trace-motion',action='store_true',help='Save body velocity and stop transients for diagnosis')
-p.add_argument('--reward-audit-task',choices=['walk_low_speed_focused_control','walk_low_speed_air_window','walk_low_speed_mean_tracking','walk_mean_motion_tracking'],
+p.add_argument('--reward-audit-task',choices=['walk_low_speed_focused_control','walk_low_speed_air_window','walk_low_speed_mean_tracking','walk_mean_motion_tracking','walk_cycle_mean_tracking'],
     help='Frozen diagnostic: use and record training rewards without optimizing')
 p.add_argument('--stop-teacher-checkpoint',type=Path,help='Simulation-only stop controller diagnostic; not deployment')
 p.add_argument('--feedback-vx-limit',type=float,default=.12)
@@ -138,6 +138,7 @@ for seed in a.seeds:
             phase_steps=torch.zeros((worlds,2,2),device=env.device)
             phase_distance=torch.zeros_like(phase_steps)
             motion_trace=[]
+            bias_input_trace=[]
             if a.reward_audit_task:
                 reward_names=env.reward_manager.active_terms
                 reward_windows=[(1.,3.),(5.,11.),(11.3,16.),(16.,18.),(20.,26.),(26.3,30.)]
@@ -218,6 +219,8 @@ for seed in a.seeds:
                             reward_count[:,index]+=live
                 if a.trace_motion:
                     motion_trace.append(torch.cat((actual,command,tilt[:,None],live[:,None]),-1).detach().clone())
+                    if a.reward_audit_task=='walk_cycle_mean_tracking':
+                        bias_input_trace.append(env.reward_manager.get_term_cfg('tracking_bias').func.audit_inputs.detach().clone())
                 motion_window = (5. <= phase < 11. or 20. <= phase < 26.) if a.long_hold else (2. <= phase < 4. or 8. <= phase < 10.)
                 if motion_window:
                     direction = 0 if phase < (16. if a.long_hold else 7.) else 1
@@ -274,6 +277,11 @@ for seed in a.seeds:
                 trace_name=Path(a.output).stem+f'-{label}-{seed}-motion.npz'
                 np.savez_compressed(ROOT/'evidence'/trace_name,values=torch.stack(motion_trace).cpu().numpy(),dt=.02,columns=np.array(['vx','vy','yaw','commandVx','commandVy','commandYaw','tilt','live']))
                 row['motionTrace']=trace_name
+                if bias_input_trace:
+                    name=Path(a.output).stem+f'-{label}-{seed}-bias-input.npz'
+                    np.savez_compressed(ROOT/'evidence'/name,values=torch.stack(bias_input_trace).cpu().numpy(),
+                        dt=.02,columns=np.array(['vx','vy','yaw','commandVx','commandVy','commandYaw']))
+                    row['biasInputTrace']=name
             if a.collect_pulse_demo:
                 name=f'pulse-data-{label}-{seed}.pt'
                 torch.save(dict(observation=torch.stack(demo_obs),target=torch.stack(demo_actions),
