@@ -1,0 +1,25 @@
+{
+  "smoke/stage-audit.json": {
+    "seed": 68131,
+    "surface": false,
+    "worlds": 64,
+    "iterations": 5,
+    "rolloutSteps": 7680,
+    "adamSteps": [
+      40
+    ],
+    "actorNormalizerUnchanged": true,
+    "finite": true,
+    "onnxTorchMaxError": 4.76837158203125e-06,
+    "policySha256": "1eaf1d4bede456044e8e9167a9e6c6ad8a5ca4734b6f978f5c1589bfc17cb350",
+    "hardwareAccess": false,
+    "accepted": false
+  },
+  "control-reuse.json": {
+    "controlSource": "/CodeRepo/Code/leiwu30/1_code/microduck-training/walk-focused-stride-v30-20261016/evidence/control",
+    "controlPolicySha256": "febc44346a35781219affa5763dc9aed9f80e1b6a8637ae3623965fd20c6d502",
+    "unchangedSourceInputs": 355,
+    "trainerDifference": "Task allowlists only",
+    "controlRetrained": false
+  }
+}
