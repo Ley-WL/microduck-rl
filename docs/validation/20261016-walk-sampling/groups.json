@@ -1,0 +1,58 @@
+{
+  "diagnosticOnly": true,
+  "accepted": false,
+  "sources": {
+    "artifacts\\walk-sampling-audit-v35-20261016\\downloaded\\evidence\\sampling-screen.json": {
+      "baseline": {
+        "0.05": {
+          "worlds": 48,
+          "survived": 48,
+          "startedPhases": 74,
+          "totalPhases": 96,
+          "phaseBias": [
+            0.018466777883361374,
+            0.07089371891768792
+          ],
+          "stopMean": [
+            0.006035710560051181,
+            0.030241147226964433
+          ],
+          "stopMax": [
+            0.010420766659080982,
+            0.06512919068336487
+          ],
+          "footTravelMeanIncludingNoSteps": 0.026619330941078562,
+          "airTimeMean": 0.2309931719986101,
+          "completedFootfalls": 2239
+        }
+      },
+      "candidate": {
+        "0.05": {
+          "worlds": 48,
+          "survived": 48,
+          "startedPhases": 87,
+          "totalPhases": 96,
+          "phaseBias": [
+            0.011964393549230104,
+            0.08574958957130245
+          ],
+          "stopMean": [
+            0.010129868664080277,
+            0.0893386898872753
+          ],
+          "stopMax": [
+            0.016492124646902084,
+            0.11582127213478088
+          ],
+          "footTravelMeanIncludingNoSteps": 0.026649527542758733,
+          "airTimeMean": 0.24205327654878298,
+          "completedFootfalls": 2722
+        }
+      },
+      "lost": {
+        "232151": [],
+        "232157": []
+      }
+    }
+  }
+}

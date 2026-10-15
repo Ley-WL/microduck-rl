@@ -1,0 +1,22 @@
+{
+  "simulationOnly": true,
+  "diagnosticOnly": true,
+  "summary": {
+    "baseline": {
+      "startedPhases": 13,
+      "totalPhases": 32,
+      "phaseBias": [
+        0.034039729906851335,
+        0.02347106037890967
+      ]
+    },
+    "candidate": {
+      "startedPhases": 25,
+      "totalPhases": 32,
+      "phaseBias": [
+        0.015414882574987132,
+        0.05289808021916542
+      ]
+    }
+  }
+}

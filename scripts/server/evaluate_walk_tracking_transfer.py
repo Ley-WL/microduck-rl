@@ -28,11 +28,13 @@ p.add_argument('--stop-teacher-checkpoint',type=Path,help='Simulation-only stop 
 p.add_argument('--feedback-vx-limit',type=float,default=.12)
 p.add_argument('--feedback-query-vx-limit',type=float,default=.3)
 p.add_argument('--feedback-teacher', action='store_true', help='Privileged simulation reference, never a deployed policy')
+p.add_argument('--stochastic-candidate',action='store_true',help='Frozen diagnostic: training distribution samples, never deployment')
 a = p.parse_args()
 assert not a.baseline_cache or a.speed_grid==[-.2,-.1,0.,.1,.2], 'Changed speed grid cannot reuse legacy cache'
 assert not a.baseline_cache or a.baseline_checkpoint==Path('inputs/seed.pt'), 'Explicit baseline cannot reuse legacy cache'
 assert not a.reward_audit_task or (a.long_hold and not a.baseline_cache), 'Reward audit requires uncached long hold'
 assert sum(bool(x) for x in (a.feedback_teacher,a.teacher_map,a.stop_teacher_checkpoint))<=1, 'Select one simulation teacher'
+assert not a.stochastic_candidate or not any((a.feedback_teacher,a.teacher_map,a.stop_teacher_checkpoint)), 'Do not mix diagnostic action sampling and teachers'
 assert not a.nominal_dr or a.fixed_actuator, 'Nominal DR requires fixed actuator'
 assert not ((a.long_hold or a.fixed_actuator or a.nominal_dr) and a.baseline_cache), 'Diagnostic profiles cannot reuse legacy baseline cache'
 ROOT = Path(__file__).resolve().parents[2]
@@ -83,6 +85,10 @@ for seed in a.seeds:
             runner = MjlabOnPolicyRunner(RslRlVecEnvWrapper(env), agent, log_dir=None, device=env.device)
             runner.load(str(ROOT / checkpoint), load_cfg={'actor': True}, map_location=env.device)
             actor = runner.alg.actor; actor.eval()
+            policy_rng=None
+            if a.stochastic_candidate and label=='candidate':
+                assert actor.distribution is not None
+                policy_rng=torch.Generator(device=env.device).manual_seed(seed+900000).get_state()
             stop_actor=None
             if a.stop_teacher_checkpoint and label=='candidate':
                 stop_actor=copy.deepcopy(actor)
@@ -144,7 +150,14 @@ for seed in a.seeds:
                         active=env.command_manager.get_command('twist').norm(dim=-1)>.001
                         view[:,48:51]=feedback.query(view[:,48:51],actual_feedback,enabled=active)
                         query={**obs,'actor':view}
-                    action = actor(query)
+                    if policy_rng is not None:
+                        # Sampling must not consume the RNG used by physics/DR.
+                        with torch.random.fork_rng(devices=[torch.cuda.current_device()]):
+                            torch.cuda.set_rng_state(policy_rng)
+                            action=actor(query,stochastic_output=True)
+                            policy_rng=torch.cuda.get_rng_state()
+                    else:
+                        action = actor(query)
                     if stop_actor is not None:
                         moving_now=env.command_manager.get_command('twist').norm(dim=-1)>.001
                         has_moved|=moving_now
@@ -264,6 +277,7 @@ for seed in a.seeds:
     comparisons.append(dict(seed=seed, lost=lost, paired=int(keep.sum()), perCase=per_case,
         aggregate=aggregate, directionRegressionPassed=bool(directional), passed=bool(passed)))
 result = dict(cases=cases, results=rows, comparisons=comparisons, accepted=all(r['passed'] for r in comparisons),
+    stochasticCandidate=a.stochastic_candidate,actionSamplingSeedOffset=900000 if a.stochastic_candidate else None,
     longHold=a.long_hold, fixedActuator=a.fixed_actuator, nominalDr=a.nominal_dr, privilegedFeedbackTeacher=a.feedback_teacher,feedbackVxLimit=a.feedback_vx_limit,feedbackQueryVxLimit=a.feedback_query_vx_limit,
     stopTeacherCheckpoint=str(a.stop_teacher_checkpoint) if a.stop_teacher_checkpoint else None,
     stopTeacherSha256=hashlib.sha256((ROOT/a.stop_teacher_checkpoint).read_bytes()).hexdigest() if a.stop_teacher_checkpoint else None,
