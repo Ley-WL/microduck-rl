@@ -162,10 +162,10 @@ for seed in a.seeds:
                 actual = torch.cat((robot.data.root_link_lin_vel_b[:, :2], robot.data.root_link_ang_vel_b[:, 2:3]), -1)
                 if a.reward_audit_task:
                     term_reward=env.reward_manager._step_reward
+                    scale=env.step_dt if env.reward_manager._scale_by_dt else 1.
                     legacy_reward=term_reward.clone()
                     for i,term_cfg in legacy_terms:
-                        legacy_reward[:,i]=torch.nan_to_num(term_cfg.func.legacy_reward*term_cfg.weight)
-                    scale=env.step_dt if env.reward_manager._scale_by_dt else 1.
+                        legacy_reward[:,i]=torch.nan_to_num(term_cfg.func.legacy_reward*term_cfg.weight*scale)/scale
                     if tick in (0,500,1499):
                         torch.testing.assert_close(term_reward[live].sum(-1)*scale,reward[live],atol=1e-5,rtol=1e-5)
                     for index,(start,end) in enumerate(reward_windows):
