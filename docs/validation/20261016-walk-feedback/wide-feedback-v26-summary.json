@@ -1,0 +1,45 @@
+{
+  "accepted": false,
+  "teacherOnly": true,
+  "failed": [
+    {
+      "policy": "candidate",
+      "seed": 223151,
+      "world": 1,
+      "command": [
+        -0.4,
+        -0.6
+      ]
+    }
+  ],
+  "policies": {
+    "baseline": {
+      "totalSurvived": 96,
+      "total": 96,
+      "lowSpeedSurvived": 48,
+      "lowSpeedTotal": 48,
+      "lowSpeedPhaseBias": [
+        0.022881335658585817,
+        0.04701053941918568
+      ],
+      "lowSpeedMeanStop": [
+        0.004978756067430368,
+        0.024809472660611693
+      ]
+    },
+    "candidate": {
+      "totalSurvived": 95,
+      "total": 96,
+      "lowSpeedSurvived": 48,
+      "lowSpeedTotal": 48,
+      "lowSpeedPhaseBias": [
+        0.0021834455352897444,
+        0.007413774416818342
+      ],
+      "lowSpeedMeanStop": [
+        0.005888704610697459,
+        0.02965182001935318
+      ]
+    }
+  }
+}

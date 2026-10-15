@@ -1,0 +1,30 @@
+{
+  "gpuShape": [
+    1500,
+    40,
+    61
+  ],
+  "cpuShape": [
+    45000,
+    61
+  ],
+  "gpuTrainingWorlds": 30,
+  "gpuValidationWorlds": 10,
+  "cpuTrainingWorlds": 20,
+  "cpuValidationWorlds": 10,
+  "wholeWorldSplit": true,
+  "finite": true,
+  "gpuMeanPhaseBias": [
+    0.0012481899466365576,
+    0.007763801608234644
+  ],
+  "gpuMaxPhaseBias": [
+    0.014550074934959412,
+    0.087819404900074
+  ],
+  "gpuStartedPhases": 80,
+  "gpuTotalPhases": 80,
+  "cpuSha256": "9eb0af11947451c1d46908f51a0e820de92bc4a4556535584f50577d274075fe",
+  "gpuSha256": "dc731198c414e1639e8af1d483694bdd471807bd39baf8f2802350914175611d",
+  "notFinalLargeStrideTarget": true
+}

@@ -8,13 +8,14 @@ import kissqy_walk_physics as physics
 p=argparse.ArgumentParser();p.add_argument('root',type=Path)
 p.add_argument('--window',type=float,nargs=2,default=[5.,9.])
 p.add_argument('--seconds',type=float,default=12.)
+p.add_argument('--pattern',default='cpu-*/seed*.json')
 a=p.parse_args()
 assert 1 <= a.window[0] < a.window[1] <= a.seconds-3
 ROOT=Path(__file__).resolve().parents[1]
 spec=mujoco.MjSpec.from_file(str(ROOT/'src/mjlab_microduck/robot/replica/scene_walk_backlash.xml'))
 physics.apply(spec);model=spec.compile();data=mujoco.MjData(model)
 feet=[model.site(n).id for n in ['left_foot','right_foot']];results=[]
-for path in sorted(a.root.glob('cpu-*/seed*.json')):
+for path in sorted(a.root.glob(a.pattern)):
     frames=json.loads(path.read_text())['frames'];t=np.array([f['time'] for f in frames])
     q=np.array([f['qpos'][3:7] for f in frames]);v=np.array([f['velocity'][:3] for f in frames]);w,x,y,z=q.T
     vx=(1-2*(y*y+z*z))*v[:,0]+2*(x*y+w*z)*v[:,1]+2*(x*z-w*y)*v[:,2]

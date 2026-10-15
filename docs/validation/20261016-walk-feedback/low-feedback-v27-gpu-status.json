@@ -1,0 +1,28 @@
+{
+  "live": false,
+  "exit": "0",
+  "sourceVerified": true,
+  "progress": {
+    "stage": "complete",
+    "training": false,
+    "hardwareAccess": false
+  },
+  "audit": {
+    "worlds": 40,
+    "survived": 40,
+    "maxTiltDeg": 10.312995910644531,
+    "seed": 224131,
+    "steps": 1500,
+    "trainingWorlds": 30,
+    "validationWorlds": 10,
+    "speeds": [
+      -0.05,
+      0.05
+    ],
+    "feedbackVxLimit": 0.25,
+    "feedbackQueryVxLimit": 0.6,
+    "privilegedTeacherOnly": true,
+    "teacherCheckpointSha256": "059dc6060f7ce0d1f6cc7a5287c016118ad4080b01cb75463551231a79720eac",
+    "dataSha256": "dc731198c414e1639e8af1d483694bdd471807bd39baf8f2802350914175611d"
+  }
+}

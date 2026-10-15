@@ -1,0 +1,732 @@
+{
+  "simulationOnly": true,
+  "hardwareValidated": false,
+  "windowSeconds": [
+    17.0,
+    27.0
+  ],
+  "seconds": 30.0,
+  "rollingSeconds": 1.0,
+  "results": [
+    {
+      "source": "yaw-0.3\\seed224101-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 4.671771152375093,
+      "meanCommand": [
+        -0.04999999329447746,
+        -0.2999999523162842
+      ],
+      "meanActual": [
+        -0.049900981765826684,
+        -0.304450685640183
+      ],
+      "rolling1sMAE": [
+        0.002260912502245231,
+        0.025288576865629138
+      ],
+      "rolling1sP95": [
+        0.004867955815740647,
+        0.05828488658934276
+      ],
+      "stopMeanHorizontalSpeed": 0.002220825747667311,
+      "stepDistance": 0.025184806008541432,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw-0.3\\seed224101-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.156643001095081,
+      "meanCommand": [
+        0.04999999329447746,
+        -0.2999999523162842
+      ],
+      "meanActual": [
+        0.04913723259692295,
+        -0.30186487488647945
+      ],
+      "rolling1sMAE": [
+        0.0037454624446192765,
+        0.03567936121530018
+      ],
+      "rolling1sP95": [
+        0.008808622400687697,
+        0.0863962686399887
+      ],
+      "stopMeanHorizontalSpeed": 0.0028218059853730073,
+      "stepDistance": 0.027442799292931003,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw-0.3\\seed224107-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 4.721828154006217,
+      "meanCommand": [
+        -0.04999999329447746,
+        -0.2999999523162842
+      ],
+      "meanActual": [
+        -0.04997864175576759,
+        -0.30022367422628504
+      ],
+      "rolling1sMAE": [
+        0.002379306719139452,
+        0.02790370108771012
+      ],
+      "rolling1sP95": [
+        0.006253646360368774,
+        0.06188375721581864
+      ],
+      "stopMeanHorizontalSpeed": 0.002764386693862972,
+      "stepDistance": 0.02498421207664333,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw-0.3\\seed224107-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.034614892607066,
+      "meanCommand": [
+        0.04999999329447746,
+        -0.2999999523162842
+      ],
+      "meanActual": [
+        0.04963932568441335,
+        -0.30406913093246984
+      ],
+      "rolling1sMAE": [
+        0.003888385592956868,
+        0.04864763763886216
+      ],
+      "rolling1sP95": [
+        0.00910405505220088,
+        0.11400300998971517
+      ],
+      "stopMeanHorizontalSpeed": 0.0022371317932327957,
+      "stepDistance": 0.027087422848267928,
+      "stepCount": 36
+    },
+    {
+      "source": "yaw-0.3\\seed224113-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.813299968202729,
+      "meanCommand": [
+        -0.04999999329447746,
+        -0.2999999523162842
+      ],
+      "meanActual": [
+        -0.05022824763602129,
+        -0.30548502711533054
+      ],
+      "rolling1sMAE": [
+        0.0024023551566985327,
+        0.02171348459956585
+      ],
+      "rolling1sP95": [
+        0.0049222143527284865,
+        0.05062558544949254
+      ],
+      "stopMeanHorizontalSpeed": 0.002563531896549331,
+      "stepDistance": 0.025624795876867185,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw-0.3\\seed224113-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.813299968202729,
+      "meanCommand": [
+        0.04999999329447746,
+        -0.2999999523162842
+      ],
+      "meanActual": [
+        0.04917699844598716,
+        -0.3024235648560379
+      ],
+      "rolling1sMAE": [
+        0.004554652098430185,
+        0.04321778538605938
+      ],
+      "rolling1sP95": [
+        0.012881725904367482,
+        0.11339035504254497
+      ],
+      "stopMeanHorizontalSpeed": 0.005016145099333571,
+      "stepDistance": 0.023378515500449996,
+      "stepCount": 41
+    },
+    {
+      "source": "yaw-0.6\\seed224101-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 4.62159414202525,
+      "meanCommand": [
+        -0.04999999329447746,
+        -0.5999999046325684
+      ],
+      "meanActual": [
+        -0.0499532001199592,
+        -0.594534836840267
+      ],
+      "rolling1sMAE": [
+        0.002185015567120555,
+        0.02095828877117482
+      ],
+      "rolling1sP95": [
+        0.005107780404268467,
+        0.04999522145253082
+      ],
+      "stopMeanHorizontalSpeed": 0.004231776058216844,
+      "stepDistance": 0.02555917155388079,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw-0.6\\seed224101-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.156643001095081,
+      "meanCommand": [
+        0.04999999329447746,
+        -0.5999999046325684
+      ],
+      "meanActual": [
+        0.049296684852157054,
+        -0.6043601122330724
+      ],
+      "rolling1sMAE": [
+        0.0035100466501744453,
+        0.02844764503807525
+      ],
+      "rolling1sP95": [
+        0.00793550736046418,
+        0.07548629006435248
+      ],
+      "stopMeanHorizontalSpeed": 0.005347341336283146,
+      "stepDistance": 0.026750374341188505,
+      "stepCount": 36
+    },
+    {
+      "source": "yaw-0.6\\seed224107-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 4.670407178287166,
+      "meanCommand": [
+        -0.04999999329447746,
+        -0.5999999046325684
+      ],
+      "meanActual": [
+        -0.050022620145124576,
+        -0.5964316341605981
+      ],
+      "rolling1sMAE": [
+        0.002159589722559196,
+        0.021532953011498462
+      ],
+      "rolling1sP95": [
+        0.005086779222566978,
+        0.05311585503191111
+      ],
+      "stopMeanHorizontalSpeed": 0.0035987424652803098,
+      "stepDistance": 0.02465952428662082,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw-0.6\\seed224107-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.034614892607066,
+      "meanCommand": [
+        0.04999999329447746,
+        -0.5999999046325684
+      ],
+      "meanActual": [
+        0.050604477837786,
+        -0.5914276240509962
+      ],
+      "rolling1sMAE": [
+        0.003693056210968922,
+        0.026869412857392198
+      ],
+      "rolling1sP95": [
+        0.008048625349281652,
+        0.06353494131592555
+      ],
+      "stopMeanHorizontalSpeed": 0.003302067127309133,
+      "stepDistance": 0.02673530598910025,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw-0.6\\seed224113-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.813299968202729,
+      "meanCommand": [
+        -0.04999999329447746,
+        -0.5999999046325684
+      ],
+      "meanActual": [
+        -0.04989989343841737,
+        -0.6051377717125038
+      ],
+      "rolling1sMAE": [
+        0.0021168619329237958,
+        0.01845554171902185
+      ],
+      "rolling1sP95": [
+        0.005178678433092965,
+        0.0433286679784652
+      ],
+      "stopMeanHorizontalSpeed": 0.0036822687463276523,
+      "stepDistance": 0.02459884236921452,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw-0.6\\seed224113-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.813299968202729,
+      "meanCommand": [
+        0.04999999329447746,
+        -0.5999999046325684
+      ],
+      "meanActual": [
+        0.05111401644618239,
+        -0.5979425834868967
+      ],
+      "rolling1sMAE": [
+        0.0033036824063983777,
+        0.033844159504651576
+      ],
+      "rolling1sP95": [
+        0.007633956132599743,
+        0.08599811394021487
+      ],
+      "stopMeanHorizontalSpeed": 0.0026680151490274338,
+      "stepDistance": 0.0267827209653425,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw0\\seed224101-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 4.732773109968559,
+      "meanCommand": [
+        -0.04999999329447746,
+        0.0
+      ],
+      "meanActual": [
+        -0.0495365650243952,
+        -0.0012982845455221088
+      ],
+      "rolling1sMAE": [
+        0.0023570092297093797,
+        0.01830510209667178
+      ],
+      "rolling1sP95": [
+        0.005789045579010048,
+        0.04462091824129734
+      ],
+      "stopMeanHorizontalSpeed": 0.007816031055814045,
+      "stepDistance": 0.02527427023726436,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw0\\seed224101-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 6.005591500379801,
+      "meanCommand": [
+        0.04999999329447746,
+        0.0
+      ],
+      "meanActual": [
+        0.04856935850002172,
+        -0.010622870987781247
+      ],
+      "rolling1sMAE": [
+        0.019249636940867707,
+        0.05620902624304488
+      ],
+      "rolling1sP95": [
+        0.04220074291203006,
+        0.14003000480625613
+      ],
+      "stopMeanHorizontalSpeed": 0.0028814031513506567,
+      "stepDistance": 0.03376797843972214,
+      "stepCount": 29
+    },
+    {
+      "source": "yaw0\\seed224107-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 4.670407178287166,
+      "meanCommand": [
+        -0.04999999329447746,
+        0.0
+      ],
+      "meanActual": [
+        -0.0501610450020016,
+        -0.0007850844533471776
+      ],
+      "rolling1sMAE": [
+        0.0023431295139670744,
+        0.02064183275684921
+      ],
+      "rolling1sP95": [
+        0.004881941292508355,
+        0.04703611678699901
+      ],
+      "stopMeanHorizontalSpeed": 0.0022639660493596215,
+      "stepDistance": 0.02553443993679289,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw0\\seed224107-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 6.533908094834621,
+      "meanCommand": [
+        0.04999999329447746,
+        0.0
+      ],
+      "meanActual": [
+        0.049709390433809814,
+        -0.015502899929414742
+      ],
+      "rolling1sMAE": [
+        0.018972949838043065,
+        0.06723966231411216
+      ],
+      "rolling1sP95": [
+        0.0381168441890492,
+        0.1579324520384636
+      ],
+      "stopMeanHorizontalSpeed": 0.0035859530807829942,
+      "stepDistance": 0.03186906589243413,
+      "stepCount": 32
+    },
+    {
+      "source": "yaw0\\seed224113-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.813299968202729,
+      "meanCommand": [
+        -0.04999999329447746,
+        0.0
+      ],
+      "meanActual": [
+        -0.04983681393276675,
+        -0.002289467126578692
+      ],
+      "rolling1sMAE": [
+        0.0018496060629441698,
+        0.01997395027688975
+      ],
+      "rolling1sP95": [
+        0.004623182457382544,
+        0.04775351671060144
+      ],
+      "stopMeanHorizontalSpeed": 0.0033650540242676033,
+      "stepDistance": 0.02555875988531872,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw0\\seed224113-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.813299968202729,
+      "meanCommand": [
+        0.04999999329447746,
+        0.0
+      ],
+      "meanActual": [
+        0.049454055786547026,
+        2.049100922359251e-05
+      ],
+      "rolling1sMAE": [
+        0.014197395973668762,
+        0.0703304261567048
+      ],
+      "rolling1sP95": [
+        0.03580785148881116,
+        0.1336302563187371
+      ],
+      "stopMeanHorizontalSpeed": 0.00039496451494253217,
+      "stepDistance": 0.02891875341249996,
+      "stepCount": 34
+    },
+    {
+      "source": "yaw0.3\\seed224101-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 4.62159414202525,
+      "meanCommand": [
+        -0.04999999329447746,
+        0.2999999523162842
+      ],
+      "meanActual": [
+        -0.05055123023024255,
+        0.3003951104599971
+      ],
+      "rolling1sMAE": [
+        0.0021422432211396464,
+        0.016396201346481218
+      ],
+      "rolling1sP95": [
+        0.0053970982974588765,
+        0.037803743197838455
+      ],
+      "stopMeanHorizontalSpeed": 0.001434011198517058,
+      "stepDistance": 0.025044380521856698,
+      "stepCount": 36
+    },
+    {
+      "source": "yaw0.3\\seed224101-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.156643001095081,
+      "meanCommand": [
+        0.04999999329447746,
+        0.2999999523162842
+      ],
+      "meanActual": [
+        0.05050878564018479,
+        0.2937489919932268
+      ],
+      "rolling1sMAE": [
+        0.002188430803656055,
+        0.03023715419049575
+      ],
+      "rolling1sP95": [
+        0.004835744784482687,
+        0.06979182276876841
+      ],
+      "stopMeanHorizontalSpeed": 0.004531145821831044,
+      "stepDistance": 0.027800085742648542,
+      "stepCount": 36
+    },
+    {
+      "source": "yaw0.3\\seed224107-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 4.670407178287166,
+      "meanCommand": [
+        -0.04999999329447746,
+        0.2999999523162842
+      ],
+      "meanActual": [
+        -0.05007733372058489,
+        0.2987673613074999
+      ],
+      "rolling1sMAE": [
+        0.0018964003216982751,
+        0.015011949539796132
+      ],
+      "rolling1sP95": [
+        0.004618099323470499,
+        0.033447737051738494
+      ],
+      "stopMeanHorizontalSpeed": 0.005730275072286534,
+      "stepDistance": 0.024890736468388505,
+      "stepCount": 36
+    },
+    {
+      "source": "yaw0.3\\seed224107-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.034614892607066,
+      "meanCommand": [
+        0.04999999329447746,
+        0.2999999523162842
+      ],
+      "meanActual": [
+        0.05028149884946903,
+        0.3010900893948023
+      ],
+      "rolling1sMAE": [
+        0.0022631961584549574,
+        0.02335703375494334
+      ],
+      "rolling1sP95": [
+        0.005077628294293746,
+        0.05959252731457881
+      ],
+      "stopMeanHorizontalSpeed": 0.004642961872448813,
+      "stepDistance": 0.02795275982866803,
+      "stepCount": 36
+    },
+    {
+      "source": "yaw0.3\\seed224113-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.813299968202729,
+      "meanCommand": [
+        -0.04999999329447746,
+        0.2999999523162842
+      ],
+      "meanActual": [
+        -0.04976562481551596,
+        0.30073493664469614
+      ],
+      "rolling1sMAE": [
+        0.0018999413491400466,
+        0.0234443839230062
+      ],
+      "rolling1sP95": [
+        0.004054213031698334,
+        0.05690460678600373
+      ],
+      "stopMeanHorizontalSpeed": 0.002919418057238615,
+      "stepDistance": 0.024664193624029936,
+      "stepCount": 36
+    },
+    {
+      "source": "yaw0.3\\seed224113-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.813299968202729,
+      "meanCommand": [
+        0.04999999329447746,
+        0.2999999523162842
+      ],
+      "meanActual": [
+        0.05011521732775006,
+        0.29751637064000036
+      ],
+      "rolling1sMAE": [
+        0.0024761946193529215,
+        0.028418213728797617
+      ],
+      "rolling1sP95": [
+        0.005290377360439516,
+        0.06167147404251552
+      ],
+      "stopMeanHorizontalSpeed": 0.0019836874527577684,
+      "stepDistance": 0.02789775236623969,
+      "stepCount": 36
+    },
+    {
+      "source": "yaw0.6\\seed224101-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 4.62159414202525,
+      "meanCommand": [
+        -0.04999999329447746,
+        0.5999999046325684
+      ],
+      "meanActual": [
+        -0.05031580195306129,
+        0.595307925677275
+      ],
+      "rolling1sMAE": [
+        0.0030851496835359754,
+        0.02033235644125017
+      ],
+      "rolling1sP95": [
+        0.006470759574681375,
+        0.04498209903830741
+      ],
+      "stopMeanHorizontalSpeed": 0.005876063781016668,
+      "stepDistance": 0.024231403553205,
+      "stepCount": 36
+    },
+    {
+      "source": "yaw0.6\\seed224101-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.156643001095081,
+      "meanCommand": [
+        0.04999999329447746,
+        0.5999999046325684
+      ],
+      "meanActual": [
+        0.05034395398140669,
+        0.5890886345995497
+      ],
+      "rolling1sMAE": [
+        0.0021078687404344756,
+        0.02699093792224961
+      ],
+      "rolling1sP95": [
+        0.004407052941483809,
+        0.06716965381292823
+      ],
+      "stopMeanHorizontalSpeed": 0.0019306671477917576,
+      "stepDistance": 0.028760330980497056,
+      "stepCount": 36
+    },
+    {
+      "source": "yaw0.6\\seed224107-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.202565604169994,
+      "meanCommand": [
+        -0.04999999329447746,
+        0.5999999046325684
+      ],
+      "meanActual": [
+        -0.04998830827156371,
+        0.6060897143656456
+      ],
+      "rolling1sMAE": [
+        0.0017632072484933994,
+        0.01828978512579955
+      ],
+      "rolling1sP95": [
+        0.005091668138611569,
+        0.04234761635315465
+      ],
+      "stopMeanHorizontalSpeed": 0.00644221905498028,
+      "stepDistance": 0.023562267181627045,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw0.6\\seed224107-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.034614892607066,
+      "meanCommand": [
+        0.04999999329447746,
+        0.5999999046325684
+      ],
+      "meanActual": [
+        0.050209727364917967,
+        0.6044592017388872
+      ],
+      "rolling1sMAE": [
+        0.002150077703357141,
+        0.03148718886184471
+      ],
+      "rolling1sP95": [
+        0.004226209013897636,
+        0.07002466355279807
+      ],
+      "stopMeanHorizontalSpeed": 0.00667177235433634,
+      "stepDistance": 0.028293472618600966,
+      "stepCount": 35
+    },
+    {
+      "source": "yaw0.6\\seed224113-trial0-speed-0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.813299968202729,
+      "meanCommand": [
+        -0.04999999329447746,
+        0.5999999046325684
+      ],
+      "meanActual": [
+        -0.04968234016677722,
+        0.6046204027185434
+      ],
+      "rolling1sMAE": [
+        0.002315921247518197,
+        0.019715419699985484
+      ],
+      "rolling1sP95": [
+        0.005051900786043075,
+        0.046907448249217804
+      ],
+      "stopMeanHorizontalSpeed": 0.006627776130444938,
+      "stepDistance": 0.02357980580261106,
+      "stepCount": 37
+    },
+    {
+      "source": "yaw0.6\\seed224113-trial0-speed0.05.json",
+      "completed": true,
+      "maxTiltDeg": 5.813299968202729,
+      "meanCommand": [
+        0.04999999329447746,
+        0.5999999046325684
+      ],
+      "meanActual": [
+        0.050134722239362446,
+        0.5999126435133383
+      ],
+      "rolling1sMAE": [
+        0.002205939760379011,
+        0.028279362505170987
+      ],
+      "rolling1sP95": [
+        0.00480462121879081,
+        0.06167759721424544
+      ],
+      "stopMeanHorizontalSpeed": 0.00422348011501454,
+      "stepDistance": 0.028789417982243444,
+      "stepCount": 36
+    }
+  ]
+}
