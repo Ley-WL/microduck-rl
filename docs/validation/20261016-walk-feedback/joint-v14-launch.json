@@ -1,0 +1,10 @@
+{
+  "remote": "/CodeRepo/Code/leiwu30/1_code/microduck-training/walk-joint-feedback-student-v14-20261016",
+  "sourceArchiveSha256": "4c92db2837786ec3dc72b6d1074462e4877c5138388952ac61479f9a72b7c4e5",
+  "output": "{\"pid\": 2046789}\n",
+  "launcherPid": 2046789,
+  "workerPid": 2047426,
+  "sourceHashesVerified": 620,
+  "hardwareAccess": false,
+  "deploymentAccepted": false
+}
