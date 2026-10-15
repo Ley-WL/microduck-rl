@@ -1,0 +1,27 @@
+{
+  "task": "walk_motion_critic_context",
+  "seed": 68131,
+  "surface": false,
+  "worlds": 64,
+  "iterations": 5,
+  "rolloutSteps": 7680,
+  "adamSteps": [
+    1640
+  ],
+  "actorNormalizerUnchanged": true,
+  "finite": true,
+  "onnxTorchMaxError": 3.814697265625e-06,
+  "policySha256": "4084235c69f40b515fef93b56d95862a723e24db10a86c8f2eeeceba34e9c4fb",
+  "hardwareAccess": false,
+  "criticOnly": false,
+  "criticInitializer": null,
+  "resumeInitializer": {
+    "sha256": "158a045b4bb4172ac3dccced92d46258fd2e49807f576ed6033b40a44bc8e224",
+    "optimizerStepsLoaded": 1600,
+    "completedIterations": 200,
+    "environmentStateRestored": false,
+    "commonStepCounter": 4800
+  },
+  "actorExactlyUnchanged": false,
+  "accepted": false
+}

@@ -29,3 +29,13 @@ for mode in ('fixed','anneal'):
     assert noise.iteration==200 and noise.calls==0
 assert sigma_at(0,'anneal')==.05 and abs(sigma_at(129,'anneal')-.005)<1e-9
 print('200 rollout/update boundaries: exact log-probability parity, fixed and annealed schedules passed')
+
+# Resumed rollouts keep the final exploration level, including across updates.
+alg=SimpleNamespace(actor=SimpleNamespace(distribution=dist),act=act,update=update)
+noise=RolloutNoise(alg,'anneal');noise.iteration=200
+for iteration in range(200,205):
+    for step in range(24):alg.act(torch.zeros(2,14))
+    alg.update()
+    assert abs(float(dist.std_param[0])-.005)<1e-8
+assert [r['iteration'] for r in noise.audit]==list(range(200,205))
+print('Resume offset 200 preserves .005 noise and exact log probabilities')
