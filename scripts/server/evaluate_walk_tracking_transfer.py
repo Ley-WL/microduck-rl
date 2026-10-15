@@ -1,5 +1,5 @@
 """Direction-resolved paired screen; fixed grid, never rewards post-fall resets."""
-import argparse, hashlib, json
+import argparse, hashlib, json, copy
 from pathlib import Path
 from dataclasses import asdict
 from types import MethodType
@@ -20,10 +20,12 @@ p.add_argument('--teacher-map', type=Path, help='Offline diagnostic teacher quer
 p.add_argument('--long-hold', action='store_true', help='30s: move1-11, stop11-16, reverse16-26, stop26-30')
 p.add_argument('--fixed-actuator', action='store_true', help='7.4V/no droop/4 physics ticks; other DR retained')
 p.add_argument('--nominal-dr', action='store_true', help='Disable listed parameter/sensor DR; reset distribution remains')
+p.add_argument('--trace-motion',action='store_true',help='Save body velocity and stop transients for diagnosis')
+p.add_argument('--stop-teacher-checkpoint',type=Path,help='Simulation-only stop controller diagnostic; not deployment')
 p.add_argument('--feedback-teacher', action='store_true', help='Privileged simulation reference, never a deployed policy')
 a = p.parse_args()
 assert not a.baseline_cache or a.baseline_checkpoint==Path('inputs/seed.pt'), 'Explicit baseline cannot reuse legacy cache'
-assert not (a.feedback_teacher and a.teacher_map), 'Select one simulation teacher'
+assert sum(bool(x) for x in (a.feedback_teacher,a.teacher_map,a.stop_teacher_checkpoint))<=1, 'Select one simulation teacher'
 assert not a.nominal_dr or a.fixed_actuator, 'Nominal DR requires fixed actuator'
 assert not ((a.long_hold or a.fixed_actuator or a.nominal_dr) and a.baseline_cache), 'Diagnostic profiles cannot reuse legacy baseline cache'
 ROOT = Path(__file__).resolve().parents[2]
@@ -68,7 +70,13 @@ for seed in a.seeds:
             agent = asdict(rl_cfg()); agent['upload_model'] = False
             runner = MjlabOnPolicyRunner(RslRlVecEnvWrapper(env), agent, log_dir=None, device=env.device)
             runner.load(str(ROOT / checkpoint), load_cfg={'actor': True}, map_location=env.device)
-            actor = runner.alg.actor; actor.eval(); obs, _ = env.reset(seed=seed)
+            actor = runner.alg.actor; actor.eval()
+            stop_actor=None
+            if a.stop_teacher_checkpoint and label=='candidate':
+                stop_actor=copy.deepcopy(actor)
+                stop_actor.load_state_dict(torch.load(ROOT/a.stop_teacher_checkpoint,map_location=env.device,weights_only=False)['actor_state_dict'],strict=True)
+                stop_actor.eval()
+            obs, _ = env.reset(seed=seed)
             robot = env.scene['robot']; feet, _ = robot.find_sites(['left_foot', 'right_foot'])
             sensor = env.scene['feet_ground_contact']
             initial = torch.cat([robot.data.root_link_pos_w, robot.data.root_link_quat_w,
@@ -93,6 +101,7 @@ for seed in a.seeds:
                     self.is_world_env[:] = False
                 term.compute = MethodType(long_compute, term)
             failed = torch.zeros(60, device=env.device, dtype=torch.bool)
+            has_moved=torch.zeros_like(failed)
             peak = torch.zeros(60, device=env.device)
             sums = torch.zeros((60, 2, 8), device=env.device)
             counts = torch.zeros((60, 2), device=env.device)
@@ -101,6 +110,7 @@ for seed in a.seeds:
             lift_dir = torch.zeros_like(lift_xy); valid = torch.zeros((60, 2), device=env.device, dtype=torch.bool)
             steps = torch.zeros((60, 2), device=env.device); distance = torch.zeros_like(steps)
             airsum = torch.zeros_like(steps)
+            motion_trace=[]
             command_hash = hashlib.sha256()
             for tick in range(1500 if a.long_hold else 1200):
                 with torch.inference_mode():
@@ -114,6 +124,11 @@ for seed in a.seeds:
                         view[:,48:51]=feedback.query(view[:,48:51],actual_feedback,enabled=active)
                         query={**obs,'actor':view}
                     action = actor(query)
+                    if stop_actor is not None:
+                        moving_now=env.command_manager.get_command('twist').norm(dim=-1)>.001
+                        has_moved|=moving_now
+                        stopped=has_moved & ~moving_now
+                        action=torch.where(stopped[:,None],stop_actor(obs),action)
                 obs, _, done, timeout, _ = env.step(action)
                 tilt = torch.rad2deg(torch.acos((-robot.data.projected_gravity_b[:, 2]).clamp(-1, 1)))
                 peak = torch.maximum(peak, torch.where(~failed, tilt, 0.))
@@ -124,6 +139,8 @@ for seed in a.seeds:
                 command_hash.update(command.cpu().numpy().tobytes())
                 phase = ((tick + 1) * .02) if a.long_hold else ((tick + 1) * .02) % 12.
                 actual = torch.cat((robot.data.root_link_lin_vel_b[:, :2], robot.data.root_link_ang_vel_b[:, 2:3]), -1)
+                if a.trace_motion:
+                    motion_trace.append(torch.cat((actual,command,tilt[:,None],live[:,None]),-1).detach().clone())
                 motion_window = (5. <= phase < 11. or 20. <= phase < 26.) if a.long_hold else (2. <= phase < 4. or 8. <= phase < 10.)
                 if motion_window:
                     direction = 0 if phase < (16. if a.long_hold else 7.) else 1
@@ -160,6 +177,10 @@ for seed in a.seeds:
                 stepAirTime=(airsum / steps.clamp_min(1)).cpu().tolist(),
                 initialStateSha256=hashlib.sha256(initial.numpy().tobytes()).hexdigest(),
                 commandTraceSha256=command_hash.hexdigest())
+            if a.trace_motion:
+                trace_name=Path(a.output).stem+f'-{label}-{seed}-motion.npz'
+                np.savez_compressed(ROOT/'evidence'/trace_name,values=torch.stack(motion_trace).cpu().numpy(),dt=.02,columns=np.array(['vx','vy','yaw','commandVx','commandVy','commandYaw','tilt','live']))
+                row['motionTrace']=trace_name
             rows.append(row)
             print(label, seed, 'survived', int(live.sum()), flush=True)
             (ROOT / 'evidence' / a.output).write_text(json.dumps(dict(cases=cases, results=rows, accepted=False), indent=2))
@@ -200,6 +221,8 @@ for seed in a.seeds:
         aggregate=aggregate, directionRegressionPassed=bool(directional), passed=bool(passed)))
 result = dict(cases=cases, results=rows, comparisons=comparisons, accepted=all(r['passed'] for r in comparisons),
     longHold=a.long_hold, fixedActuator=a.fixed_actuator, nominalDr=a.nominal_dr, privilegedFeedbackTeacher=a.feedback_teacher,
+    stopTeacherCheckpoint=str(a.stop_teacher_checkpoint) if a.stop_teacher_checkpoint else None,
+    stopTeacherSha256=hashlib.sha256((ROOT/a.stop_teacher_checkpoint).read_bytes()).hexdigest() if a.stop_teacher_checkpoint else None,
     candidateCheckpoint=a.candidate, baselineCheckpoint=str(a.baseline_checkpoint), baselineCache=str(a.baseline_cache) if a.baseline_cache else None,
     teacherMap=str(a.teacher_map) if a.teacher_map else None,
     teacherMapSha256=hashlib.sha256(a.teacher_map.read_bytes()).hexdigest() if a.teacher_map else None,

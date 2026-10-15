@@ -123,9 +123,15 @@ def run(args):
     opts=ort.SessionOptions();opts.intra_op_num_threads=1;opts.inter_op_num_threads=1
     session=ort.InferenceSession(str(args.onnx),sess_options=opts,providers=['CPUExecutionProvider'])
     assert session.get_inputs()[0].shape==[1,61] and session.get_outputs()[0].shape==[1,14]
+    stop_path=getattr(args,'stop_teacher_onnx',None)
+    assert not stop_path or not getattr(args,'feedback_teacher',False), 'Select one simulation teacher'
+    stop_session=ort.InferenceSession(str(stop_path),sess_options=opts,providers=['CPUExecutionProvider']) if stop_path else None
+    if stop_session:
+        assert stop_session.get_inputs()[0].shape==[1,61] and stop_session.get_outputs()[0].shape==[1,14]
     manifest=dict(simulationOnly=True,hardwareAccess=False,training=False,policySha256=meta['policySha256'],
         policyForwardDiagnostic=getattr(args,'policy_forward',False),
         privilegedFeedbackTeacher=getattr(args,'feedback_teacher',False),
+        stopTeacherSha256=hashlib.sha256(stop_path.read_bytes()).hexdigest() if stop_path else None,
         feedbackVxCorrectionLimit=getattr(args,'feedback_vx_limit',.12),
         feedbackQueryVxLimit=getattr(args,'feedback_query_vx_limit',.3),
         hardwareProfile="microduck-replica-hd1910-v1",bodyContractApplied=aligned,physicsProfile='kissqy' if aligned else 'local',physicsAudit=physics_audit,bodyGroundMeshes=contacts,
@@ -202,6 +208,7 @@ def run(args):
                     filtered=np.asarray(real_start['emaPreviousRadians'],dtype=np.float32)
                     command=np.asarray(real_start['commandTwist'],dtype=np.float32)
                 pushed=False
+                has_moved=False
                 teacher=None
                 if getattr(args,'feedback_teacher',False):
                     from walk_feedback_teacher import FeedbackTeacher
@@ -231,7 +238,10 @@ def run(args):
                         body_velocity=data.xmat[trunk].reshape(3,3).T@data.qvel[:3]
                         query[48:51]=teacher.query(command,[body_velocity[0],gyro[2]],
                             enabled=np.linalg.norm(target_command)>.001)
-                    raw=session.run(None,{session.get_inputs()[0].name:query[None]})[0][0]
+                    moving_now=np.linalg.norm(target_command)>.001
+                    has_moved=has_moved or moving_now
+                    active_session=stop_session if stop_session and has_moved and not moving_now else session
+                    raw=active_session.run(None,{active_session.get_inputs()[0].name:query[None]})[0][0]
                     if not np.isfinite(raw).all():raise ValueError('Non-finite frozen policy output')
                     voltage_scale=np.float32(7.4/np.clip(args.voltage,6.,9.5)) if args.voltage_compensation else np.float32(1.)
                     filtered=action_step(filtered,raw*voltage_scale,tick>0,action_scale);desired=home.astype(np.float64)+filtered
@@ -277,6 +287,7 @@ if __name__=='__main__':
     p.add_argument('--turn-rate',type=float,default=0.,help='Signed yaw command in rad/s during walking')
     p.add_argument('--turn-at',type=float,default=4.,help='Start turning after the initial straight walk')
     p.add_argument('--policy-forward',action='store_true',help='Diagnostic: refresh constraints before each policy observation, as mjlab does')
+    p.add_argument('--stop-teacher-onnx',type=Path,help='Simulation-only stop controller diagnostic')
     p.add_argument('--feedback-query-vx-limit',type=float,default=.3,help='Simulation teacher command query bound; runtime unchanged')
     p.add_argument('--feedback-vx-limit',type=float,default=.12,help='Simulation teacher correction bound; runtime unchanged')
     p.add_argument('--feedback-teacher',action='store_true',help='Privileged simulation-only feedback demonstration; not a deployed policy')
