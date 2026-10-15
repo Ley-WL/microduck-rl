@@ -1,0 +1,161 @@
+{
+  "stage-audit.json": {
+    "task": "walk_relative_cycle_context",
+    "seed": 68131,
+    "surface": false,
+    "worlds": 64,
+    "iterations": 5,
+    "rolloutSteps": 7680,
+    "adamSteps": [
+      40
+    ],
+    "actorNormalizerUnchanged": true,
+    "finite": true,
+    "onnxTorchMaxError": 2.384185791015625e-06,
+    "policySha256": "5e2519c6079720df22ddc180ec5a4d632cb8af9d23d6406ae29ce2dc190130c5",
+    "hardwareAccess": false,
+    "criticOnly": false,
+    "criticInitializer": {
+      "sha256": "aecadc901934840021e5f316c56112144728d0be843a0caf7b17622e2ad71b14",
+      "actorUnchangedOnLoad": true,
+      "optimizerStatesLoaded": false,
+      "iterationLoaded": false
+    },
+    "resumeInitializer": null,
+    "actorExactlyUnchanged": false,
+    "accepted": false
+  },
+  "retention-kl.json": {
+    "coefficient": 0.01,
+    "kl": [
+      0.0,
+      0.6277860403060913,
+      0.3901321291923523,
+      0.16817231476306915,
+      0.13000482320785522,
+      0.14362582564353943,
+      0.1606075018644333,
+      0.12621383368968964,
+      0.0798707976937294,
+      0.06618452817201614,
+      0.07787169516086578,
+      0.06962870061397552,
+      0.03676118701696396,
+      0.024876467883586884,
+      0.04306232929229736,
+      0.04641254246234894,
+      0.035656291991472244,
+      0.024586930871009827,
+      0.020727667957544327,
+      0.01965426467359066,
+      0.017714237794280052,
+      0.012581439688801765,
+      0.019330330193042755,
+      0.022159218788146973,
+      0.021234720945358276,
+      0.013245441019535065,
+      0.014218220487236977,
+      0.015255896374583244,
+      0.01139921322464943,
+      0.009890532121062279,
+      0.015914682298898697,
+      0.014866236597299576,
+      0.010233469307422638,
+      0.013539200648665428,
+      0.013455979526042938,
+      0.00933033600449562,
+      0.009023813530802727,
+      0.012378880754113197,
+      0.010509960353374481,
+      0.00987059623003006
+    ],
+    "normalization": "sum over 14 actions; mean over observations",
+    "sigma": 0.005,
+    "replacesUnnormalizedMsePenalty": true
+  },
+  "retention.json": {
+    "coefficient": null,
+    "optimizationPenalty": "see retention-kl.json",
+    "loss": [
+      0.0,
+      2.242093160020886e-06,
+      1.3933290574641433e-06,
+      6.006154649185191e-07,
+      4.643029853923508e-07,
+      5.129493843014643e-07,
+      5.73598242681328e-07,
+      4.5076370724927983e-07,
+      2.852528666608123e-07,
+      2.363733244692412e-07,
+      2.781132195650571e-07,
+      2.486739276719163e-07,
+      1.312899655658839e-07,
+      8.884452995516767e-08,
+      1.5379403350834764e-07,
+      1.657590900094874e-07,
+      1.2734390963942133e-07,
+      8.781047000638864e-08,
+      7.402738333439629e-08,
+      7.01938134284319e-08,
+      6.326513357635122e-08,
+      4.4933717191497635e-08,
+      6.903689353521258e-08,
+      7.914007227327602e-08,
+      7.583829386703655e-08,
+      4.730515357209697e-08,
+      5.077935583130966e-08,
+      5.448534423635465e-08,
+      4.071147330364511e-08,
+      3.532333181510694e-08,
+      5.6838150186422354e-08,
+      5.309370365580435e-08,
+      3.654810143416398e-08,
+      4.835429123772883e-08,
+      4.805707121136038e-08,
+      3.3322631765031474e-08,
+      3.2227909230186924e-08,
+      4.4210292315938204e-08,
+      3.753557820118658e-08,
+      3.525213543298378e-08
+    ],
+    "source": "input seed actor; on-policy samples",
+    "notHistoricalCheckpointResume": true
+  },
+  "noise-audit.json": {
+    "mode": "low",
+    "distributionFrozen": true,
+    "deterministicExport": true,
+    "iterations": [
+      {
+        "iteration": 0,
+        "sigma": 0.004999999888241291,
+        "rolloutSteps": 24,
+        "constantThroughUpdate": true
+      },
+      {
+        "iteration": 1,
+        "sigma": 0.004999999888241291,
+        "rolloutSteps": 24,
+        "constantThroughUpdate": true
+      },
+      {
+        "iteration": 2,
+        "sigma": 0.004999999888241291,
+        "rolloutSteps": 24,
+        "constantThroughUpdate": true
+      },
+      {
+        "iteration": 3,
+        "sigma": 0.004999999888241291,
+        "rolloutSteps": 24,
+        "constantThroughUpdate": true
+      },
+      {
+        "iteration": 4,
+        "sigma": 0.004999999888241291,
+        "rolloutSteps": 24,
+        "constantThroughUpdate": true
+      }
+    ]
+  }
+}

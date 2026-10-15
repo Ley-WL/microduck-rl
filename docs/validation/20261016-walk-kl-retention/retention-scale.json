@@ -1,0 +1,46 @@
+{
+  "hypothesisOnly": true,
+  "causalityProven": false,
+  "fixedSigma": 0.005,
+  "actionCount": 14,
+  "oldMseCoefficient": 5,
+  "newKlCoefficient": 0.01,
+  "newEffectiveMseCoefficient": 2800.0,
+  "rows": [
+    {
+      "iteration": 0,
+      "meanMse": 9.811577825757922e-07,
+      "rmsRadians": 0.0009905340895576447,
+      "oldWeightedPenalty": 4.905788912878961e-06,
+      "equalCovarianceKl": 0.2747241791212218
+    },
+    {
+      "iteration": 10,
+      "meanMse": 1.3365415725274943e-06,
+      "rmsRadians": 0.0011560889120337996,
+      "oldWeightedPenalty": 6.682707862637471e-06,
+      "equalCovarianceKl": 0.3742316403076984
+    },
+    {
+      "iteration": 50,
+      "meanMse": 7.064356111641246e-06,
+      "rmsRadians": 0.0026578856468330698,
+      "oldWeightedPenalty": 3.532178055820623e-05,
+      "equalCovarianceKl": 1.9780197112595488
+    },
+    {
+      "iteration": 100,
+      "meanMse": 1.705577619759424e-05,
+      "rmsRadians": 0.004129863944198918,
+      "oldWeightedPenalty": 8.52788809879712e-05,
+      "equalCovarianceKl": 4.7756173353263875
+    },
+    {
+      "iteration": 199,
+      "meanMse": 2.1942134026176063e-05,
+      "rmsRadians": 0.004684243164714665,
+      "oldWeightedPenalty": 0.00010971067013088032,
+      "equalCovarianceKl": 6.143797527329298
+    }
+  ]
+}

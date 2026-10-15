@@ -1,0 +1,9 @@
+{
+  "mode": "gaussian-kl",
+  "coefficient": 0.01,
+  "screenSeeds": [
+    259151,
+    259157
+  ],
+  "purpose": "Preserve frozen v55 behavior relative to fixed .005 exploration scale; rewards and PD unchanged"
+}

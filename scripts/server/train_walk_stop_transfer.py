@@ -17,7 +17,10 @@ p.add_argument('--output',type=Path,required=True)
 p.add_argument('--noise-schedule',choices=['fixed','anneal','low'])
 p.add_argument('--critic-only',action='store_true')
 p.add_argument('--critic-checkpoint',type=Path)
-p.add_argument('--resume-checkpoint',type=Path);a=p.parse_args()
+p.add_argument('--resume-checkpoint',type=Path)
+p.add_argument('--retention-kl',type=float,help='Optional normalized frozen-actor retention coefficient')
+a=p.parse_args()
+assert a.retention_kl is None or (0<a.retention_kl<=1 and a.noise_schedule=='low' and not a.critic_only and TASK=='walk_relative_cycle_context')
 assert not a.resume_checkpoint or (not a.critic_checkpoint and not a.critic_only and a.noise_schedule=='anneal' and TASK=='walk_motion_critic_context')
 assert not (a.critic_only and a.noise_schedule)
 assert a.noise_schedule!='low' or (TASK in ('walk_continuous_coverage','walk_relative_cycle_context') and a.critic_checkpoint and not a.resume_checkpoint)
@@ -84,6 +87,7 @@ try:
     # Retain the baked deployment distribution; only critic normalization learns.
     actor.update_normalization=lambda *args,**kwargs:None
     anchor_stats=[]
+    retention_kl_stats=[]
     if TASK!='walk_stop_transfer' and not a.critic_only:
         anchor=copy.deepcopy(actor).eval()
         if a.resume_checkpoint:
@@ -94,8 +98,16 @@ try:
             sample=rows[torch.randint(len(rows),(512,),device=env.device)]
             td=TensorDict({'actor':sample},batch_size=[len(sample)])
             with torch.no_grad():target=anchor(td)
-            loss=(actor(td)-target).square().mean()
-            ((5. if actor_only else 10.)*loss).backward()
+            prediction=actor(td)
+            loss=(prediction-target).square().mean()
+            if a.retention_kl is None:
+                penalty=(5. if actor_only else 10.)*loss
+            else:
+                from walk_actor_retention import gaussian_mean_kl
+                kl=gaussian_mean_kl(prediction,target,actor.distribution.std_param)
+                penalty=a.retention_kl*kl
+                retention_kl_stats.append(float(kl.detach()))
+            penalty.backward()
             torch.nn.utils.clip_grad_norm_(actor.parameters(),runner.alg.max_grad_norm)
             anchor_stats.append(float(loss.detach()))
         hook=runner.alg.optimizer.register_step_pre_hook(retain)
@@ -139,9 +151,15 @@ try:
     if TASK!='walk_stop_transfer' and not a.critic_only:
         hook.remove()
         assert len(anchor_stats)==a.iterations*8
-        (a.output/'retention.json').write_text(json.dumps(dict(coefficient=5. if actor_only else 10.,
+        (a.output/'retention.json').write_text(json.dumps(dict(coefficient=(5. if actor_only else 10.) if a.retention_kl is None else None,
+            optimizationPenalty='mse' if a.retention_kl is None else 'see retention-kl.json',
             loss=anchor_stats,source='input seed actor; on-policy samples',
             notHistoricalCheckpointResume=not bool(a.resume_checkpoint))))
+        if a.retention_kl is not None:
+            assert len(retention_kl_stats)==a.iterations*8
+            (a.output/'retention-kl.json').write_text(json.dumps(dict(coefficient=a.retention_kl,
+                kl=retention_kl_stats,normalization='sum over 14 actions; mean over observations',
+                sigma=.005,replacesUnnormalizedMsePenalty=True),indent=2))
     assert all(torch.equal(actor.state_dict()[k],v) for k,v in normalizer.items()),'Actor normalizer drift'
     steps={int(v['step']) for v in runner.alg.optimizer.state.values()}
     assert steps=={initial_adam_steps+a.iterations*8},steps

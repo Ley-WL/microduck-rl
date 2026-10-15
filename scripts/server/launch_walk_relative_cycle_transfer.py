@@ -29,12 +29,21 @@ status=1
 try:
     task='walk_relative_cycle_context'
     stages=[('coverage-test','scripts/server/test_walk_relative_cycle_context.py',[],task),('noise-test','scripts/server/test_walk_noise_schedule.py',[],task)]
+    retention_path=ROOT/'inputs/retention-spec.json'
+    retention=json.loads(retention_path.read_text()) if retention_path.exists() else None
+    extra=[]
+    if retention is not None:
+        assert retention['coefficient']==.01 and retention['mode']=='gaussian-kl'
+        assert len(retention['screenSeeds'])==2 and len(set(retention['screenSeeds']))==2
+        extra=['--retention-kl',str(retention['coefficient'])]
+        stages.append(('retention-test','scripts/server/test_walk_actor_retention.py',[],task))
     for label,envs,iterations in [('smoke',64,5),('main',1024,200)]:
         stages.append((label,'scripts/server/train_walk_stop_transfer.py',
             ['--envs',str(envs),'--iterations',str(iterations),'--noise-schedule','low',
-             '--critic-checkpoint','inputs/warm-critic.pt','--output','evidence/'+label],task))
+             '--critic-checkpoint','inputs/warm-critic.pt','--output','evidence/'+label,*extra],task))
     stages.append(('screen','scripts/server/evaluate_walk_tracking_transfer.py',
-        ['--candidate','evidence/main/final.pt','--long-hold','--seeds','256151','256157',
+        ['--candidate','evidence/main/final.pt','--long-hold','--seeds',
+         *[str(s) for s in (retention['screenSeeds'] if retention is not None else [256151,256157])],
          '--speed-grid','-.4','-.2','-.075','-.05','-.035','0','.025','.035','.05','.075','.1','.2','.4',
          '--output','relative-cycle-screen.json'],task))
     for name,path,args,task in stages:
