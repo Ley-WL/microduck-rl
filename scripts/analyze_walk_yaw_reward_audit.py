@@ -7,6 +7,7 @@ import numpy as np
 p=argparse.ArgumentParser()
 p.add_argument('source',type=Path)
 p.add_argument('--output',type=Path,required=True)
+p.add_argument('--legacy',action='store_true',help='Previous reward on the same recorded trajectory')
 a=p.parse_args()
 data=json.loads(a.source.read_text(encoding='utf-8'))
 seeds=sorted({r['seed'] for r in data['results']})
@@ -27,11 +28,12 @@ for seed in seeds:
             if min(bb['samples'][world][phase],cc['samples'][world][phase])<299:continue
             actual=[np.array(row['meanActual'][world][phase]) for row in (bb,cc)]
             errors=[np.abs(v-cmd) for v in actual]
-            rates=[np.array(row['meanWeightedRate'][world][phase]) for row in (bb,cc)]
+            rates=[np.array(row['meanLegacyWeightedRate' if a.legacy else 'meanWeightedRate'][world][phase]) for row in (bb,cc)]
             records.append(dict(seed=seed,world=world,phase=bb['phases'][phase],
                 command=cmd.tolist(),baselineActual=actual[0].tolist(),candidateActual=actual[1].tolist(),
                 straight=bool(abs(cmd[2])<.001),
                 yawRegressed=bool(errors[0][0]<.03 and errors[0][2]<.15 and errors[1][2]>errors[0][2]+.05),
+                speedRegressed=bool(errors[0][0]<.03 and errors[1][0]>errors[0][0]+.02),
                 baselineRate=dict(zip(terms,rates[0].tolist())),
                 candidateRate=dict(zip(terms,rates[1].tolist())),
                 baselineTotal=float(rates[0].sum()),candidateTotal=float(rates[1].sum())))
@@ -44,8 +46,10 @@ def summarize(rows):
         meanTotal={label:float(np.mean([r[label+'Total'] for r in rows])) for label in ('baseline','candidate')})
 
 result=dict(simulationOnly=True,optimizationSteps=0,accepted=False,
+    legacySameTrajectoryScores=a.legacy,
     allMoving=summarize(records),allStraight=summarize([r for r in records if r['straight']]),
     yawRegressed=summarize([r for r in records if r['yawRegressed']]),pairs=records,
+    speedRegressed=summarize([r for r in records if r['speedRegressed']]),
     limitations='Matched reset states and command sequence, not same-state counterfactuals or proof of PPO gradient cause. Scores are weighted reward rates, not discounted returns.')
 a.output.parent.mkdir(parents=True,exist_ok=True)
 a.output.write_text(json.dumps(result,indent=2),encoding='utf-8')

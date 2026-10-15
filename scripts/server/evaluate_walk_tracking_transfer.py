@@ -22,7 +22,7 @@ p.add_argument('--long-hold', action='store_true', help='30s: move1-11, stop11-1
 p.add_argument('--fixed-actuator', action='store_true', help='7.4V/no droop/4 physics ticks; other DR retained')
 p.add_argument('--nominal-dr', action='store_true', help='Disable listed parameter/sensor DR; reset distribution remains')
 p.add_argument('--trace-motion',action='store_true',help='Save body velocity and stop transients for diagnosis')
-p.add_argument('--reward-audit-task',choices=['walk_low_speed_focused_control','walk_low_speed_air_window','walk_low_speed_mean_tracking'],
+p.add_argument('--reward-audit-task',choices=['walk_low_speed_focused_control','walk_low_speed_air_window','walk_low_speed_mean_tracking','walk_mean_motion_tracking'],
     help='Frozen diagnostic: use and record training rewards without optimizing')
 p.add_argument('--stop-teacher-checkpoint',type=Path,help='Simulation-only stop controller diagnostic; not deployment')
 p.add_argument('--feedback-vx-limit',type=float,default=.12)

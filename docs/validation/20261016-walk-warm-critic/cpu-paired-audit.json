@@ -1,0 +1,186 @@
+{
+  "pairs": [
+    {
+      "file": "cpu-main\\cpu-yaw-0.6\\seed227171-trial0-speed-0.05.json",
+      "candidateSha256": "fd8e764b01ef203f3cc036029f53d52d384c27d05ff5acdf585f32fe5afa4890",
+      "baselineSha256": "80a8311da28c2edc4e01cbe78bde081ee74647437da36ed9df28745acfa81ea6"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw-0.6\\seed227171-trial0-speed-0.2.json",
+      "candidateSha256": "b86fb13473db3f3c259162391d50b087c9091e8e252db18134fcb61acdecb03f",
+      "baselineSha256": "3c939f5b15f154cbc726b1f815913f1df1437810157ea14eee93b6e637107241"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw-0.6\\seed227171-trial0-speed-0.4.json",
+      "candidateSha256": "067c96c4ee0a836916c58ca7045a66caaec9893ce61dd5c6c6d87adf81103811",
+      "baselineSha256": "36d460e8eed798ca2015db2dbf6a0c2bf72decaebe3f05ea81f4e2308716f3c2"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw-0.6\\seed227171-trial0-speed0.05.json",
+      "candidateSha256": "54bac8627f7d156874a8a0182e091cc2ba6aecc4a0ce1636d2e96ec509020e5c",
+      "baselineSha256": "debee15e777796a40b54141972db3965341f85657a0b8a56f288be7d64dea928"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw-0.6\\seed227171-trial0-speed0.2.json",
+      "candidateSha256": "021c0f19b91885dbe27161308786d07437069a2cc178a7fdbca9986a6cec5140",
+      "baselineSha256": "71499d2ec73b22e17f6939fc0c91acdce77bd9b19cc2f7195df124ee7f3f14fe"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw-0.6\\seed227171-trial0-speed0.4.json",
+      "candidateSha256": "fb424e458a978296f3dc5caf6f4cbe422b39917b92ad3a93767d360abb5ab4be",
+      "baselineSha256": "95b7ebaf9879facea9e5021d5c49e10f281a25ecb696ecf01e104da74cd6653e"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw-0.6\\seed227177-trial0-speed-0.05.json",
+      "candidateSha256": "9915842ca79f44857fe048246aef5d1c5e55e6a4a01d0d3a2eb1fc9048b4dc83",
+      "baselineSha256": "f9e0e02dbea50c39b3a7d13b6e3739f3d94fa0592b4224ad0cf28a15629cc976"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw-0.6\\seed227177-trial0-speed-0.2.json",
+      "candidateSha256": "20f9d4acecb9176c8d496e57c6270e6deaa89f6ff5bb45c79f9f01fea693e32f",
+      "baselineSha256": "e4a1d3dc59229b252f6f7f963d7d7d1a6d42d2609b7aeccc7a4d72a9c2601596"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw-0.6\\seed227177-trial0-speed-0.4.json",
+      "candidateSha256": "a17f73e12bf2411a9e31a7ebe1e91a8836bfef41a71983d11189d2c8cc33e6e2",
+      "baselineSha256": "393034c147f361d22331c2fd63b754922b261ea1d1756455d938405d87121397"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw-0.6\\seed227177-trial0-speed0.05.json",
+      "candidateSha256": "a53c6f66ac419d7944f00eb7efbdea1b7ecd072970bdd25d5c108e40a4fbf840",
+      "baselineSha256": "7ce4318359db32cfab3154bccbd946f513255da0ae2b118f23baf9bc55387bfb"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw-0.6\\seed227177-trial0-speed0.2.json",
+      "candidateSha256": "baaa40d4c45f7c1a8e1a81ba0f7441674a3bc0466ea06ad88588c7312be27c3a",
+      "baselineSha256": "dcbb8745f7adb796a91d272e66c15accc610c6bd517514ebc3874ed1eb7fea05"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw-0.6\\seed227177-trial0-speed0.4.json",
+      "candidateSha256": "c532c54dfdc3297ec98fafcc42c61f96a366f54aa31e894f656db304ee927bd7",
+      "baselineSha256": "204add5f0740225b2bf1ccab84748a968118832f45af0aa4f3854c3b55d7e8b4"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0\\seed227171-trial0-speed-0.05.json",
+      "candidateSha256": "9723b951488761eb6c4ca15b1e6ce9180e638399df1b17a0fdde0008397b0504",
+      "baselineSha256": "80da5ef04796da486630949d7790c71f9164e58ac4cc790aa1a85e871d75e78e"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0\\seed227171-trial0-speed-0.2.json",
+      "candidateSha256": "af0bc60372f68e66d62c743fcaf8c3846d0af2e736b43dfebaa546d969ab9680",
+      "baselineSha256": "8bab42d283d413d25d0eec82e8f1029fff36dccb47e8940c5a9fce39416b95d3"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0\\seed227171-trial0-speed-0.4.json",
+      "candidateSha256": "80808c968b3cf260cc74e2c1a2bba7b37207951b8cdd211f18fb8e295e38e301",
+      "baselineSha256": "540ee41c2b19312d93cf0db71e95fed885b698f15bb20ad062bcb8a4562d50db"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0\\seed227171-trial0-speed0.05.json",
+      "candidateSha256": "65a1754933a819711077e4e9844fa7fce6ec67ceea7c32976bfc0ceb1bf2e1b5",
+      "baselineSha256": "ade647a95b5e411122e34b1a970796ff5e7ec1a667c94bc1cf4316a30e5a3df4"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0\\seed227171-trial0-speed0.2.json",
+      "candidateSha256": "c4f39e1f90323c25c36147e2f1b57efb5377ac6fcb39542947247b7436f01110",
+      "baselineSha256": "b038334451281abe6a5fd9cac9e81bc3f4bbcb8bd05facf6ceb636849aaab0f8"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0\\seed227171-trial0-speed0.4.json",
+      "candidateSha256": "259a5c4284ad1b4159e2e16b181ebd88afe3130005b26a2b63a5dae62a7295d9",
+      "baselineSha256": "7cac0ec86a940f75750638fc5af6f2f75c088d137a4c969384a679d4ebbab14d"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0\\seed227177-trial0-speed-0.05.json",
+      "candidateSha256": "5b329793ecfeb8d3f97364d5fd6df6561edc3c96c9ea1b5d17cb37ce307bb371",
+      "baselineSha256": "a6565aeef5ef7a40a67a7fda3bcce22a47e56911d8375a6894a714aabd73c411"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0\\seed227177-trial0-speed-0.2.json",
+      "candidateSha256": "42ff7580c0716564c9bb2f315fc69b37db6e394962825fe0536d01320bf84d90",
+      "baselineSha256": "7c10d3a91f4f0f350b79729dbc107657650641be3ed2611d262e18edd15716a2"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0\\seed227177-trial0-speed-0.4.json",
+      "candidateSha256": "f875fc10a2f0683402aedc1d846c06bbd66d27c0698d7ee81ba38b388e93e0ee",
+      "baselineSha256": "80c3c1e15c32fa081f39f2985f858cbd242d052bbdd9b0ff22ce929de91906a2"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0\\seed227177-trial0-speed0.05.json",
+      "candidateSha256": "b83c6523fe1ddc36ff2cce805d5545fbcf77c27987a93ac6e23dead79fa28cba",
+      "baselineSha256": "13b7e3839a41c454c73d2bb697498d655db61def01b7efc35f1c48af20f187fb"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0\\seed227177-trial0-speed0.2.json",
+      "candidateSha256": "6f0ba01f73e36017b36c1332b0b9adb8c9dcd8e41423f82856c0c36b934a23f8",
+      "baselineSha256": "1670bb29c913eec670ed6cf0a1443dc4048b90ab469eab2b2ebbc6df3ed4d970"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0\\seed227177-trial0-speed0.4.json",
+      "candidateSha256": "9764bbad4a6b55c17a83e95d312bdee3fa7bce6f6b0b08c04b0015145a9ddd50",
+      "baselineSha256": "5fb5c55f14d83520b8b2629dc571b03f2a74a9589100537bbdf11792ea896366"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0.6\\seed227171-trial0-speed-0.05.json",
+      "candidateSha256": "84aed4c037a0cc14c24e9dd2a7612c6bb790ca05a76dc36202009e4817688ff0",
+      "baselineSha256": "1e0f87c589cce765d308e8da6651d500c0daaf8bf468d3380d63251ba726b1a6"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0.6\\seed227171-trial0-speed-0.2.json",
+      "candidateSha256": "5944e8a25b4dca348a12e1291a25cc312013d1ebea012681e9efe6c0cf574391",
+      "baselineSha256": "089e13ac8a0a6ae5df5e3dd27104004704c7cfbab3ad8e38cc8f45177af5129a"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0.6\\seed227171-trial0-speed-0.4.json",
+      "candidateSha256": "f02d6f670ac45c83ef61fde72934f6cc56e93edcf8f5f90136dba68aafd53b54",
+      "baselineSha256": "a8dae229c5e945f2db330c82285ffb419b8e7025f9411aabef7d50f3aec67c0f"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0.6\\seed227171-trial0-speed0.05.json",
+      "candidateSha256": "0253ed7cf278627793c7847fce1ad200d66765404b083300d1ef603a0545fae4",
+      "baselineSha256": "f99b6abfc4520e96aa7ff0c5683b44989407826c0c4d8b65c3f34b038d8de5da"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0.6\\seed227171-trial0-speed0.2.json",
+      "candidateSha256": "abb05b6b331e9b5ebe718ace9bddccc1209b063dd2996a670692b59d0dca8cf7",
+      "baselineSha256": "ce15bbc7487b112e69f173598ae760189e75ab42a2f5bf94905d7f2f8d3a80b4"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0.6\\seed227171-trial0-speed0.4.json",
+      "candidateSha256": "5c1020c1d9502e483f529f8911d81ca741446b4f204d4dfa02010f7d2f4831cb",
+      "baselineSha256": "92c1ae9ea73169109f461893f3e28348cd6211f1002d39805af7e0a8797dfcff"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0.6\\seed227177-trial0-speed-0.05.json",
+      "candidateSha256": "d97b18b6f06541032b1e3e8be73396832770b38eb6913ec86e77dacd6ea47a66",
+      "baselineSha256": "3aa2e75a8329bf0dfd0711ebcbb1e5d1354b46d5146840fa439a7f263e56d3f7"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0.6\\seed227177-trial0-speed-0.2.json",
+      "candidateSha256": "68c3e96e33ed737fe068b98dc8b6aaa98873ba51bcaf4a4754d955a34e55aa4e",
+      "baselineSha256": "e1513af90c3f4e34e5e6597ee1da999c3f4675bcc5d1bac23b4d6933979934a8"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0.6\\seed227177-trial0-speed-0.4.json",
+      "candidateSha256": "d12b7dfb5ffaf4af4cd94ca00893fa5c1cf3b7133db17f74220e1a069f88a955",
+      "baselineSha256": "d192996038fdf536f7767e65f8a1585c5d56cd43e150895dc474a358b960fd26"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0.6\\seed227177-trial0-speed0.05.json",
+      "candidateSha256": "2fb4df1963c7456cc87658d08a40e0fd818c46ce6c32942844138a6fd941f4e1",
+      "baselineSha256": "a617fc87834ab00b2d1897a40c29aef8f9e7e5fa823e2a5beb2658fa0e8f1c33"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0.6\\seed227177-trial0-speed0.2.json",
+      "candidateSha256": "54d34cd4a23c30f0cb2b41180ca54af7b320a63b361b22abd1d603cbbb549a4b",
+      "baselineSha256": "4af6ce1420843bbaffc384fbdd28c98dce36109068045ccea61a2b1ad6685a7a"
+    },
+    {
+      "file": "cpu-main\\cpu-yaw0.6\\seed227177-trial0-speed0.4.json",
+      "candidateSha256": "67ae24b8c69f09984b7c60d38adf21f9090e3363152902f8529dc7bfc0f781d4",
+      "baselineSha256": "2046b646af5217bd66dbeda12f19a892451f7343df551c29e0c2e1983651198b"
+    }
+  ],
+  "initialQposAndFirstVelocityExact": true,
+  "allCommandsExact": true
+}

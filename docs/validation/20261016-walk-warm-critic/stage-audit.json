@@ -1,0 +1,24 @@
+{
+  "seed": 68131,
+  "surface": false,
+  "worlds": 1024,
+  "iterations": 200,
+  "rolloutSteps": 4915200,
+  "adamSteps": [
+    1600
+  ],
+  "actorNormalizerUnchanged": true,
+  "finite": true,
+  "onnxTorchMaxError": 2.384185791015625e-06,
+  "policySha256": "5a22e811869f14f94fa3250bd55fa2dbc57b51144e218a064e985882d5ec1636",
+  "hardwareAccess": false,
+  "criticOnly": false,
+  "criticInitializer": {
+    "sha256": "5286e66f81003cf6356e4d65457a54a1ae1eb659bbb5e318886467380387201b",
+    "actorUnchangedOnLoad": true,
+    "optimizerStatesLoaded": false,
+    "iterationLoaded": false
+  },
+  "actorExactlyUnchanged": false,
+  "accepted": false
+}
