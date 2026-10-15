@@ -14,8 +14,10 @@ from walk_transfer_task import make_cfg,rl_cfg,TASK
 p=argparse.ArgumentParser();p.add_argument('--surface',action='store_true')
 p.add_argument('--envs',type=int,required=True);p.add_argument('--iterations',type=int,required=True)
 p.add_argument('--output',type=Path,required=True)
-p.add_argument('--noise-schedule',choices=['fixed','anneal']);a=p.parse_args()
-if a.noise_schedule:
+p.add_argument('--noise-schedule',choices=['fixed','anneal'])
+p.add_argument('--critic-only',action='store_true');a=p.parse_args()
+assert not (a.critic_only and a.noise_schedule)
+if a.noise_schedule or a.critic_only:
     assert TASK=='walk_low_speed_mean_tracking'
     assert (a.envs,a.iterations) in [(64,5),(1024,200)]
 else:
@@ -33,11 +35,17 @@ try:
         assert all(group['lr']==1e-5 for group in runner.alg.optimizer.param_groups)
     env.common_step_counter=0;runner.current_learning_iteration=0
     actor=runner.alg.actor
+    frozen_actor=None
+    if a.critic_only:
+        frozen_actor={k:v.clone() for k,v in actor.state_dict().items()}
+        for parameter in actor.parameters():parameter.requires_grad_(False)
+        runner.alg.learning_rate=3e-4
+        for group in runner.alg.optimizer.param_groups:group['lr']=3e-4
     normalizer={k:v.clone() for k,v in actor.state_dict().items() if k.startswith('obs_normalizer.')}
     # Retain the baked deployment distribution; only critic normalization learns.
     actor.update_normalization=lambda *args,**kwargs:None
     anchor_stats=[]
-    if TASK!='walk_stop_transfer':
+    if TASK!='walk_stop_transfer' and not a.critic_only:
         anchor=copy.deepcopy(actor).eval()
         for parameter in anchor.parameters():parameter.requires_grad_(False)
         def retain(optimizer,args,kwargs):
@@ -56,12 +64,32 @@ try:
         from walk_noise_schedule import RolloutNoise
         assert rl['num_steps_per_env']==24 and abs(env.step_dt-.02)<1e-9
         noise=RolloutNoise(runner.alg,a.noise_schedule)
+    value_stats=[]
+    if a.critic_only:
+        original_update=runner.alg.update
+        def value_update():
+            storage=runner.alg.storage
+            target=storage.returns.detach();prediction=storage.values.detach()
+            residual=prediction-target;variance=target.var(unbiased=False)
+            value_stats.append(dict(iteration=len(value_stats),
+                meanBootstrappedTarget=float(target.mean()),meanPrediction=float(prediction.mean()),
+                rmse=float(residual.square().mean().sqrt()),
+                explainedVariance=float(1-residual.var(unbiased=False)/variance) if variance>1e-12 else None))
+            return original_update()
+        runner.alg.update=value_update
     runner.learn(num_learning_iterations=a.iterations,init_at_random_ep_len=False)
+    if a.critic_only:
+        assert all(torch.equal(actor.state_dict()[k],v) for k,v in frozen_actor.items())
+        assert all(parameter not in runner.alg.optimizer.state for parameter in actor.parameters())
+        assert len(value_stats)==a.iterations
+        (a.output/'critic-warmup-audit.json').write_text(json.dumps(dict(actorExactlyUnchanged=True,
+            actorOptimizerStates=0,criticLearningRate=3e-4,iterations=value_stats,
+            limitation='Training targets are bootstrapped; independent frozen reward-tail validation still required.'),indent=2))
     if noise:
         assert len(noise.audit)==a.iterations and noise.calls==0
         (a.output/'noise-audit.json').write_text(json.dumps(dict(mode=a.noise_schedule,
             distributionFrozen=True,deterministicExport=True,iterations=noise.audit),indent=2))
-    if TASK!='walk_stop_transfer':
+    if TASK!='walk_stop_transfer' and not a.critic_only:
         hook.remove()
         assert len(anchor_stats)==a.iterations*8
         (a.output/'retention.json').write_text(json.dumps(dict(coefficient=5. if actor_only else 10.,
@@ -86,9 +114,11 @@ try:
     meta.update(policySha256=sha,artifactType='diagnostic-transfer-policy',hardwareValidated=False)
     meta['walkExecution']['policySha256']=sha
     meta['transferExperiment']=dict(surface=a.surface,seed=68131,worlds=a.envs,iterations=a.iterations,
-        originalDonorResume=False,critic='fresh-initialized',actorNormalizerFrozen=True,accepted=False)
+        originalDonorResume=False,critic='fresh-initialized',actorNormalizerFrozen=True,
+        criticOnly=a.critic_only,accepted=False)
     (a.output/'policy.metadata.json').write_text(json.dumps(meta,indent=2))
     (a.output/'stage-audit.json').write_text(json.dumps(dict(seed=68131,surface=a.surface,worlds=a.envs,
         iterations=a.iterations,rolloutSteps=a.envs*24*a.iterations,adamSteps=sorted(steps),actorNormalizerUnchanged=True,
-        finite=True,onnxTorchMaxError=error,policySha256=sha,hardwareAccess=False,accepted=False),indent=2))
+        finite=True,onnxTorchMaxError=error,policySha256=sha,hardwareAccess=False,
+        criticOnly=a.critic_only,actorExactlyUnchanged=bool(a.critic_only),accepted=False),indent=2))
 finally:env.close()

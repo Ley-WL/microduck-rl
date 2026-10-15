@@ -1,0 +1,151 @@
+{
+  "results": [
+    {
+      "seed": 235151,
+      "worlds": 48,
+      "survivedFirst30": 48,
+      "survived60": 48,
+      "gamma": 0.99,
+      "unobservedTailDiscount": 2.8365594903161287e-07,
+      "phases": [
+        {
+          "phase": "stand",
+          "samples": 2400,
+          "meanReturn": 17.8937931060791,
+          "meanPrediction": 7.221649646759033,
+          "rmse": 11.41535758972168,
+          "bias": -10.672143936157227,
+          "explainedVariance": -0.4196573495864868,
+          "targetStd": 3.400465250015259
+        },
+        {
+          "phase": "forward",
+          "samples": 14400,
+          "meanReturn": 17.16376304626465,
+          "meanPrediction": 9.086487770080566,
+          "rmse": 8.721980094909668,
+          "bias": -8.077274322509766,
+          "explainedVariance": 0.16048473119735718,
+          "targetStd": 3.591792106628418
+        },
+        {
+          "phase": "stopFirst",
+          "samples": 12000,
+          "meanReturn": 19.82262420654297,
+          "meanPrediction": 9.207600593566895,
+          "rmse": 10.820144653320312,
+          "bias": -10.615023612976074,
+          "explainedVariance": -0.1569613218307495,
+          "targetStd": 1.9494380950927734
+        },
+        {
+          "phase": "reverse",
+          "samples": 14400,
+          "meanReturn": 17.68122673034668,
+          "meanPrediction": 8.843155860900879,
+          "rmse": 9.189148902893066,
+          "bias": -8.838069915771484,
+          "explainedVariance": 0.23821479082107544,
+          "targetStd": 2.8823728561401367
+        },
+        {
+          "phase": "stopSecond",
+          "samples": 9600,
+          "meanReturn": 20.07798194885254,
+          "meanPrediction": 9.197121620178223,
+          "rmse": 11.01039981842041,
+          "bias": -10.880861282348633,
+          "explainedVariance": -0.25403785705566406,
+          "targetStd": 1.5037672519683838
+        },
+        {
+          "phase": "fullCycle",
+          "samples": 72000,
+          "meanReturn": 18.161325454711914,
+          "meanPrediction": 8.93612289428711,
+          "rmse": 9.741656303405762,
+          "bias": -9.225202560424805,
+          "explainedVariance": 0.11448889970779419,
+          "targetStd": 3.3259565830230713
+        }
+      ]
+    },
+    {
+      "seed": 235157,
+      "worlds": 48,
+      "survivedFirst30": 48,
+      "survived60": 48,
+      "gamma": 0.99,
+      "unobservedTailDiscount": 2.8365594903161287e-07,
+      "phases": [
+        {
+          "phase": "stand",
+          "samples": 2400,
+          "meanReturn": 17.988134384155273,
+          "meanPrediction": 7.221033573150635,
+          "rmse": 11.478409767150879,
+          "bias": -10.76710033416748,
+          "explainedVariance": -0.4079623222351074,
+          "targetStd": 3.3523921966552734
+        },
+        {
+          "phase": "forward",
+          "samples": 14400,
+          "meanReturn": 17.465730667114258,
+          "meanPrediction": 9.22999382019043,
+          "rmse": 8.773589134216309,
+          "bias": -8.235736846923828,
+          "explainedVariance": 0.13247692584991455,
+          "targetStd": 3.24739146232605
+        },
+        {
+          "phase": "stopFirst",
+          "samples": 12000,
+          "meanReturn": 19.722023010253906,
+          "meanPrediction": 9.322443008422852,
+          "rmse": 10.617185592651367,
+          "bias": -10.399580955505371,
+          "explainedVariance": -0.06929755210876465,
+          "targetStd": 2.068082571029663
+        },
+        {
+          "phase": "reverse",
+          "samples": 14400,
+          "meanReturn": 17.41156578063965,
+          "meanPrediction": 9.197761535644531,
+          "rmse": 8.606904029846191,
+          "bias": -8.2138032913208,
+          "explainedVariance": 0.31602591276168823,
+          "targetStd": 3.1092417240142822
+        },
+        {
+          "phase": "stopSecond",
+          "samples": 9600,
+          "meanReturn": 20.053613662719727,
+          "meanPrediction": 9.355332374572754,
+          "rmse": 10.83218765258789,
+          "bias": -10.698283195495605,
+          "explainedVariance": -0.28669166564941406,
+          "targetStd": 1.4968836307525635
+        },
+        {
+          "phase": "fullCycle",
+          "samples": 72000,
+          "meanReturn": 18.142576217651367,
+          "meanPrediction": 9.144878387451172,
+          "rmse": 9.488990783691406,
+          "bias": -8.997696876525879,
+          "explainedVariance": 0.1562526822090149,
+          "targetStd": 3.28090763092041
+        }
+      ]
+    }
+  ],
+  "optimizationSteps": 0,
+  "actorAndCriticUnchanged": true,
+  "stochasticTrainingPolicy": true,
+  "checkpointSha256": "01e13c241a48c88e436041c2a71c1239ac7736ed5c77db23950e9a48fb9204ba",
+  "limitation": "Frozen critic on its own final actor distribution; 64s diagnostic episode differs from 32s training timeout, first 30s only scored. Value fit does not prove policy gradient causality.",
+  "hardwareAccess": false,
+  "accepted": false
+}

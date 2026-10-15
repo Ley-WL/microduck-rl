@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "results": [
+    {
+      "seed": 235151,
+      "cpuFloat64ReturnMaxError": 4.521867726481332e-05
+    },
+    {
+      "seed": 235157,
+      "cpuFloat64ReturnMaxError": 3.741053411943085e-05
+    }
+  ]
+}
