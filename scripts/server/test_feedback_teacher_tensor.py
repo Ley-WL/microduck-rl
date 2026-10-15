@@ -30,3 +30,16 @@ for step in range(500):
     observed=tensor.query(torch.tensor(command),torch.tensor(actual),enabled=torch.tensor(enabled)).numpy()
     np.testing.assert_allclose(observed,expected,atol=2e-6,rtol=2e-6)
 print('Wide feedback bound and stop parity passed')
+
+for response,kp,ki in ((.1,.3,.8),(.1,.3,.3),(.1,.8,.3)):
+    options=dict(response_seconds=response,vx_kp=kp,vx_ki=ki,vx_limit=.25,query_vx_limit=.6)
+    scalar=[FeedbackTeacher(**options) for _ in range(4)]
+    tensor=TensorFeedbackTeacher(**options)
+    for step in range(500):
+        command=rng.uniform(-.3,.3,(4,3)).astype(np.float32)
+        actual=rng.normal(0,.1,(4,2)).astype(np.float32)
+        enabled=np.full(4,step%100<80)
+        expected=np.stack([t.query(c,v,enabled=bool(e)) for t,c,v,e in zip(scalar,command,actual,enabled)])
+        observed=tensor.query(torch.tensor(command),torch.tensor(actual),enabled=torch.tensor(enabled)).numpy()
+        np.testing.assert_allclose(observed,expected,atol=2e-6,rtol=2e-6)
+print('Response settings, reversal and stop parity passed')

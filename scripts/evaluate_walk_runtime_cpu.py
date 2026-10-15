@@ -124,6 +124,12 @@ def run(args):
     session=ort.InferenceSession(str(args.onnx),sess_options=opts,providers=['CPUExecutionProvider'])
     assert session.get_inputs()[0].shape==[1,61] and session.get_outputs()[0].shape==[1,14]
     stop_path=getattr(args,'stop_teacher_onnx',None)
+    feedback_path=getattr(args,'feedback_teacher_onnx',None)
+    feedback_after=float(getattr(args,'feedback_after',0.))
+    assert 0 <= feedback_after < args.seconds
+    assert not (feedback_path or feedback_after) or getattr(args,'feedback_teacher',False)
+    feedback_session=ort.InferenceSession(str(feedback_path),sess_options=opts,providers=['CPUExecutionProvider']) if feedback_path else session
+    assert feedback_session.get_inputs()[0].shape==[1,61] and feedback_session.get_outputs()[0].shape==[1,14]
     assert not stop_path or not getattr(args,'feedback_teacher',False), 'Select one simulation teacher'
     stop_session=ort.InferenceSession(str(stop_path),sess_options=opts,providers=['CPUExecutionProvider']) if stop_path else None
     if stop_session:
@@ -131,6 +137,8 @@ def run(args):
     manifest=dict(simulationOnly=True,hardwareAccess=False,training=False,policySha256=meta['policySha256'],
         policyForwardDiagnostic=getattr(args,'policy_forward',False),
         privilegedFeedbackTeacher=getattr(args,'feedback_teacher',False),
+        feedbackTeacherSha256=hashlib.sha256(feedback_path.read_bytes()).hexdigest() if feedback_path else None,
+        feedbackAfterSeconds=feedback_after,
         stopTeacherSha256=hashlib.sha256(stop_path.read_bytes()).hexdigest() if stop_path else None,
         feedbackVxCorrectionLimit=getattr(args,'feedback_vx_limit',.12),
         feedbackQueryVxLimit=getattr(args,'feedback_query_vx_limit',.3),
@@ -234,13 +242,15 @@ def run(args):
                     encoder_q=data.qpos[qadr]+(data.qpos[passive_qadr] if args.backlash else 0)
                     obs=np.concatenate([gyro,gravity,observed_angles(encoder_q)-home,velocity_previous,previous,command,np.zeros(10)]).astype(np.float32)
                     query=obs.copy()
-                    if teacher is not None:
+                    feedback_active=teacher is not None and t>=feedback_after
+                    if feedback_active:
                         body_velocity=data.xmat[trunk].reshape(3,3).T@data.qvel[:3]
                         query[48:51]=teacher.query(command,[body_velocity[0],gyro[2]],
                             enabled=np.linalg.norm(target_command)>.001)
                     moving_now=np.linalg.norm(target_command)>.001
                     has_moved=has_moved or moving_now
                     active_session=stop_session if stop_session and has_moved and not moving_now else session
+                    if feedback_active:active_session=feedback_session
                     raw=active_session.run(None,{active_session.get_inputs()[0].name:query[None]})[0][0]
                     if not np.isfinite(raw).all():raise ValueError('Non-finite frozen policy output')
                     voltage_scale=np.float32(7.4/np.clip(args.voltage,6.,9.5)) if args.voltage_compensation else np.float32(1.)
@@ -249,7 +259,7 @@ def run(args):
                     tilt=float(np.degrees(np.arccos(np.clip(-gravity[2],-1,1))))
                     contact_pairs=[[model.geom(c.geom1).name,model.geom(c.geom2).name] for c in data.contact]
                     rows.append(dict(time=t,tilt=tilt,command=command.tolist(),raw=raw.tolist(),target=target.tolist(),contacts=contact_pairs,
-                        qpos=data.qpos.tolist(),velocity=data.qvel.tolist(),obs=obs.tolist(),teacherCommand=query[48:51].tolist() if teacher is not None else None,clipped=(np.abs(desired-np.clip(desired,np.asarray(list(mechanical.LIMITS.values()))[:,0],np.asarray(list(mechanical.LIMITS.values()))[:,1]))>1e-7).tolist()))
+                        qpos=data.qpos.tolist(),velocity=data.qvel.tolist(),obs=obs.tolist(),teacherCommand=query[48:51].tolist() if feedback_active else None,clipped=(np.abs(desired-np.clip(desired,np.asarray(list(mechanical.LIMITS.values()))[:,0],np.asarray(list(mechanical.LIMITS.values()))[:,1]))>1e-7).tolist()))
                     if tilt>=60:fallen=t;break
                     velocity_previous=data.qvel[vadr].copy()+(data.qvel[passive_vadr] if args.backlash else 0)
                     steps=max(1,round(cadence[tick%len(cadence)]/dt)) if cadence else decimation
@@ -291,4 +301,6 @@ if __name__=='__main__':
     p.add_argument('--feedback-query-vx-limit',type=float,default=.3,help='Simulation teacher command query bound; runtime unchanged')
     p.add_argument('--feedback-vx-limit',type=float,default=.12,help='Simulation teacher correction bound; runtime unchanged')
     p.add_argument('--feedback-teacher',action='store_true',help='Privileged simulation-only feedback demonstration; not a deployed policy')
+    p.add_argument('--feedback-teacher-onnx',type=Path,help='Simulation-only teacher policy; defaults to the tested policy')
+    p.add_argument('--feedback-after',type=float,default=0.,help='Start simulation teacher after this many seconds, retaining student state')
     run(p.parse_args())

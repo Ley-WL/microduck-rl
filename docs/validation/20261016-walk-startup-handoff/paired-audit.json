@@ -1,0 +1,50 @@
+{
+  "pairs": [
+    {
+      "case": "seed225171-trial0-speed-0.05.json",
+      "preSwitchFrames": 401,
+      "maxErrors": {
+        "qpos": 0.0,
+        "velocity": 0.0,
+        "obs": 0.0,
+        "raw": 0.0,
+        "target": 0.0
+      }
+    },
+    {
+      "case": "seed225171-trial0-speed0.05.json",
+      "preSwitchFrames": 401,
+      "maxErrors": {
+        "qpos": 0.0,
+        "velocity": 0.0,
+        "obs": 0.0,
+        "raw": 0.0,
+        "target": 0.0
+      }
+    },
+    {
+      "case": "seed225177-trial0-speed-0.05.json",
+      "preSwitchFrames": 401,
+      "maxErrors": {
+        "qpos": 0.0,
+        "velocity": 0.0,
+        "obs": 0.0,
+        "raw": 0.0,
+        "target": 0.0
+      }
+    },
+    {
+      "case": "seed225177-trial0-speed0.05.json",
+      "preSwitchFrames": 401,
+      "maxErrors": {
+        "qpos": 0.0,
+        "velocity": 0.0,
+        "obs": 0.0,
+        "raw": 0.0,
+        "target": 0.0
+      }
+    }
+  ],
+  "serverBaselineNotBitwiseEqual": true,
+  "serverComparisonRejected": true
+}
