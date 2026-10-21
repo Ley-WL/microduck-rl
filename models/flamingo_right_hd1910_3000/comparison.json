@@ -1,0 +1,41 @@
+{
+  "baseline": {
+    "holdSuccess": 90,
+    "survived": 96,
+    "lowerSuccess": 96
+  },
+  "candidates": {
+    "501": {
+      "holdSuccess": 48,
+      "survived": 96,
+      "lowerSuccess": 96
+    },
+    "1001": {
+      "holdSuccess": 48,
+      "survived": 96,
+      "lowerSuccess": 96
+    },
+    "1501": {
+      "holdSuccess": 15,
+      "survived": 96,
+      "lowerSuccess": 96
+    },
+    "2001": {
+      "holdSuccess": 35,
+      "survived": 96,
+      "lowerSuccess": 93
+    },
+    "2501": {
+      "holdSuccess": 39,
+      "survived": 96,
+      "lowerSuccess": 96
+    },
+    "3000": {
+      "holdSuccess": 48,
+      "survived": 96,
+      "lowerSuccess": 96
+    }
+  },
+  "totalCases": 96,
+  "accepted": false
+}

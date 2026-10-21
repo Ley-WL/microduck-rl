@@ -1,3 +1,15 @@
+> **2026-10-21 右侧限定候选已部署240：** 用户授权后，Observer服务与e01fa49f模型已部署192.168.137.240，仅启用抬右脚。板端推理/模型bank/20卸力快照通过，未发动作，实物效果待测试。保留5000行走及整包回退；不改变右48/48、左0/48仿真结论。以下待IP/未部署为历史记录。
+
+> **2026-10-21 用户授权右侧限定实机测试：** 用户接受只抬右脚，授权修改Observer服务并替换3000轮e01fa49f模型。Observer代码/模型/ARM包已准备、261测试通过；旧IP160不可达，等待新IP，尚未部署。双侧模型仍不合格，授权仅右侧试用，不改变历史仿真结论。
+
+> **2026-10-21 Flamingo从头训练最终完成（最新）：** author-scratch目录launcher2977838已完成3000轮和全部评估，job.exit=0，无自动续训。最终保持48/96：抬左脚0/48、抬右脚48/48；未倒/落脚均96/96，原版保持90/96，候选不采用不部署。SHA e01fa49f；模型、结果、代表视频已下载到artifacts/flamingo-author-scratch-20261021/final，模型SHA核验通过。完整日志/checkpoint保留服务器。详见docs/flamingo-author-scratch-20261021.md。以下进行中记录均为历史。
+
+> **2026-10-21 Flamingo公开CycleHard从头训练（最新）：** 用户要求与作者保持一致。新目录/CodeRepo/Code/leiwu30/hd1910-flamingo-author-scratch-20261021，GPU1，launcher2977838，禁止重复启动。使用公开CycleHard奖励/课程/PPO与MicroduckOnPolicyRunner，从随机初始化连续learn3000，4096环境；取消ONNX导入、合成count、critic预热、分段重建训练环境。HD1910/Observer限位保持。公开run起始checkpoint未查到，不声称精确复现该run或臆造stage1到stage2加载链。4配置测试及64×5冷启动冒烟通过，正在正式train。计划501/1001/1501/2001/2501/3000更新评估96例，progress.json/comparison.json/job.exit记录；只仿真不部署。说明docs/flamingo-author-scratch-20261021.md。上一轮1401494已完成退出，3000轮保持0/96，拒绝采用。
+
+> **2026-10-21 Flamingo公开课程重新微调进行中（最新）：** 用户确认参考原作者公开配置。从原actor df77929c重新开始；新目录/CodeRepo/Code/leiwu30/hd1910-flamingo-curriculum-20261021，GPU1，launcher1401494，禁止重复启动。保留公开Hard课程/PPO：初始LR1e-3自适应、std1、推扰0→500轮.08→1000轮.15→1400轮.25；HD1910 P5/Observer限位保持。新critic预热10轮、actor归一化恢复后允许更新；非原完整checkpoint复现。4项测试及64环境5轮+续训2轮已通过；4096环境正式阶段train100已启动，100/500/1000/1500/2000/3000轮逐段训练、评估并恢复完整训练状态。evidence/progress.json/comparison.json/job.exit为状态；首launcher1386287因预热后reset上下文错误退出，归档evidence-failed-reset，已修复。未评估前不声称提升，不部署、不动现役模型。说明docs/flamingo-published-curriculum-20261021.md。
+
+> **2026-10-21 FlamingoCycle HD1910短微调已完成、退步不采用：** 独立服务器hd1910-flamingo-cycle-20261021/GPU2/launcher979848，job.exit=0，无活跃续训。固定上游0bf9897/Hub a69e4f6/原actor df77929c；HD1910 P5/Observer限位，恢复actor和冻结normalizer、新critic先10轮，再1024环境100轮低LR微调。候选4df12bb6：同初态6×16评估，原版单脚保持90/96、候选61/96，丢29无新增；两版未倒/落脚均96/96。候选不部署、不替换行走模型。完整证据与并排视频artifacts/flamingo-cycle-hd1910-20261021，归档SHA32b6991f已核验；详见docs/flamingo-cycle-hd1910-20261021.md。此前35ms错误批已归档无效，最终评估14ms。
+
 > **2026-10-21 配方清理：** 已删除淘汰的HD1910行走配方及对应训练/微调入口，当前仅使用 train_walk_observer.py + walk_observer_contract.py 和5000轮模型e3b90ac0。官方velocity基础配置保留为当前方法依赖；walk_runtime_eval.py仅用于运行仿真，不提供旧PPO训练入口。其他技能保持。
 
 > **2026-10-21 当前采用：** 官方配方 + HD1910 + Observer机械/目标限位，从头5000轮；最终模型e3b90ac0保存于 `models/walk_observer_hd1910_5000/`，用户实机反馈效果很好。训练配方、独立30输入评估及限制见 [说明](docs/walk-observer-official-training-20261020.md)。10000轮已完成但未全面超过本版本，不替换现役。
