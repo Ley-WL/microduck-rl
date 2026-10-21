@@ -19,10 +19,10 @@
 | 功能 | 当前版本 / 来源 | 状态与说明 | 模型 / 测试说明 |
 |---|---|---|---|
 | 行走 | HD1910 + Observer限位，5000轮 | 用户实机反馈好；保留当前版本 | [模型与测试](models/walk_observer_hd1910_5000/README.md) · [配方](docs/walk-observer-official-training-20261020.md) |
-| 金鸡独立 | HD1910 CycleHard，3000轮 | 仅抬右脚；仿真48/48，已部署待实测 | [模型与测试](models/flamingo_right_hd1910_3000/README.md) · [配方](docs/flamingo-author-scratch-20261021.md) |
+| 金鸡独立 | HD1910 CycleHard，3000轮 | 仅抬右脚；仿真48/48，实机出现软掉/重启，原因待查 | [模型与测试](models/flamingo_right_hd1910_3000/README.md) · [配方](docs/flamingo-author-scratch-20261021.md) |
 | 十拍舞蹈 | HD1910 大幅抗扰 v5 | 已部署试用，抗扰仍有失败 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/dance10.onnx) · [训练与测试](docs/dance10-training.md) |
 | 倒地起身 | HD1910 GetupMechanical | 已部署，仍有实机失稳记录 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_getup.onnx) · [合同](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_getup.metadata.json) |
-| 坐下 / 站起 | 导入 KissQy 坐站模型 | 共用一个模型；有磕头问题记录 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/alpha_sitstand.onnx) · [合同](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/alpha_sitstand.metadata.json) |
+| 坐下 / 站起 | 导入 KissQy 坐站模型 | 现役保持；新训3000轮仿真64/64，已停止训练、未部署 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/alpha_sitstand.onnx) · [合同](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/alpha_sitstand.metadata.json) · [新模型与测试结论](models/sitstand_hd1910_3000/README.md) · [训练方法](docs/sitstand-official-scratch-20261021.md) |
 | 拾取 | 导入 KissQy 拾取模型 | 沿用现有模型 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_pick.onnx) · [合同](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_pick.metadata.json) |
 | 翻滚 | 导入 KissQy 翻滚模型 | 沿用原模型，未换成微调候选 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_roulade.onnx) · [合同](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_roulade.metadata.json) |
 | 左 / 右踢球 | 导入官方踢球模型 | 左右各一个模型 | [左脚](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/kick_left.onnx) · [右脚](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/kick_right.onnx) |

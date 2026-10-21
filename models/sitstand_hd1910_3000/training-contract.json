@@ -1,0 +1,351 @@
+{
+  "fromScratch": true,
+  "onnxImported": false,
+  "checkpointLoaded": false,
+  "criticWarmup": 0,
+  "syntheticNormalizerCount": false,
+  "initialActorNormalizerCount": 0,
+  "initialCriticNormalizerCount": 0,
+  "initialOptimizerStates": 0,
+  "seed": 211121,
+  "worlds": 4096,
+  "iterations": 15000,
+  "actor": {
+    "hidden_dims": [
+      512,
+      256,
+      128
+    ],
+    "activation": "elu",
+    "obs_normalization": true,
+    "distribution_cfg": {
+      "init_std": 1.0,
+      "std_type": "scalar"
+    }
+  },
+  "critic": {
+    "hidden_dims": [
+      512,
+      256,
+      128
+    ],
+    "activation": "elu",
+    "obs_normalization": true
+  },
+  "ppo": {
+    "num_learning_epochs": 5,
+    "num_mini_batches": 4,
+    "learning_rate": 0.001,
+    "schedule": "adaptive",
+    "gamma": 0.99,
+    "lam": 0.95,
+    "entropy_coef": 0.01,
+    "desired_kl": 0.01,
+    "max_grad_norm": 1.0,
+    "value_loss_coef": 1.0,
+    "use_clipped_value_loss": true,
+    "clip_param": 0.2,
+    "normalize_advantage_per_mini_batch": false,
+    "optimizer": "adam",
+    "symmetry_cfg": null,
+    "rnd_cfg": null
+  },
+  "runner": "MicroduckOnPolicyRunner/VelocityOnPolicyRunner",
+  "curriculum": {
+    "head_pose_range": {
+      "command_name": "head_pose",
+      "range_stages": [
+        {
+          "step": 0,
+          "ranges": [
+            [
+              -0.05,
+              0.05
+            ],
+            [
+              -0.05,
+              0.05
+            ],
+            [
+              -0.07,
+              0.07
+            ],
+            [
+              -0.015,
+              0.015
+            ]
+          ]
+        },
+        {
+          "step": 12000,
+          "ranges": [
+            [
+              -0.17,
+              0.17
+            ],
+            [
+              -0.17,
+              0.17
+            ],
+            [
+              -0.21,
+              0.21
+            ],
+            [
+              -0.047,
+              0.047
+            ]
+          ]
+        },
+        {
+          "step": 24000,
+          "ranges": [
+            [
+              -0.39,
+              0.39
+            ],
+            [
+              -0.39,
+              0.39
+            ],
+            [
+              -0.49,
+              0.49
+            ],
+            [
+              -0.11,
+              0.11
+            ]
+          ]
+        },
+        {
+          "step": 36000,
+          "ranges": [
+            [
+              -0.72,
+              0.72
+            ],
+            [
+              -0.72,
+              0.72
+            ],
+            [
+              -0.91,
+              0.91
+            ],
+            [
+              -0.2,
+              0.2
+            ]
+          ]
+        },
+        {
+          "step": 48000,
+          "ranges": [
+            [
+              -1.1,
+              1.1
+            ],
+            [
+              -1.1,
+              1.1
+            ],
+            [
+              -1.4,
+              1.4
+            ],
+            [
+              -0.31,
+              0.31
+            ]
+          ]
+        }
+      ]
+    },
+    "com_range": {
+      "event_name": "randomize_com",
+      "range_stages": [
+        {
+          "step": 0,
+          "range": 0.003
+        },
+        {
+          "step": 12000,
+          "range": 0.005
+        },
+        {
+          "step": 24000,
+          "range": 0.01
+        },
+        {
+          "step": 36000,
+          "range": 0.015
+        }
+      ]
+    },
+    "head_com_range": {
+      "event_name": "randomize_head_com",
+      "range_stages": [
+        {
+          "step": 0,
+          "range": 0.003
+        },
+        {
+          "step": 12000,
+          "range": 0.005
+        },
+        {
+          "step": 24000,
+          "range": 0.01
+        }
+      ]
+    },
+    "push_magnitude": {
+      "event_name": "push_robot",
+      "push_stages": [
+        {
+          "step": 0,
+          "velocity_range": {
+            "x": [
+              0.0,
+              0.0
+            ],
+            "y": [
+              0.0,
+              0.0
+            ]
+          }
+        },
+        {
+          "step": 24000,
+          "velocity_range": {
+            "x": [
+              -0.05,
+              0.05
+            ],
+            "y": [
+              -0.05,
+              0.05
+            ]
+          }
+        },
+        {
+          "step": 36000,
+          "velocity_range": {
+            "x": [
+              -0.1,
+              0.1
+            ],
+            "y": [
+              -0.1,
+              0.1
+            ]
+          }
+        },
+        {
+          "step": 48000,
+          "velocity_range": {
+            "x": [
+              -0.2,
+              0.2
+            ],
+            "y": [
+              -0.2,
+              0.2
+            ]
+          }
+        },
+        {
+          "step": 60000,
+          "velocity_range": {
+            "x": [
+              -0.3,
+              0.3
+            ],
+            "y": [
+              -0.3,
+              0.3
+            ]
+          }
+        }
+      ]
+    },
+    "action_rate_weight": {
+      "reward_name": "action_rate_l2",
+      "weight_stages": [
+        {
+          "step": 0,
+          "weight": -0.1
+        },
+        {
+          "step": 12000,
+          "weight": -0.2
+        },
+        {
+          "step": 18000,
+          "weight": -0.4
+        },
+        {
+          "step": 24000,
+          "weight": -0.6
+        },
+        {
+          "step": 30000,
+          "weight": -0.8
+        },
+        {
+          "step": 36000,
+          "weight": -1.0
+        }
+      ]
+    },
+    "descent_speed_weight": {
+      "reward_name": "descent_speed",
+      "weight_stages": [
+        {
+          "step": 0,
+          "weight": 10.0
+        },
+        {
+          "step": 12000,
+          "weight": 20.0
+        }
+      ]
+    },
+    "rise_speed_weight": {
+      "reward_name": "rise_speed",
+      "weight_stages": [
+        {
+          "step": 0,
+          "weight": 0.0
+        },
+        {
+          "step": 36000,
+          "weight": 5.0
+        },
+        {
+          "step": 60000,
+          "weight": 10.0
+        }
+      ]
+    },
+    "torque_rate_weight": {
+      "reward_name": "joint_torque_rate_l2",
+      "weight_stages": [
+        {
+          "step": 0,
+          "weight": 0.0
+        },
+        {
+          "step": 18000,
+          "weight": -0.0005
+        },
+        {
+          "step": 30000,
+          "weight": -0.001
+        }
+      ]
+    }
+  },
+  "hardware": false
+}
