@@ -1,8 +1,4 @@
-"""Isolated walking transfer factory, not an original donor checkpoint resume.
-
-Control and surface roots share all policy/runtime/physics/reward settings.
-Only terrain generator differs. CPU carpet diagnostics remain approximations.
-"""
+"""Runtime-only HD1910 simulation used by the accepted walking policy evaluation."""
 from copy import deepcopy
 from dataclasses import dataclass, replace
 import json
@@ -15,7 +11,7 @@ import mjlab.terrains as terrain_gen
 from mjlab.terrains.terrain_generator import TerrainGeneratorCfg
 from mjlab.envs.mdp.actions import JointPositionAction, JointPositionActionCfg
 from mjlab.utils.spec_config import CollisionCfg
-from mjlab.tasks.registry import load_env_cfg, load_rl_cfg
+from mjlab.tasks.registry import load_env_cfg
 from .getup_mechanical_contract import NAMES, LIMITS, REFERENCES, DIRECTIONS, ENCODER_STEP, edit_mechanical_spec
 from . import mdp
 from .backlash import make_backlash_variant
@@ -123,8 +119,7 @@ def make_cfg(surface=False,play=False):
     cfg.sim.mujoco.timestep=.002;cfg.decimation=10
     cfg.sim.mujoco.disableflags=('eulerdamp',);cfg.sim.nconmax=200;cfg.sim.contact_sensor_maxmatch=256
     cfg.curriculum.clear()
-    # Both roots use the same restricted locomotion context and fresh critic.
-    # This is explicitly a transfer task, not faithful historical PPO replay.
+    # Evaluation context; this does not change the official training recipe.
     for name in ('head_pose','body_pose'):
         cfg.commands[name].ranges=tuple((0.,0.) for _ in cfg.commands[name].ranges)
     for group in ('actor','critic'):
@@ -142,13 +137,4 @@ def make_cfg(surface=False,play=False):
         cfg.scene.terrain.terrain_generator=TerrainGeneratorCfg(size=(4.,4.),border_width=2.,num_rows=2,num_cols=2,
             curriculum=False,sub_terrains={'wave':terrain_gen.HfWaveTerrainCfg(amplitude_range=(.0015,.003),
                 num_waves=40,horizontal_scale=.04,vertical_scale=.0005)},add_lights=False)
-    return cfg
-
-def rl_cfg():
-    cfg=deepcopy(load_rl_cfg('Mjlab-Velocity-Flat-MicroDuck'))
-    cfg.num_steps_per_env=24;cfg.algorithm.num_learning_epochs=2;cfg.algorithm.num_mini_batches=4
-    cfg.algorithm.learning_rate=1e-5;cfg.algorithm.schedule='fixed'
-    # rsl_rl names direct per-action std parameters 'scalar' (shape 14).
-    cfg.actor.distribution_cfg={'class_name':'GaussianDistribution','init_std':.1,'std_type':'scalar'}
-    cfg.max_iterations=20;cfg.save_interval=20;cfg.experiment_name='walk_surface_transfer'
     return cfg

@@ -1,3 +1,5 @@
+> **2026-10-21 配方清理：** 已删除淘汰的HD1910行走配方及对应训练/微调入口，当前仅使用 train_walk_observer.py + walk_observer_contract.py 和5000轮模型e3b90ac0。官方velocity基础配置保留为当前方法依赖；walk_runtime_eval.py仅用于运行仿真，不提供旧PPO训练入口。其他技能保持。
+
 > **2026-10-21 当前采用：** 官方配方 + HD1910 + Observer机械/目标限位，从头5000轮；最终模型e3b90ac0保存于 `models/walk_observer_hd1910_5000/`，用户实机反馈效果很好。训练配方、独立30输入评估及限制见 [说明](walk-observer-official-training-20261020.md)。10000轮已完成但未全面超过本版本，不替换现役。
 
 > **2026-10-14 大幅舞蹈 v5 抗扰续训已启动：** 用户要求加强动作与抗干扰。v4 已完成800轮，正常64/64、训练式扰动55/64、周期压力57/64，尚未通过抗扰验收。独立 `dance10-resilient-v5-20261014`（launcher PID122660）载入v4 final，保留完整大幅动作且取消幅度渐增；训练水平推扰±0.18m/s、间隔1.5–4秒、每回合24秒连续三轮。HD1910/当前STL/61维/EMA/机械限位/45度终止门保持，actor归一化冻结、Adam重置、std .08、LR1e-5、seed121031。12项本地测试通过，64环境×5轮及带归一化ONNX导出通过，已进入1024环境×1000轮阶段。结束自动按v4原评估条件/两旧seed对照，再用120011、120017各64环境做新旧配对压力评估，核验初始qpos/qvel/观测哈希及实际动作幅度，并留视频复核；不宣称全部物理随机量一致。查看evidence/progress.json与job.exit，勿重复启动。未部署或访问主板，仿真非实机验收。详见docs/dance10-training.md。
@@ -17,35 +19,6 @@
 > 新独立CPU walk-delay16-fullscreen-20261013 PID2324408已启动，Baseline/Delay16×14/16ms×三地面×四速度.1/.15/.2/.25×seeds130031/240017×2trial共192 actor例（96配对）；复用已完成66例，只新增126例，不重复GPU训练或抓实机。所有policy逐例初态/首velocity必须匹配，保存目标frame p95/max、存活/实际前进及丢原成功集；完整回归结束前无合格/待部署结论，后续须真正未用seed与正式验收。参考已完成baseline16/旧delay14/关键candidate trace，复用原始trace SHA记录并连同新全帧归档；跨地面初态受静置影响，非实测地毯剪切/全CPU-GPU动力学证明。追踪launch/progress/job.exit/comparison，不重复2324408。当前无活跃GPU训练、仅CPU回归；用户设备已关机，不再尝试主板SSH或要求开机。现役walk1cbf8730/P5D0及所有其它模型/标定EEPROM/增益/BLE/网页masked保持，无新权重部署/实机运动。七记录同步；仿真非实机验收，RL只本地提交不推上游。
 
 > **2026-10-13 延迟配对筛选入口修复（最新当前阶段）：** 首screen2264708/job1仅因新ONNX旁缺Delay16.metadata.json在初例物理运行前拒绝，未重训或判模型失败；原完整归档SHAf8a4fa33保留。补配套原导出metadata的新独立walk-delay16-screen-v2-20261013 PID2284601运行12例，training=false/optimizer0/不接硬件，已完成14ms平地及pile3并推进pile6；后续16ms同三条件。所有源在launch SHA锁定，旧screen源码不改，不重复已完成GPU训练2251965。当前无合格/待部署候选，最终效果以完整comparison及逐例初態审计为准；旧“screen2264708在途”为历史。设备仍关机，仿真非实机验收。
-
-> **2026-10-13 固定16ms行走对照训练结束/配对筛选中（最新覆盖）：** walk-delay16-transfer-20261013 launcher2251965/job0已结束，无活跃GPU训练；Surface仅固定lag7→8，seed68131且初始actor/critic/空Adam与encoder20原seed字节相同，其他训练/运行合同保持。64×5 smoke/1024×20主run实际Adam40/160、rollout7680/491520、actor normalizer逐值保持/finite/正规导出通过，Torch-ONNX误差3.815e-6/2.146e-6rad；主权重SHA485722b8…尚无效果结论accepted=false。完整归档SHA68fb5fe0722ba379e65c44a692d2da529271f7d7f0ddeb262b6479024738fd8a已下载核验解压，236 sourceHashes保持、delay16-transfer-final-audit保存。
->
-> 独立CPU walk-delay16-screen-20261013 PID2264708已启动，等待既有训练结束后才复制唯一主ONNX，三关键条件各2trial×14/16ms共12例，不重复训练。baseline/encoder引用两延迟已完成源trace，逐例初始qpos/首velocity必须匹配；raw允许新actor改变，不假称raw相同。检查存活与有效前进（max .02m/s或指令30%诊断阈值），拟合内筛选非正式/实物验收；完成后下载全包SHA/sourcehash及comparison再作判断，勿重复启动。用户设备已关机，不访问主板或要求开机，现役walk1cbf8730/P5D0及全部其它技能、标定EEPROM增益BLE网页masked保持，无新模型部署或实机运动。七记录同步，仿真非实机验收。
-
-> **2026-10-13 行走编码量化与延迟对照（最新覆盖）：** 用户确认设备已关机/App不能连接，继续离线，不再访问主板；现役walk1cbf8730/P5D0及全部模型/标定EEPROM/独立增益/BLE/网页/masked服务保持，无实机动作或新权重部署。旧GPU冻结1930331已完成，完整SHAdb832b8e核验：rough .2三actor baseline/control/surface生存25/25/24、有效前进24/24/23（32各），.25生存21/21/20、前进20/20/19；禁附加噪声仍有继承DR，非CPU同初态/全动力学等价。编码量化transfer2100330完成64×5/1024×20、Adam40/160、normalizer/sourcehash/正规导出通过，SHAe735b9cd；关键6例2136542完成，恢复旧.25生存但丢flat240017/0/.15有效前进及pile6/.04 130031/1/.2改善（14.92秒倒），候选拒绝。完整probe SHA ff380ad211007990a3fa6d0e4706e50c4054a9776c3f8433936fb1c7308509fd下载核验解压、266源hash/job0，encoder-probe-final-audit保存，勿重复/加轮。
->
-> 冻结CPU delay probe2165698全部18例完成，14ms相对16ms baseline gain/lose生存1/1、有效前进1/1；Surface生存gain1/lose0、前进无增减；Encoder生存gain1/lose2、前进gain1/lose2。逐例qpos/首velocity/首raw相同；2ms会翻转个别成败，不证明实机UART/PD延迟根因。完整SHA1e853d4195e83c7482cc1017a4d417a2800aca9c32981ec474e007e3c9452c99下载核验解压/267源hash/job0，delay-probe-final-audit保存。读取安装版mjlab env每2ms write_data_to_sim→entity apply_delay→BAM compute；真实Actuator.apply_delay/DelayBuffer冻结4×14目标阶跃测试7/8tick在14/16ms首次进入控制，BAM compute_control/compute_torque无JSON command_delay二次叠加，保存安装源码及delay-implementation-audit。此是软件执行时刻核对，不是实机延迟辨识或全动力学证明。
->
-> 新独立walk-delay16-prepare-20261013 PID2243674/job0，5配置/延迟检查与64×40两root算术通过：target2.8498e-8/history0/previousvelocity0/encoder position1.4901e-8；源hash保持，准备没有optimizer更新。首setup因提前import缓存安装tasks而ModuleNotFoundError，发生在GPU准备前、未训练；已有目录只审计恢复，不重建/重启；PYTHONPATH进程前设置后通过。新walk-delay16-transfer-20261013 launcher2251965已启动，seed68131，仅Surface分支固定lag7→8（14→16ms），不混入随机延迟分布变化。保留actor编码量化、24step/2epoch/4mini、奖励/探索/增益/限位/EMA/HOME/物理；直接复用encoder20原seed字节相同actor/critic/空Adam，非供体历史完整resume。每stage授权GPU0/1容量>12GiB/util<30，本run指定GPU1；先64×5/Adam40正规导出finite/normalizer，成功才1024×20/Adam160。当前尚无新候选效果/合格结论，跟踪evidence/launch/progress/job.exit不要重复启动。完成后同时14/16ms冻结配对保原生存及有效前进，过门才真正未用seed回归/正式验收，仿真非实机验收。RL只本地提交不推上游。证据RL artifacts/walk-fast-audit-20261013及scripts/server/prepare_walk_delay_control.py、launch_walk_delay_control.py。
-
-> **2026-10-13 保留修复失败与编码器量化补齐（最新）：** update-fraction18例全部完成/sourcehash通过，三幅度均不合格：.25保旧成功但丢pile6/.04 .2改善；.5亦丢flat .15且丢改善；.75保改善但仍丢flat .15与pile3/.02 .25。完整SHA16faf74e下载核验，update-fraction-final-audit.json。新CPU单actor监督success-retention PID2034652完成/job0，anchor原两丢成功轨迹2500帧、Surface成功轨迹抽6000（seed171337）源trace SHA锁定，teacher在全部数据原输出复算误差0；固定LR1e-5/actor100 Adam步/原normalizer图保持，不更新critic、不改运行端动作scale或双actor切换。20/50/100正规单ONNX finite及Torch数值通过，源hash保持，完整SHAa2b1a38f下载核验。anchor/preserve实梯度step20=.093/.101、cos−.958，50=.095/.091、cos−.996，100=.087/.085、cos−.998，表明本批保留目标相抵，不证明唯一失效原因。CPU关键18例PID2043352完成：Step20仍丢两个旧成功，Step50/100丢flat .15且丢pile6 .2改善；均拒绝不部署或加步，完整SHA6571a27f下载核验及success-retention-probe-final-audit保存，所有seed仍属拟合诊断非独立验收。
->
-> 审代码确认训练actor此前用连续joint_pos_rel_backlash，而native/CPU用4096步量化位置；此前审计只核target/history/velocity，不能称所有观测处理已对齐。新增encoder_feedback_position在齿隙合角及训练校准bias后编码量化，不按目标范围clip；critic仍保留privileged连续位置、偏置/噪声/IMU misalignment DR保持。新walk-encoder-prepare-20261013 PID2079869/GPU0/两root64×40通过，target2.85e-8/history0/previousvelocity0/position1.49e-8rad，actor恢复及源hash保持。全部actor/critic起始state与旧20轮seed逐值相同，配置规范路径后唯一差异actor joint_pos函数，非重新调奖励/探索/增益/限位；准备完整SHAc88e3732下载源hash核验，encoder-prepare-final-audit保存，不证明量化就是实机摔倒根因或全动力学等价。独立walk-encoder-transfer-20261013 launcher2100330已启动，GPU0每阶段容量门/seed68131，仅Surface量化分支（避免重跑旧Control）；先64×5smoke正规导出normalizer/Adam40后1024×20/Adam160，与旧Surface20单项处理对照，尚无效果结论不可重复。旧GPU32world冻结1930331仍在途、与CPU不同DR/初态上下文，.2 rough Baseline25/Control25/Surface24存活（32各），不能称Surface已全面合格或CPU/GPU根因证明。板上现役walk及所有模型/独立增益/EEPROM标定BLE/网页masked服务保持，无主板运动/部署；RL仅本地提交，仿真非实机验收。
-> **2026-10-13 行走配对初筛全部结束（新结果，未通过）：** walk-surface-screen-20261013 PID1902317/job0，三actor×三地面×16例=144配对样本，所有逐例初始qpos及速度逐值相同、源hash保持；完整含分析归档SHA9505fa32下载解压核验，surface-screen-final-audit.json保存。Baseline/Control/Surface生存42/40/46（48各），有效前进21/16/31（诊断阈值max .02m/s或指令30%，非实机验收）；Surface .2共12/12存活且有效前进，baseline11/12，修复pile6/.04 seed130031/trial1。但是Surface新增pile3/.02 seed240017/trial0/.25倒下21.58秒，并丢flat seed240017/trial0/.15有效前进，不能因总分增加部署；Control新增4原生存例失败、丢9原有效前进。候选仍accepted=false，不扩大正式验收或加轮。GPU冻结PID1930331仍在途，.2Control在该上下文32/32而CPU平地4例停滞；上下文含继承encoder bias/IMU misalignment等，enable_corruption=False只关附加观测噪声，不能当同物理初态CPU/GPU差异根因证明。
->
-> 下一新独立walk-update-fraction-20261013 PID1994939，仅CPU冻结MLP参数更新幅度.25/.5/.75三点×两退化场景与一改善场景×两trial=18例，不训练/不改原normalizer/不改运行时动作尺度.9、滤波/反馈。相同ONNX图仅mlp权重从原到Surface线性插值，端点纯推理复算及normalizer逐值一致/finite已核对，accepted=false。目的是检验更新幅度是否存在保留原成功又保留.2改善的区间，不能称降动作幅度或新PPO训练。reference锁定原screen逐例初态/结果及trace SHA，完成后核对同初态并评估；只通过关键例才全场地回归及真正未用seed。首scp超时导致准备脚本缺失被拒，无launch/训练，重传成功后才启动1994939，禁止重复。板上现役/所有标定EEPROM增益BLE/技能网页masked服务保持，无实物动作/部署。仿真非实机验收。
-> **2026-10-13 行走20轮迁移完成/冻结筛选在途（最新覆盖）：** walk-surface-control-20261013 job.exit0，Control与Surface两分支smoke64×5/主run1024×20全部完成，Adam40/160、正规ONNX导出finite及actor normalizer逐值保持通过，完整归档SHA6b214436下载解压/全部sourceHashes核验，surface-training-final-audit.json保存。主run Control SHA62e10dba/Surface3d111856，accepted=false未部署。CPU独立walk-surface-screen-20261013 PID1902317已启动，三地面flat/合成pile3 contact.02/pile6 contact.04×四速度.1/.15/.2/.25×两seed130031/240017×两trial×三actor=144例，已有两个同源baseline地面32例复用（源代码逐项核验），只新增112例，不重跑旧baseline；所有模型同场地逐例起始qpos/速度核对后才比较有效前进/生存/目标帧及接触，跨地面最终初态受静置接触影响。已出现Control平地.2停滞/.25倒退，故该分支不能部署，Surface尚在筛选，未预判效果。独立walk-surface-frozen-gpu-20261013 PID1930331/GPU1容量门通过，32world冻结三个actor/两地面/三速度上下文诊断，seed97133/禁观察噪声/只加载actor不加载Adam，无优化器更新；目的是区分训练环境表现与CPU回归差异，不是CPU/GPU全动力学等价、历史训练重放或实物验收。所有候选无正式通过，板上walk1cbf8730及P5D0/其它模型设置保持，未访问主板或发运动。
-> **2026-10-13 行走terrain迁移小预算训练已启动（最新）：** prepare-v5两root64×40全部通过/exit0/sourcehash保持/无overflow：目标误差2.8498e-8rad、raw历史及上一20ms反馈速度误差0，恢复actor与现役ONNX最大差2.6226e-6rad，critic76维；准备含全部失败case归档SHAed016e3d完整下载解压并逐项sourceHashes核验。独立walk-surface-control-20261013 launcher1873045已启动不可重复，seed68131；Control/Surface均64×5smoke正规导出/finite/actor normalizer逐值保持及Adam40通过，Control1024×20完成，Surface1024×20在途；每阶段GPU0/1容量门≥12GiB且util<30，未干扰其它任务。两个分支仅terrain不同，当前heightfield网格.04m，波长/高度为训练代理而非实测地毯。seed源SHAaeb4fc94已核验，新critic及空Adam非历史checkpoint续训，24step/2epochs/4mini/fixed LR1e-5/std.1、actor normalizer冻结而critic normalizer学习。最终Adam须160，候选accepted=false；训练完成后以冻结CPU相同场地/初态逐例对照现役及Control，检查有效前进（明确诊断阈值max .02m/s或指令30%）、倾角/接触/目标帧变化，不以存活冒充走路通过，只有改善且无原成功退化才独立seed扩大。当前未部署/未发实机运动，不能称快走已修。准备失败v2/v3/v4保留，无重复学习。RL只本地提交，仿真非实机验收。
-> **2026-10-13 地毯/软垫行走诊断与迁移准备（最新覆盖）：** 用户确认50%直线前进在地毯或软垫摔倒，对应0.2m/s指令。现役walk1cbf8730/P5D0保持，本轮无主板运动或模型部署。CPU冻结扫描v1至v4、soft及pile均已结束且完整证据下载SHA/源hash核验；v1/v2/v3含旧10ms速度采样假设，v2低压未补动作电压缩放，不与v4的上一20ms反馈/标量电压补偿混作验收。正确walk供体惯量、±1°齿隙编码、DOF摩擦修订dof-id-friction-force-v1保持，非实机PD辨识或CPU/GPU全动力学等价。平地存活可能停滞/倒退；软接触部分0.2实际速度仅.008m/s，不能当走路通过。合成6mm起伏/contact .04的0.2在13.84秒持续前进失稳；.02中某初态0.4秒开走前倒下另作站立失败，22.36秒失败在减速后，不混为前进失败。高度场非实测地毯形貌/剪切，跨地面静置后初态受接触影响。真实交接已知观测重建12例归档SHA64c4ddde完整下载及源hash核验：四地面0.2均存活、实际均速.069～.124m/s，0.15均基本不走，0.25两例17.50/21.10秒失败；根线速度/齿隙初态/支撑高度未知，非现场完整重现。前600实测纯推理复算raw误差2.086e-7rad、filter/target/history0；缺失摔前8.013秒仍无法恢复。
->
-> 新Control/Surface迁移准备无任何optimizer更新：seed68131，从现役ONNX恢复actor/烘焙normalizer，count合成1000000，critic新随机/Adam空，非供体完整checkpoint续训。两分支仅terrain生成器不同，共同奖励为当前Velocity transfer来源而非原donor历史完全重放。v2准备因继承观察延迟叠加显式previous缓存而速度误差2.77rad/s失败；修去继承delay后v3目标2.85e-8/raw历史0/速度0，随后std_type=vector不支持导致失败，修为库中直接逐动作14维参数scalar。v4 PID1846022恢复actor通过后Surface出现height field collision overflow，按验证/proc的独立进程组精确终止，prepare.exit143，不采用此地面审计。所有失败源/日志保留；新独立walk-surface-prepare-v5-20261013 PID1861691/GPU1容量门通过，heightfield间距.01→.04m并新增overflow拒绝门，64×40两root算术/恢复审计在途，不重启或称训练开始。审计通过才smoke64×5正规导出/normalizer/finite/Adam40，再1024×20两分支Adam160，保留实际前进及平地低速逐例回归，不盲加轮。训练前每阶段仅授权GPU0/1空闲容量，不干扰其它任务；RL只本地提交不推上游。详见RL artifacts/walk-fast-audit-20261013/runtime-scan及diagnostics；仿真非实机验收，旧失败保护/标定EEPROM/所有技能独立增益BLE/网页/masked服务保持。
-> **2026-10-12 坐站训练与执行链最终状态（覆盖此前运行中状态）：** Pitch及FixedLR两轮均结束，无活跃训练/合格候选。FixedLR各64×5冒烟及1024×20完成，5配置检查、四正规导出finite/normalizer/Adam100和400/全checkpoint固定学习率1e-5核验通过。初筛Control正常/扰动各8/8无磕头，但新seed677031/789017正常15/16、扰动13/16，相对基线15/16丢sit_cycle677031/0、/3，扰动仍3例接地、最大目标帧50.80→61.26度；拒绝扩大验收、部署或盲加轮。完整FixedLR归档SHA cf9c99bff413d5694b6a019dcf3f66b3f8bb8d9636ae1ed1678436adcae4ee08已下载解压、源hash逐项核验。真实观测审计为归档之后的独立补充，不冒称归档成员。
->
-> 只读真实会话2026-10-12 15:21:28：新机械起身→walk→sit313帧→stand50帧→walk，坐站仍1c94934c。站起倾角5.02→34.50度、峰38.20度，颈实际17.40→−78.22度、末请求−90度、12帧裁剪，P5/D20、电压7.8V；原模型同真实观测复算误差4.768e-7rad，裁剪前颈目标最低−470.04度。FixedControl同旧观测仍−471.77度/12帧，仅反事实输出，不是新闭环实物响应。倾倒及低头已在切回行走前出现，不能判切换或单颈PD为唯一原因。
->
-> 已确认并修复Rust执行链缺陷：新机械起身从legacy worker100启动，后续切到donor walk/sit/stand未进入native同步50Hz循环。现在切换清旧worker、保留历史且不重复观察当前采样，提升到native循环；native状态明确kissqy-sync50-v1/feedbackTargetHz50。134项Rust检查通过、1外部忽略，ARM二进制SHA3164689e1a12e8522b96c0ff5d00ef8615108883fcba6e28e42e4c3467a96961。主板空闲15卸力下仅二进制部署runtime-20261012-164043，旧getup-mechanical-20261012-v2保留回滚；模型/网页/标定EEPROM/独立增益/IMU/BLE身份保持，tofd/rsyslog仍masked。候选1000/1000完整只读关节反馈及20生产快照通过，无代发实机动作。新起身4b9c82e5和原坐站1c949权重未换；软件测试及只读部署不证明磕头已解决。
->
-> 下一步需用户现场托稳做一次倒地起身→坐下→站起→停止/卸力采集修复后的执行链，顶住立即急停；基于新链的真实初态、raw历史/越界输出诊断再决定小预算训练，不把失败raw当正确示范。RL仅本地提交，不推上游；仿真非实机验收。证据：RL artifacts/sit-pitch-fixedlr-20261012/{final,real-observation-audit.json,board-chain-summary.json}；Observer附件/平台/2026-10-12/{sit-engine-handoff,runtime-20261012-164043}。
 
 > **2026-10-12 坐站前倾预防20轮已完成，固定学习率对照已启动（最新）：** 原Pitch20 job0、4检查及4正规导出finite/normalizer/Adam100/400通过，当前actor无EMA机械范围/raw历史保持。原baseline同native sensor/1s→walk正常8/8无头接地，扰动8/8有2例20帧头接地；Repair20正常/扰动均8/8无接地，无baseline成功退化，多余行程少7.14%/20.30%，但正常右膝target帧p95 8.4375→8.9692度增加6.30%，拒绝替换。32例capture逐qpos/result匹配原screen，targets非实际运动。原main checkpoint5/10（实际6/11轮）正规导出含normalizer/Torch-ORT审计通过，均两条件8/8，扰动仍1例接地，膝p95不劣但左膝stress最大帧53.0859/54.7559>baseline52.6465度，亦未合格；不扩大正式验收/部署。源manifest/原handoff两个修改文件独立原源码snapshot哈希均核验；完整case归档SHA642c56062936b3b4fe1af1673a177822665332ccdd6a609dd27412ff0e2e5ff4下载SHA核验，final-audit/frame-audit/checkpoint-comparison保存。本轮早/末模型仅小样本诊断，未完整重现实物PD/P6行走对应BAM，不能宣传实际不磕头。checkpoint分析首次MLPModel原地pop复用cfg第二模型KeyError，修deepcopy、保留源码日志，没有重训/重跑动力学。
 
@@ -396,100 +369,6 @@ scripts/server/export.sh Mjlab-StandUp-Flat-MicroDuck \
 - 后台启动器通过帮助命令验收，PID/日志/退出状态文件生成，退出状态0；未启动长期训练。
 - 服务器setup/deployment-verification.json保存源码基线、脚本哈希、导出哈希与检查结果。
 
-## 2026-10-05 正常步伐 v11（新训练，尚未验收）
-
-用户反馈旧行走模型低头、小碎步，要求正常步伐。服务器v10审核显示颈部平均HOME误差约31–39度，最终accepted=false；不能把旧模型描述为已验收。新任务 `Mjlab-WalkNatural-Flat-MicroDuck-HD1910` 使用独立实验目录、从头训练4096环境/4000轮，不续用低头策略。正奖励按0.5秒头姿偏差滤波乘以质量因子，取消低头仍支付40%的奖励下限；步幅奖励分阶段增强，保留完整摆腿/离地高度目标。训练动作EMA旧0.45+新0.55、raw prev_action，与当前运行端匹配；本机几何/HOME及61维观测保持。
-
-正式run：`hd1910-walk-v11-natural4000`，GPU7。64环境/5轮短测试与ONNX 61→14有限值核验先行，相关15项测试通过（使用python -m pytest）。训练完成由服务器finalizer自动导出、评估7种指令并生成前进视频；验收包括前进同脚落点步幅至少75mm、离地至少10mm、腾空至少100ms、平均头关节偏差不超过8度及32环境无跌倒。此处步幅是同脚相邻落点距离，不是单步长度。所有结果均为仿真；未更换平台模型、未发实物运动指令。实际正常步伐仍须回放及实机验收。
-
-### 2026-10-05 用户缩短为1000轮阶段评估（覆盖上述4000轮计划）
-
-用户要求先1000轮看效果，再决定是否继续。终止4000轮训练及对应后处理，使用已保存model_250.pt完整恢复权重、归一化、优化器和课程步数；prepare_resume_checkpoint将下轮设251，余749次更新，总计1000轮，最终model_999.pt。新run=hd1910-walk-v11-natural1000，自动后处理目标同步改1000。未保存的250之后少量更新不保留。1000轮后只导出评估和视频，不自动续训；课程尚未到1500轮最终阶段属于本次阶段评估的边界。
-
-### 2026-10-05 v11 1000轮完成：仿真未通过，未续训
-
-训练exit0，model_999完成，导出及7指令评估完成，finalize=needs_more_training/accepted=false。前进32环境20秒无跌倒，但命令0.2m/s时实际平均约0.000062m/s、总前进2.8mm、有效落脚0/步幅0，几乎原地站立；头颈平均HOME偏差最大0.75°、P95最大6.96°。转右32/32环境出现失败。头姿改善不能冒称正常行走成功。模型和视频下载至microduck-rl/artifacts/hd1910-walk-v11-natural1000。按用户要求停在1000轮，未自动续训/未部署实机。当前奖励可能仍使静止更有利，为推测，须后续诊断再改训练。
-
-### 2026-10-05 按用户要求提高真正行走得分（v12配置，未正式续训）
-
-用户要求把得分加到行走。速度跟踪权重5→10、腾空0.8→2，新增command_progress权重8：按指令方向实际速度/目标速度给0–1分，反向与静止为0，超速不额外支付。移动指令下原有正向姿态/头姿/速度等奖励同步乘真实移动进度，消除站着领取大额姿态分；零指令保持原站立奖励。步幅奖励增加交替落脚要求，双脚同时落地和同脚连续跳不领取该奖励。维持头姿和EMA规则。新配置不改变已导出v11权重；仅短测试，不自动开启下一轮正式训练。
-
-### 2026-10-05 用户授权v12正式1000轮
-
-用户明确“训练1000轮看看”。使用行走得分修订配置，GPU7/4096环境/1000轮，从头学习避免直接沿用v11原地站立策略；run=hd1910-walk-v12-progress1000。16项测试与64环境5轮短训练已通过，正式启动前检查新短测试ONNX 61→14有限值。完成自动导出model_999、评估7种指令及生成前进视频，随后停止，不自动续训。未替换平台模型、未执行实物动作；效果以本轮评估和视频为准。
-
-### 2026-10-05 v12 1000轮结果：开始迈步，但仍碎步/走偏，未通过
-
-训练exit0，自动导出/7指令评估完成，accepted=false。前进32环境20秒：实际移动段平均0.236m/s（命令0.2）、前进投影2.82m；1/32环境失败。头关节平均HOME误差最大3.43°、P95最大8.14°。同脚相邻落点步幅中位36.8mm，目标75mm；腾空80ms，目标100ms；离地峰值约8mm，目标10mm。航向偏差P95约57°、横向偏移P95约1.10m。已经从v11原地站立变为移动，但未达到用户正常步伐要求。后退32/32失败，转左8/32、转右10/32失败；指标含自动重置后的片段，失败场景速度/路径不应视为连续成功。模型及视频保存在artifacts/hd1910-walk-v12-progress1000；1000轮后停止，未续训或部署实机。下一轮应加强完整步幅与直线航向约束，先诊断再改参数。
-
-### 2026-10-05 v12 0.05m/s慢速回放（仅仿真）
-
-用户要求看0.05m/s，evaluate_walk新增--forward-speed参数，未更改模型权重/训练。32环境20秒，前2秒站立、2–15秒前进、末5秒停止；移动统计4–15秒。实际平均前进速度约0.031m/s；5/32环境跌倒。同脚步幅中位14.1mm、离地峰值3.49mm、腾空70ms；头颈平均HOME偏差最大10.55°、P95最大14.81°，航向P95偏48.1°。未达到稳定正常慢走，不能把命令速度称为实际速度。统计含失败后重置片段，回放显示第0环境，不代表所有环境。视频及JSON保存在artifacts/hd1910-walk-v12-progress1000/hd1910-walk-v12-progress1000-forward005.*。未续训、未部署或执行实物动作。
-
-### 2026-10-05 v13针对0.1m/s正常步伐（用户“继续”授权1000轮）
-
-新增WalkSlow独立任务/实验目录，不覆盖v12。95%移动样本为正向直行，其中80%精确0.1m/s、其余0.07–0.13；保留约25%零指令起停。v12会迈步模型暖启动，MICRODUCK_WARM_START=1重置新训练轮数/课程计数，保留权重、优化器、归一化；来源自然步态相同61维合同。完整摆腿奖励乘腾空/离地/摆腿距离完成比例，保留交替落脚，目标周期0.6秒/腾空0.16秒/离地15mm，奖励1000轮内逐级增强。直行正奖励增加角速度/侧向速度质量门控，新路径成本锚定每个直行段开始的航向/横向位置，目标跟踪std0.04；进度奖励8→4，减少只靠速度获得高分。
-
-17项检查及64环境5轮短训练通过。计划run=hd1910-walk-v13-slow1000，GPU7/4096环境/1000次新更新，完毕后停止。专属后处理评估0.1m/s前进和零指令：32环境20秒无失败、实际平均0.08–0.12m/s、速度绝对误差<=0.03、航向P95<=10度/横向P95<=80mm、同脚步幅>=40mm/腾空>=100ms/离地>=10mm及头姿/停步。0.1m/s目标步幅不同于旧0.2m/s的75mm要求，不把其冒称已验证自然步态；仍须视频验收。本轮不验收后退/侧行/转向。不部署实机，不执行实物动作。
-
-### 2026-10-05 v13 1000轮完成：0.1m/s起步失败，未通过
-
-训练exit0，导出及idle/forward评估完成，accepted=false。0.1m/s前进32/32环境均fell_over，首次失败2.54–3.56秒，命令自2秒开始即起步0.54–1.56秒后跌倒；自动重置累计389次fell_over，有效落脚0。平均速度0.063m/s及航向指标包含反复重置，不能视为正常持续前进/走直成功。零指令32/32无跌倒。此轮退化，重奖励约束组合/启动分布或课程可能导致，原因未定，不直接归因于训练轮数不足。视频/模型保存在artifacts/hd1910-walk-v13-slow1000。已停训、未部署实机。后续优先比较v12/v13同0.1指令及中间断点，诊断奖励/起步行为再改训练。
-
-### 2026-10-05 v13失步诊断（未启动新训练）
-
-用户要求找原因。新增diagnose_slow_regression.py及summarize_slow_diagnosis.py，evaluate_walk支持--start-moving/--trace。相同WalkSlow物理、0.1m/s、8环境12秒：v12原权重0/8失败、v13 model_0 0/8失败；v13 model_250/500/750/999均8/8失败、有效完整落脚为0。证实已会迈步策略在本轮训练中退化，250轮时即可发现，原先只有短测试和末次验收不足以发现行为回退。v12此条件实际约0.140m/s、同脚步幅23.4mm，仍非正常0.1m/s步态，不能视为达标。
-
-冻结v12在新奖励下回放，首环境4–7秒瞬时straight_quality平均0.1175/中位0.0147，46%时刻<0.01；实际平均绝对yaw约0.427rad/s、侧速0.0489m/s，说明新增瞬时yaw/侧速门控会大幅削弱已有迈步奖励，也会惩罚可交替抵消的自然摆动。训练0/100/250/300/500/700/750/999轮日志stride_quality显示0.0000，而速度tracking至999轮升到0.3934，episode长度约92步（1.84秒），非正常持续步态。三项完整摆腿完成比例相乘、再叠头姿/支撑/速度/瞬时走直门控，造成已有短步很难拿到步幅信号；这属于已确认的奖励压低现象，具体每项对失稳的因果贡献未做单因素续训验证，不将怀疑冒称全部根因。
-
-排除项：v13 model_999与ONNX逐步推理最大绝对误差1.46e-6；取消2秒站立等待、从t0直接行走仍8/8失败，故不是只因回放启动方式。训练/推理EMA一致，未发现本次导出错误。结论是先退回v12会迈步权重，取消瞬时摆动“一票否决”，用慢平均/每个直行段累计航向控制；将抬脚、腾空、步长信号分阶段学习，并在每100–250轮定向验收/退化即停，而非直接增加训练轮数。诊断证据在artifacts/v13-regression/diagnosis.json及summary.json；本次仅诊断，没有新正式训练或实机部署。
-
-诊断补充：冻结v12首环境4–7秒，新奖励各项积分合计约-5.26，其中瞬时yaw_error_cost约-4.52，步幅奖励仅+0.032，速度tracking+0.401。这证明现有迈步行为在新评分下净负分，不只是权重看起来偏重。v13最终首环境起步到0.68秒后跌倒的奖励合计约-1.40（含-5失败项）；可以在倒下前先取得移动正分，移动奖励本身没有要求完整交替步态。这两段时长/状态不同，不用其直接比较长期收益或冒称完整因果消融。trace在ended帧的速度/倾角是自动reset后的状态，只用于确认该帧ended和奖励，不当作跌倒前姿态。
-
-### 2026-10-05 v14修复先100轮对照（用户“继续”授权）
-
-新增WalkRepair任务，保留v12模型/归一化，去掉v13瞬时straight_quality门控，瞬时yaw_error权重-3→-0.3/角速度tracking6→1，保留0.5秒yaw bias及较轻的累积路径成本。步幅分数改为距离/抬脚/腾空三个完成比例的平均，避免三重乘积让短步没有学习信号；抬脚/腾空/摆腿目标为12mm/120ms/周期0.4秒，保持交替落脚及头姿/支撑。只步幅项移除瞬时移动门控，允许先抬脚再前进，不恢复原地移动奖励。速度tracking std由0.04放宽0.08、LR5e-5。
-
-为已有步态微调，v12探索std原0.29–1.07rad，seed最大限制0.2rad，actor/critic和归一化保留，旧目标Adam动量清空，新课程/轮数重置。19项检查、64环境5轮短训练及61→14有限值导出通过。GPU7/4096环境先100轮run=hd1910-walk-v14-repair100；GPU6进行匹配v12基线：32环境20秒0.1命令，1/32失败、实际0.128m/s、同脚步幅21.2mm/腾空75ms/抬脚5.6mm。100轮完成后同条件评估，不将训练得分改善冒称正常步态。后续仅在不明显退化时继续到总1000轮，guard_gait_repair.py每100轮检查，失败/步幅/速度/偏航明显退化终止本run。未部署实机/未执行实物动作。
-
-### 2026-10-05 v14 100轮对照后继续至总1000轮
-
-相同32环境20秒/0.1m/s，修复100轮：失败1/32（原v12基线1/32）；同脚步幅21.15→30.40mm；航向P95 33.23→16.83度/横向P95 0.446→0.232m；实际速度0.1283→0.1213m/s，速度误差0.0333→0.0237m/s；头姿平均最大1.22度。尚未通过正常步态：腾空75→65ms、离地5.61→4.72mm、接触抖动比0.17→0.54，抬脚/腾空未改善。100轮不是最终验收。
-
-已从model_99完整续训到总1000轮，source iter99调整至下轮100，common_step_counter2400保留，共900次余更新；run=hd1910-walk-v14-repair1000。正式PID357024、finalizer357041、guard357054（仅当时进程识别）。每100轮GPU6评估32环境/20秒/0.1命令，较100轮参考：失败>2、步幅或抬脚下降>25%、腾空下降>15%、速度误差增>0.025、航向P95增>50%+5度，终止该run并保留断点。guard失败检查只是退化兜底，不代表正常步态验收通过；最终仍用Slow专属条件及视频。100轮模型/视频本地artifacts/hd1910-walk-v14-repair100，未部署实机。
-
-### 2026-10-05 v14守卫400轮停训，v15优化摆腿发现信号
-
-用户继续优化。v14守卫检查200/300/400轮32环境20秒：均0失败，但同脚步幅26.9→25.8→20.2mm，400轮较100轮30.4mm下降超25%，守卫主动SIGTERM停止，训练exit143；当时后处理failed指的是被守卫终止，不是训练崩溃。未完成1000轮，不能宣称完成。将后续finalizer改为明确stopped_for_regression。
-
-进一步读源码：继承feet_air_time要求current_air_time>125ms才开始正奖励，实际腾空65–70ms，短步无法取得腾空奖励。新增WalkSwing：摆腿中连续反馈脚高/腾空时长，两个比例平均加最短板项，只有单脚支撑+air_time<240ms才能给分；仍乘已有实际移动/头姿/支撑门控，避免静止/双脚跳或永久单脚抬起支付。目标脚高10mm/腾空100ms，地面脚间隙成本目标统一10mm，进度权重4→2、步幅权重固定3、路径成本固定100轮阶段，集中优化抬脚和时长。保持0.1m/s采样、EMA、raw prev_action及本机几何。
-
-21项检查/64环境5轮短测试通过。从v14 100轮model_99继续微调（此断点步幅30.4mm优于400轮20.2mm），保留actor/critic/normalizers、探索std上限0.2rad、清旧目标Adam动量；先新100轮run=hd1910-walk-v15-swing100，结束自动0.1评估/视频再判断是否扩大。未部署平台/无实物动作。
-
-### 2026-10-05 v15 100轮无抬脚改善，v16转移奖励占比短对照
-
-v15 32环境20秒0.1m/s无跌倒，但同脚步幅23.3mm（v14种子30.4）、腾空65ms不变、抬脚4.43mm（种子4.72），航向P95 26.2度（种子16.8）。未通过/不直接续1000轮，视频及模型保存artifacts/hd1910-walk-v15-swing100。连续摆腿反馈有信号但本100轮未改善几何质量，不以稳定或奖励非零称优化成功。
-
-新增SwingFocus作为同种子/同物理/同目标的奖励占比对照：连续摆腿权重3→8，速度跟踪10→5，单纯前进2→1，其余Swing配置不变。22项检查及64环境5轮短训练通过。GPU7从同一v14 model_99独立微调100轮，run=hd1910-walk-v16-focus100，自动0.1m/s 32环境/20秒+idle评估及回放，先检查脚高/腾空/步幅再判断是否继续。此次未自动接1000轮，未部署或实物动作。
-
-### 2026-10-05 用户明确扩到2万轮：v16长训练
-
-用户“训练2w轮看看”覆盖短100轮预算。当前v16短100轮已exit0、model_99保存；继续同一训练至总20000轮（余19900次更新），prepare_resume_checkpoint将iter99→下轮100，common_step_counter2400保留；不重置actor/critic/归一化/Adam/课程。run=hd1910-walk-v16-focus20000，GPU7/4096环境；保存每500轮，预计约9–10小时（按现有1.65–1.7秒/轮估算，非保证）。最终model_19999，finalizer按20000验完整断点并导出/0.1m/s及idle评估/视频。
-
-本次按用户长训练意图中间评估为observe-only：GPU6每1000轮32环境20秒0.1命令，记录质量与退化，保留所有中间模型用于比较；不沿用v14短探针的步幅下降即主动停训。训练原有NaN/异常退出机制保持。guard_gait_repair扩展总轮数/评估间隔/observe-only参数，默认旧模式仍保持。训练不是模型已正常行走，未更新平台策略、未实物动作。
-
-### 2026-10-06 v16总20000轮完成：大步形成，但速度/起停失稳，仿真未通过
-
-训练exit0，实际续训耗时08:45:48，总20000轮/model_19999；导出及评估完成accepted=false。0.1命令移动片段平均0.222m/s（超目标），同脚步幅75.1mm、腾空175ms、脚高27.3mm，头关节平均HOME偏差最大0.81度。32/32前进场景失败：许多发生前2秒零指令阶段，其余多在15秒切停后；idle独立场景也是32/32失败。因此不能将其描述为正常0.1m/s行走或仅起步失败，也不能把重置后混合片段速度/步幅视为连续成功。此轮大幅改善摆腿量，但零指令站立/停步和速度控制退化，未验收/未部署。最终模型及视频/两场景JSON下载artifacts/hd1910-walk-v16-focus20000。下一步应查看中间评估选取折中断点，针对0.1速度上界与起停修复，不直接加轮数。本次仅检查结果/取回证据，没有新训练或实物动作。
-
-### 2026-10-07 XgoDuck原版ONNX对照（无训练/无硬件）
-
-原版模型SHA256 5727b909d5ea1a0f9ff63bf4cea9707339dea6a522374c7a120da633605b923f。原版RL commit326d77a1122870bdefa2c36403937502c958e69c；EMA0.45/raw prev_action/head-body零命令，关闭play默认推扰。32环境20秒起停：0.1指令在原版及本机移植均不迈步；0.2原版实际0.1068m/s、0/32失败、步幅56.3mm/腾空250ms/脚高10.2mm；移植实际0.1114m/s、2/32跌倒、步幅72.9mm/腾空285ms/脚高13.0mm。原版也有速度映射误差，移植仍漂移和跌倒；可作为微调种子，不直接上实机，不以改指令乘2称正常0.1m/s验收。原版配置不确定与ONNX训练版本一致，仿真不含完整实机通信/IMU。视频/JSON/来源详见artifacts/xgoduck-compare-20261007/README.md。新增evaluate_xgoduck.py回放入口；未启动训练或替换硬件策略。
-
-### 2026-10-09 用户要求RL和observer限位对齐（本地配置）
-
-microduck/replica共14个robot XML变体的14舵机关节范围统一为XgoDuck快照；左右髋偏航、颈与头俯仰四项有实质差异，其余仅保留供体精度。颈−135～60°、头俯仰±105°、左髋−0.22～0.45rad、右髋−0.45～0.22rad。STL/BAM/HOME和被动关节不变，HD1910 walk动作裁剪自动读取新XML范围。增加独立JSON快照、CAD导出后处理及16项MuJoCo编译/全部关节范围/导出配置校验；修复相关导出JSON原有尾逗号，防止重新生成恢复旧值。四方向各1秒CPU起身冒烟有限值通过，不作为成功率验收。observer后端/API及网页已同范围，增加全部14项快照比较测试；嘴仍0～30°，模型编码饱和规则保持。无训练/实机连接/部署，旧48次评估证据保留当时哈希。
-
 ### 2026-10-09 XgoDuck倒地起身在本机几何/HD1910参数上评估
 
 CPU MuJoCo，共48次无重置试验：仰躺/俯卧/左右侧各4次，三组各16次。当前replica物理限位+起身后切walk：6/16达到直立连续1秒、5/16最终站稳；同STL及HD1910 BAM参数、仅评估时对齐XgoDuck14关节限位：14/16达到直立、6/16最终站稳；对齐限位并持续getup：14/16达到直立、9/16最终站稳。最终站稳要求末3秒至少95%采样倾角<20°、高度>HOME85%、水平速度<0.2m/s、角速度<2rad/s。
@@ -508,19 +387,3 @@ GPU nominal各转换窗口：站起所有门通过，坐下主要height/legPose�
 新腿姿用exp(−mean(error²)/std²)，高度L1除坐站高度差且权重3，移除upright_while_tall；保留upright_linear/composite。action_rate初期−0.05，1500轮−0.1，2500轮−0.2。新三项SIT错误站姿−2.0428、正确坐姿4.0，STAND相反。旧任务默认height error_scale=1保留；新物理v3合同不变。33项测试、64环境5轮冒烟nan_state0/成本符号、归一化ONNX与CPU四场景/GPU单循环链路完成，5轮成功率0，非动作验收。
 
 隔离服务器/home/leiwu30/microduck-training/sit-contact-objective-v2-20261010，GPU6从头4096环境1000轮，run=objective-v2-firstlook1000，launcher653594；不用旧objective优化器/课程计数，到1000自动停止/导出及GPU nominal/robust与CPU runtime两种子诊断/视频，不自动续训/部署。本地artifacts/sit-contact-objective-v2-20261010/{objective-audit.json,launch.json,smoke.log}，launch含配置/奖励源码/脚本哈希。未连接机器人、发动作或替换板上模型。
-
-
-## 2026-10-10 脚滑策略偏置优化：长时回归不通过
-
-在同一xgoduck_walk原权重基础上，对五个左右镜像的输出层常量偏置进行三代共36候选的无梯度搜索；不是PPO重训练。新增固定低摩擦、2.5秒摩擦突降和±0.5rad/s真实俯仰角速度扰动，保留61维、原normalizer/隐藏层/EMA/硬件参数。搜索6工况3→6通过，独立16个12秒工况12→14，原成功例未丢；但进一步14个30秒工况7→11，丢失正常地面0.2m/s一例（未倒但前向位移不足/侧向偏移加大），候选拒绝。另0.5倍/0.75倍/首代候选分别6/7/9通过，均丢原正常地面0.4m/s成功例，也拒绝。最终selected=null，metadata与verification已标不通过，不部署、不替换原权重。
-
-所有计数仅筛选：现有前向位移阈值未完整限制侧向偏移，不能称通过即正常直线行走。后续应先增加航向/横向漂移及动态步态验收，再进行状态相关策略训练；静态偏置未找到无退化方案。相同初态重置复现误差<1e-8；ONNX仅输出bias改变、100条推理偏置核对最大误差2.87e-7，原权重哈希保持。证据平级microduck-rl/artifacts/walk-slip-repair-20261010/{final-gate,long-holdout,second-screen,integrity}.json。没有实机动作/部署，未证明实机前摔根因。
-
-
-LowExplore状态更新：64×5smoke正规导出通过，normalizer逐值保持、参数finite、std均值0.0299766rad落在设定范围；progress=train/100。最终闭环结果未完成，不能称合格。
-
-
-CriticWarm状态更新：64×5smoke正规导出/校验通过，actor全部state（含normalizer）逐值等于seed、finite，5轮只训练critic已确认。正式1024×120已开始，不重复launcher2586030；完整筛选仍未结束。
-
-
-ArrivalGate最新：64×5正规导出smoke通过、normalizer逐值保持/finite，1024×100已开始。相同保存姿态的门控静态审计：基线正确3.62°的9项subtotal13.2875保持，错误34.77°的subtotal8.7837→1.7275、stillness1.7748→0；仅证明奖励修改数值达到设计，不是新闭环成功或实机验收。证据gated-static-reward-audit.json，launcher2688946，不重复启动。

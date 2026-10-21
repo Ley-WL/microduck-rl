@@ -422,62 +422,6 @@ register_mjlab_task(
 )
 
 from .microduck_hd1910_settle_env_cfg import make_hd1910_settle_env_cfg, HD1910SettleRlCfg
-from .microduck_hd1910_walk_env_cfg import make_hd1910_walk_env_cfg, HD1910WalkRlCfg
-from .microduck_hd1910_walk_headstart_env_cfg import make_hd1910_walk_headstart_env_cfg
-from .microduck_hd1910_walk_natural_env_cfg import make_hd1910_walk_natural_env_cfg, HD1910NaturalWalkRlCfg
-from .microduck_hd1910_walk_slow_env_cfg import make_hd1910_walk_slow_env_cfg, HD1910SlowWalkRlCfg
-from .microduck_hd1910_walk_repair_env_cfg import make_hd1910_walk_repair_env_cfg, HD1910RepairWalkRlCfg
-from .microduck_hd1910_walk_swing_env_cfg import make_hd1910_walk_swing_env_cfg, HD1910SwingWalkRlCfg
-from .microduck_hd1910_walk_swing_focus_env_cfg import make_hd1910_walk_swing_focus_env_cfg, HD1910SwingFocusWalkRlCfg
-register_mjlab_task(
-    task_id="Mjlab-WalkSwingFocus-Flat-MicroDuck-HD1910",
-    env_cfg=make_hd1910_walk_swing_focus_env_cfg(),
-    play_env_cfg=make_hd1910_walk_swing_focus_env_cfg(play=True),
-    rl_cfg=HD1910SwingFocusWalkRlCfg,
-    runner_cls=MicroduckOnPolicyRunner,
-)
-register_mjlab_task(
-    task_id="Mjlab-WalkSwing-Flat-MicroDuck-HD1910",
-    env_cfg=make_hd1910_walk_swing_env_cfg(),
-    play_env_cfg=make_hd1910_walk_swing_env_cfg(play=True),
-    rl_cfg=HD1910SwingWalkRlCfg,
-    runner_cls=MicroduckOnPolicyRunner,
-)
-register_mjlab_task(
-    task_id="Mjlab-WalkRepair-Flat-MicroDuck-HD1910",
-    env_cfg=make_hd1910_walk_repair_env_cfg(),
-    play_env_cfg=make_hd1910_walk_repair_env_cfg(play=True),
-    rl_cfg=HD1910RepairWalkRlCfg,
-    runner_cls=MicroduckOnPolicyRunner,
-)
-register_mjlab_task(
-    task_id="Mjlab-WalkSlow-Flat-MicroDuck-HD1910",
-    env_cfg=make_hd1910_walk_slow_env_cfg(),
-    play_env_cfg=make_hd1910_walk_slow_env_cfg(play=True),
-    rl_cfg=HD1910SlowWalkRlCfg,
-    runner_cls=MicroduckOnPolicyRunner,
-)
-register_mjlab_task(
-    task_id="Mjlab-WalkNatural-Flat-MicroDuck-HD1910",
-    env_cfg=make_hd1910_walk_natural_env_cfg(),
-    play_env_cfg=make_hd1910_walk_natural_env_cfg(play=True),
-    rl_cfg=HD1910NaturalWalkRlCfg,
-    runner_cls=MicroduckOnPolicyRunner,
-)
-register_mjlab_task(
-    task_id="Mjlab-WalkHeadStart-Flat-MicroDuck-HD1910",
-    env_cfg=make_hd1910_walk_headstart_env_cfg(),
-    play_env_cfg=make_hd1910_walk_headstart_env_cfg(play=True),
-    rl_cfg=HD1910WalkRlCfg,
-    runner_cls=MicroduckOnPolicyRunner,
-)
-register_mjlab_task(
-    task_id="Mjlab-Walk-Flat-MicroDuck-HD1910",
-    env_cfg=make_hd1910_walk_env_cfg(),
-    play_env_cfg=make_hd1910_walk_env_cfg(play=True),
-    rl_cfg=HD1910WalkRlCfg,
-    runner_cls=MicroduckOnPolicyRunner,
-)
 register_mjlab_task(
     task_id="Mjlab-PushSettle-Flat-MicroDuck-HD1910",
     env_cfg=make_hd1910_settle_env_cfg(),

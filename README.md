@@ -1,3 +1,5 @@
+> **2026-10-21 配方清理：** 已删除淘汰的HD1910行走配方及对应训练/微调入口，当前仅使用 train_walk_observer.py + walk_observer_contract.py 和5000轮模型e3b90ac0。官方velocity基础配置保留为当前方法依赖；walk_runtime_eval.py仅用于运行仿真，不提供旧PPO训练入口。其他技能保持。
+
 > **2026-10-21 当前采用：** 官方配方 + HD1910 + Observer机械/目标限位，从头5000轮；最终模型e3b90ac0保存于 `models/walk_observer_hd1910_5000/`，用户实机反馈效果很好。训练配方、独立30输入评估及限制见 [说明](docs/walk-observer-official-training-20261020.md)。10000轮已完成但未全面超过本版本，不替换现役。
 
 # MicroDuck HD1910 训练项目
@@ -40,14 +42,14 @@ uv run python scripts/audit_hardware_profile.py --configs
 uv run list-envs
 
 # 新训练先做 64 环境、5 轮冒烟；通过后再按任务决定预算
-uv run train Mjlab-Walk-Flat-MicroDuck-HD1910 --env.scene.num-envs 64 --agent.max-iterations 5
+uv run python scripts/server/train_walk_observer.py launch
 uv run train Mjlab-GetupMechanical-Flat-MicroDuck-HD1910 --env.scene.num-envs 64 --agent.max-iterations 5
 
 # 导出保留内嵌观测归一化；明确指定本地 checkpoint
-uv run python scripts/export.py Mjlab-Walk-Flat-MicroDuck-HD1910 --checkpoint-file /path/to/model.pt
+# 行走由上述训练入口自动导出；模型见 models/walk_observer_hd1910_5000/
 ```
 
-常用任务：`StandHold`（站立保持）、`Walk`（行走）、`GetupMechanical`（现行机械限位起身）、`SitStandContact`（坐站接触），完整 ID 以 `list-envs` 为准。任务各自的奖励、PPO、动作 EMA、限位和观测合同继续明确区分，不能把一种技能的动作滤波随意套到其他技能。通用 PPO/奖励算法保留，移除的是旧硬件默认参数和默认官方教师权重。
+常用任务：`StandHold`（站立保持）、`train_walk_observer.py`（当前行走配方）、`GetupMechanical`（现行机械限位起身）、`SitStandContact`（坐站接触），完整 ID 以 `list-envs` 为准。任务各自的奖励、PPO、动作 EMA、限位和观测合同继续明确区分，不能把一种技能的动作滤波随意套到其他技能。通用 PPO/奖励算法保留，移除的是旧硬件默认参数和默认官方教师权重。
 
 新训练默认使用本地 TensorBoard；实验名有 `hd1910` 标识。默认不下载官方教师，不自动推送权重。迁移学习必须显式选择兼容 checkpoint，旧权重不会因为更换配置自动成为新硬件训练结果。
 

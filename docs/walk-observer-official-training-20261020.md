@@ -68,3 +68,7 @@ PYTHONPATH=src MUJOCO_GL=egl CUDA_VISIBLE_DEVICES=0 python scripts/compare_walk_
 两项合同测试验证奖励/课程/指令/观测/事件/终止未变、14关节范围、HD1910/P5、裁剪顺序及raw history。每输入16环境10秒，2–8秒输入，4–8秒统计；倒地后屏蔽数据。共同运行近似包含backlash、身体接触、7.4V、14ms延迟、编码取整、前一帧反馈速度、指令平滑及理想gyro；这是评估工况，不是训练设置。
 
 历史30输入评估480/480未倒，但原地小幅左转弱响应及后退偏航仍待优化。用户反馈不等于完整量化验收；metadata.hardwareValidated=false保留。部署合同61→14、50Hz、scale1、无EMA、P5/D0；目标机器编码器/EEPROM可达性仍由控制器校验。
+
+## 代码入口整理
+
+旧慢走/摆腿/转向迁移/锚定/地面延迟迁移和10000续训入口已移除。训练仅用 `scripts/server/train_walk_observer.py`，运行仿真依赖 `walk_runtime_eval.py`。官方velocity基础配置及其他技能所需共享函数保留；当前模型权重不变。历史对比表是验证证据，不是可选旧配方。

@@ -14,7 +14,7 @@ import torch
 import onnxruntime as ort
 import mjlab_microduck.tasks
 from mjlab.envs import ManagerBasedRlEnv
-from mjlab_microduck.tasks import walk_surface_transfer as base
+from mjlab_microduck.tasks import walk_runtime_eval as base
 
 LABEL=sys.argv[1] if len(sys.argv)>1 else "observer5000"
 assert LABEL in ('initial','original5000','repair100','observer5000')
