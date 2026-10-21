@@ -2,6 +2,16 @@
 
 本项目使用当前本地 `robot/replica` STL/MJCF 和 HD1910 BAM M6 动力学。所有已注册的 MicroDuck 任务都使用这套硬件；旧任务 ID 仅保留名称兼容，不再选择官方 XL330 参数。
 
+## 视频展示
+
+<table>
+<tr>
+  <td width="33%" align="center"><video src="https://github.com/user-attachments/assets/c5ef2333-d38d-456e-afb6-89fb5f8b2f60" controls></video></td>
+  <td width="33%" align="center"><video src="https://github.com/user-attachments/assets/eb1ef356-b40e-4d24-ab92-f37a1b45dcf1" controls></video></td>
+  <td width="33%" align="center"><video src="https://github.com/user-attachments/assets/1ee32755-6e41-4c7c-9f7c-88e3762b8e5a" controls></video></td>
+</tr>
+</table>
+
 ## 最新更新 · 2026-10-21
 
 当前采用 **官方行走配方 + HD1910 参数 + Observer 机械/目标限位，从头训练 5000 轮**。用户实机反馈效果很好；已移除旧行走训练、微调及续训入口，保留最新方法、模型和运行仿真。10000 轮候选未全面超过此版本，未替换现役模型。
@@ -25,16 +35,6 @@
 - **2026-10-21**：实体手柄转向改为线性 ±1 rad/s，普通前后 ±0.2 m/s、LT ±0.4 m/s；用户反馈效果很好。[Observer 更新](https://github.com/Ley-WL/microduck-observer/commit/734faac)。
 - **2026-10-21**：发布训练配方、运行合同、最终 ONNX 和评估工具；随后清理淘汰的行走配方，运行仿真独立为 `walk_runtime_eval.py`。[发布](https://github.com/Ley-WL/microduck-rl/commit/303c47f) · [清理](https://github.com/Ley-WL/microduck-rl/commit/f3490a0)。
 - **2026-10-20**：Observer 限位 5000 轮模型部署并获得用户正面反馈。[模型接入](https://github.com/Ley-WL/microduck-observer/commit/3ef3958)。
-
-## 视频展示
-
-<table>
-<tr>
-  <td width="33%" align="center"><video src="https://github.com/user-attachments/assets/c5ef2333-d38d-456e-afb6-89fb5f8b2f60" controls></video></td>
-  <td width="33%" align="center"><video src="https://github.com/user-attachments/assets/eb1ef356-b40e-4d24-ab92-f37a1b45dcf1" controls></video></td>
-  <td width="33%" align="center"><video src="https://github.com/user-attachments/assets/1ee32755-6e41-4c7c-9f7c-88e3762b8e5a" controls></video></td>
-</tr>
-</table>
 
 ## 唯一硬件入口
 本仓库是基于 [pollen-robotics/microduck_rl](https://github.com/pollen-robotics/microduck_rl) 的 HD1910 适配与训练实验分支。
