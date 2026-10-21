@@ -1,10 +1,30 @@
-> **2026-10-21 配方清理：** 已删除淘汰的HD1910行走配方及对应训练/微调入口，当前仅使用 train_walk_observer.py + walk_observer_contract.py 和5000轮模型e3b90ac0。官方velocity基础配置保留为当前方法依赖；walk_runtime_eval.py仅用于运行仿真，不提供旧PPO训练入口。其他技能保持。
-
-> **2026-10-21 当前采用：** 官方配方 + HD1910 + Observer机械/目标限位，从头5000轮；最终模型e3b90ac0保存于 `models/walk_observer_hd1910_5000/`，用户实机反馈效果很好。训练配方、独立30输入评估及限制见 [说明](docs/walk-observer-official-training-20261020.md)。10000轮已完成但未全面超过本版本，不替换现役。
-
 # MicroDuck HD1910 训练项目
 
 本项目使用当前本地 `robot/replica` STL/MJCF 和 HD1910 BAM M6 动力学。所有已注册的 MicroDuck 任务都使用这套硬件；旧任务 ID 仅保留名称兼容，不再选择官方 XL330 参数。
+
+## 最新更新 · 2026-10-21
+
+当前采用 **官方行走配方 + HD1910 参数 + Observer 机械/目标限位，从头训练 5000 轮**。用户实机反馈效果很好；已移除旧行走训练、微调及续训入口，保留最新方法、模型和运行仿真。10000 轮候选未全面超过此版本，未替换现役模型。
+
+**[查看测试结论 README：仿真对比、板端验证和已知限制](models/walk_observer_hd1910_5000/README.md#测试结论)**
+
+| 内容 | 路径与入口 |
+|---|---|
+| 训练方法、参数和复现命令 | [docs/walk-observer-official-training-20261020.md](docs/walk-observer-official-training-20261020.md) |
+| 当前训练入口 | [scripts/server/train_walk_observer.py](scripts/server/train_walk_observer.py) |
+| Observer 限位适配 | [src/mjlab_microduck/tasks/walk_observer_contract.py](src/mjlab_microduck/tasks/walk_observer_contract.py) |
+| 最终 5000 轮模型 | [models/walk_observer_hd1910_5000/policy.onnx](models/walk_observer_hd1910_5000/policy.onnx) |
+| 模型说明与测试结论 | [models/walk_observer_hd1910_5000/README.md](models/walk_observer_hd1910_5000/README.md) |
+| 运行合同 / 原始训练预检 | [walk.metadata.json](models/walk_observer_hd1910_5000/walk.metadata.json) · [training-contract.json](models/walk_observer_hd1910_5000/training-contract.json) |
+| 30 输入仿真评估 | [scripts/compare_walk_inputs.py](scripts/compare_walk_inputs.py) · [完整对比结果](models/walk_observer_hd1910_5000/simulation-comparison.md) |
+
+模型 SHA256：`e3b90ac0e5359f91e14306b7e2143e0d5a1f4cd49cb256bca3fd71835250d895`，与 Observer 当前采用的行走权重一致。
+
+更新记录：
+
+- **2026-10-21**：实体手柄转向改为线性 ±1 rad/s，普通前后 ±0.2 m/s、LT ±0.4 m/s；用户反馈效果很好。[Observer 更新](https://github.com/Ley-WL/microduck-observer/commit/734faac)。
+- **2026-10-21**：发布训练配方、运行合同、最终 ONNX 和评估工具；随后清理淘汰的行走配方，运行仿真独立为 `walk_runtime_eval.py`。[发布](https://github.com/Ley-WL/microduck-rl/commit/303c47f) · [清理](https://github.com/Ley-WL/microduck-rl/commit/f3490a0)。
+- **2026-10-20**：Observer 限位 5000 轮模型部署并获得用户正面反馈。[模型接入](https://github.com/Ley-WL/microduck-observer/commit/3ef3958)。
 
 ## 视频展示
 
@@ -41,7 +61,7 @@ uv sync
 uv run python scripts/audit_hardware_profile.py --configs
 uv run list-envs
 
-# 新训练先做 64 环境、5 轮冒烟；通过后再按任务决定预算
+# 行走入口先64环境5轮冒烟，通过后自动进行4096环境5000轮训练
 uv run python scripts/server/train_walk_observer.py launch
 uv run train Mjlab-GetupMechanical-Flat-MicroDuck-HD1910 --env.scene.num-envs 64 --agent.max-iterations 5
 
