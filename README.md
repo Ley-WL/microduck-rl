@@ -1,3 +1,5 @@
+> **2026-10-21 当前采用：** 官方配方 + HD1910 + Observer机械/目标限位，从头5000轮；最终模型e3b90ac0保存于 `models/walk_observer_hd1910_5000/`，用户实机反馈效果很好。训练配方、独立30输入评估及限制见 [说明](docs/walk-observer-official-training-20261020.md)。10000轮已完成但未全面超过本版本，不替换现役。
+
 # MicroDuck HD1910 训练项目
 
 本项目使用当前本地 `robot/replica` STL/MJCF 和 HD1910 BAM M6 动力学。所有已注册的 MicroDuck 任务都使用这套硬件；旧任务 ID 仅保留名称兼容，不再选择官方 XL330 参数。

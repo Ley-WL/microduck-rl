@@ -1,0 +1,142 @@
+{
+  "hardware": {
+    "profile": "microduck-replica-hd1910-v1",
+    "actuatorParamsSha256": "ef2d51adfb1cc0831b9b02ca19aa9176fceecdf725148d084378d7d9a64afceb",
+    "geometryManifestSha256": "062699cf4f92d8cbe0bb50e8fab3614b4ee6c253e2f36b024b040a2282602f08",
+    "hardwareValidated": false
+  },
+  "task": "Mjlab-Velocity-Flat-MicroDuck",
+  "recipeGitBlob": "45a1f6d5b7f5d81aa58dab777ed34f458a2f847c",
+  "fromScratch": true,
+  "worlds": 4096,
+  "iterations": 5000,
+  "curriculum": [
+    "action_rate_weight",
+    "standing_envs",
+    "head_pose_range",
+    "body_pose_range",
+    "com_range",
+    "head_com_range",
+    "head_pose_bias_weight"
+  ],
+  "actionScale": 1.0,
+  "actionFiltering": false,
+  "originalPpo": true,
+  "jointLimitsRadians": {
+    "left_hip_yaw": [
+      -0.4363323129985824,
+      0.5235987755982988
+    ],
+    "left_hip_roll": [
+      -0.3839724354387525,
+      0.3839724354387525
+    ],
+    "left_hip_pitch": [
+      -1.5707963267948966,
+      1.5707963267948966
+    ],
+    "left_knee": [
+      -1.5707963267948966,
+      1.5707963267948966
+    ],
+    "left_ankle": [
+      -1.2217304763960306,
+      1.2217304763960306
+    ],
+    "neck_pitch": [
+      -1.5707963267948966,
+      1.2217304763960306
+    ],
+    "head_pitch": [
+      -1.5707963267948966,
+      1.5707963267948966
+    ],
+    "head_yaw": [
+      -2.9670597283903604,
+      2.9670597283903604
+    ],
+    "head_roll": [
+      -0.3490658503988659,
+      0.3490658503988659
+    ],
+    "right_hip_yaw": [
+      -0.5235987755982988,
+      0.4363323129985824
+    ],
+    "right_hip_roll": [
+      -0.3839724354387525,
+      0.3839724354387525
+    ],
+    "right_hip_pitch": [
+      -1.5707963267948966,
+      1.5707963267948966
+    ],
+    "right_knee": [
+      -1.5707963267948966,
+      1.5707963267948966
+    ],
+    "right_ankle": [
+      -1.2217304763960306,
+      1.2217304763960306
+    ]
+  },
+  "targetClipRadians": {
+    "left_hip_yaw": [
+      -0.4363323129985824,
+      0.5235987755982988
+    ],
+    "left_hip_roll": [
+      -0.3839724354387525,
+      0.3839724354387525
+    ],
+    "left_hip_pitch": [
+      -1.5707963267948966,
+      1.5707963267948966
+    ],
+    "left_knee": [
+      -1.5707963267948966,
+      1.5707963267948966
+    ],
+    "left_ankle": [
+      -1.2217304763960306,
+      1.2217304763960306
+    ],
+    "neck_pitch": [
+      -1.5707963267948966,
+      1.2217304763960306
+    ],
+    "head_pitch": [
+      -1.5707963267948966,
+      1.5707963267948966
+    ],
+    "head_yaw": [
+      -2.9670597283903604,
+      2.9670597283903604
+    ],
+    "head_roll": [
+      -0.3490658503988659,
+      0.3490658503988659
+    ],
+    "right_hip_yaw": [
+      -0.5235987755982988,
+      0.4363323129985824
+    ],
+    "right_hip_roll": [
+      -0.3839724354387525,
+      0.3839724354387525
+    ],
+    "right_hip_pitch": [
+      -1.5707963267948966,
+      1.5707963267948966
+    ],
+    "right_knee": [
+      -1.5707963267948966,
+      1.5707963267948966
+    ],
+    "right_ankle": [
+      -1.2217304763960306,
+      1.2217304763960306
+    ]
+  },
+  "officialCommit": "b02fdea4902c2b93b7d34a83a6f05da4ececb7d3"
+}

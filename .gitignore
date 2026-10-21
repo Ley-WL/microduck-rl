@@ -44,3 +44,7 @@ logdir/.claude/worktrees/
 .local/
 MJDATA.TXT
 MJMODEL.TXT
+
+# Accepted deployment artifact explicitly versioned with its recipe.
+!models/walk_observer_hd1910_5000/policy.onnx
+evidence/
