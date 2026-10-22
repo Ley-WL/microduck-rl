@@ -18,13 +18,13 @@
 
 | 功能 | 当前版本 / 来源 | 状态与说明 | 模型 / 测试说明 |
 |---|---|---|---|
-| 行走 | HD1910 + Observer限位，5000轮 | 用户实机反馈好；保留当前版本 | [模型与测试](models/walk_observer_hd1910_5000/README.md) · [配方](docs/walk-observer-official-training-20261020.md) |
-| 金鸡独立 | HD1910 CycleHard，3000轮 | 仅抬右脚；仿真48/48，实机出现软掉/重启，原因待查 | [模型与测试](models/flamingo_right_hd1910_3000/README.md) · [配方](docs/flamingo-author-scratch-20261021.md) |
+| 行走 | HD1910 + Observer限位，5000轮 | 用户实机反馈好；保留当前版本 | [模型与测试](models/walk_observer_hd1910_5000/README.md) · [训练方法](docs/walk-observer-official-training-20261020.md) |
+| 金鸡独立 | HD1910 CycleHard，3000轮 | 仅抬右脚；仿真48/48，实机出现软掉/重启，原因待查 | [模型与测试](models/flamingo_right_hd1910_3000/README.md) · [训练方法](docs/flamingo-author-scratch-20261021.md) |
 | 十拍舞蹈 | HD1910 大幅抗扰 v5 | 已部署试用，抗扰仍有失败 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/dance10.onnx) · [训练与测试](docs/dance10-training.md) |
 | 倒地起身 | HD1910 GetupMechanical | 已部署，仍有实机失稳记录 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_getup.onnx) · [合同](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_getup.metadata.json) |
-| 坐下 / 站起 | HD1910官方配方，3000轮 | 用户实测通过；连续稳定0.5秒切回行走 | [模型与测试](models/sitstand_hd1910_3000/README.md) · [配方](docs/sitstand-official-scratch-20261021.md) |
-| 拾取 | HD1910 官方配方，1001轮 / seed221149 | 已部署233，用户反馈动作流畅；仿真下探中位数约29mm | [模型与测试](models/pick_hd1910_1001/README.md) · [配方](docs/pick-seed-screening-20261022.md) |
-| 翻滚 | HD1910官方配方，1000轮 | 已部署23试用；仿真32/32，实机待验证 | [模型与测试](models/roulade_hd1910_1000/README.md) · [配方](docs/pick-roll-official-scratch-20261021.md) |
+| 坐下 / 站起 | 基于 HD1910 重新训练，3000轮 | 用户实测通过；连续稳定0.5秒切回行走 | [模型与测试](models/sitstand_hd1910_3000/README.md) · [训练方法](docs/sitstand-official-scratch-20261021.md) |
+| 拾取 | 基于 HD1910 重新训练，1001轮 / seed221149 | 用户实测拾取效果通过；仿真下探中位数约29mm | [模型与测试](models/pick_hd1910_1001/README.md) · [训练方法](docs/pick-seed-screening-20261022.md) |
+| 翻滚 | 基于 HD1910 重新训练，1000轮 | 已部署23试用；仿真32/32，实机待验证 | [模型与测试](models/roulade_hd1910_1000/README.md) · [训练方法](docs/pick-roll-official-scratch-20261021.md) |
 | 左 / 右踢球 | 导入官方踢球模型 | 左右各一个模型 | [左脚](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/kick_left.onnx) · [右脚](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/kick_right.onnx) |
 
 以上按当前Observer模型路由与最近部署记录整理；已部署不等于完整实物验收。后续训练提交仅在现役模型或其结论变化时更新本表，详细实验留在专题文档。
@@ -56,7 +56,7 @@ uv run train Mjlab-GetupMechanical-Flat-MicroDuck-HD1910 --env.scene.num-envs 64
 # 行走由上述训练入口自动导出；模型见 models/walk_observer_hd1910_5000/
 ```
 
-常用任务：`StandHold`（站立保持）、`train_walk_observer.py`（当前行走配方）、`GetupMechanical`（现行机械限位起身）、`SitStandContact`（坐站接触），完整 ID 以 `list-envs` 为准。任务各自的奖励、PPO、动作 EMA、限位和观测合同继续明确区分，不能把一种技能的动作滤波随意套到其他技能。通用 PPO/奖励算法保留，移除的是旧硬件默认参数和默认官方教师权重。
+常用任务：`StandHold`（站立保持）、`train_walk_observer.py`（当前行走训练方法）、`GetupMechanical`（现行机械限位起身）、`SitStandContact`（坐站接触），完整 ID 以 `list-envs` 为准。任务各自的奖励、PPO、动作 EMA、限位和观测合同继续明确区分，不能把一种技能的动作滤波随意套到其他技能。通用 PPO/奖励算法保留，移除的是旧硬件默认参数和默认官方教师权重。
 
 新训练默认使用本地 TensorBoard；实验名有 `hd1910` 标识。默认不下载官方教师，不自动推送权重。迁移学习必须显式选择兼容 checkpoint，旧权重不会因为更换配置自动成为新硬件训练结果。
 
