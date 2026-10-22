@@ -1,0 +1,203 @@
+{
+  "fromScratch": true,
+  "onnxImported": false,
+  "checkpointLoaded": false,
+  "criticWarmup": 0,
+  "syntheticNormalizerCount": false,
+  "initialActorNormalizerCount": 0,
+  "initialCriticNormalizerCount": 0,
+  "initialOptimizerStates": 0,
+  "seed": 211151,
+  "worlds": 4096,
+  "iterations": 10000,
+  "actor": {
+    "hidden_dims": [
+      512,
+      256,
+      128
+    ],
+    "activation": "elu",
+    "obs_normalization": true,
+    "cnn_cfg": null,
+    "distribution_cfg": {
+      "class_name": "GaussianDistribution",
+      "init_std": 1.0,
+      "std_type": "scalar"
+    },
+    "rnn_type": null,
+    "rnn_hidden_dim": 256,
+    "rnn_num_layers": 1,
+    "class_name": "MLPModel"
+  },
+  "critic": {
+    "hidden_dims": [
+      512,
+      256,
+      128
+    ],
+    "activation": "elu",
+    "obs_normalization": true,
+    "cnn_cfg": null,
+    "distribution_cfg": null,
+    "rnn_type": null,
+    "rnn_hidden_dim": 256,
+    "rnn_num_layers": 1,
+    "class_name": "MLPModel"
+  },
+  "ppo": {
+    "num_learning_epochs": 5,
+    "num_mini_batches": 4,
+    "learning_rate": 0.001,
+    "schedule": "adaptive",
+    "gamma": 0.99,
+    "lam": 0.95,
+    "entropy_coef": 0.01,
+    "desired_kl": 0.01,
+    "max_grad_norm": 1.0,
+    "value_loss_coef": 1.0,
+    "use_clipped_value_loss": true,
+    "clip_param": 0.2,
+    "normalize_advantage_per_mini_batch": false,
+    "optimizer": "adam",
+    "share_cnn_encoders": false,
+    "class_name": "PPO",
+    "symmetry_cfg": {
+      "use_data_augmentation": false,
+      "use_mirror_loss": true,
+      "mirror_loss_coeff": 0.5,
+      "data_augmentation_func": "mjlab_microduck.tasks.symmetry.microduck_vel_symmetry"
+    }
+  },
+  "runner": "MicroduckOnPolicyRunner/VelocityOnPolicyRunner",
+  "curriculum": {
+    "roulade_spawn_mix": {
+      "event_name": "set_roulade_state",
+      "param_stages": [
+        {
+          "step": 0,
+          "params": {
+            "standing_prob": 0.5,
+            "midroll_prob": 0.5
+          }
+        },
+        {
+          "step": 72000,
+          "params": {
+            "standing_prob": 0.65,
+            "midroll_prob": 0.35
+          }
+        },
+        {
+          "step": 144000,
+          "params": {
+            "standing_prob": 0.8,
+            "midroll_prob": 0.2
+          }
+        }
+      ]
+    },
+    "com_range": {
+      "event_name": "randomize_com",
+      "range_stages": [
+        {
+          "step": 0,
+          "range": 0.003
+        },
+        {
+          "step": 12000,
+          "range": 0.005
+        },
+        {
+          "step": 24000,
+          "range": 0.01
+        },
+        {
+          "step": 36000,
+          "range": 0.015
+        }
+      ]
+    },
+    "head_com_range": {
+      "event_name": "randomize_head_com",
+      "range_stages": [
+        {
+          "step": 0,
+          "range": 0.003
+        },
+        {
+          "step": 12000,
+          "range": 0.005
+        },
+        {
+          "step": 24000,
+          "range": 0.01
+        }
+      ]
+    },
+    "action_rate_weight": {
+      "reward_name": "action_rate_l2",
+      "weight_stages": [
+        {
+          "step": 0,
+          "weight": -0.1
+        },
+        {
+          "step": 36000,
+          "weight": -0.2
+        },
+        {
+          "step": 72000,
+          "weight": -0.4
+        }
+      ]
+    },
+    "arrival_damping_weight": {
+      "reward_name": "arrival_damping",
+      "weight_stages": [
+        {
+          "step": 0,
+          "weight": 0.0
+        },
+        {
+          "step": 60000,
+          "weight": -0.025
+        },
+        {
+          "step": 84000,
+          "weight": -0.05
+        }
+      ]
+    },
+    "torque_rate_weight": {
+      "reward_name": "joint_torque_rate_l2",
+      "weight_stages": [
+        {
+          "step": 0,
+          "weight": 0.0
+        },
+        {
+          "step": 60000,
+          "weight": -0.0005
+        },
+        {
+          "step": 84000,
+          "weight": -0.001
+        }
+      ]
+    },
+    "gentle_landing_weight": {
+      "reward_name": "gentle_landing",
+      "weight_stages": [
+        {
+          "step": 0,
+          "weight": 0.002
+        },
+        {
+          "step": 60000,
+          "weight": 0.005
+        }
+      ]
+    }
+  },
+  "hardware": false
+}

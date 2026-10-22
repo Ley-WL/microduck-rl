@@ -1,0 +1,351 @@
+{
+  "baseline": [
+    {
+      "seed": 211131,
+      "originalReplayExact": {
+        "task": false,
+        "qpos": false,
+        "stable": false,
+        "qposMaxAbsDifference": 0.3451952636241913
+      },
+      "meanMouthMinMm": 17.61128044128418,
+      "joints": {
+        "left_hip_yaw": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 6.078143150792176
+        },
+        "left_hip_roll": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.8698866363072073
+        },
+        "left_hip_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 10.201142822410569
+        },
+        "left_knee": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 2.135168903466765
+        },
+        "left_ankle": {
+          "clippedPct": 100.0,
+          "meanGoalErrorDeg": 2.7221919375672874
+        },
+        "neck_pitch": {
+          "clippedPct": 0.8333333333333334,
+          "meanGoalErrorDeg": 10.03338328461316
+        },
+        "head_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 5.486934300879333
+        },
+        "head_yaw": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.48156091104306
+        },
+        "head_roll": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.3353282334562158
+        },
+        "right_hip_yaw": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 5.45959096322036
+        },
+        "right_hip_roll": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.0413031206464323
+        },
+        "right_hip_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 6.905095228539608
+        },
+        "right_knee": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 15.325151877786526
+        },
+        "right_ankle": {
+          "clippedPct": 100.0,
+          "meanGoalErrorDeg": 1.8655884229912905
+        }
+      },
+      "rewardApproachMean": {
+        "dof_pos_limits": -0.2556869685649872,
+        "self_collisions": 0.0,
+        "head_impact_penalty": -0.03432931751012802
+      }
+    },
+    {
+      "seed": 211139,
+      "originalReplayExact": {
+        "task": false,
+        "qpos": false,
+        "stable": false,
+        "qposMaxAbsDifference": 0.35434195399284363
+      },
+      "meanMouthMinMm": 17.640762329101562,
+      "joints": {
+        "left_hip_yaw": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 6.051911474504449
+        },
+        "left_hip_roll": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.8483893164607532
+        },
+        "left_hip_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 10.231423090275166
+        },
+        "left_knee": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 2.107716541136535
+        },
+        "left_ankle": {
+          "clippedPct": 100.0,
+          "meanGoalErrorDeg": 2.824859524091242
+        },
+        "neck_pitch": {
+          "clippedPct": 0.9895833333333333,
+          "meanGoalErrorDeg": 9.843473521421762
+        },
+        "head_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 5.4706966609351
+        },
+        "head_yaw": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.4966149378732765
+        },
+        "head_roll": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.3449664952100102
+        },
+        "right_hip_yaw": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 5.453235393045731
+        },
+        "right_hip_roll": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.020355204401892
+        },
+        "right_hip_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 6.65544774116387
+        },
+        "right_knee": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 15.102391460816618
+        },
+        "right_ankle": {
+          "clippedPct": 100.0,
+          "meanGoalErrorDeg": 1.8187554807111228
+        }
+      },
+      "rewardApproachMean": {
+        "dof_pos_limits": -0.2544555366039276,
+        "self_collisions": 0.0,
+        "head_impact_penalty": -0.03940091282129288
+      }
+    }
+  ],
+  "candidate": [
+    {
+      "seed": 211131,
+      "originalReplayExact": {
+        "task": false,
+        "qpos": false,
+        "stable": false,
+        "qposMaxAbsDifference": 0.01954752206802368
+      },
+      "meanMouthMinMm": 52.15781021118164,
+      "joints": {
+        "left_hip_yaw": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.9698696784262462
+        },
+        "left_hip_roll": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 0.8071407213477284
+        },
+        "left_hip_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.552096785809869
+        },
+        "left_knee": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 12.053757770015917
+        },
+        "left_ankle": {
+          "clippedPct": 100.0,
+          "meanGoalErrorDeg": 3.173017730632503
+        },
+        "neck_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 5.327416306256176
+        },
+        "head_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 9.166324258217237
+        },
+        "head_yaw": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.2027860059681728
+        },
+        "head_roll": {
+          "clippedPct": 96.09375,
+          "meanGoalErrorDeg": 1.76328341395718
+        },
+        "right_hip_yaw": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.3596922174056807
+        },
+        "right_hip_roll": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 0.7984216209067231
+        },
+        "right_hip_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.2185559320337234
+        },
+        "right_knee": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 9.861059252165887
+        },
+        "right_ankle": {
+          "clippedPct": 100.0,
+          "meanGoalErrorDeg": 2.992581329184958
+        }
+      },
+      "rewardApproachMean": {
+        "dof_pos_limits": -0.22361931204795837,
+        "self_collisions": 0.0,
+        "head_impact_penalty": 0.0
+      }
+    },
+    {
+      "seed": 211139,
+      "originalReplayExact": {
+        "task": false,
+        "qpos": false,
+        "stable": false,
+        "qposMaxAbsDifference": 0.04435068368911743
+      },
+      "meanMouthMinMm": 52.3635139465332,
+      "joints": {
+        "left_hip_yaw": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.9355421232720222
+        },
+        "left_hip_roll": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 0.7768636591363713
+        },
+        "left_hip_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.5659250560693871
+        },
+        "left_knee": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 11.894277705176341
+        },
+        "left_ankle": {
+          "clippedPct": 100.0,
+          "meanGoalErrorDeg": 3.2248919039156196
+        },
+        "neck_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 5.361832505348569
+        },
+        "head_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 9.152673965078408
+        },
+        "head_yaw": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.1875145959844982
+        },
+        "head_roll": {
+          "clippedPct": 95.88541666666667,
+          "meanGoalErrorDeg": 1.772713110770543
+        },
+        "right_hip_yaw": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.4006925667795358
+        },
+        "right_hip_roll": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 0.7983356908125967
+        },
+        "right_hip_pitch": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 1.2205839699447736
+        },
+        "right_knee": {
+          "clippedPct": 0.0,
+          "meanGoalErrorDeg": 9.585760992919557
+        },
+        "right_ankle": {
+          "clippedPct": 100.0,
+          "meanGoalErrorDeg": 2.996607345059929
+        }
+      },
+      "rewardApproachMean": {
+        "dof_pos_limits": -0.22086410224437714,
+        "self_collisions": 0.0,
+        "head_impact_penalty": 0.0
+      }
+    }
+  ],
+  "comparison": {
+    "baseline": {
+      "success": 20,
+      "noReset": 20,
+      "sha": "2b69fa681ed06f7ded9e2a2d12ba5c6776ec87308ac4a299e4b8196199c17f24",
+      "seeds": {
+        "211131": {
+          "first2p8MouthMinMedianMm": 18.092100143432617,
+          "initialHash": "e4d42ea36b1d75aec102d87fe409db9aca72bed05d0d909fba580a56cc87e298"
+        },
+        "211139": {
+          "first2p8MouthMinMedianMm": 18.322107315063477,
+          "initialHash": "8653a92a419e3e92461d1227c0cc6860065148668d70aacaa9eb3f48574188be"
+        }
+      }
+    },
+    "candidate": {
+      "success": 0,
+      "noReset": 32,
+      "sha": "20f4d43b40d3279552c5bf78c949ba36ba390acaa82ce7cfdf0afdd4343f0838",
+      "seeds": {
+        "211131": {
+          "first2p8MouthMinMedianMm": 55.62139892578125,
+          "initialHash": "e4d42ea36b1d75aec102d87fe409db9aca72bed05d0d909fba580a56cc87e298"
+        },
+        "211139": {
+          "first2p8MouthMinMedianMm": 55.47096252441406,
+          "initialHash": "8653a92a419e3e92461d1227c0cc6860065148668d70aacaa9eb3f48574188be"
+        }
+      }
+    },
+    "official": {
+      "success": 0,
+      "noReset": 32,
+      "sha": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872",
+      "seeds": {
+        "211131": {
+          "first2p8MouthMinMedianMm": 35.80341339111328,
+          "initialHash": "e4d42ea36b1d75aec102d87fe409db9aca72bed05d0d909fba580a56cc87e298"
+        },
+        "211139": {
+          "first2p8MouthMinMedianMm": 35.49533462524414,
+          "initialHash": "8653a92a419e3e92461d1227c0cc6860065148668d70aacaa9eb3f48574188be"
+        }
+      }
+    }
+  },
+  "notes": [
+    "Frozen policies; no optimization steps; same HD1910 nominal physics and seeds",
+    "Replay does not exactly match original saved trajectories; baseline now20/32 vs previously18/32, not an improvement",
+    "Three full cycles criteria differs from official one-shot duration2.8s; first2.8s minimum heights also reported",
+    "Mean goal error compares current unclagged clipped target with post-step angle; includes motion and delay, not isolated actuator error"
+  ]
+}

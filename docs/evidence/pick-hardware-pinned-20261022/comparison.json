@@ -1,0 +1,99 @@
+{
+  "conditions": {
+    "xl330": [
+      {
+        "seed": "211131",
+        "first2p8MinMouthMedianMm": 28.214818954467773,
+        "fullMinMouthMedianMm": 28.214818954467773,
+        "success": 0,
+        "noReset": 16,
+        "worlds": 16,
+        "policySha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872"
+      },
+      {
+        "seed": "211139",
+        "first2p8MinMouthMedianMm": 28.67118263244629,
+        "fullMinMouthMedianMm": 28.361875534057617,
+        "success": 0,
+        "noReset": 16,
+        "worlds": 16,
+        "policySha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872"
+      }
+    ],
+    "hd1910": [
+      {
+        "seed": "211131",
+        "first2p8MinMouthMedianMm": 39.6397705078125,
+        "fullMinMouthMedianMm": 38.912227630615234,
+        "success": 0,
+        "noReset": 16,
+        "worlds": 16,
+        "policySha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872"
+      },
+      {
+        "seed": "211139",
+        "first2p8MinMouthMedianMm": 40.771549224853516,
+        "fullMinMouthMedianMm": 39.58846664428711,
+        "success": 0,
+        "noReset": 16,
+        "worlds": 16,
+        "policySha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872"
+      }
+    ],
+    "hd1910_limits": [
+      {
+        "seed": "211131",
+        "first2p8MinMouthMedianMm": 35.61614227294922,
+        "fullMinMouthMedianMm": 35.297447204589844,
+        "success": 0,
+        "noReset": 16,
+        "worlds": 16,
+        "policySha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872"
+      },
+      {
+        "seed": "211139",
+        "first2p8MinMouthMedianMm": 35.430938720703125,
+        "fullMinMouthMedianMm": 35.39323806762695,
+        "success": 0,
+        "noReset": 16,
+        "worlds": 16,
+        "policySha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872"
+      }
+    ],
+    "replica_limits": [
+      {
+        "seed": "211131",
+        "first2p8MinMouthMedianMm": 35.603546142578125,
+        "fullMinMouthMedianMm": 35.36415100097656,
+        "success": 0,
+        "noReset": 16,
+        "worlds": 16,
+        "policySha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872"
+      },
+      {
+        "seed": "211139",
+        "first2p8MinMouthMedianMm": 35.49687576293945,
+        "fullMinMouthMedianMm": 35.429134368896484,
+        "success": 0,
+        "noReset": 16,
+        "worlds": 16,
+        "policySha256": "ffbf5109982ff999b0ba53afe86b9ae731bbec679d67fb7f8ab4c52152c88872"
+      }
+    ]
+  },
+  "jobExit": "0 0",
+  "officialXmlSha256": "99d23867e46e9d4748ff1398016b850f09fb6cf02a558c0272743b39ce3acf15",
+  "scriptSha256": "c9a65e3cf6fb5fbdc77475b3fbb717fe5530454cc50ff7ec627f7fcd16e109bf",
+  "trainingPerformed": false,
+  "hardwareAccess": false,
+  "initialStateHashes": {
+    "211131": "e4d42ea36b1d75aec102d87fe409db9aca72bed05d0d909fba580a56cc87e298",
+    "211139": "8653a92a419e3e92461d1227c0cc6860065148668d70aacaa9eb3f48574188be"
+  },
+  "limitations": [
+    "Nominal fixed7.4V no pushes/no actor noise, common current training-library stack; not reproduction of published model exact training history",
+    "25mm/3-cycle threshold is local and not official acceptance; no walk handoff tested",
+    "HD1910 vs XL330 changes full actuator model incl gain, delay implementation, identified motor parameters; not isolated torque strength",
+    "Original baseline using historically modified local official XML aborted, excluded"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "baseline": {
+    "success": 30,
+    "noReset": 32
+  },
+  "candidates": {
+    "1001": {
+      "success": 32,
+      "noReset": 32
+    },
+    "3001": {
+      "success": 28,
+      "noReset": 32
+    },
+    "5001": {
+      "success": 30,
+      "noReset": 32
+    },
+    "10000": {
+      "success": 28,
+      "noReset": 32
+    }
+  },
+  "totalCases": 32,
+  "accepted": false
+}

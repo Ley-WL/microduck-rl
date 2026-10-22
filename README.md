@@ -12,7 +12,7 @@
 </tr>
 </table>
 
-## Observer 当前使用的模型 · 2026-10-21
+## Observer 当前使用的模型 · 2026-10-22
 
 仅列当前服务使用的模型；历史训练、失败实验和备用权重不列入首页。
 
@@ -22,9 +22,9 @@
 | 金鸡独立 | HD1910 CycleHard，3000轮 | 仅抬右脚；仿真48/48，实机出现软掉/重启，原因待查 | [模型与测试](models/flamingo_right_hd1910_3000/README.md) · [配方](docs/flamingo-author-scratch-20261021.md) |
 | 十拍舞蹈 | HD1910 大幅抗扰 v5 | 已部署试用，抗扰仍有失败 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/dance10.onnx) · [训练与测试](docs/dance10-training.md) |
 | 倒地起身 | HD1910 GetupMechanical | 已部署，仍有实机失稳记录 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_getup.onnx) · [合同](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_getup.metadata.json) |
-| 坐下 / 站起 | 导入 KissQy 坐站模型 | 现役保持；新训3000轮仿真64/64，已停止训练、未部署 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/alpha_sitstand.onnx) · [合同](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/alpha_sitstand.metadata.json) · [新模型与测试结论](models/sitstand_hd1910_3000/README.md) · [训练方法](docs/sitstand-official-scratch-20261021.md) |
-| 拾取 | 导入 KissQy 拾取模型 | 沿用现有模型 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_pick.onnx) · [合同](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_pick.metadata.json) |
-| 翻滚 | 导入 KissQy 翻滚模型 | 沿用原模型，未换成微调候选 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_roulade.onnx) · [合同](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_roulade.metadata.json) |
+| 坐下 / 站起 | HD1910官方配方，3000轮 | 用户实测通过；连续稳定0.5秒切回行走 | [模型与测试](models/sitstand_hd1910_3000/README.md) · [配方](docs/sitstand-official-scratch-20261021.md) |
+| 拾取 | HD1910 官方配方，1001轮 / seed221149 | 已部署233，用户反馈动作流畅；仿真下探中位数约29mm | [模型与测试](models/pick_hd1910_1001/README.md) · [配方](docs/pick-seed-screening-20261022.md) |
+| 翻滚 | HD1910官方配方，1000轮 | 已部署23试用；仿真32/32，实机待验证 | [模型与测试](models/roulade_hd1910_1000/README.md) · [配方](docs/pick-roll-official-scratch-20261021.md) |
 | 左 / 右踢球 | 导入官方踢球模型 | 左右各一个模型 | [左脚](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/kick_left.onnx) · [右脚](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/kick_right.onnx) |
 
 以上按当前Observer模型路由与最近部署记录整理；已部署不等于完整实物验收。后续训练提交仅在现役模型或其结论变化时更新本表，详细实验留在专题文档。

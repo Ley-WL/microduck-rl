@@ -1,0 +1,30 @@
+{
+  "microduck_ground_pick_env_cfg.py": {
+    "upstreamSha": "9b68951e2c84fdccb5894701efa97e060438eb56c956a34c65e844ba3fa6185e",
+    "astEqual": true
+  },
+  "microduck_roulade_env_cfg.py": {
+    "upstreamSha": "7075e079849a9961dbe8d35dc680848c9651e8a98897f08538c48b29f715fc10",
+    "astEqual": true
+  },
+  "symmetry.py": {
+    "upstreamSha": "e37980389773f2f87b8f376df449af4d70e0c983744459f9a35a3ee7b686186b",
+    "astEqual": true
+  },
+  "mdp.py": {
+    "upstreamSha": "f62b79259e1c34468a93d0c036e2960c6a3251ba319eaf8d82bdeb24f89105fc",
+    "astEqual": false
+  },
+  "directMdpAudit": {
+    "pick": {
+      "equal": 24,
+      "different": []
+    },
+    "roll": {
+      "equal": 27,
+      "different": [
+        "reset_roulade_state adds environment origin z; flat terrain z=0"
+      ]
+    }
+  }
+}

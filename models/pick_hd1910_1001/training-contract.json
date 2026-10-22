@@ -1,0 +1,131 @@
+{
+  "fromScratch": true,
+  "onnxImported": false,
+  "checkpointLoaded": false,
+  "criticWarmup": 0,
+  "syntheticNormalizerCount": false,
+  "initialActorNormalizerCount": 0,
+  "initialCriticNormalizerCount": 0,
+  "initialOptimizerStates": 0,
+  "seed": 221149,
+  "worlds": 4096,
+  "iterations": 3001,
+  "officialMaxIterations": 20000,
+  "screening": true,
+  "actor": {
+    "hidden_dims": [
+      512,
+      256,
+      128
+    ],
+    "activation": "elu",
+    "obs_normalization": true,
+    "cnn_cfg": null,
+    "distribution_cfg": {
+      "class_name": "GaussianDistribution",
+      "init_std": 1.0,
+      "std_type": "scalar"
+    },
+    "rnn_type": null,
+    "rnn_hidden_dim": 256,
+    "rnn_num_layers": 1,
+    "class_name": "MLPModel"
+  },
+  "critic": {
+    "hidden_dims": [
+      512,
+      256,
+      128
+    ],
+    "activation": "elu",
+    "obs_normalization": true,
+    "cnn_cfg": null,
+    "distribution_cfg": null,
+    "rnn_type": null,
+    "rnn_hidden_dim": 256,
+    "rnn_num_layers": 1,
+    "class_name": "MLPModel"
+  },
+  "ppo": {
+    "num_learning_epochs": 5,
+    "num_mini_batches": 4,
+    "learning_rate": 0.001,
+    "schedule": "adaptive",
+    "gamma": 0.99,
+    "lam": 0.95,
+    "entropy_coef": 0.01,
+    "desired_kl": 0.01,
+    "max_grad_norm": 1.0,
+    "value_loss_coef": 1.0,
+    "use_clipped_value_loss": true,
+    "clip_param": 0.2,
+    "normalize_advantage_per_mini_batch": false,
+    "optimizer": "adam",
+    "share_cnn_encoders": false,
+    "class_name": "PPO",
+    "symmetry_cfg": null
+  },
+  "runner": "MicroduckOnPolicyRunner/VelocityOnPolicyRunner",
+  "curriculum": {
+    "action_rate_weight": {
+      "reward_name": "action_rate_l2",
+      "weight_stages": [
+        {
+          "step": 0,
+          "weight": -0.8
+        },
+        {
+          "step": 6000,
+          "weight": -1.5
+        },
+        {
+          "step": 12000,
+          "weight": -2.0
+        }
+      ]
+    },
+    "com_range": {
+      "event_name": "randomize_com",
+      "range_stages": [
+        {
+          "step": 0,
+          "range": 0.003
+        },
+        {
+          "step": 12000,
+          "range": 0.005
+        },
+        {
+          "step": 24000,
+          "range": 0.01
+        },
+        {
+          "step": 36000,
+          "range": 0.015
+        },
+        {
+          "step": 48000,
+          "range": 0.02
+        }
+      ]
+    },
+    "head_com_range": {
+      "event_name": "randomize_head_com",
+      "range_stages": [
+        {
+          "step": 0,
+          "range": 0.003
+        },
+        {
+          "step": 12000,
+          "range": 0.005
+        },
+        {
+          "step": 24000,
+          "range": 0.01
+        }
+      ]
+    }
+  },
+  "hardware": false
+}
