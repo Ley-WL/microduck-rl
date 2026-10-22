@@ -24,8 +24,10 @@
 | 倒地起身 | HD1910 GetupMechanical | 已部署，仍有实机失稳记录 | [模型](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_getup.onnx) · [合同](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/xgoduck_getup.metadata.json) |
 | 坐下 / 站起 | 基于 HD1910 重新训练，3000轮 | 用户实测通过；连续稳定0.5秒切回行走 | [模型与测试](models/sitstand_hd1910_3000/README.md) · [训练方法](docs/sitstand-official-scratch-20261021.md) |
 | 拾取 | 基于 HD1910 重新训练，1001轮 / seed221149 | 用户实测拾取效果通过；仿真下探中位数约29mm | [模型与测试](models/pick_hd1910_1001/README.md) · [训练方法](docs/pick-seed-screening-20261022.md) |
-| 翻滚 | 基于 HD1910 重新训练，1000轮 | 已部署23试用；仿真32/32，实机待验证 | [模型与测试](models/roulade_hd1910_1000/README.md) · [训练方法](docs/pick-roll-official-scratch-20261021.md) |
+| 翻滚 | 基于 HD1910 重新训练，1000轮 | 1.6秒翻滚接起身；统一交接版本用户反馈良好 | [模型与测试](models/roulade_hd1910_1000/README.md) · [训练方法](docs/pick-roll-official-scratch-20261021.md) |
 | 左 / 右踢球 | 导入官方踢球模型 | 左右各一个模型 | [左脚](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/kick_left.onnx) · [右脚](https://github.com/Ley-WL/microduck-observer/blob/feat/vision-camera-npu/models/kick_right.onnx) |
+
+**2026-10-22 更新：** 57鸭子统一交接版本实测反馈良好；模型权重保持，配套名义交接仿真256/256通过，见[测试结论与脚本](docs/shared-walk-handoff-20261022.md)。
 
 以上按当前Observer模型路由与最近部署记录整理；已部署不等于完整实物验收。后续训练提交仅在现役模型或其结论变化时更新本表，详细实验留在专题文档。
 
