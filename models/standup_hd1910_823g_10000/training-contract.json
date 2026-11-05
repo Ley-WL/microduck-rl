@@ -1,0 +1,95 @@
+{
+  "actorTransfer": true,
+  "fullResume": false,
+  "freshCritic": true,
+  "freshOptimizer": true,
+  "curriculumStart": 0,
+  "seed": 261029,
+  "checkpointSha256": "3397e7cb2e665e0026219af6256dba36509d5719fa363e3266baef921b8572ae",
+  "sourceOnnxSha256": "4b9c82e5bbd003a465b9bf861d4e7020014e7781d311f3780001e5257a588838",
+  "initialOnnxMaxError": 0.0,
+  "actorNormalizerCount": 449839104.0,
+  "worlds": 4096,
+  "iterations": 10000,
+  "recipe": {
+    "seed": 42,
+    "num_steps_per_env": 24,
+    "max_iterations": 15000,
+    "obs_groups": {
+      "actor": [
+        "actor"
+      ],
+      "critic": [
+        "critic"
+      ]
+    },
+    "save_interval": 250,
+    "experiment_name": "hd1910_standup_observer_official",
+    "run_name": "microduck_stand",
+    "logger": "tensorboard",
+    "wandb_project": "mjlab_microduck",
+    "wandb_tags": [],
+    "resume": false,
+    "load_run": ".*",
+    "load_checkpoint": "model_.*.pt",
+    "clip_actions": null,
+    "upload_model": false,
+    "class_name": "OnPolicyRunner",
+    "actor": {
+      "hidden_dims": [
+        512,
+        256,
+        128
+      ],
+      "activation": "elu",
+      "obs_normalization": true,
+      "cnn_cfg": null,
+      "distribution_cfg": {
+        "class_name": "GaussianDistribution",
+        "init_std": 1.0,
+        "std_type": "scalar"
+      },
+      "rnn_type": null,
+      "rnn_hidden_dim": 256,
+      "rnn_num_layers": 1,
+      "class_name": "MLPModel"
+    },
+    "critic": {
+      "hidden_dims": [
+        512,
+        256,
+        128
+      ],
+      "activation": "elu",
+      "obs_normalization": true,
+      "cnn_cfg": null,
+      "distribution_cfg": null,
+      "rnn_type": null,
+      "rnn_hidden_dim": 256,
+      "rnn_num_layers": 1,
+      "class_name": "MLPModel"
+    },
+    "algorithm": {
+      "num_learning_epochs": 5,
+      "num_mini_batches": 4,
+      "learning_rate": 0.001,
+      "schedule": "adaptive",
+      "gamma": 0.99,
+      "lam": 0.95,
+      "entropy_coef": 0.01,
+      "desired_kl": 0.01,
+      "max_grad_norm": 1.0,
+      "value_loss_coef": 1.0,
+      "use_clipped_value_loss": true,
+      "clip_param": 0.2,
+      "normalize_advantage_per_mini_batch": false,
+      "optimizer": "adam",
+      "share_cnn_encoders": false,
+      "class_name": "PPO",
+      "symmetry_cfg": null
+    }
+  },
+  "actionScale": 1.0,
+  "actionFilter": "none",
+  "hardware": false
+}
