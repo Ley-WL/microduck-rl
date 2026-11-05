@@ -21,7 +21,8 @@ assert LABEL in ('initial','original5000','repair100','observer5000')
 OUT=Path(os.environ.get('WALK_OUTPUT_DIR',str(ROOT/'evidence/input-response'/LABEL)))
 OUT.mkdir(parents=True,exist_ok=True)
 POLICIES={LABEL:ROOT/'models/walk_observer_hd1910_5000/policy.onnx'}
-CASES = []
+USE_823G = os.environ.get("WALK_PROFILE") == "823g"
+CASES = [("idle", (0., 0., 0.))] if USE_823G else []
 for speed in (.2,.3,.4):
     for sign,name in [(1,'forward'),(-1,'back')]:
         CASES.append((f'{name}{round(speed*100)}',(sign*speed,0,0)))
@@ -36,10 +37,13 @@ for speed in (.2,.3,.4):
 class CompareAction(base.RuntimeWalkAction):
     def __init__(self,cfg,env):
         super().__init__(cfg,env)
-        if LABEL!='initial': self._alpha.fill_(1.)
+        if USE_823G:
+            self._alpha[5:9] = 1.
+        elif LABEL!='initial': self._alpha.fill_(1.)
     def process_actions(self,actions):
-        # Verified metadata: scale=1 for all; old head/legs EMA .5/.7, new no EMA.
-        self._filtered=torch.where(self._initialized,(1-self._alpha)*self._filtered+self._alpha*actions,actions)
+        targets = .9 * actions if USE_823G else actions
+        # Legacy metadata: scale=1 for all; old head/legs EMA .5/.7, new no EMA.
+        self._filtered=torch.where(self._initialized,(1-self._alpha)*self._filtered+self._alpha*targets,targets)
         self._initialized.fill_(True);self._raw_actions.copy_(actions)
         bounded=(self._home+self._filtered.double()).clamp(self._bounds[:,0],self._bounds[:,1])
         encoded=torch.floor(self._refs+bounded/base.ENCODER_STEP*self._directions+.5)
@@ -61,6 +65,9 @@ cfg.actions['joint_pos']=CompareActionCfg(**vars(cfg.actions['joint_pos']))
 cfg.observations['actor'].enable_corruption=False
 cfg.observations['actor'].terms['base_ang_vel'].func=gyro
 cfg.observations['actor'].terms['base_ang_vel'].params={}
+if USE_823G:
+    from mjlab_microduck.tasks.walk_mass_823g import apply_mass_823g
+    cfg.scene.entities["robot"].spec_fn = lambda: apply_mass_823g(base.robot_spec())
 torch.manual_seed(191057)
 env=ManagerBasedRlEnv(cfg,device='cuda:0')
 robot=env.scene['robot']
@@ -70,8 +77,9 @@ results={};traces={};initial_hashes={}
 save('contract.json',dict(label=LABEL,policySha256=hashlib.sha256(POLICIES[LABEL].read_bytes()).hexdigest(),
      worlds=16,seed=191057,dt=.02,sequence='0-2s idle, 2-8s input, 8-10s stop',
      measurement='body-frame vx/vy/yaw; mean 4-8s; failed worlds excluded after first failure',
+     profile='823g' if USE_823G else 'default',
      physics='Common replica backlash, HD1910 BAM P5, 7.4V, 14ms actuator delay, mechanical limits',
-     runtime='scale1; metadata EMA; encoder rounding; previous feedback velocity; command smoothing .2',
+     runtime='scale0.9; legs new weight .7, head 1; encoder rounding; previous feedback velocity; command smoothing .2' if USE_823G else 'scale1; metadata EMA; encoder rounding; previous feedback velocity; command smoothing .2',
      caveat='Approximate runtime simulation, ideal body gyro; not real measured response or exact board calibration replay'))
 try:
     for case,command in CASES:

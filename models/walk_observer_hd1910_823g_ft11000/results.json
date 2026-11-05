@@ -1,0 +1,1242 @@
+{
+  "idle": {
+    "command": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      -7.722124792053364e-06,
+      1.2259906725375913e-05,
+      -0.0005991472862660885
+    ],
+    "velocityStd": [
+      0.0008486713049933314,
+      0.00015765306307002902,
+      0.011478939093649387
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      null,
+      null,
+      null
+    ],
+    "stopSecondsMedian": 0.0,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      0.04681464657187462,
+      0.0692639872431755
+    ],
+    "hipMeanDeg": [
+      -0.8378512263298035,
+      0.6858668923377991
+    ],
+    "validSamples": 3200
+  },
+  "forward20": {
+    "command": [
+      0.2,
+      0,
+      0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.14530262351036072,
+      0.0014645804185420275,
+      -0.014533089473843575
+    ],
+    "velocityStd": [
+      0.020894493907690048,
+      0.15743927657604218,
+      0.24541717767715454
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      0,
+      null,
+      null
+    ],
+    "stopSecondsMedian": 0.6,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      8.96564769744873,
+      12.393952369689941
+    ],
+    "hipMeanDeg": [
+      -14.89671516418457,
+      2.9290506839752197
+    ],
+    "validSamples": 3200
+  },
+  "back20": {
+    "command": [
+      -0.2,
+      0,
+      0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      -0.1203589215874672,
+      -0.0033066344913095236,
+      -0.016512896865606308
+    ],
+    "velocityStd": [
+      0.02628880925476551,
+      0.16538739204406738,
+      0.28309565782546997
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      0,
+      null,
+      null
+    ],
+    "stopSecondsMedian": 0.46,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      7.089202404022217,
+      12.482552528381348
+    ],
+    "hipMeanDeg": [
+      -11.355972290039062,
+      1.0872761011123657
+    ],
+    "validSamples": 3200
+  },
+  "forward30": {
+    "command": [
+      0.3,
+      0,
+      0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.22103412449359894,
+      0.007296361494809389,
+      -0.04854632914066315
+    ],
+    "velocityStd": [
+      0.026224594563245773,
+      0.1603686362504959,
+      0.31733426451683044
+    ],
+    "response70Seconds": [
+      1.19,
+      null,
+      null
+    ],
+    "responseReached": [
+      2,
+      null,
+      null
+    ],
+    "stopSecondsMedian": 0.65,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      14.881755828857422,
+      10.900835990905762
+    ],
+    "hipMeanDeg": [
+      -15.074156761169434,
+      3.701808214187622
+    ],
+    "validSamples": 3200
+  },
+  "back30": {
+    "command": [
+      -0.3,
+      0,
+      0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      -0.18990835547447205,
+      -0.0062176017090678215,
+      0.01124691404402256
+    ],
+    "velocityStd": [
+      0.027935508638620377,
+      0.17113323509693146,
+      0.2863340377807617
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      0,
+      null,
+      null
+    ],
+    "stopSecondsMedian": 0.54,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      9.338739395141602,
+      13.121076583862305
+    ],
+    "hipMeanDeg": [
+      -11.872547149658203,
+      2.5458126068115234
+    ],
+    "validSamples": 3200
+  },
+  "forward40": {
+    "command": [
+      0.4,
+      0,
+      0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.28779974579811096,
+      0.011720026843249798,
+      0.017761245369911194
+    ],
+    "velocityStd": [
+      0.03253328427672386,
+      0.16479220986366272,
+      0.39992019534111023
+    ],
+    "response70Seconds": [
+      2.2800000000000002,
+      null,
+      null
+    ],
+    "responseReached": [
+      1,
+      null,
+      null
+    ],
+    "stopSecondsMedian": 0.66,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      19.825576782226562,
+      11.63898754119873
+    ],
+    "hipMeanDeg": [
+      -13.853633880615234,
+      3.4000742435455322
+    ],
+    "validSamples": 3200
+  },
+  "back40": {
+    "command": [
+      -0.4,
+      0,
+      0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      -0.24868495762348175,
+      -0.01072586327791214,
+      0.009076039306819439
+    ],
+    "velocityStd": [
+      0.03145362436771393,
+      0.17750874161720276,
+      0.303139865398407
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      0,
+      null,
+      null
+    ],
+    "stopSecondsMedian": 0.5800000000000001,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      11.214960098266602,
+      14.093304634094238
+    ],
+    "hipMeanDeg": [
+      -12.418745994567871,
+      4.2871575355529785
+    ],
+    "validSamples": 3200
+  },
+  "yaw_left_0.2": {
+    "command": [
+      0,
+      0,
+      0.2
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      8.956114470493048e-05,
+      0.0001261969009647146,
+      0.00027402062551118433
+    ],
+    "velocityStd": [
+      0.00045873623457737267,
+      0.0001918145571835339,
+      0.006745683029294014
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      null,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.0,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      0.1763482242822647,
+      0.14128431677818298
+    ],
+    "hipMeanDeg": [
+      -3.0459063053131104,
+      0.7915391325950623
+    ],
+    "validSamples": 3200
+  },
+  "yaw_right_0.2": {
+    "command": [
+      0,
+      0,
+      -0.2
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.00010987887071678415,
+      0.00025820283917710185,
+      0.0001214852964039892
+    ],
+    "velocityStd": [
+      0.0007125554257072508,
+      0.000806080992333591,
+      0.01474403589963913
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      null,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.0,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      0.19418354332447052,
+      0.26992619037628174
+    ],
+    "hipMeanDeg": [
+      -5.241015911102295,
+      0.04329740256071091
+    ],
+    "validSamples": 3200
+  },
+  "yaw_left_0.3": {
+    "command": [
+      0,
+      0,
+      0.3
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.0017649851506575942,
+      -0.005966442637145519,
+      0.0661325752735138
+    ],
+    "velocityStd": [
+      0.01169399730861187,
+      0.08599477261304855,
+      0.1671951562166214
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      null,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.56,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      0.3449471592903137,
+      0.15916825830936432
+    ],
+    "hipMeanDeg": [
+      -10.808265686035156,
+      3.89817476272583
+    ],
+    "validSamples": 3200
+  },
+  "yaw_right_0.3": {
+    "command": [
+      0,
+      0,
+      -0.3
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.0037433430552482605,
+      -0.005632142536342144,
+      -0.21869604289531708
+    ],
+    "velocityStd": [
+      0.01586085371673107,
+      0.12063468992710114,
+      0.2396835833787918
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      null,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.4,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      5.3427910804748535,
+      12.181112289428711
+    ],
+    "hipMeanDeg": [
+      -13.755581855773926,
+      0.5986628532409668
+    ],
+    "validSamples": 3200
+  },
+  "yaw_left_0.4": {
+    "command": [
+      0,
+      0,
+      0.4
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.010223324410617352,
+      0.005015426781028509,
+      0.29914164543151855
+    ],
+    "velocityStd": [
+      0.020662711933255196,
+      0.15357166528701782,
+      0.22722025215625763
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      null,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.43000000000000005,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      5.16566801071167,
+      11.217696189880371
+    ],
+    "hipMeanDeg": [
+      -11.425249099731445,
+      1.538886308670044
+    ],
+    "validSamples": 3200
+  },
+  "yaw_right_0.4": {
+    "command": [
+      0,
+      0,
+      -0.4
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.005324296187609434,
+      0.0010512990411370993,
+      -0.3969535529613495
+    ],
+    "velocityStd": [
+      0.021301008760929108,
+      0.1540651023387909,
+      0.21546244621276855
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      null,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.44,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      7.11090612411499,
+      14.277207374572754
+    ],
+    "hipMeanDeg": [
+      -13.592340469360352,
+      1.082806944847107
+    ],
+    "validSamples": 3200
+  },
+  "yaw_left_0.5": {
+    "command": [
+      0,
+      0,
+      0.5
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.011210587806999683,
+      0.008446194231510162,
+      0.4074477255344391
+    ],
+    "velocityStd": [
+      0.020926382392644882,
+      0.1558690071105957,
+      0.22964051365852356
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      null,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.42,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      6.126021862030029,
+      11.479114532470703
+    ],
+    "hipMeanDeg": [
+      -11.476096153259277,
+      1.9002833366394043
+    ],
+    "validSamples": 3200
+  },
+  "yaw_right_0.5": {
+    "command": [
+      0,
+      0,
+      -0.5
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.004505090415477753,
+      0.004006064031273127,
+      -0.495250940322876
+    ],
+    "velocityStd": [
+      0.022163087502121925,
+      0.15630249679088593,
+      0.22197659313678741
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      null,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.46,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      8.777310371398926,
+      15.348116874694824
+    ],
+    "hipMeanDeg": [
+      -13.939993858337402,
+      1.2988636493682861
+    ],
+    "validSamples": 3200
+  },
+  "yaw_left_0.75": {
+    "command": [
+      0,
+      0,
+      0.75
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.013801716268062592,
+      0.010654603131115437,
+      0.6853717565536499
+    ],
+    "velocityStd": [
+      0.021918432787060738,
+      0.15706972777843475,
+      0.2372329831123352
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      1.92
+    ],
+    "responseReached": [
+      null,
+      null,
+      1
+    ],
+    "stopSecondsMedian": 0.49,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      8.827803611755371,
+      12.44571590423584
+    ],
+    "hipMeanDeg": [
+      -10.695887565612793,
+      2.450761556625366
+    ],
+    "validSamples": 3200
+  },
+  "yaw_right_0.75": {
+    "command": [
+      0,
+      0,
+      -0.75
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.0021476189140230417,
+      0.007515279110521078,
+      -0.7312104105949402
+    ],
+    "velocityStd": [
+      0.024981770664453506,
+      0.15926779806613922,
+      0.2582707703113556
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      1.02
+    ],
+    "responseReached": [
+      null,
+      null,
+      1
+    ],
+    "stopSecondsMedian": 0.48,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      12.848725318908691,
+      18.116676330566406
+    ],
+    "hipMeanDeg": [
+      -14.249147415161133,
+      1.429208755493164
+    ],
+    "validSamples": 3200
+  },
+  "yaw_left_1": {
+    "command": [
+      0,
+      0,
+      1.0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.016643038019537926,
+      0.010935625992715359,
+      0.9529010653495789
+    ],
+    "velocityStd": [
+      0.023613320663571358,
+      0.1566224992275238,
+      0.23981420695781708
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      0.49
+    ],
+    "responseReached": [
+      null,
+      null,
+      2
+    ],
+    "stopSecondsMedian": 0.49,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      11.548609733581543,
+      13.813608169555664
+    ],
+    "hipMeanDeg": [
+      -9.623513221740723,
+      3.1159563064575195
+    ],
+    "validSamples": 3200
+  },
+  "yaw_right_1": {
+    "command": [
+      0,
+      0,
+      -1.0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.0015482796588912606,
+      0.010172056965529919,
+      -0.9747755527496338
+    ],
+    "velocityStd": [
+      0.028936684131622314,
+      0.16052988171577454,
+      0.2991623878479004
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      1.08
+    ],
+    "responseReached": [
+      null,
+      null,
+      1
+    ],
+    "stopSecondsMedian": 0.51,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      16.56947135925293,
+      20.237443923950195
+    ],
+    "hipMeanDeg": [
+      -14.469724655151367,
+      1.407251000404358
+    ],
+    "validSamples": 3200
+  },
+  "arc_0.2_left_0.5": {
+    "command": [
+      0.2,
+      0,
+      0.5
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.14144065976142883,
+      0.0003509200760163367,
+      0.41900771856307983
+    ],
+    "velocityStd": [
+      0.020929161459207535,
+      0.1570463627576828,
+      0.2544744312763214
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      0,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.48,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      10.031749725341797,
+      10.2998685836792
+    ],
+    "hipMeanDeg": [
+      -14.147271156311035,
+      2.751836061477661
+    ],
+    "validSamples": 3200
+  },
+  "arc_0.2_right_0.5": {
+    "command": [
+      0.2,
+      0,
+      -0.5
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.13981656730175018,
+      0.0001763471809681505,
+      -0.4048152267932892
+    ],
+    "velocityStd": [
+      0.02589861862361431,
+      0.15703162550926208,
+      0.2633996903896332
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      0,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.55,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      9.4680814743042,
+      15.719958305358887
+    ],
+    "hipMeanDeg": [
+      -13.743941307067871,
+      3.2965502738952637
+    ],
+    "validSamples": 3200
+  },
+  "arc_0.2_left_1": {
+    "command": [
+      0.2,
+      0,
+      1.0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.13188916444778442,
+      -0.002727427752688527,
+      0.9094035625457764
+    ],
+    "velocityStd": [
+      0.023552557453513145,
+      0.15640254318714142,
+      0.23978489637374878
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      2.58
+    ],
+    "responseReached": [
+      0,
+      null,
+      2
+    ],
+    "stopSecondsMedian": 0.58,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      12.926124572753906,
+      12.32512378692627
+    ],
+    "hipMeanDeg": [
+      -11.641510963439941,
+      3.602396011352539
+    ],
+    "validSamples": 3200
+  },
+  "arc_0.2_right_1": {
+    "command": [
+      0.2,
+      0,
+      -1.0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.1380290538072586,
+      0.0052880533039569855,
+      -0.8713411688804626
+    ],
+    "velocityStd": [
+      0.0343237966299057,
+      0.15779542922973633,
+      0.2925569713115692
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      0,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.63,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      13.912932395935059,
+      20.387653350830078
+    ],
+    "hipMeanDeg": [
+      -13.180009841918945,
+      3.332353353500366
+    ],
+    "validSamples": 3200
+  },
+  "arc_0.3_left_0.5": {
+    "command": [
+      0.3,
+      0,
+      0.5
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.21721813082695007,
+      0.0026442036032676697,
+      0.43137723207473755
+    ],
+    "velocityStd": [
+      0.022069644182920456,
+      0.16250430047512054,
+      0.29914265871047974
+    ],
+    "response70Seconds": [
+      2.0,
+      null,
+      0.66
+    ],
+    "responseReached": [
+      3,
+      null,
+      1
+    ],
+    "stopSecondsMedian": 0.5900000000000001,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      16.62282943725586,
+      8.769588470458984
+    ],
+    "hipMeanDeg": [
+      -14.182966232299805,
+      3.9047698974609375
+    ],
+    "validSamples": 3200
+  },
+  "arc_0.3_right_0.5": {
+    "command": [
+      0.3,
+      0,
+      -0.5
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.21684075891971588,
+      0.004088587127625942,
+      -0.40146690607070923
+    ],
+    "velocityStd": [
+      0.03213418275117874,
+      0.1596560776233673,
+      0.3153323829174042
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      0,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.66,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      13.790223121643066,
+      14.647564888000488
+    ],
+    "hipMeanDeg": [
+      -13.97661018371582,
+      4.099966526031494
+    ],
+    "validSamples": 3200
+  },
+  "arc_0.3_left_1": {
+    "command": [
+      0.3,
+      0,
+      1.0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.2055702954530716,
+      -0.004593528341501951,
+      0.9014762043952942
+    ],
+    "velocityStd": [
+      0.022039223462343216,
+      0.15991267561912537,
+      0.2926847040653229
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      0.64
+    ],
+    "responseReached": [
+      0,
+      null,
+      1
+    ],
+    "stopSecondsMedian": 0.61,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      17.38649559020996,
+      10.793830871582031
+    ],
+    "hipMeanDeg": [
+      -12.4463529586792,
+      4.740810871124268
+    ],
+    "validSamples": 3200
+  },
+  "arc_0.3_right_1": {
+    "command": [
+      0.3,
+      0,
+      -1.0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.2083376944065094,
+      0.006719118449836969,
+      -0.8686257004737854
+    ],
+    "velocityStd": [
+      0.03961145132780075,
+      0.1550244390964508,
+      0.31695061922073364
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      0,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.63,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      16.954484939575195,
+      19.509382247924805
+    ],
+    "hipMeanDeg": [
+      -13.30759334564209,
+      3.9641318321228027
+    ],
+    "validSamples": 3200
+  },
+  "arc_0.4_left_0.5": {
+    "command": [
+      0.4,
+      0,
+      0.5
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.2822454869747162,
+      0.0011539453407749534,
+      0.44088783860206604
+    ],
+    "velocityStd": [
+      0.02784004993736744,
+      0.16558358073234558,
+      0.39926761388778687
+    ],
+    "response70Seconds": [
+      1.76,
+      null,
+      null
+    ],
+    "responseReached": [
+      3,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.6,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      21.27956199645996,
+      7.669989585876465
+    ],
+    "hipMeanDeg": [
+      -12.41128158569336,
+      4.617400646209717
+    ],
+    "validSamples": 3200
+  },
+  "arc_0.4_right_0.5": {
+    "command": [
+      0.4,
+      0,
+      -0.5
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.2837732434272766,
+      0.01742042414844036,
+      -0.33601224422454834
+    ],
+    "velocityStd": [
+      0.03824732452630997,
+      0.16097941994667053,
+      0.4332388937473297
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      0,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.67,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      18.071910858154297,
+      15.643696784973145
+    ],
+    "hipMeanDeg": [
+      -14.296783447265625,
+      2.6203503608703613
+    ],
+    "validSamples": 3200
+  },
+  "arc_0.4_left_1": {
+    "command": [
+      0.4,
+      0,
+      1.0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.2677077054977417,
+      -0.008188673295080662,
+      0.861603319644928
+    ],
+    "velocityStd": [
+      0.026056986302137375,
+      0.16228389739990234,
+      0.3964545428752899
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      4.76
+    ],
+    "responseReached": [
+      0,
+      null,
+      1
+    ],
+    "stopSecondsMedian": 0.66,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      21.462255477905273,
+      9.50021743774414
+    ],
+    "hipMeanDeg": [
+      -11.120254516601562,
+      5.532535076141357
+    ],
+    "validSamples": 3200
+  },
+  "arc_0.4_right_1": {
+    "command": [
+      0.4,
+      0,
+      -1.0
+    ],
+    "survived": 16,
+    "worlds": 16,
+    "meanVelocity": [
+      0.2723938822746277,
+      0.01918472908437252,
+      -0.7973884344100952
+    ],
+    "velocityStd": [
+      0.044131070375442505,
+      0.15338702499866486,
+      0.41874852776527405
+    ],
+    "response70Seconds": [
+      null,
+      null,
+      null
+    ],
+    "responseReached": [
+      0,
+      null,
+      0
+    ],
+    "stopSecondsMedian": 0.71,
+    "stopReached": 16,
+    "hipExcursionDeg": [
+      19.349342346191406,
+      21.293214797973633
+    ],
+    "hipMeanDeg": [
+      -13.579730987548828,
+      2.676201581954956
+    ],
+    "validSamples": 3200
+  }
+}
