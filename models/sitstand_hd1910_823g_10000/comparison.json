@@ -1,0 +1,26 @@
+{
+  "baseline": {
+    "success": 64,
+    "survived": 64
+  },
+  "candidates": {
+    "1001": {
+      "success": 54,
+      "survived": 58
+    },
+    "3001": {
+      "success": 62,
+      "survived": 62
+    },
+    "5001": {
+      "success": 36,
+      "survived": 64
+    },
+    "10000": {
+      "success": 63,
+      "survived": 64
+    }
+  },
+  "totalCases": 64,
+  "accepted": false
+}
