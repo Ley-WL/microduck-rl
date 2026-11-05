@@ -1,0 +1,62 @@
+{
+  "211131": {
+    "success": 16,
+    "successByWorld": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "noReset": 16,
+    "worlds": 16,
+    "initialQposQvelSha256": "e4d42ea36b1d75aec102d87fe409db9aca72bed05d0d909fba580a56cc87e298",
+    "policySha256": "6e26c9deafe7812dd29dffa0247ef48ecdf796e3b9a710107f28371346ef644a",
+    "screeningOnly": true,
+    "mouthMinMedianMm": 21.912202835083008,
+    "trunkDropAtMouthMinMedianMm": 19.871435165405273,
+    "trunkAtMouthMinMedianMm": 101.93330383300781,
+    "returnStableFraction": 1.0
+  },
+  "211139": {
+    "success": 16,
+    "successByWorld": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ],
+    "noReset": 16,
+    "worlds": 16,
+    "initialQposQvelSha256": "8653a92a419e3e92461d1227c0cc6860065148668d70aacaa9eb3f48574188be",
+    "policySha256": "6e26c9deafe7812dd29dffa0247ef48ecdf796e3b9a710107f28371346ef644a",
+    "screeningOnly": true,
+    "mouthMinMedianMm": 22.0844669342041,
+    "trunkDropAtMouthMinMedianMm": 22.351078033447266,
+    "trunkAtMouthMinMedianMm": 102.11569213867188,
+    "returnStableFraction": 1.0
+  }
+}
