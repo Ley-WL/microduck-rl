@@ -1,0 +1,4 @@
+* text eol=lf
+*.onnx -text
+*.mp4 -text
+*.tar.gz -text

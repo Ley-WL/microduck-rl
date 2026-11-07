@@ -1,0 +1,144 @@
+{
+  "nominalOnly": true,
+  "seconds": 10,
+  "transientSeconds": 2,
+  "commandSemantics": "throttle and constant heading error; not velocity targets",
+  "rows": [
+    {
+      "throttle": 0.4,
+      "headingErrorRad": 0.0,
+      "worlds": 1,
+      "survived": 1,
+      "meanForwardSpeedSurvivors": 0.46781665086746216,
+      "meanYawRateSurvivors": -0.44492247700691223,
+      "forwardSpeedByWorld": [
+        0.46781665086746216
+      ],
+      "yawRateByWorld": [
+        -0.44492247700691223
+      ],
+      "failed": [
+        false
+      ]
+    },
+    {
+      "throttle": -0.4,
+      "headingErrorRad": 0.0,
+      "worlds": 1,
+      "survived": 1,
+      "meanForwardSpeedSurvivors": -0.3890903890132904,
+      "meanYawRateSurvivors": -0.20096875727176666,
+      "forwardSpeedByWorld": [
+        -0.3890903890132904
+      ],
+      "yawRateByWorld": [
+        -0.20096875727176666
+      ],
+      "failed": [
+        false
+      ]
+    },
+    {
+      "throttle": 0.3,
+      "headingErrorRad": -0.25,
+      "worlds": 1,
+      "survived": 1,
+      "meanForwardSpeedSurvivors": 0.382019966840744,
+      "meanYawRateSurvivors": -1.3885577917099,
+      "forwardSpeedByWorld": [
+        0.382019966840744
+      ],
+      "yawRateByWorld": [
+        -1.3885577917099
+      ],
+      "failed": [
+        false
+      ]
+    },
+    {
+      "throttle": 0.3,
+      "headingErrorRad": 0.25,
+      "worlds": 1,
+      "survived": 1,
+      "meanForwardSpeedSurvivors": 0.3189438581466675,
+      "meanYawRateSurvivors": 1.9148337841033936,
+      "forwardSpeedByWorld": [
+        0.3189438581466675
+      ],
+      "yawRateByWorld": [
+        1.9148337841033936
+      ],
+      "failed": [
+        false
+      ]
+    },
+    {
+      "throttle": -0.3,
+      "headingErrorRad": -0.25,
+      "worlds": 1,
+      "survived": 1,
+      "meanForwardSpeedSurvivors": -0.007054533809423447,
+      "meanYawRateSurvivors": -1.278141736984253,
+      "forwardSpeedByWorld": [
+        -0.007054533809423447
+      ],
+      "yawRateByWorld": [
+        -1.278141736984253
+      ],
+      "failed": [
+        false
+      ]
+    },
+    {
+      "throttle": -0.3,
+      "headingErrorRad": 0.25,
+      "worlds": 1,
+      "survived": 1,
+      "meanForwardSpeedSurvivors": 0.005816316232085228,
+      "meanYawRateSurvivors": 1.6303499937057495,
+      "forwardSpeedByWorld": [
+        0.005816316232085228
+      ],
+      "yawRateByWorld": [
+        1.6303499937057495
+      ],
+      "failed": [
+        false
+      ]
+    },
+    {
+      "throttle": 0.0,
+      "headingErrorRad": -0.5,
+      "worlds": 1,
+      "survived": 1,
+      "meanForwardSpeedSurvivors": 0.12013230472803116,
+      "meanYawRateSurvivors": -5.180726528167725,
+      "forwardSpeedByWorld": [
+        0.12013230472803116
+      ],
+      "yawRateByWorld": [
+        -5.180726528167725
+      ],
+      "failed": [
+        false
+      ]
+    },
+    {
+      "throttle": 0.0,
+      "headingErrorRad": 0.5,
+      "worlds": 1,
+      "survived": 1,
+      "meanForwardSpeedSurvivors": 0.05999204143881798,
+      "meanYawRateSurvivors": 5.374567985534668,
+      "forwardSpeedByWorld": [
+        0.05999204143881798
+      ],
+      "yawRateByWorld": [
+        5.374567985534668
+      ],
+      "failed": [
+        false
+      ]
+    }
+  ]
+}

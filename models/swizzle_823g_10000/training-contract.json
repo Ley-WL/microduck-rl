@@ -1,0 +1,11 @@
+{
+  "actorTransfer": true,
+  "fullResume": false,
+  "freshCritic": true,
+  "freshOptimizer": true,
+  "syntheticNormalizerCount": 1000000,
+  "initialActorParityPassed": true,
+  "updates": 10000,
+  "worlds": 4096,
+  "seed": 261106
+}

@@ -1,0 +1,21 @@
+{
+  "policySha256": "50282524d226c95bf5469140714d9499e55226f67ac74ee3b680209c6441f1d8",
+  "video": "swizzle-10000.mp4",
+  "seed": 241079,
+  "worlds": 8,
+  "seconds": 10,
+  "fps": 25,
+  "playbackSpeed": 1,
+  "nominalOnly": true,
+  "newRollout": true,
+  "notOriginal240WorldEvaluation": true,
+  "trainingModified": false,
+  "hardwareAccess": false,
+  "mass": {
+    "originalKg": 0.73682962,
+    "totalKg": 0.82258644,
+    "addedKg": 0.08575682000000007,
+    "bodyReferenceKg": 0.823,
+    "wheelMassPreserved": true
+  }
+}
